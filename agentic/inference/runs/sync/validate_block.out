@@ -1,0 +1,15 @@
+[block] waiting for vLLM /health ...
+[block] ready
+[block] cudasync lines:
+[cudasync pid=3686149] cudaSetDeviceFlags(BlockingSync) via libcudart.so.13 rc=0
+[cudasync pid=3686430] cudaSetDeviceFlags(BlockingSync) via libcudart.so.13 rc=0
+[cudasync pid=3686431] cudaSetDeviceFlags(BlockingSync) via libcudart.so.13 rc=0
+[block] engine pids: 3686149,3686431
+=== [block] perf stat engine, 10s during single-stream decode ===
+         10,450.31 msec task-clock                       #    1.044 CPUs utilized             
+    40,217,018,495      cycles                           #    3.848 GHz                       
+   134,497,945,697      instructions                     #    3.34  insn per cycle            
+[block] GPU util during: 100 %
+[block] generated 1600 tokens in 33.1s  (tok/s = 48.3)
+validate_sync.sh: line 14: 3686149 Killed                  nohup bash serve_sync.sh > "runs/sync/serve_$MODE.log" 2>&1
+[block] done

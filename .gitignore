@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets / local config
+.env
+deploy/config.env
+
+
+# Large runtime assets / models
+fastapi_runtime_assets/models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+*.onnx
+
+# Benchmark outputs
+loadgen/benchmark/results/
+*.pid
+
+# Backups
+*.bak
+# Claude Code project files — never publish
+.claude/
+CLAUDE.md
+# Live cluster config (account id etc.) — keep local
+deploy/config.env
+# Heavy raw measurement data — kept local, not published (plots are tracked separately)
+benchmark_results/
+*.ncu-rep
+*.nsys-rep

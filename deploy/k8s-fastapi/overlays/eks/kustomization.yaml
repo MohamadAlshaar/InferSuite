@@ -1,0 +1,63 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+# Swap local Docker image for ECR — deploy script updates this via:
+#   kustomize edit set image llm-service-kernel:fastapi-selfcontained=<ECR_URL>:latest
+images:
+- name: llm-service-kernel:fastapi-selfcontained
+  newName: YOUR_ACCOUNT_ID.dkr.ecr.YOUR_REGION.amazonaws.com/llm-service/fastapi
+  newTag: latest
+patches:
+# Switch PVCs from minikube "standard" to EKS EBS gp3
+- target:
+    kind: PersistentVolumeClaim
+  patch: |-
+    - op: replace
+      path: /spec/storageClassName
+      value: ebs-gp3
+# Pin FastAPI + bootstrap to the general-purpose managed node group (bare-metal).
+# Uses nodegroup label — stable regardless of instance type, no sed substitution needed.
+# taskset pins the uvicorn process to physical cores only (no HT sibling interference).
+- target:
+    kind: Deployment
+    name: llm-service-kernel
+  patch: |-
+    - op: add
+      path: /spec/template/spec/nodeSelector
+      value:
+        node.kubernetes.io/instance-type: c7i.metal-24xl
+    - op: replace
+      path: /spec/template/spec/containers/0/imagePullPolicy
+      value: Always
+    - op: replace
+      path: /spec/template/spec/containers/0/command
+      value: ["taskset", "-c", "0-47", "uvicorn", "src.service.main:app", "--host", "0.0.0.0", "--port", "8080"]
+- target:
+    kind: Job
+    name: llm-service-kernel-bootstrap
+  patch: |-
+    - op: add
+      path: /spec/template/spec/nodeSelector
+      value:
+        node.kubernetes.io/instance-type: c7i.metal-24xl
+    - op: replace
+      path: /spec/template/spec/containers/0/imagePullPolicy
+      value: Always
+# EKS-specific configmap values
+- target:
+    kind: ConfigMap
+    name: llm-service-kernel-config-fullstack
+  patch: |-
+    - op: replace
+      path: /data/RAG_OBJECT_STORE_REGION
+      value: eu-west-2
+    - op: replace
+      path: /data/CACHE_SCOPE
+      value: eks-eu-west-2
+    - op: add
+      path: /data/RAG_FORCE_SEAWEED_FETCH
+      value: "1"
+    - op: replace
+      path: /data/GENERATION_API_MODE
+      value: "chat"

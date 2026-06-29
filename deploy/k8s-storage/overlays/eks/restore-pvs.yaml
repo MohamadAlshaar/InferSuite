@@ -1,0 +1,220 @@
+# Static PVs binding pre-existing EBS volumes to storage PVCs.
+# Volume IDs were tagged restore-*-2b-v2 from the prior cluster run (2026-06-08).
+# All volumes are in eu-west-2b; claimRef pre-binds each PV to its PVC.
+# Driver: ebs.csi.aws.com — EKS Auto Mode driver cannot attach pre-existing volumes.
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-milvus-data
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-0484eb5b9556e7e40
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: milvus-data-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-milvus-minio
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-01006428a936fd2da
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: milvus-minio-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-milvus-etcd
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-053b6eafb25d9c1da
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: milvus-etcd-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-mongodb
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-030c8d5e448a847ce
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: mongodb-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-seaweed-master
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-0d49bba19af943008
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: seaweed-master-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-seaweed-volume
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-01369357e6343bcaf
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: seaweed-volume-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-seaweed-filer
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-00f6bc0574381b08d
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: seaweed-filer-pvc
+    namespace: llm-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: restore-rag-store-tenants
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-gp3
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-0cad024c992c47384
+    fsType: ext4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - eu-west-2b
+  claimRef:
+    name: rag-store-tenants-pvc
+    namespace: llm-service

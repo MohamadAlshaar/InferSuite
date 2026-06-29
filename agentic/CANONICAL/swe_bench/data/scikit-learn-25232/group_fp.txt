@@ -1,0 +1,18 @@
+# started on Thu Jun 25 19:25:04 2026
+
+
+ Performance counter stats for 'system wide':
+
+10,978,753,325,220      cycles                           system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (79.89%)
+ 7,115,972,880,261      instructions                     system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope #    0.65  insn per cycle              (90.10%)
+           281,293      fp_arith_inst_retired.scalar_single system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (90.10%)
+     1,329,576,810      fp_arith_inst_retired.scalar_double system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (89.95%)
+                 0      fp_arith_inst_retired.128b_packed_single system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (90.35%)
+       121,068,256      fp_arith_inst_retired.128b_packed_double system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (89.58%)
+                 0      fp_arith_inst_retired.256b_packed_single system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (90.28%)
+     1,169,916,023      fp_arith_inst_retired.256b_packed_double system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (89.89%)
+             1,580      fp_arith_inst_retired.512b_packed_single system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (89.91%)
+       749,466,271      fp_arith_inst_retired.512b_packed_double system.slice/docker-cf220e378ff698f8bb675047e7e074b816ab11c1d09778c98ec69fbedf322d20.scope                                        (90.06%)
+
+     155.771228666 seconds time elapsed
+

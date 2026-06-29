@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: benchmark-runner
+  namespace: llm-service
+  labels:
+    app: benchmark-runner
+spec:
+  hostPID: true
+  restartPolicy: Never
+  serviceAccountName: default
+  nodeSelector:
+    node.kubernetes.io/instance-type: c7i.metal-24xl
+  tolerations:
+    - operator: Exists
+  containers:
+    - name: runner
+      image: YOUR_ACCOUNT_ID.dkr.ecr.YOUR_REGION.amazonaws.com/llm-service/fastapi:latest
+      imagePullPolicy: Always
+      command: ["/bin/bash"]
+      args: ["-c", "sleep infinity"]
+      securityContext:
+        privileged: true
+        runAsUser: 0
+      env:
+        - name: DEPLOY_ENV
+          value: "eks"
+        - name: VLLM_NAMESPACE
+          value: "llm-d"
+        - name: BENCHMARK_URL
+          value: "http://llm-service-kernel.llm-service.svc.cluster.local:8080"
+        - name: BENCHMARK_MODEL
+          value: "qwen2.5-14b"
+        - name: BENCHMARK_NAMESPACE
+          value: "llm-service"
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "1Gi"
+        limits:
+          cpu: "2"
+          memory: "4Gi"
+  volumes: []

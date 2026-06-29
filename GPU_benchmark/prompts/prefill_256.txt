@@ -1,0 +1,15 @@
+International comparisons of hierarchical time series data sets based on
+survey data, such as annual country-level estimates of school enrollment rates,
+can suffer from large amounts of missing data due to differing coverage of
+surveys across countries and across times. A popular approach to handling
+missing data in these settings is through multiple imputation, which can be
+especially effective when there is an auxiliary variable that is strongly
+predictive of and has a smaller amount of missing data than the variable of
+interest. However, standard methods for multiple imputation of hierarchical
+time series data can perform poorly when the auxiliary variable and the
+variable of interest have a nonlinear relationship. Performance can also suffer
+if the multiple imputations are used to estimate an analysis model that makes
+different assumptions about the data compared to the imputation model, leading
+to uncongeniality between analysis and imputation models. We propose a Bayesian
+method for multiple imputation of hierarchical nonlinear time series data that
+use

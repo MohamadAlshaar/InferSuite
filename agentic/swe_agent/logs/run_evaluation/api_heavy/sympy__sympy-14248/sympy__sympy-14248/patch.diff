@@ -1,0 +1,64 @@
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 000000000..794cb32a9
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,20 @@
++from sympy import *
++
++A = MatrixSymbol('A', 2, 2)
++B = MatrixSymbol('B', 2, 2)
++
++expr = A - A*B - B
++
++print("str output:")
++print(expr)
++
++print("\npretty output:")
++pprint(expr)
++
++print("\nlatex output:")
++print(latex(expr))
++
++print("\nExpected:")
++print("A - A*B - B")
++print("A - A⋅B - B")
++print("A - A B - B")
+diff --git a/sympy/printing/str.py b/sympy/printing/str.py
+index 0baefe0f7..94ab22519 100644
+--- a/sympy/printing/str.py
++++ b/sympy/printing/str.py
+@@ -304,7 +304,14 @@ def _print_Mul(self, expr):
+             return sign + '*'.join(a_str) + "/(%s)" % '*'.join(b_str)
+ 
+     def _print_MatMul(self, expr):
+-        return '*'.join([self.parenthesize(arg, precedence(expr))
++        c, m = expr.as_coeff_mmul()
++
++        sign = ""
++        if c.is_number and c < 0:
++            sign = "-"
++            expr = expr.func(-c, m)
++
++        return sign + '*'.join([self.parenthesize(arg, precedence(expr))
+             for arg in expr.args])
+ 
+     def _print_HadamardProduct(self, expr):
+@@ -312,8 +319,15 @@ def _print_HadamardProduct(self, expr):
+             for arg in expr.args])
+ 
+     def _print_MatAdd(self, expr):
+-        return ' + '.join([self.parenthesize(arg, precedence(expr))
+-            for arg in expr.args])
++        terms = list(expr.args)
++        tex = self._print(terms[0])
++        for term in terms[1:]:
++            t = self._print(term)
++            if t.startswith('-'):
++                tex += ' - ' + t[1:]
++            else:
++                tex += ' + ' + t
++        return tex
+ 
+     def _print_NaN(self, expr):
+         return 'nan'

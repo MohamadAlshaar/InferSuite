@@ -1,0 +1,85 @@
+INFO 06-28 18:17:37 [api_utils.py:273] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': True, 'gpu_memory_utilization': 0.9, 'disable_log_stats': True, 'enforce_eager': True, 'model': 'Qwen/Qwen2.5-7B-Instruct-AWQ'}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING 06-28 18:17:37 [arg_utils.py:1557] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 06-28 18:17:38 [model.py:611] Resolved architecture: Qwen2ForCausalLM
+INFO 06-28 18:17:38 [model.py:1745] Using max model len 4096
+INFO 06-28 18:17:38 [awq_marlin.py:269] The model is convertible to awq_marlin during runtime. Using awq_marlin kernel.
+INFO 06-28 18:17:38 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=8192.
+Parse safetensors files:   0%|          | 0/2 [00:00<?, ?it/s]Parse safetensors files:  50%|█████     | 1/2 [00:00<00:00,  2.00it/s]Parse safetensors files: 100%|██████████| 2/2 [00:00<00:00,  3.67it/s]Parse safetensors files: 100%|██████████| 2/2 [00:00<00:00,  3.26it/s]
+INFO 06-28 18:17:39 [vllm.py:999] Asynchronous scheduling is enabled.
+WARNING 06-28 18:17:39 [vllm.py:1055] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+WARNING 06-28 18:17:39 [vllm.py:1097] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+INFO 06-28 18:17:39 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 06-28 18:17:39 [vllm.py:1273] Cudagraph is disabled under eager mode
+INFO 06-28 18:17:39 [compilation.py:321] Enabled custom fusions: norm_quant, act_quant
+INFO 06-28 18:17:42 [core.py:113] Initializing a V1 LLM engine (v0.23.0) with config: model='Qwen/Qwen2.5-7B-Instruct-AWQ', speculative_config=None, tokenizer='Qwen/Qwen2.5-7B-Instruct-AWQ', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=awq_marlin, quantization_config=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=Qwen/Qwen2.5-7B-Instruct-AWQ, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=True, moe_backend='auto', linear_backend='auto')
+INFO 06-28 18:17:42 [parallel_state.py:1568] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://192.168.100.247:33609 backend=nccl
+INFO 06-28 18:17:42 [parallel_state.py:1903] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+INFO 06-28 18:17:42 [topk_topp_sampler.py:39] FlashInfer top-p/top-k sampling disabled via VLLM_USE_FLASHINFER_SAMPLER=0.
+INFO 06-28 18:17:43 [gpu_model_runner.py:5092] Starting to load model Qwen/Qwen2.5-7B-Instruct-AWQ...
+INFO 06-28 18:17:43 [awq_marlin.py:437] Using MarlinLinearKernel for AWQMarlinLinearMethod
+INFO 06-28 18:17:43 [cuda.py:378] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+INFO 06-28 18:17:43 [flash_attn.py:636] Using FlashAttention version 2
+INFO 06-28 18:17:44 [weight_utils.py:922] Filesystem type for checkpoints: EXT4. Checkpoint size: 5.19 GiB. Available RAM: 54.40 GiB.
+INFO 06-28 18:17:44 [weight_utils.py:945] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  50% Completed | 1/2 [00:00<00:00,  1.82it/s]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:00<00:00,  2.67it/s]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:00<00:00,  2.50it/s]
+
+INFO 06-28 18:17:44 [default_loader.py:397] Loading weights took 0.82 seconds
+INFO 06-28 18:17:46 [gpu_model_runner.py:5187] Model loading took 5.29 GiB memory and 2.734196 seconds
+INFO 06-28 18:17:52 [gpu_worker.py:480] Available KV cache memory: 4.04 GiB
+INFO 06-28 18:17:52 [kv_cache_utils.py:1744] GPU KV cache size: 75,552 tokens
+INFO 06-28 18:17:52 [kv_cache_utils.py:1745] Maximum concurrency for 4,096 tokens per request: 18.45x
+WARNING 06-28 18:17:52 [import_utils.py:408] Module vllm.third_party.deep_gemm was found but failed to import
+WARNING 06-28 18:17:52 [import_utils.py:408] Traceback (most recent call last):
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/utils/import_utils.py", line 406, in _has_module
+WARNING 06-28 18:17:52 [import_utils.py:408]     importlib.import_module(module_name)
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+WARNING 06-28 18:17:52 [import_utils.py:408]     return _bootstrap._gcd_import(name[level:], package, level)
+WARNING 06-28 18:17:52 [import_utils.py:408]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/__init__.py", line 123, in <module>
+WARNING 06-28 18:17:52 [import_utils.py:408]     _find_cuda_home()                           # CUDA home
+WARNING 06-28 18:17:52 [import_utils.py:408]     ^^^^^^^^^^^^^^^^^
+WARNING 06-28 18:17:52 [import_utils.py:408]   File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/__init__.py", line 117, in _find_cuda_home
+WARNING 06-28 18:17:52 [import_utils.py:408]     assert cuda_home is not None
+WARNING 06-28 18:17:52 [import_utils.py:408]            ^^^^^^^^^^^^^^^^^^^^^
+WARNING 06-28 18:17:52 [import_utils.py:408] AssertionError
+INFO 06-28 18:17:52 [jit_monitor.py:54] Kernel JIT monitor activated — Triton JIT compilations during inference will be logged as warnings.
+INFO 06-28 18:17:52 [core.py:313] init engine (profile, create kv cache, warmup model) took 6.28 s
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 69.97it/s]
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]WARNING 06-28 18:17:52 [jit_monitor.py:103] Triton kernel JIT compilation during inference: _compute_slot_mapping_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+Processed prompts: 100%|██████████| 1/1 [00:03<00:00,  3.15s/it, est. speed input: 276.40 toks/s, output: 40.67 toks/s]Processed prompts: 100%|██████████| 1/1 [00:03<00:00,  3.15s/it, est. speed input: 276.40 toks/s, output: 40.67 toks/s]Processed prompts: 100%|██████████| 1/1 [00:03<00:00,  3.15s/it, est. speed input: 276.40 toks/s, output: 40.67 toks/s]
+   B  agg tok/s  per-seq  vs B=1
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 344.33it/s]
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts: 100%|██████████| 1/1 [00:02<00:00,  2.63s/it, est. speed input: 331.35 toks/s, output: 48.75 toks/s]Processed prompts: 100%|██████████| 1/1 [00:02<00:00,  2.63s/it, est. speed input: 331.35 toks/s, output: 48.75 toks/s]Processed prompts: 100%|██████████| 1/1 [00:02<00:00,  2.63s/it, est. speed input: 331.35 toks/s, output: 48.75 toks/s]
+   1         49     48.7   1.00x
+Rendering prompts:   0%|          | 0/2 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 2/2 [00:00<00:00, 606.55it/s]
+Processed prompts:   0%|          | 0/2 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:  50%|█████     | 1/2 [00:02<00:02,  2.67s/it, est. speed input: 326.24 toks/s, output: 48.00 toks/s]Processed prompts: 100%|██████████| 2/2 [00:02<00:00,  2.67s/it, est. speed input: 652.42 toks/s, output: 95.99 toks/s]Processed prompts: 100%|██████████| 2/2 [00:02<00:00,  1.33s/it, est. speed input: 652.42 toks/s, output: 95.99 toks/s]
+   2         96     47.9   1.97x
+Rendering prompts:   0%|          | 0/4 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 4/4 [00:00<00:00, 482.70it/s]
+Processed prompts:   0%|          | 0/4 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:  25%|██▌       | 1/4 [00:02<00:08,  2.73s/it, est. speed input: 318.45 toks/s, output: 46.85 toks/s]Processed prompts: 100%|██████████| 4/4 [00:02<00:00,  2.73s/it, est. speed input: 1273.72 toks/s, output: 187.40 toks/s]Processed prompts: 100%|██████████| 4/4 [00:02<00:00,  1.46it/s, est. speed input: 1273.72 toks/s, output: 187.40 toks/s]
+   4        187     46.7   3.84x
+Rendering prompts:   0%|          | 0/8 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 8/8 [00:00<00:00, 701.76it/s]
+Processed prompts:   0%|          | 0/8 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:  12%|█▎        | 1/8 [00:02<00:20,  2.88s/it, est. speed input: 301.60 toks/s, output: 44.37 toks/s]Processed prompts: 100%|██████████| 8/8 [00:02<00:00,  2.88s/it, est. speed input: 2412.70 toks/s, output: 354.97 toks/s]Processed prompts: 100%|██████████| 8/8 [00:02<00:00,  2.77it/s, est. speed input: 2412.70 toks/s, output: 354.97 toks/s]
+   8        354     44.2   7.26x
+Rendering prompts:   0%|          | 0/16 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 16/16 [00:00<00:00, 741.65it/s]
+Processed prompts:   0%|          | 0/16 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:   6%|▋         | 1/16 [00:03<00:49,  3.33s/it, est. speed input: 261.04 toks/s, output: 38.41 toks/s]Processed prompts: 100%|██████████| 16/16 [00:03<00:00,  3.33s/it, est. speed input: 4176.37 toks/s, output: 614.45 toks/s]Processed prompts: 100%|██████████| 16/16 [00:03<00:00,  4.80it/s, est. speed input: 4176.37 toks/s, output: 614.45 toks/s]
+  16        610     38.2  12.54x
+Rendering prompts:   0%|          | 0/32 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 32/32 [00:00<00:00, 735.44it/s]
+Processed prompts:   0%|          | 0/32 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:   3%|▎         | 1/32 [00:04<02:19,  4.49s/it, est. speed input: 193.56 toks/s, output: 28.48 toks/s]Processed prompts: 100%|██████████| 32/32 [00:04<00:00,  4.49s/it, est. speed input: 6193.40 toks/s, output: 911.21 toks/s]Processed prompts: 100%|██████████| 32/32 [00:04<00:00,  7.12it/s, est. speed input: 6193.40 toks/s, output: 911.21 toks/s]
+  32        902     28.2  18.54x
+Rendering prompts:   0%|          | 0/64 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 64/64 [00:00<00:00, 755.24it/s]
+Processed prompts:   0%|          | 0/64 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:   2%|▏         | 1/64 [00:07<07:51,  7.49s/it, est. speed input: 116.19 toks/s, output: 17.09 toks/s]Processed prompts: 100%|██████████| 64/64 [00:07<00:00,  7.49s/it, est. speed input: 7435.80 toks/s, output: 1094.00 toks/s]Processed prompts: 100%|██████████| 64/64 [00:07<00:00,  8.55it/s, est. speed input: 7435.80 toks/s, output: 1094.00 toks/s]
+  64       1082     16.9  22.22x
+
+free-batching => 'vs B=1' rises ~linearly with B (the GPU's efficient regime the architecture needs)
+[rank0]:[W628 18:18:22.805277279 ProcessGroupNCCL.cpp:1575] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+BT_DONE

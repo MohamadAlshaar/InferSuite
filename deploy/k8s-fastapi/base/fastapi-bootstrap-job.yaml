@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: llm-service-kernel-bootstrap
+  namespace: llm-service
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 900
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: llm-service-kernel-bootstrap
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: bootstrap
+          image: llm-service-kernel:fastapi-selfcontained
+          imagePullPolicy: Never
+          command: ["python", "-m", "src.service.bootstrap_init"]
+          envFrom:
+            - configMapRef:
+                name: llm-service-kernel-config-fullstack
+            - secretRef:
+                name: llm-service-kernel-secret
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          volumeMounts:
+            - name: rag-store-tenants
+              mountPath: /rag_store_tenants
+      volumes:
+        - name: rag-store-tenants
+          persistentVolumeClaim:
+            claimName: rag-store-tenants-pvc

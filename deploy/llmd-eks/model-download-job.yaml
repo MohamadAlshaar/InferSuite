@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: llmd-model-download
+  namespace: llm-d
+spec:
+  backoffLimit: 1
+  activeDeadlineSeconds: 7200
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: llmd-model-download
+    spec:
+      restartPolicy: OnFailure
+      nodeSelector:
+        node.kubernetes.io/instance-type: c7i.metal-24xl
+      containers:
+        - name: downloader
+          image: python:3.11-slim
+          command:
+            - /bin/sh
+            - -c
+            - |
+              pip install -q huggingface_hub
+              python - <<'EOF'
+              from huggingface_hub import snapshot_download
+              import os
+              repo = os.environ["MODEL_HF_REPO"]
+              print(f"Downloading {repo} to /model-cache ...", flush=True)
+              snapshot_download(repo_id=repo, local_dir="/model-cache",
+                                ignore_patterns=["*.gguf", "*.ggml", "*.bin"])
+              print("Download complete.", flush=True)
+              EOF
+              chmod -R a+rX /model-cache
+              echo "Permissions fixed."
+          env:
+            - name: MODEL_HF_REPO
+              value: "Qwen/Qwen2.5-32B-Instruct"
+            - name: HF_HUB_DISABLE_PROGRESS_BARS
+              value: "1"
+          resources:
+            requests:
+              cpu: "4"
+              memory: "8Gi"
+            limits:
+              cpu: "8"
+              memory: "16Gi"
+          volumeMounts:
+            - name: model-cache
+              mountPath: /model-cache
+      volumes:
+        - name: model-cache
+          persistentVolumeClaim:
+            claimName: llmd-model-pvc

@@ -1,0 +1,16 @@
+[block] waiting for vLLM /health ...
+[block] ready
+[block] cudasync lines:
+[serve] CUDA_BLOCKING_SYNC=1  (0=spin / 1=block)  LD_PRELOAD=/home/mohamad/llm-service-kernel-latest/agentic/inference/cudasync/evblock.so:
+[cudasync pid=3688402] cudaSetDeviceFlags(BlockingSync) via libcudart.so.13 rc=0
+[cudasync pid=3688668] cudaSetDeviceFlags(BlockingSync) via libcudart.so.13 rc=0
+[cudasync pid=3688669] cudaSetDeviceFlags(BlockingSync) via libcudart.so.13 rc=0
+[block] engine pids: 3688402,3688669
+=== [block] perf stat engine, 10s during single-stream decode ===
+          3,031.33 msec task-clock                       #    0.303 CPUs utilized             
+     4,571,276,448      cycles                           #    1.508 GHz                       
+     2,556,280,863      instructions                     #    0.56  insn per cycle            
+[block] GPU util during: 100 %
+[block] generated 1600 tokens in 32.9s  (tok/s = 48.6)
+validate_sync.sh: line 14: 3688402 Killed                  nohup bash serve_sync.sh > "runs/sync/serve_$MODE.log" 2>&1
+[block] done

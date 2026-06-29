@@ -1,0 +1,18 @@
+[block] waiting for vLLM ...
+[serve] CUDA_BLOCKING_SYNC=1  (0=spin / 1=block)  LD_PRELOAD=/home/mohamad/llm-service-kernel-latest/agentic/inference/cudasync/evblock.so:
+[evblock] forcing BLOCKING_SYNC on CUDA events (via cudaEventCreateWithFlags)
+[block] engine pids: 3697152,3697426
+[block] running SWE-agent (bounded 420s) ...
+=== [block] RESULT ===
+[block] agent wall = 420s | GPU-active (inference) ~= 387s
+         99,862.52 msec task-clock                       #    0.238 CPUs utilized             
+   137,638,622,870      cycles                           #    1.378 GHz                       
+    80,898,153,798      instructions                     #    0.59  insn per cycle            
+[block] engine core-seconds = 99.9s ; core-seconds per inference-second = 0.26
+[block] agent log tail:
+                                                                                
+🤠 INFO     ========================= STEP 16 =========================         
+🤖 DEBUG    n_cache_control: 2                                                  
+🔧 DEBUG    Choosing API key 0 for thread MainThread (idx 0)                    
+run_swe_sync.sh: line 15: 3697152 Killed                  nohup bash serve_sync.sh > "runs/sync/serve_swe_$MODE.log" 2>&1
+[block] done

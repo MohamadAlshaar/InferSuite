@@ -1,0 +1,57 @@
+services:
+  service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTPS_PROXY}
+        NO_PROXY: ${NO_PROXY}
+
+    image: llm-service-kernel-service:local
+    container_name: llm-service-kernel-service
+    env_file:
+      - .env
+    environment:
+      PYTHONPATH: /app
+    ports:
+      - "${SERVICE_PORT:-8080}:8080"
+    volumes:
+      - ./state:/app/state
+      # MiniLM no longer required — BGE handles both RAG and semantic cache
+      # - ../all-MiniLM-L6-v2:/assets/all-MiniLM-L6-v2:ro
+      - ../rag_store:/assets/rag_store:ro
+      - ../docs_RAG:/assets/docs_RAG:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  vllm:
+    profiles: ["vllm"]
+    image: ${VLLM_IMAGE:-vllm/vllm-openai:latest}
+    container_name: llm-service-kernel-vllm
+    ports:
+      - "${VLLM_PORT:-8001}:8001"
+    volumes:
+      - ../Qwen2.5-0.5B-Instruct:/models/Qwen2.5-0.5B-Instruct:ro
+    ipc: host
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8001"
+      - --model
+      - /models/Qwen2.5-0.5B-Instruct
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8001/v1/models"]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+      start_period: 40s

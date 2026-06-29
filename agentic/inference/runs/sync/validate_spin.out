@@ -1,0 +1,15 @@
+[spin] waiting for vLLM /health ...
+[spin] ready
+[spin] cudasync lines:
+[cudasync pid=3684871] spin mode (default cudaDeviceScheduleAuto)
+[cudasync pid=3685132] spin mode (default cudaDeviceScheduleAuto)
+[cudasync pid=3685133] spin mode (default cudaDeviceScheduleAuto)
+[spin] engine pids: 3684871,3685133
+=== [spin] perf stat engine, 10s during single-stream decode ===
+         10,433.31 msec task-clock                       #    1.043 CPUs utilized             
+    38,476,959,805      cycles                           #    3.688 GHz                       
+   130,683,983,263      instructions                     #    3.40  insn per cycle            
+[spin] GPU util during: 100 %
+[spin] generated 1600 tokens in 32.8s  (tok/s = 48.8)
+validate_sync.sh: line 14: 3684871 Killed                  nohup bash serve_sync.sh > "runs/sync/serve_$MODE.log" 2>&1
+[spin] done

@@ -1,0 +1,92 @@
+# Nsight Systems + Nsight Compute profiling pod — runs on the GPU node alongside vLLM.
+#
+# Usage:
+#   kubectl apply -f deploy/llmd-eks/nsys-profiler-pod.yaml
+#   kubectl exec -it nsys-profiler -n llm-d -- bash
+#
+# Inside the pod (wait ~3 min for apt install to finish — check: kubectl logs nsys-profiler -n llm-d):
+#
+#   # Find vLLM host PID (visible because of hostPID: true)
+#   VLLM_PID=$(pgrep -f "python.*vllm" | head -1)
+#
+#   # Profile vLLM for 30 seconds during a benchmark run
+#   nsys profile -p ${VLLM_PID} -o /profiles/vllm_trace \
+#       --trace=cuda,nvtx,osrt,python-gil --sample=cpu \
+#       --cpuctxsw=true --gpu-metrics-device=all \
+#       --duration=30
+#
+#   # Get kernel statistics from a saved trace
+#   nsys stats /profiles/vllm_trace.nsys-rep
+#
+#   # ncu: kernel-level microarchitecture (run AFTER nsys identifies target kernel)
+#   # WARNING: 10-100x overhead — vLLM is not doing real inference during capture
+#   ncu --target-processes all \
+#       --kernel-name "regex:flash_fwd|gemv2T" \
+#       --launch-count 5 --set roofline \
+#       -o /profiles/ncu_out \
+#       -- python -m vllm.entrypoints.openai.api_server ...  # see vLLM pod CMD
+#
+#   # Copy profiles out
+#   kubectl cp llm-d/nsys-profiler:/profiles/vllm_trace.nsys-rep ./vllm_trace.nsys-rep
+#   kubectl cp llm-d/nsys-profiler:/profiles/ncu_out.ncu-rep    ./ncu_out.ncu-rep
+#
+# Notes:
+#   - hostPID: true lets nsys/ncu see vLLM's PID from outside the container
+#   - privileged: true is required for CUPTI GPU profiling access
+#   - No nvidia.com/gpu resource claim — scheduling is via node label only.
+#     This avoids conflicting with vLLM's GPU allocation on the same node.
+#     CUPTI still works because the pod is privileged and shares the host device tree.
+#   - Delete the pod when done: kubectl delete pod nsys-profiler -n llm-d
+# =============================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nsys-profiler
+  namespace: llm-d
+spec:
+  hostPID: true
+  restartPolicy: Never
+
+  nodeSelector:
+    node.kubernetes.io/instance-type: p5.4xlarge
+
+  tolerations:
+  - key: nvidia.com/gpu
+    operator: Exists
+    effect: NoSchedule
+
+  containers:
+  - name: nsys-profiler
+    image: nvcr.io/nvidia/cuda:12.6.2-base-ubuntu22.04
+    command: ["/bin/bash", "-c", "--"]
+    args: ["apt-get update -qq && apt-get install -y -qq wget gnupg2 && \
+            wget -qO /tmp/cuda-keyring.deb \
+              https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
+            dpkg -i /tmp/cuda-keyring.deb && \
+            apt-get update -qq && \
+            apt-get install -y -qq cuda-nsight-systems-12-6 cuda-nsight-compute-12-6 && \
+            ln -sf /opt/nvidia/nsight-systems/*/bin/nsys /usr/local/bin/nsys && \
+            ln -sf /opt/nvidia/nsight-compute/*/ncu /usr/local/bin/ncu && \
+            mkdir -p /profiles && \
+            echo 'nsys + ncu ready' && \
+            sleep infinity"]
+
+    securityContext:
+      privileged: true
+
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"
+
+    volumeMounts:
+    - name: profiles
+      mountPath: /profiles
+
+  volumes:
+  - name: profiles
+    emptyDir:
+      sizeLimit: 20Gi

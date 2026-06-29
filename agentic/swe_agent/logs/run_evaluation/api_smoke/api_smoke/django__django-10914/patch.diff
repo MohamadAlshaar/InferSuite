@@ -1,0 +1,45 @@
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index acee9887d2..bdeec80610 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -304,7 +304,7 @@ FILE_UPLOAD_TEMP_DIR = None
+ 
+ # The numeric mode to set newly-uploaded files to. The value should be a mode
+ # you'd pass directly to os.chmod; see https://docs.python.org/library/os.html#files-and-directories.
+-FILE_UPLOAD_PERMISSIONS = None
++FILE_UPLOAD_PERMISSIONS = 0o644
+ 
+ # The numeric mode to assign to newly-created directories, when uploading files.
+ # The value should be a mode as you'd pass to os.chmod;
+diff --git a/docs/howto/deployment/checklist.txt b/docs/howto/deployment/checklist.txt
+index c31bcac62a..6841831b47 100644
+--- a/docs/howto/deployment/checklist.txt
++++ b/docs/howto/deployment/checklist.txt
+@@ -157,12 +157,8 @@ Now is a good time to check your backup strategy for these files.
+ :setting:`FILE_UPLOAD_PERMISSIONS`
+ ----------------------------------
+ 
+-With the default file upload settings, files smaller than
+-:setting:`FILE_UPLOAD_MAX_MEMORY_SIZE` may be stored with a different mode
+-than larger files as described in :setting:`FILE_UPLOAD_PERMISSIONS`.
+-
+-Setting :setting:`FILE_UPLOAD_PERMISSIONS` ensures all files are uploaded with
+-the same permissions.
++The default value of :setting:`FILE_UPLOAD_PERMISSIONS` ensures all files are
++uploaded with the same permissions regardless of their size.
+ 
+ HTTPS
+ =====
+diff --git a/docs/ref/settings.txt b/docs/ref/settings.txt
+index 46e99af993..eba5bd2e31 100644
+--- a/docs/ref/settings.txt
++++ b/docs/ref/settings.txt
+@@ -1484,7 +1484,7 @@ This value mirrors the functionality and caveats of the
+ ``FILE_UPLOAD_PERMISSIONS``
+ ---------------------------
+ 
+-Default: ``None``
++Default: ``0o644``
+ 
+ The numeric mode (i.e. ``0o644``) to set newly uploaded files to. For
+ more information about what these modes mean, see the documentation for

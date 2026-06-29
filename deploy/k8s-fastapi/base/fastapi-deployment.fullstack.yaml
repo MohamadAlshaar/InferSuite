@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-service-kernel
+  namespace: llm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llm-service-kernel
+  template:
+    metadata:
+      labels:
+        app: llm-service-kernel
+    spec:
+      containers:
+        - name: llm-service-kernel
+          image: llm-service-kernel:fastapi-selfcontained
+          imagePullPolicy: Never
+          securityContext:
+            runAsUser: 0
+            privileged: true
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: llm-service-kernel-config-fullstack
+            - secretRef:
+                name: llm-service-kernel-secret
+          volumeMounts:
+            - name: rag-store-tenants
+              mountPath: /rag_store_tenants
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: rag-store-tenants
+          persistentVolumeClaim:
+            claimName: rag-store-tenants-pvc

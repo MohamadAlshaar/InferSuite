@@ -1,0 +1,11 @@
+provider:
+  name: istio
+
+inferencePool:
+  apiVersion: inference.networking.k8s.io/v1
+  targetPortNumber: 8000
+  modelServerType: vllm
+  modelServers:
+    matchLabels:
+      llm-d.ai/inference-serving: "true"
+      llm-d.ai/role: decode

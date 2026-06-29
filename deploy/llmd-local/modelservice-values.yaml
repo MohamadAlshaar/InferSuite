@@ -1,0 +1,121 @@
+multinode: false
+
+modelArtifacts:
+  uri: "pvc://qwen-model-pvc"
+  name: "qwen2.5-0.5b"
+
+routing:
+  servicePort: 8000
+  proxy:
+    image: "ghcr.io/llm-d/llm-d-routing-sidecar:v0.7.1"
+    imagePullPolicy: IfNotPresent
+    targetPort: 8200
+    debugLevel: 5
+    secure: false
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: infra-local-inference-gateway
+        namespace: llm-d-local
+
+decode:
+  create: true
+  replicas: 1
+  parallelism:
+    tensor: 1
+    data: 1
+    dataLocal: 1
+    workers: 1
+  containers:
+    - name: "vllm"
+      image: "ghcr.io/llm-d/llm-d-cuda:v0.6.0"
+      imagePullPolicy: IfNotPresent
+      modelCommand: custom
+      command:
+        - "/bin/sh"
+        - "-c"
+      args:
+        - |
+          set -euo pipefail
+
+          append_path_if_exists() {
+            var_name="$1"
+            path_value="$2"
+
+            [ -n "${path_value}" ] || return 0
+            [ -d "${path_value}" ] || return 0
+
+            current="$(eval "printf '%s' \"\${$var_name:-}\"")"
+            if [ -z "${current}" ]; then
+              export "${var_name}=${path_value}"
+            else
+              case ":${current}:" in
+                *":${path_value}:"*) ;;
+                *) export "${var_name}=${current}:${path_value}" ;;
+              esac
+            fi
+          }
+
+          append_path_if_exists LD_LIBRARY_PATH /usr/lib/x86_64-linux-gnu
+          append_path_if_exists LD_LIBRARY_PATH /usr/local/cuda/lib64
+          append_path_if_exists LD_LIBRARY_PATH /usr/local/cuda/compat
+          append_path_if_exists LD_LIBRARY_PATH /usr/local/cuda-12.9/compat
+          append_path_if_exists LD_LIBRARY_PATH /usr/local/nvidia/lib
+          append_path_if_exists LD_LIBRARY_PATH /usr/local/nvidia/lib64
+          append_path_if_exists LD_LIBRARY_PATH /opt/nvshmem-v3.5.19-1/lib
+
+          append_path_if_exists LIBRARY_PATH /usr/lib/x86_64-linux-gnu
+          append_path_if_exists LIBRARY_PATH /usr/local/cuda/lib64
+          append_path_if_exists LIBRARY_PATH /usr/local/cuda/compat
+          append_path_if_exists LIBRARY_PATH /usr/local/cuda-12.9/compat
+          append_path_if_exists LIBRARY_PATH /usr/local/nvidia/lib
+          append_path_if_exists LIBRARY_PATH /usr/local/nvidia/lib64
+          append_path_if_exists LIBRARY_PATH /opt/nvshmem-v3.5.19-1/lib
+
+          echo "[decode-startup] LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}" >&2
+          echo "[decode-startup] LIBRARY_PATH=${LIBRARY_PATH:-}" >&2
+
+          exec vllm serve /model-cache \
+            --host 0.0.0.0 \
+            --port 8200 \
+            --served-model-name qwen2.5-0.5b \
+            --max-model-len 2048 \
+            --gpu-memory-utilization 0.85 \
+            --enforce-eager
+      env:
+        - name: VLLM_LOGGING_LEVEL
+          value: "INFO"
+        - name: HF_HUB_OFFLINE
+          value: "1"
+        - name: TRANSFORMERS_OFFLINE
+          value: "1"
+      ports:
+        - containerPort: 8200
+          name: metrics
+          protocol: TCP
+      resources:
+        limits:
+          nvidia.com/gpu: "1"
+          cpu: "8"
+          memory: 20Gi
+        requests:
+          nvidia.com/gpu: "1"
+          cpu: "4"
+          memory: 12Gi
+      mountModelVolume: true
+      volumeMounts:
+        - name: metrics-volume
+          mountPath: /.config
+        - name: torch-compile-cache
+          mountPath: /.cache
+  volumes:
+    - name: metrics-volume
+      emptyDir: {}
+    - name: torch-compile-cache
+      emptyDir: {}
+
+prefill:
+  create: false
+
+accelerator:
+  type: "nvidia"

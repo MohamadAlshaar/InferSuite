@@ -1,0 +1,31 @@
+# Track only OUR glue: configs, run/plot/parse scripts, READMEs, figures,
+# and the SMALL cited run-results. Everything ignored below is re-creatable /
+# re-clonable and kept locally only (NOT pushed to GitHub).
+
+# cloned upstream agent source (re-clone on demand)
+*/external/
+openclaw/tools/
+# python virtualenvs (re-install)
+*/.venv/
+*/.venv_*/
+*/venv/
+# datasets / large inputs
+*/data/
+*/datasets/
+*/results/
+*/trajectories/
+*/*.log
+
+# large / scratch run outputs  — but KEEP the small CITED results:
+#   inference/runs/sync (entropy-gating), openclaw/runs (passes_*, perf_cat_prod),
+#   bigcodebench/runs (agentic*)  -> these are intentionally NOT ignored.
+swe_agent/runs/
+inference/runs/phase1/
+inference/runs/ncu/
+
+**/__pycache__/
+
+# secrets (NEVER commit — contain live API keys)
+.env
+*.env
+swe_agent/.env

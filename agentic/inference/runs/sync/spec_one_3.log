@@ -1,0 +1,32 @@
+INFO 06-28 17:07:57 [api_utils.py:273] non-default args: {'max_model_len': 10000, 'gpu_memory_utilization': 0.9, 'enforce_eager': True, 'speculative_config': {'model': 'Qwen/Qwen2.5-0.5B-Instruct', 'num_speculative_tokens': 3}, 'model': 'Qwen/Qwen2.5-7B-Instruct-AWQ'}
+WARNING 06-28 17:07:57 [arg_utils.py:1557] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+INFO 06-28 17:07:58 [model.py:611] Resolved architecture: Qwen2ForCausalLM
+INFO 06-28 17:07:58 [model.py:1745] Using max model len 10000
+INFO 06-28 17:07:58 [awq_marlin.py:269] The model is convertible to awq_marlin during runtime. Using awq_marlin kernel.
+INFO 06-28 17:07:59 [model.py:611] Resolved architecture: Qwen2ForCausalLM
+WARNING 06-28 17:07:59 [model.py:2083] Casting torch.bfloat16 to torch.float16.
+INFO 06-28 17:07:59 [model.py:1745] Using max model len 32768
+INFO 06-28 17:07:59 [speculative.py:885] Overriding draft model max model len from 32768 to 10000
+Traceback (most recent call last):
+  File "/home/mohamad/llm-service-kernel-latest/agentic/inference/measure_spec.py", line 20, in <module>
+    llm = LLM(**kw)
+          ^^^^^^^^^
+  File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/entrypoints/llm.py", line 349, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py", line 162, in from_engine_args
+    vllm_config = engine_args.create_engine_config(usage_context)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/engine/arg_utils.py", line 2012, in create_engine_config
+    speculative_config = self.create_speculative_config(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/vllm/engine/arg_utils.py", line 1700, in create_speculative_config
+    return SpeculativeConfig(**self.speculative_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mohamad/llm-service-kernel-latest/agentic/bigcodebench/.venv/lib/python3.12/site-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+    s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for SpeculativeConfig
+  Value error, Target and draft model should have the same vocabulary size. Target model vocab_size=152064. Draft model vocab_size=151936. Using models with different tokenizers can cause out-of-bounds errors during speculative decoding. [type=value_error, input_value=ArgsKwargs((), {'model': ..., _api_process_rank=0)}), input_type=ArgsKwargs]
+    For further information visit https://errors.pydantic.dev/2.13/v/value_error
+SPEC_ONE_DONE exit=1

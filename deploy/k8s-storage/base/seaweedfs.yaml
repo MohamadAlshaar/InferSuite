@@ -1,0 +1,280 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seaweedfs-s3-config
+  namespace: llm-service
+data:
+  s3.json: |
+    {
+      "identities": [
+        {
+          "name": "llm-benchmark-admin",
+          "credentials": [
+            {
+              "accessKey": "llmbenchadmin",
+              "secretKey": "llmbenchsecretkey123"
+            }
+          ],
+          "actions": [
+            "Read",
+            "Write",
+            "List",
+            "Tagging",
+            "Admin"
+          ]
+        }
+      ]
+    }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seaweed-master-pvc
+  namespace: llm-service
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seaweed-volume-pvc
+  namespace: llm-service
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seaweed-filer-pvc
+  namespace: llm-service
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seaweed-master
+  namespace: llm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seaweed-master
+  template:
+    metadata:
+      labels:
+        app: seaweed-master
+    spec:
+      containers:
+        - name: master
+          image: chrislusf/seaweedfs:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - master
+            - -ip=seaweed-master
+            - -ip.bind=0.0.0.0
+            - -mdir=/data
+            - -port=9333
+            - -volumePreallocate=false
+          ports:
+            - containerPort: 9333
+            - containerPort: 19333
+          volumeMounts:
+            - name: master-data
+              mountPath: /data
+      volumes:
+        - name: master-data
+          persistentVolumeClaim:
+            claimName: seaweed-master-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweed-master
+  namespace: llm-service
+spec:
+  selector:
+    app: seaweed-master
+  ports:
+    - name: master
+      port: 9333
+      targetPort: 9333
+    - name: master-grpc
+      port: 19333
+      targetPort: 19333
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seaweed-volume
+  namespace: llm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seaweed-volume
+  template:
+    metadata:
+      labels:
+        app: seaweed-volume
+    spec:
+      containers:
+        - name: volume
+          image: chrislusf/seaweedfs:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - volume
+            - -mserver=seaweed-master:9333
+            - -ip=seaweed-volume
+            - -ip.bind=0.0.0.0
+            - -dir=/data
+            - -port=8080
+            - -publicUrl=seaweed-volume:8080
+          ports:
+            - containerPort: 8080
+            - containerPort: 18080
+          volumeMounts:
+            - name: volume-data
+              mountPath: /data
+      volumes:
+        - name: volume-data
+          persistentVolumeClaim:
+            claimName: seaweed-volume-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweed-volume
+  namespace: llm-service
+spec:
+  selector:
+    app: seaweed-volume
+  ports:
+    - name: volume
+      port: 8080
+      targetPort: 8080
+    - name: volume-grpc
+      port: 18080
+      targetPort: 18080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seaweed-filer
+  namespace: llm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seaweed-filer
+  template:
+    metadata:
+      labels:
+        app: seaweed-filer
+    spec:
+      containers:
+        - name: filer
+          image: chrislusf/seaweedfs:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - filer
+            - -master=seaweed-master:9333
+            - -ip=seaweed-filer
+            - -ip.bind=0.0.0.0
+            - -port=8888
+            - -defaultReplicaPlacement=000
+          ports:
+            - containerPort: 8888
+            - containerPort: 18888
+          volumeMounts:
+            - name: filer-data
+              mountPath: /data
+      volumes:
+        - name: filer-data
+          persistentVolumeClaim:
+            claimName: seaweed-filer-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweed-filer
+  namespace: llm-service
+spec:
+  selector:
+    app: seaweed-filer
+  ports:
+    - name: filer
+      port: 8888
+      targetPort: 8888
+    - name: filer-grpc
+      port: 18888
+      targetPort: 18888
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seaweed-s3
+  namespace: llm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seaweed-s3
+  template:
+    metadata:
+      labels:
+        app: seaweed-s3
+    spec:
+      containers:
+        - name: s3
+          image: chrislusf/seaweedfs:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - s3
+            - -filer=seaweed-filer:8888
+            - -ip.bind=0.0.0.0
+            - -port=8333
+            - -config=/etc/seaweedfs/s3.json
+          ports:
+            - containerPort: 8333
+          volumeMounts:
+            - name: s3-config
+              mountPath: /etc/seaweedfs/s3.json
+              subPath: s3.json
+              readOnly: true
+      volumes:
+        - name: s3-config
+          configMap:
+            name: seaweedfs-s3-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweed-s3
+  namespace: llm-service
+spec:
+  selector:
+    app: seaweed-s3
+  ports:
+    - name: s3
+      port: 8333
+      targetPort: 8333
+  type: ClusterIP

@@ -1,0 +1,62 @@
+# eksctl ClusterConfig — standard EKS (no Auto Mode)
+# Creates eu-west-2 cluster with two managed node groups:
+#   compute: c7i.metal-24xl pinned to eu-west-2b (where data EBS volumes live)
+#   gpu:     p5.4xlarge pinned to eu-west-2b (same AZ as model PVC, starts at 0)
+#
+# Create:  eksctl create cluster -f deploy/eks-cluster-config.yaml
+# Delete:  eksctl delete cluster --name e2e-cluster-eks --region eu-west-2 --wait
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: e2e-cluster-eks
+  region: eu-west-2
+  version: "1.32"
+
+autoModeConfig:
+  enabled: false   # use standard managed node groups, not Auto Mode
+
+iam:
+  withOIDC: true   # required for IRSA (EBS CSI driver service account)
+
+addons:
+- name: vpc-cni
+  resolveConflicts: overwrite
+- name: kube-proxy
+  resolveConflicts: overwrite
+- name: coredns
+  resolveConflicts: overwrite
+- name: aws-ebs-csi-driver
+  wellKnownPolicies:
+    ebsCSIController: true   # creates IRSA role + attaches AmazonEBSCSIDriverPolicy
+
+managedNodeGroups:
+# ── CPU/storage node ──────────────────────────────────────────────────────────
+- name: compute
+  instanceType: c7i.metal-24xl
+  availabilityZones: ["eu-west-2b"]   # pinned: all data EBS volumes are in eu-west-2b
+  minSize: 0
+  maxSize: 2
+  desiredCapacity: 0   # scale to 1 manually after cluster is up (avoids blocking creation)
+  volumeSize: 600      # SWE-bench per-instance Docker images are GB each; 100 was too small
+  amiFamily: AmazonLinux2023
+  iam:
+    withAddonPolicies:
+      ebs: true   # ec2:AttachVolume / DetachVolume on node IAM role
+
+# ── GPU node ──────────────────────────────────────────────────────────────────
+- name: gpu-h100
+  instanceType: p5.4xlarge   # 1× H100 80GB — fits 14B TP=1 (single-process → ncu works); 16 vCPU = P-quota
+  availabilityZones: ["eu-west-2b"]   # co-locate with metal node + data; model PVC in 2b
+  minSize: 0
+  maxSize: 1
+  desiredCapacity: 1   # provision on create
+  volumeSize: 200
+  amiFamily: AmazonLinux2   # eksctl auto-selects EKS-optimized GPU AMI (driver 570 supports H100)
+  taints:
+  - key: nvidia.com/gpu
+    value: "true"
+    effect: NoSchedule
+  iam:
+    withAddonPolicies:
+      ebs: true

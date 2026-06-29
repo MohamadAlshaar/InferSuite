@@ -1,0 +1,18 @@
+# started on Sat Jun 27 15:42:54 2026
+
+
+ Performance counter stats for 'system wide':
+
+   146,191,979,527      cycles                           system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (81.38%)
+   129,622,710,683      instructions                     system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope #    0.89  insn per cycle              (90.34%)
+        25,144,041      fp_arith_inst_retired.scalar_single system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (90.84%)
+       201,767,751      fp_arith_inst_retired.scalar_double system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (88.78%)
+                 0      fp_arith_inst_retired.128b_packed_single system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (87.13%)
+            20,748      fp_arith_inst_retired.128b_packed_double system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (88.62%)
+                 0      fp_arith_inst_retired.256b_packed_single system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (88.89%)
+        42,686,911      fp_arith_inst_retired.256b_packed_double system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (91.13%)
+             1,176      fp_arith_inst_retired.512b_packed_single system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (92.37%)
+         2,756,567      fp_arith_inst_retired.512b_packed_double system.slice/docker-09878b91688b193cc52c4d93138b18b216e2a96cb46ce48cb385e2a758bf67d4.scope                                        (90.87%)
+
+     300.389280515 seconds time elapsed
+

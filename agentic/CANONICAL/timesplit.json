@@ -1,0 +1,14 @@
+{
+  "_provenance": "Agent-loop wall-clock split into LLM-inference time vs local tool-execution time. tool_s sources: SWE-bench = summed trajectory step execution_time; BigCodeBench = summed per-task exec_times; OpenClaw = container_timeline active-cycle seconds (cycles > 5% of one core). inference_s = wall_s - tool_s. calendar's timeline was overwritten by a later run, so its numbers are from the original 2026-06-26 run.",
+  "metric": "tool_pct = local CPU tool-execution share of wall-clock; inference_pct = 100 - tool_pct (time the agent waits on LLM generation, i.e. inference-GPU time)",
+  "workloads": [
+    {"task": "astropy",      "bench": "SWE-bench",     "wall_s": 414,  "tool_s": 31,  "tool_pct": 7.5},
+    {"task": "scikit-learn", "bench": "SWE-bench",     "wall_s": 330,  "tool_s": 146, "tool_pct": 44.3},
+    {"task": "sympy",        "bench": "SWE-bench",     "wall_s": 1724, "tool_s": 28,  "tool_pct": 1.7},
+    {"task": "code-gen",     "bench": "BigCodeBench",  "wall_s": 2357, "tool_s": 374, "tool_pct": 15.9},
+    {"task": "calendar",     "bench": "OpenClaw",      "wall_s": 324,  "tool_s": 23,  "tool_pct": 7.0},
+    {"task": "image-crop",   "bench": "OpenClaw",      "wall_s": 196,  "tool_s": 49,  "tool_pct": 25.0},
+    {"task": "web-digest",   "bench": "OpenClaw",      "wall_s": 1118, "tool_s": 94,  "tool_pct": 8.4},
+    {"task": "pdf-digest",   "bench": "OpenClaw",      "wall_s": 663,  "tool_s": 59,  "tool_pct": 8.9}
+  ]
+}

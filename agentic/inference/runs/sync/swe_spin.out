@@ -1,0 +1,18 @@
+[spin] waiting for vLLM ...
+[cudasync pid=3690746] spin mode (default cudaDeviceScheduleAuto)
+[cudasync pid=3691019] spin mode (default cudaDeviceScheduleAuto)
+[spin] engine pids: 3690746,3691019
+[spin] running SWE-agent (bounded 420s) ...
+=== [spin] RESULT ===
+[spin] agent wall = 420s | GPU-active (inference) ~= 395s
+        420,575.45 msec task-clock                       #    1.001 CPUs utilized             
+ 1,599,377,334,411      cycles                           #    3.803 GHz                       
+ 5,540,603,446,218      instructions                     #    3.46  insn per cycle            
+[spin] engine core-seconds = 420.6s ; core-seconds per inference-second = 1.06
+[spin] agent log tail:
+                                                                                
+🤠 INFO     ========================= STEP 17 =========================         
+🤖 DEBUG    n_cache_control: 2                                                  
+🔧 DEBUG    Choosing API key 0 for thread MainThread (idx 0)                    
+run_swe_sync.sh: line 15: 3690746 Killed                  nohup bash serve_sync.sh > "runs/sync/serve_swe_$MODE.log" 2>&1
+[spin] done
