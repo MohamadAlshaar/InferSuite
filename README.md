@@ -13,6 +13,9 @@ It contains three things, and they form one story:
 **The central goal** is to characterize what the CPU does **DURING inference** (the vLLM serving engine)
 versus **OUTSIDE inference** (RAG retrieval, semantic-cache lookup, and agentic tool execution), across
 every workload, on two axes simultaneously: **wall-clock time** and **CPU core-seconds**.
+The **GPU is measured in lockstep** — a full GPU top-down via **Nsight Compute** (a Speed-of-Light roofline plus
+*two* warp-scheduler TMAs: the native warp-state breakdown and an Intel-style Retiring/Frontend/Backend mapping)
+— so every workload is profiled on **both engines**, and the CPU's role is always read against what the GPU is doing.
 
 Hardware: a local box — **Intel Xeon w5-3425** (Sapphire Rapids, AMX/AVX-512) + **NVIDIA RTX A2000**
 (Ampere) — with cloud GPU runs (H100 / L40S) for the parts the local GPU can't measure.
