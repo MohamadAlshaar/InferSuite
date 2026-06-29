@@ -170,26 +170,26 @@ def disp(v, fmt): return f"{v/32*100:.0f}" if fmt == "simt" else (f"{v:.1f}" if 
 M = np.array([[uval(r, c, m) for m, _, _ in flat] for r, c, _ in ROWS])
 Mn = (M - M.min(0)) / (np.ptp(M, 0) + 1e-9)            # per-column min-max for colour
 fig, ax = plt.subplots(figsize=(13.0, 5.6))
-ax.imshow(Mn, cmap="cividis", aspect="auto", vmin=0, vmax=1)
+ax.imshow(Mn, cmap="YlGnBu", aspect="auto", vmin=0, vmax=1)
 ax.set_xticks(range(len(COLS))); ax.set_xticklabels(COLS, fontsize=9)
 ax.set_yticks(range(len(ROWS))); ax.set_yticklabels([r[2] for r in ROWS], fontsize=10.5)
 ax.tick_params(top=True, labeltop=True, bottom=False, labelbottom=False, length=0)
 for i in range(len(ROWS)):
     for j, (m, _, fmt) in enumerate(flat):
         ax.text(j, i, disp(M[i, j], fmt), ha="center", va="center", fontsize=9.5,
-                color="white" if Mn[i, j] < 0.55 else "#1a1a00", fontweight="bold")
+                color="black" if Mn[i, j] < 0.6 else "white", fontweight="bold")
 b = 0                                                   # group separators + group labels on top
 for gname, cols in GROUPS:
     n = len(cols)
     if b > 0: ax.axvline(b - 0.5, color="white", lw=3)
-    ax.text(b + (n - 1) / 2.0, -1.35, gname, ha="center", va="bottom", fontsize=9.3, fontweight="bold", color="#333")
+    ax.text(b + (n - 1) / 2.0, -0.82, gname, ha="center", va="bottom", fontsize=9.3, fontweight="bold", color="#333")
     b += n
 ax.axhline(2.5, color="white", lw=3)                   # prefill / decode blocks
 ax.set_ylim(len(ROWS) - 0.5, -1.45)
 for sp in ax.spines.values(): sp.set_visible(False)
 ax.set_title("Micro-architectural signature of the dominant GPU kernels", pad=52)
-fig.text(0.5, -0.02, "Hardware measures (not the warp-state top-down). Colour = per-column min–max (dark = low, "
-         "light = high vs the other kernels); numbers are true values. IPC max = 4/SM; Lanes = active threads/warp.",
+fig.text(0.5, -0.02, "Hardware measures (not the warp-state top-down). Colour = per-column min–max (light = low, "
+         "dark = high vs the other kernels); numbers are true values. IPC max = 4/SM; Lanes = active threads/warp.",
          ha="center", fontsize=8.2, style="italic", color="#666")
 fig.savefig(f"{HERE}/gpu_04_signature_heatmap.png"); plt.close(fig)
 

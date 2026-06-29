@@ -66,7 +66,7 @@ for i in range(len(rows)):
         ax.text(j, i, txt, ha="center", va="center", fontsize=8.5, fontweight="bold",
                 color="black" if norm[i][j] < 0.6 else "white")
 ax.set_title("Micro-architectural signature of the service CPU — work OUTSIDE inference\n"
-             "(run_20260609, all tiers)", fontsize=11)
+             "(aggregated across all token tiers)", fontsize=11)
 fig.text(0.5, -0.02, "Colour = per-metric min–max across pods (light = low, dark = high vs the other pods); "
          "numbers are true values.", ha="center", fontsize=8.2, style="italic", color="#666")
 plt.tight_layout()
