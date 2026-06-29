@@ -18,7 +18,7 @@ The **GPU is measured in lockstep** — a full GPU top-down via **Nsight Compute
 — so every workload is profiled on **both engines**, and the CPU's role is always read against what the GPU is doing.
 
 Hardware: a local box — **Intel Xeon w5-3425** (Sapphire Rapids, AMX/AVX-512) + **NVIDIA RTX A2000**
-(Ampere) — with cloud GPU runs (H100 / L40S) for the parts the local GPU can't measure.
+(Ampere).
 
 ---
 
@@ -180,13 +180,6 @@ host-level CPU counters, so each path can be attributed to GPU-generation vs. CP
 so generation cost is comparable across runs. Flags: `RAG_FORCE_SEAWEED_FETCH=1`, `HISTORY_ENABLED=0`,
 `GENERATION_API_MODE=chat`.
 
-**Harness:** `scripts/run_benchmark.sh` (orchestrator) → `query_runner.py` (sends requests, per-request
-metrics) → `generate_report.py` (HTML report) / `results_cli.py` (terminal summary). Stability sweep:
-`scripts/analyze_stability.py`.
-
-**Canonical results:** `benchmark_results/run_20260609_140052/` (the authoritative merged run) +
-`stability_report.html`. Service-level figures in `thesis_plots/`.
-
 ---
 
 # Part III — The Agentic Workloads
@@ -226,23 +219,13 @@ Agentic side adds AMAT/MPKI, arithmetic-intensity + CPU-roofline, AVX%/FMA-aware
 - Prefill profiling requires `enable_prefix_caching=False` + a distinct warmup, or "prefill" is a 1-token
   cache hit and inverts the conclusion.
 
-### Phantom-CPU
-During decode the vLLM engine host thread **busy-waits on `cuEventSynchronize` at IPC ~3.4 doing zero work**
-(it even reads as "retiring-bound"/healthy in TMA). An `LD_PRELOAD` shim (`agentic/inference/cudasync/`)
-forcing `cudaEventBlockingSync` makes it **sleep instead of spin**, recovering **~76% of the engine CPU**
-(420.6 → 99.9 core-seconds on a live SWE-agent run) at **no latency or throughput cost**.
-
-### Platform gotchas
-Local bare-metal Sapphire Rapids has a full PMU (`sudo perf`, `perf_event_paranoid=-1`); the **cloud GPU
-instance exposes no CPU PMU** (so vLLM-during-inference TMA is local-only). Kill stale root `perf -a` orphans before runs.
-
 ---
 
 ## Key findings
 
 - **The serial alternation.** The agent loop is GPU-busy/CPU-idle (decode) then CPU-busy/GPU-idle (tool) —
   the two engines rarely overlap.
-- **The phantom core** — a whole CPU core spins on GPU sync doing nothing; reclaimable for free (above).
+- **The phantom core** — a whole CPU core spins on GPU sync doing nothing; reclaimable for free.
 - **Where generation compute goes** (code-agent, token-weighted): **35% semantic reasoning / 34% boilerplate /
   28% delegated code / 3% exact-simulated** — exact work is already offloaded to tools.
 - **What the idle CPU *cannot* do** (measured negatives that bound the design space): co-compute the matmul
