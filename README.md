@@ -40,7 +40,7 @@ agentic/                The three agentic workloads + measurement harness
   swe_agent/              SWE-bench code-repair agent (file-I/O tool-exec)
   bigcodebench/           code-gen + execute loop (numeric / FP tool-exec)
   openclaw/               browser / general web agent
-  inference/              phantom-CPU experiment (cudasync/), entropy-UQ, GPU-TMA build
+  inference/              phantom-CPU experiment (cudasync/) + GPU-TMA build
   aws_agents/, cloud/     cloud-run results (GPU ncu data) + launch scripts
 ```
 
@@ -226,7 +226,7 @@ Agentic side adds AMAT/MPKI, arithmetic-intensity + CPU-roofline, AVX%/FMA-aware
 - Prefill profiling requires `enable_prefix_caching=False` + a distinct warmup, or "prefill" is a 1-token
   cache hit and inverts the conclusion.
 
-### Phantom-CPU (the signature finding)
+### Phantom-CPU
 During decode the vLLM engine host thread **busy-waits on `cuEventSynchronize` at IPC ~3.4 doing zero work**
 (it even reads as "retiring-bound"/healthy in TMA). An `LD_PRELOAD` shim (`agentic/inference/cudasync/`)
 forcing `cudaEventBlockingSync` makes it **sleep instead of spin**, recovering **~76% of the engine CPU**
@@ -248,8 +248,6 @@ instance exposes no CPU PMU** (so vLLM-during-inference TMA is local-only). Kill
 - **What the idle CPU *cannot* do** (measured negatives that bound the design space): co-compute the matmul
   (1.05×), run a draft model (37 < 45 tok/s), or fill the tool-window with prefill (causality). The CPU
   cannot be a second *compute* engine on commodity hardware.
-- **What it *can* do for free** — compute uncertainty (Shannon entropy) in the decode shadow at ~zero
-  marginal cost; the signal is informative (beats a random baseline) and can gate adaptive compute.
 
 ---
 
