@@ -49,7 +49,7 @@ def load(d, up):
     tma,td2,ca,fp,ml=g("tma"),g("td2"),g("cache"),g("fp"),g("mlp"); ch=M.cache_hits(ca)
     return dict(ipc=M.ipc(tma), l1=M.tma_l1(tma), l2=M.tma_l2(td2), avx=M.avx_pct(fp),
                 flop=M.flops(fp), mflop=M.flops(fp)/1e6, dram=M.dram_gb_cgroup(ca),
-                l1hit=ch["l1"], mpki=ch["mpki"], mlp=M.mlp(ml), ilp=M.ilp(ml),
+                l1hit=ch["l1"], l2hit=ch["l2"], l3hit=ch["l3"], mpki=ch["mpki"], mlp=M.mlp(ml), ilp=M.ilp(ml),
                 cyc=tma.get("cycles",1), l3miss=ca.get("mem_load_retired.l3_miss",0))
 TAG={"SWE-bench":"SB","BigCodeBench":"SBCB","OpenClaw":"OC"}
 def tagged(task,bench): return f"{task} ({TAG[bench]})"
@@ -103,12 +103,9 @@ bench_legend(ax, loc="upper left")
 fig.savefig(f"{OUT}/03_roofline.png"); plt.close(fig)
 
 # ================= 4. Microarchitecture signature heatmap =================
-metrics=[("IPC","ipc"),("Retiring %",None),("Front-end %",None),("Back-end %",None),
-         ("Vectorized %","avx"),("L1 hit %","l1hit"),("MLP","mlp"),("ILP","ilp")]
+metrics=[("IPC","ipc"),("L1 hit %","l1hit"),("L2 hit %","l2hit"),("L3 hit %","l3hit"),
+         ("MPKI","mpki"),("MLP","mlp"),("ILP","ilp"),("Vectorized %","avx")]
 def mval(w,key,name):
-    if name=="Retiring %": return w["l1"]["retiring"]
-    if name=="Front-end %": return w["l1"]["fe-bound"]
-    if name=="Back-end %": return w["l1"]["be-bound"]
     return w[key]
 Mtx=np.array([[mval(w,k,n) for n,k in metrics] for w in W],dtype=float)
 Norm=(Mtx-Mtx.min(0))/(np.ptp(Mtx,0)+1e-9)
