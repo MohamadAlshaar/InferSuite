@@ -52,13 +52,14 @@ COMPUTE, MEMORY, LAT = "#0072B2", "#D55E00", "#6a51a3"
 
 # ===================== Fig 1: Speed-of-Light bottleneck map =====================
 fig, ax = plt.subplots(figsize=(7.0, 6.4))
-ax.axhspan(60, 100, color=COMPUTE, alpha=0.05, zorder=0)
-ax.axvspan(60, 100, color=MEMORY, alpha=0.05, zorder=0)
-ax.add_patch(plt.Rectangle((0, 0), 50, 50, color=LAT, alpha=0.06, zorder=0))
+# bottleneck = whichever throughput is higher (split on the y=x diagonal); both low = latency/occupancy-bound
+ax.fill([0, 0, 100], [0, 100, 100], color=COMPUTE, alpha=0.06, zorder=0)        # above y=x  -> compute-bound
+ax.fill([0, 100, 100], [0, 0, 100], color=MEMORY, alpha=0.06, zorder=0)         # below y=x  -> memory-bound
+ax.add_patch(plt.Rectangle((0, 0), 50, 50, color=LAT, alpha=0.10, zorder=0.5))  # both < 50% -> latency-bound
 ax.plot([0, 100], [0, 100], ls="--", color="#bbbbbb", lw=1.0, zorder=1)
-ax.text(82, 92, "compute-bound", color=COMPUTE, fontsize=10.5, ha="center", style="italic")
-ax.text(92, 8, "memory-\nbound", color=MEMORY, fontsize=10.5, ha="center", va="center", style="italic")
-ax.text(11, 9, "latency-bound", color=LAT, fontsize=10.5, ha="left", va="center", style="italic")
+ax.text(6, 90, "compute-bound", color=COMPUTE, fontsize=10.5, ha="left", va="center", style="italic")
+ax.text(94, 12, "memory-bound", color=MEMORY, fontsize=10.5, ha="right", va="center", style="italic")
+ax.text(8, 6, "latency-bound", color=LAT, fontsize=10.5, ha="left", va="center", style="italic")
 LBLPOS = {"prefill": (49, 93), "decode": (86, 55), "prompts": (67, 78)}
 for key, lab, col in REG:
     x, y = R[key]["sol_memory_pct"], R[key]["sol_compute_pct"]
