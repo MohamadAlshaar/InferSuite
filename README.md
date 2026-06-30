@@ -54,6 +54,10 @@ agentic/                The three agentic workloads + measurement harness
 
 A production-style GenAI inference stack deployable on **any Kubernetes cluster** — a managed cloud cluster or a local **minikube** GPU machine.
 
+![InferSuite deployment architecture](docs/architecture.png)
+
+*The deployed stack: the service kernel runs semantic cache + RAG over Milvus (RAG/cache vectors), MongoDB (cache metadata/history), and SeaweedFS (RAG files); requests then go through the **llm-d** router to the **vLLM** engine pods (each with a routing sidecar) on the GPUs.*
+
 ```
 Client
   │
