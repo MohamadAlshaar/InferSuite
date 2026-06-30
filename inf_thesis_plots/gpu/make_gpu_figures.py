@@ -60,7 +60,7 @@ ax.plot([0, 100], [0, 100], ls="--", color="#bbbbbb", lw=1.0, zorder=1)
 ax.text(6, 90, "compute-bound", color=COMPUTE, fontsize=10.5, ha="left", va="center", style="italic")
 ax.text(94, 12, "memory-bound", color=MEMORY, fontsize=10.5, ha="right", va="center", style="italic")
 ax.text(8, 6, "latency-bound", color=LAT, fontsize=10.5, ha="left", va="center", style="italic")
-LBLPOS = {"prefill": (28, 33), "decode": (87, 66), "prompts": (62, 20)}
+LBLPOS = {"prefill": (16, 64), "decode": (80, 57), "prompts": (52, 58)}
 for key, lab, col in REG:
     x, y = R[key]["sol_memory_pct"], R[key]["sol_compute_pct"]
     ax.scatter(x, y, s=300, color=col, zorder=5, edgecolor="white", linewidth=2)
