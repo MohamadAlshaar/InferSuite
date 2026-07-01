@@ -228,7 +228,7 @@ ax.set_title("GPU top-down in Intel-style buckets — Retiring / Front-end / Bac
 ax.legend(loc="center left", bbox_to_anchor=(1.01, 0.5), fontsize=8.6); ax.grid(axis="x", visible=False)
 fig.text(0.5, -0.04, "Bad-speculation = N/A on GPU (no speculative execution): its analogs are SIMT divergence (spatial) "
          "and instruction replays (temporal) — both ≈ 0 here (lanes 100%).  Covered (latency-hidden) "
-         "is small because occupancy is low (16–18%), so stalls are uncovered → genuinely back-end-bound.",
+         "is small because occupancy is low (16–21%), so stalls are uncovered → genuinely back-end-bound.",
          ha="center", fontsize=8.1, style="italic", color="#666", wrap=True)
 fig.savefig(f"{HERE}/gpu_05_gpu_tma_intel.png"); plt.close(fig)
 

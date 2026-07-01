@@ -105,7 +105,7 @@ fig.savefig(f"{OUT}/03_roofline.png"); plt.close(fig)
 
 # ================= 4. Microarchitecture signature heatmap =================
 metrics=[("IPC","ipc"),("L1 hit %","l1hit"),("L2 hit %","l2hit"),("L3 hit %","l3hit"),
-         ("MPKI","mpki"),("AMAT (cyc)","amat"),("DRAM (GB)","dram"),
+         ("MPKI","mpki"),("AMAT (est.)","amat"),("DRAM (GB)","dram"),
          ("MLP","mlp"),("ILP","ilp"),("Vectorized %","avx")]
 def mval(w,key,name):
     return w[key]

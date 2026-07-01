@@ -37,7 +37,7 @@ prompts["by_kernel_class"] = {c: {"time_pct": W_PF * pf["by_kernel_class"].get(c
                               for c in allcls}
 prompts["lane_eff_pct"] = blend(pf["lane_eff_pct"], dec["lane_eff_pct"])
 prompts["uarch"] = {nm: blend(pf["uarch"][nm], dec["uarch"][nm]) for nm in pf["uarch"]}
-R = {"prefill": pf, "decode": dec, "prompts": prompts}
+R = {"prefill": pf, "decode": dec, "prompts": G["normal"]}   # measured agent turn, not a blend
 
 plt.rcParams.update({
     "font.family": "serif", "font.serif": ["DejaVu Serif"], "mathtext.fontset": "dejavuserif",

@@ -99,11 +99,11 @@ def fig_roofline():
     ax.text(0.62, 1.7, "MEMORY-BOUND", fontsize=11.5, fontweight="bold", color=PINK)
     ax.text(78, 1.7, "COMPUTE-BOUND", fontsize=11.5, fontweight="bold", color="#b07000", ha="right")
     ax.scatter([1.6], [12], s=170, color=PINK, edgecolor="k", lw=0.8, zorder=10)
-    ax.annotate("DECODE\nskinny GEMV + attention\nlong_scoreboard  ·  ~75% of mem peak",
+    ax.annotate("DECODE\nskinny GEMV + attention\nlong_scoreboard  ·  near the memory roof",
                 (1.6, 12), xytext=(2.2, 2.4), fontsize=8.9, color=PINK, fontweight="bold",
                 arrowprops=dict(arrowstyle="->", color=PINK, lw=1.4))
     ax.scatter([28], [72], s=170, color=ORANGE, edgecolor="k", lw=0.8, zorder=10)
-    ax.annotate("PREFILL   (≈ agent prompts)\nbig GEMM  ·  math_pipe_throttle\n~72% of compute peak",
+    ax.annotate("PREFILL   (≈ agent prompts)\nbig GEMM  ·  math_pipe_throttle\nnear the compute roof",
                 (28, 72), xytext=(34, 17), ha="center", fontsize=8.9, color="#b07000", fontweight="bold",
                 arrowprops=dict(arrowstyle="->", color=ORANGE, lw=1.4))
     ax.set_title("The two roofs — which ceiling is the kernel hitting?", fontsize=14, fontweight="bold")
