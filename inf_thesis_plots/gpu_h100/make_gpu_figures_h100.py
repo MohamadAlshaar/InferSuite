@@ -36,7 +36,7 @@ prompts["by_kernel_class"] = {c: {"time_pct": W_PF * pf["by_kernel_class"].get(c
                               for c in allcls}
 prompts["lane_eff_pct"] = blend(pf["lane_eff_pct"], dec["lane_eff_pct"])
 prompts["uarch"] = {nm: blend(pf["uarch"][nm], dec["uarch"][nm]) for nm in pf["uarch"]}
-R = {"prefill": pf, "decode": dec, "prompts": prompts}
+R = {"prefill": pf, "decode": dec, "prompts": G["normal"]}   # measured agent turn (8-16K prompt), not a blend
 
 plt.rcParams.update({
     "font.family": "serif", "font.serif": ["DejaVu Serif"], "mathtext.fontset": "dejavuserif",
@@ -59,7 +59,7 @@ ax.plot([0, 100], [0, 100], ls="--", color="#bbbbbb", lw=1.0, zorder=1)
 ax.text(6, 90, "compute-bound", color=COMPUTE, fontsize=10.5, ha="left", va="center", style="italic")
 ax.text(94, 12, "memory-bound", color=MEMORY, fontsize=10.5, ha="right", va="center", style="italic")
 ax.text(8, 6, "latency-bound", color=LAT, fontsize=10.5, ha="left", va="center", style="italic")
-LBLPOS = {"prefill": (60, 86), "decode": (56, 16), "prompts": (54, 62)}
+LBLPOS = {"prefill": (52, 84), "decode": (54, 16), "prompts": (62, 66)}
 for key, lab, col in REG:
     x, y = R[key]["sol_memory_pct"], R[key]["sol_compute_pct"]
     ax.scatter(x, y, s=300, color=col, zorder=5, edgecolor="white", linewidth=2)
