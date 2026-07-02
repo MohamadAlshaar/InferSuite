@@ -30,17 +30,20 @@ PODS = [
 CLS_COL = {"INSIDE": "#6a51a3", "ROUTING": "#0072B2", "OUTSIDE": "#1b9e77"}
 
 # role -> (color, regex over "dso :: symbol")
+# Palette matches the LOCAL during-inference donut (inf_thesis_plots/make_figures.py DESC) so the same
+# semantic category has the same colour across the thesis: busy-wait purple #6a51a3, clock-poll #9e9ac8,
+# Python #d94801, kernel #cb181d, C library #2171b5.
 ROLES = [
-    ("CUDA GPU-sync (busy-wait)",  "#d94801", re.compile(r"libcuda|libcudart|libc10_cuda|cuEvent|cudaEvent|Synchronize", re.I)),
-    ("vDSO clock-poll",            "#fdae6b", re.compile(r"\[vdso\]")),
+    ("CUDA GPU-sync (busy-wait)",  "#6a51a3", re.compile(r"libcuda|libcudart|libc10_cuda|cuEvent|cudaEvent|Synchronize", re.I)),
+    ("vDSO clock-poll",            "#9e9ac8", re.compile(r"\[vdso\]")),
     ("MKL/PyTorch GEMM (BGE embed)","#238b45", re.compile(r"libtorch|mkl_|sgemm|dgemm|gemm|libblas|openblas|aten|libc10\b", re.I)),
     ("OpenMP thread-pool (spin)",  "#66c2a4", re.compile(r"libgomp|libiomp|libomp", re.I)),
-    ("Python / asyncio",           "#74c476", re.compile(r"libpython|cpython|uvicorn|asyncio|_PyEval|ceval", re.I)),
-    ("Envoy routing proxy",        "#3182bd", re.compile(r"envoy", re.I)),
-    ("Milvus vector search",       "#e6550d", re.compile(r"milvus|knowhere|faiss", re.I)),
-    ("MongoDB engine",             "#9e9ac8", re.compile(r"mongod|wiredtiger|WiredTiger", re.I)),
-    ("OS kernel (sched/epoll/net)","#54278f", re.compile(r"\[kernel|finish_task_switch|__schedule|epoll|sys_|softirq|napi|tcp_|sock", re.I)),
-    ("C library / allocator",      "#41b6c4", re.compile(r"libc\.so|libc-|ld-linux|jemalloc|tcmalloc|\bmalloc|memcpy|memset", re.I)),
+    ("Python / asyncio",           "#d94801", re.compile(r"libpython|cpython|uvicorn|asyncio|_PyEval|ceval", re.I)),
+    ("Envoy routing proxy",        "#6baed6", re.compile(r"envoy", re.I)),
+    ("Milvus vector search",       "#E69F00", re.compile(r"milvus|knowhere|faiss", re.I)),
+    ("MongoDB engine",             "#41b6c4", re.compile(r"mongod|wiredtiger|WiredTiger", re.I)),
+    ("OS kernel (sched/epoll/net)","#cb181d", re.compile(r"\[kernel|finish_task_switch|__schedule|epoll|sys_|softirq|napi|tcp_|sock", re.I)),
+    ("C library / allocator",      "#2171b5", re.compile(r"libc\.so|libc-|ld-linux|jemalloc|tcmalloc|\bmalloc|memcpy|memset", re.I)),
 ]
 FLAT = re.compile(r"^\s*[0-9.]+%\s+([0-9.]+)%\s+\S+\s+(\S+)\s+\[.\]\s+(.*)")
 

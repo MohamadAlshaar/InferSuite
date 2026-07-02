@@ -4,6 +4,12 @@
 This repository is the artifact for a master's thesis that asks one question of a real,
 production-style GenAI system: **where does the compute actually go — and what is the CPU doing?**
 
+**InferSuite is developed by us**: the service, the deployment, the benchmark suite, the agent
+harnesses, and the measurement/plotting tooling are all built in-house for this work — it is not a
+wrapper around an existing benchmark.
+
+![InferSuite service pipeline](docs/service_pipeline.png)
+
 It contains three things, and they form one story:
 
 1. **The Service** — a deployable RAG + semantic-cache + vLLM chatbot on Kubernetes (managed cloud cluster or local minikube).
@@ -54,9 +60,7 @@ agentic/                The three agentic workloads + measurement harness
 
 A production-style GenAI inference stack deployable on **any Kubernetes cluster** — a managed cloud cluster or a local **minikube** GPU machine.
 
-![InferSuite deployment architecture](docs/architecture.png)
-
-*The deployed stack: the service kernel runs semantic cache + RAG over Milvus (RAG/cache vectors), MongoDB (cache metadata/history), and SeaweedFS (RAG files); requests then go through the **llm-d** router to the **vLLM** engine pods (each with a routing sidecar) on the GPUs.*
+*The deployed stack (figure at the top): the service kernel runs semantic cache + RAG over Milvus (RAG/cache vectors), MongoDB (cache metadata/history), and SeaweedFS (RAG files); requests then go through the **llm-d** router to the **vLLM** engine pods (each with a routing sidecar) on the GPUs.*
 
 ```
 Client

@@ -18,13 +18,13 @@ plt.rcParams.update({
 # DSO -> role buckets (order = legend/stack order); colours are distinct, house-ish
 TOOL_ROLES=[
     ("Compiler / build",      "#8c510a", re.compile(r"\bcc1|cc1plus|collect2|\bas\b|/as$|-as$|\bld\b|-ld$|libbfd|libopcodes|gcc|cpp\b", re.I)),
-    ("BLAS / OpenMP / Fortran","#d55e00", re.compile(r"openblas|libblas|liblapack|libgomp|libmkl|libgfortran|libquadmath|blas", re.I)),
+    ("BLAS / OpenMP / Fortran","#238b45", re.compile(r"openblas|libblas|liblapack|libgomp|libmkl|libgfortran|libquadmath|blas", re.I)),
     ("NumPy / SciPy native",  "#e69f00", re.compile(r"_multiarray|umath|cython_|sklearn|scipy|numpy", re.I)),
-    ("Python interpreter",    "#009e73", re.compile(r"python3|libpython|/python[0-9]|\.cpython-", re.I)),
-    ("Node.js / V8 (agent)",  "#0072b2", re.compile(r"\bnode\b|libnode|/node$|\bv8\b|electron|\[JIT\]", re.I)),
-    ("Browser / Chromium",    "#56b4e9", re.compile(r"chrom|headless|blink|libskia|cef|nwjs", re.I)),
-    ("C library / loader",    "#41b6c4", re.compile(r"libc\.so|ld-linux|libm\.so|libstdc|libpthread|libdl|libz\.", re.I)),
-    ("OS kernel",             "#6a51a3", re.compile(r"kallsyms|\[kernel|\[vdso\]", re.I)),
+    ("Python interpreter",    "#d94801", re.compile(r"python3|libpython|/python[0-9]|\.cpython-", re.I)),
+    ("Node.js / V8 (agent)",  "#56b4e9", re.compile(r"\bnode\b|libnode|/node$|\bv8\b|electron|\[JIT\]", re.I)),
+    ("Browser / Chromium",    "#0072b2", re.compile(r"chrom|headless|blink|libskia|cef|nwjs", re.I)),
+    ("C library / loader",    "#2171b5", re.compile(r"libc\.so|ld-linux|libm\.so|libstdc|libpthread|libdl|libz\.", re.I)),
+    ("OS kernel",             "#cb181d", re.compile(r"kallsyms|\[kernel|\[vdso\]", re.I)),
 ]
 NEUTRAL="#b3b3b3"
 def parse_dso(path):

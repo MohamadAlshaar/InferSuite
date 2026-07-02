@@ -343,13 +343,13 @@ def make_timesplit_fig(markers_path, outdir, app):
 
 # ============ inf_thesis-style figures (perf-native, no py-spy) ============
 NATIVE_ROLES = [
-    ("OS kernel — thread scheduling", "#6a51a3", re.compile(r"finish_task_switch|__schedule|\bschedule\b|schedule_tail|resched|try_to_wake|pick_next_task|__switch_to|context_switch", re.I)),
-    ("OS kernel — futex / wait",      "#9e9ac8", re.compile(r"futex|hrtimer|\bpoll\b|epoll|do_sys_poll|do_syscall|syscall", re.I)),
-    ("sync / spinlock / condvar",         "#2171b5", re.compile(r"_raw_spin|osq_lock|rwsem|\bmutex|cond_wait|pthread_cond", re.I)),
-    ("CUDA GPU-sync (busy-wait)",      "#d94801", re.compile(r"cuda|libcuda|nvidia|cuEvent|cuStream|Synchronize|EvtHandlr|\[vdso\]", re.I)),
-    ("Python interpreter",                "#238b45", re.compile(r"_PyEval|PyObject|PyNumber|_Py[A-Z]|ceval|python3\.1", re.I)),
+    ("OS kernel — thread scheduling", "#cb181d", re.compile(r"finish_task_switch|__schedule|\bschedule\b|schedule_tail|resched|try_to_wake|pick_next_task|__switch_to|context_switch", re.I)),
+    ("OS kernel — futex / wait",      "#fc9272", re.compile(r"futex|hrtimer|\bpoll\b|epoll|do_sys_poll|do_syscall|syscall", re.I)),
+    ("sync / spinlock / condvar",         "#6baed6", re.compile(r"_raw_spin|osq_lock|rwsem|\bmutex|cond_wait|pthread_cond", re.I)),
+    ("CUDA GPU-sync (busy-wait)",      "#6a51a3", re.compile(r"cuda|libcuda|nvidia|cuEvent|cuStream|Synchronize|EvtHandlr|\[vdso\]", re.I)),
+    ("Python interpreter",                "#d94801", re.compile(r"_PyEval|PyObject|PyNumber|_Py[A-Z]|ceval|python3\.1", re.I)),
     ("PyTorch / ATen",                    "#74c476", re.compile(r"libtorch|libc10|aten|c10::|\btorch", re.I)),
-    ("C library — memcpy/malloc",      "#41b6c4", re.compile(r"libc\.so|\bmalloc|\bfree\b|memcpy|memmove|memset|tcmalloc", re.I)),
+    ("C library — memcpy/malloc",      "#2171b5", re.compile(r"libc\.so|\bmalloc|\bfree\b|memcpy|memmove|memset|tcmalloc", re.I)),
 ]
 def _roles(pairs):
     out={r[0]:0.0 for r in NATIVE_ROLES}; out["other"]=0.0
