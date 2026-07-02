@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: loadgen, namespace: llm-service }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: loadgen } }
+  template:
+    metadata: { labels: { app: loadgen } }
+    spec:
+      containers:
+      - name: loadgen
+        image: llm-service-kernel:fastapi-selfcontained
+        imagePullPolicy: Never
+        command: ["/bin/sh","-c"]
+        args:
+        - |
+          while true; do
+            python3 /app/scripts/query_runner.py --mode rag \
+              --queries /app/benchmark_queries/rag/short.txt --size-bucket short \
+              --count 2000 --warmup 0 --max-tokens 320 --concurrency 6 \
+              --out-dir /tmp/lg 2>&1 | tail -1
+          done
+        env:
+        - { name: BENCHMARK_URL, value: "http://llm-service-kernel.llm-service.svc.cluster.local:8080" }
+        - { name: BENCHMARK_MODEL, value: "qwen2.5-32b-instruct" }
+        resources: { requests: { cpu: "2", memory: "2Gi" }, limits: { cpu: "6", memory: "4Gi" } }

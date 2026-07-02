@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llm-service-kernel-config-fullstack
+  namespace: llm-service
+data:
+  APP_HOST: "0.0.0.0"
+  APP_PORT: "8080"
+
+  GENERATION_BACKEND: "llmd"
+  GENERATION_BASE_URL: "http://infra-local-inference-gateway-istio.llm-d-local.svc.cluster.local:80"
+  GENERATION_API_MODE: "completions"
+  GENERATION_CHAT_PATH: "/v1/chat/completions"
+  GENERATION_COMPLETIONS_PATH: "/v1/completions"
+  GENERATION_MODEL_NAME: "qwen2.5-32b-instruct"
+  MODEL_SERVER_TIMEOUT_S: "300.0"
+
+  CACHE_SCOPE: "minikube-dev"
+
+  EXACT_CACHE_ENABLED: "0"
+
+  SEM_CACHE_ENABLED: "1"
+  SEM_CACHE_THRESHOLD: "0.88"
+  SEM_CACHE_TTL_SEC: "86400"
+  SEM_CACHE_EMBED_MODEL: "BAAI/bge-base-en-v1.5"
+  SEM_CACHE_EMBED_MODEL_PATH: "/app/fastapi_runtime_assets/models/bge-base-en-v1.5"
+  SEM_CACHE_VECTOR_DIM: "768"
+  SEM_CACHE_MONGO_URI: "mongodb://mongodb.llm-service.svc.cluster.local:27017"
+  SEM_CACHE_MONGO_DB: "semcache"
+  SEM_CACHE_MONGO_COLLECTION: "semantic_entries"
+  SEM_CACHE_MONGO_CONNECT_TIMEOUT_MS: "3000"
+  HISTORY_MONGO_URI: "mongodb://mongodb.llm-service.svc.cluster.local:27017"
+  HISTORY_MONGO_DB: "llm_service"
+  HISTORY_MONGO_COLLECTION: "messages"
+  HISTORY_ENABLED: "0"
+  SEM_CACHE_TOP_K: "5"
+  SEM_CACHE_NORMALIZE: "1"
+  SEM_CACHE_MILVUS_URI: "http://milvus.llm-service.svc.cluster.local:19530"
+  SEM_CACHE_MILVUS_SECURE: "0"
+  SEM_CACHE_MILVUS_COLLECTION: "semcache_direct_v2"
+  SEM_CACHE_ALLOW_WITH_RAG: "1"
+
+  RAG_ENABLED: "1"
+  RAG_BACKEND: "milvus"
+  RAG_TOP_K: "4"
+  RAG_MAX_CONTEXT_CHARS: "4000"
+  RAG_SCORE_MODE: "similarity"
+  RAG_SCORE_THRESHOLD: "0.60"
+  RAG_STORE_ROOT_DIR: "/rag_store_tenants"
+  RAG_MANIFEST_ROOT_DIR: "/rag_store_tenants"
+  RAG_FALLBACK_TENANT: ""
+  RAG_LOCAL_EMBED_MODEL_PATH: "/app/fastapi_runtime_assets/models/bge-base-en-v1.5"
+  RAG_SEED_MANIFEST_DIR: "/app/fastapi_runtime_assets/rag_store_tenants"
+
+  BGE_MODEL_PATH: "/app/fastapi_runtime_assets/models/bge-base-en-v1.5"
+  BGE_DEVICE: "cpu"
+  BGE_DIM: "768"
+  BGE_NORMALIZE: "1"
+
+  MILVUS_URI: "http://milvus.llm-service.svc.cluster.local:19530"
+  MILVUS_COLLECTION: "rag_chunks_seaweed_v2"
+  MILVUS_VECTOR_FIELD: "embedding"
+  MILVUS_TENANT_FIELD: "tenant_id"
+  MILVUS_METRIC_TYPE: "COSINE"
+
+  RAG_OBJECT_STORE_ENABLED: "1"
+  RAG_OBJECT_STORE_ENDPOINT_URL: "http://seaweed-s3.llm-service.svc.cluster.local:8333"
+  RAG_OBJECT_STORE_BUCKET: "llm-rag-store"
+  RAG_OBJECT_STORE_REGION: "us-east-1"
+  RAG_OBJECT_STORE_USE_SSL: "0"
+  RAG_OBJECT_STORE_VERIFY: "false"
+  RAG_OBJECT_STORE_PREFIX: "rag"
+  RAG_OBJECT_STORE_LOCAL_CACHE_TTL_SEC: "60"
+
+  KB_VERSION: "no-rag"
+  SYSTEM_PROMPT_VERSION: "v1"
+
+  TOKENIZER_PATH: "/app/fastapi_runtime_assets/models/Qwen2.5-0.5B-Instruct"
+  TOKENIZER_LOCAL_ONLY: "1"
+
+  BENCHMARK_SHADOW_MODE: "0"
+  RAG_REQUIRE_NON_EMPTY_COLLECTION: "0"
+  RAG_RETRIEVE_EVERY_REQUEST: "1"
+  RETURN_DEBUG_BLOCKS: "1"
+
+  AUTH_ENABLED: "0"
+  DEV_TENANT_ID: "tenantA"
+  TENANT_CLAIM: "tenant_id"
+
+  HF_HUB_OFFLINE: "1"
+  TRANSFORMERS_OFFLINE: "1"
+
+  # OpenTelemetry — set to Jaeger OTLP gRPC endpoint to enable tracing, leave empty to disable.
+  # Local: kubectl port-forward svc/jaeger 4317:4317 -n llm-service, then set to "localhost:4317"
+  # In-cluster: "jaeger.llm-service.svc.cluster.local:4317"
+  OTEL_EXPORTER_OTLP_ENDPOINT: ""
+  OTEL_SERVICE_NAME: "llm-service-kernel"
