@@ -1,0 +1,281 @@
+[deploy_fullstack_single_node] Ensuring cluster prerequisites
+[deploy_fullstack_single_node] Gateway API CRDs already installed
+[deploy_fullstack_single_node] Installing Istio (profile=minimal)
+        |\          
+        | \         
+        |  \        
+        |   \       
+      /||    \      
+     / ||     \     
+    /  ||      \    
+   /   ||       \   
+  /    ||        \  
+ /     ||         \ 
+/______||__________\
+____________________
+  \__       _____/  
+     \_____/        
+
+
+- Processing resources for Istio core.
+✔ Istio core installed ⛵️
+- Processing resources for Istiod.
+- Processing resources for Istiod. Waiting for Deployment/istio-system/istiod
+✔ Istiod installed 🧠
+- Pruning removed resources
+✔ Installation complete[deploy_fullstack_single_node] Waiting for Istio CRDs and control plane
+[deploy_fullstack_single_node] Istio CRDs and istiod are ready
+[deploy_fullstack_single_node] Skipping runtime asset preparation
+[deploy_fullstack_single_node] Skipping FastAPI image build
+[deploy_fullstack_single_node] Applying storage manifests
+namespace/llm-service created
+persistentvolumeclaim/mongodb-pvc created
+deployment.apps/mongodb created
+service/mongodb created
+persistentvolumeclaim/milvus-etcd-pvc created
+persistentvolumeclaim/milvus-minio-pvc created
+persistentvolumeclaim/milvus-data-pvc created
+deployment.apps/milvus-etcd created
+service/milvus-etcd created
+deployment.apps/milvus-minio created
+service/milvus-minio created
+deployment.apps/milvus created
+service/milvus created
+configmap/seaweedfs-s3-config created
+persistentvolumeclaim/seaweed-master-pvc created
+persistentvolumeclaim/seaweed-volume-pvc created
+persistentvolumeclaim/seaweed-filer-pvc created
+deployment.apps/seaweed-master created
+service/seaweed-master created
+deployment.apps/seaweed-volume created
+service/seaweed-volume created
+deployment.apps/seaweed-filer created
+service/seaweed-filer created
+deployment.apps/seaweed-s3 created
+service/seaweed-s3 created
+[deploy_fullstack_single_node] Waiting for storage deployments
+Waiting for deployment "mongodb" rollout to finish: 0 of 1 updated replicas are available...
+deployment "mongodb" successfully rolled out
+deployment "milvus-etcd" successfully rolled out
+deployment "milvus-minio" successfully rolled out
+Waiting for deployment "milvus" rollout to finish: 0 of 1 updated replicas are available...
+deployment "milvus" successfully rolled out
+deployment "seaweed-master" successfully rolled out
+deployment "seaweed-volume" successfully rolled out
+deployment "seaweed-filer" successfully rolled out
+deployment "seaweed-s3" successfully rolled out
+[deploy_fullstack_single_node] Deploying llm-d stack
+namespace/llm-d-local created
+[deploy_llmd_local] Skipping local image loading
+[deploy_llmd_local] Skipping model provisioning
+[deploy_llmd_local] Applying model PV/PVC
+persistentvolume/llmd-local-model-pv created
+persistentvolumeclaim/qwen-model-pvc created
+[deploy_llmd_local] Installing llm-d gateway infrastructure
+Release "infra-local" does not exist. Installing it now.
+NAME: infra-local
+LAST DEPLOYED: Thu Jul  2 21:09:43 2026
+NAMESPACE: llm-d-local
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing llm-d-infra.
+
+Your release is named `infra-local`.
+
+To learn more about the release, try:
+
+```bash
+$ helm status infra-local -n llm-d-local
+$ helm get all infra-local -n llm-d-local
+```
+[deploy_llmd_local] Installing llm-d model service
+Release "ms-local" does not exist. Installing it now.
+NAME: ms-local
+LAST DEPLOYED: Thu Jul  2 21:09:44 2026
+NAMESPACE: llm-d-local
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+[deploy_llmd_local] Enforcing single-GPU safe rollout strategy on decode deployment
+[deploy_llmd_local] Restarting decode deployment so patched strategy takes effect
+deployment.apps/ms-local-llm-d-modelservice-decode restarted
+[deploy_llmd_local] Waiting for llm-d deployments
+Waiting for deployment "infra-local-inference-gateway-istio" rollout to finish: 0 of 1 updated replicas are available...
+deployment "infra-local-inference-gateway-istio" successfully rolled out
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ms-local-llm-d-modelservice-decode" successfully rolled out
+[deploy_llmd_local] Applying direct decode Service and HTTPRoute
+service/ms-local-decode-direct created
+httproute.gateway.networking.k8s.io/ms-local-route-direct created
+[deploy_llmd_local] Current llm-d resources
+NAME                                                       READY   STATUS    RESTARTS   AGE     IP           NODE                         NOMINATED NODE   READINESS GATES
+pod/infra-local-inference-gateway-istio-5cb4577567-tbq7w   1/1     Running   0          6m      10.42.0.26   networking-thinkstation-p7   <none>           <none>
+pod/ms-local-llm-d-modelservice-decode-7c5656d746-tlmnt    2/2     Running   0          5m57s   10.42.0.27   networking-thinkstation-p7   <none>           <none>
+
+NAME                                          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)            AGE   SELECTOR
+service/infra-local-inference-gateway-istio   ClusterIP   10.43.128.249   <none>        15021/TCP,80/TCP   6m    gateway.networking.k8s.io/gateway-name=infra-local-inference-gateway
+service/ms-local-decode-direct                ClusterIP   10.43.21.159    <none>        8000/TCP           1s    llm-d.ai/inference-serving=true,llm-d.ai/role=decode
+[deploy_llmd_local] Current Gateway routes
+NAME                    HOSTNAMES   AGE
+ms-local-route-direct               1s
+[deploy_llmd_local] Verifying model files inside serving pod
+Defaulted container "vllm" out of: vllm, routing-proxy (init)
+total 5.2G
+drwxrwxr-x 2 1002 1002 4.0K Jun 22 11:29 .
+drwxr-xr-x 1 root root 4.0K Jul  2 19:15 ..
+-rw-rw-r-- 1 1002 1002 1.5K Jun 22 11:28 .gitattributes
+-rw-rw-r-- 1 1002 1002  12K Jun 22 11:28 LICENSE
+-rw-rw-r-- 1 1002 1002 6.3K Jun 22 11:28 README.md
+-rw-rw-r-- 1 1002 1002  841 Jun 22 11:28 config.json
+-rw-rw-r-- 1 1002 1002  243 Jun 22 11:28 generation_config.json
+-rw-rw-r-- 1 1002 1002 1.6M Jun 22 11:28 merges.txt
+-rw-rw-r-- 1 1002 1002 3.8G Jun 22 11:29 model-00001-of-00002.safetensors
+-rw-rw-r-- 1 1002 1002 1.5G Jun 22 11:29 model-00002-of-00002.safetensors
+-rw-rw-r-- 1 1002 1002  62K Jun 22 11:28 model.safetensors.index.json
+-rw-rw-r-- 1 1002 1002 6.8M Jun 22 11:28 tokenizer.json
+-rw-rw-r-- 1 1002 1002 7.2K Jun 22 11:28 tokenizer_config.json
+-rw-rw-r-- 1 1002 1002 2.7M Jun 22 11:28 vocab.json
+[deploy_llmd_local] llm-d local deployment complete
+[deploy_fullstack_single_node] Waiting for llm-d /v1/models
+[deploy_fullstack_single_node] Starting port-forward svc/infra-local-inference-gateway-istio 18080:80 in namespace llm-d-local
+[deploy_fullstack_single_node] llm-d is reachable
+[deploy_fullstack_single_node] Applying FastAPI resources
+persistentvolumeclaim/rag-store-tenants-pvc created
+persistentvolumeclaim/tenant-ingest-input-pvc created
+configmap/llm-service-kernel-config-fullstack created
+secret/llm-service-kernel-secret created
+service/llm-service-kernel created
+[deploy_fullstack_single_node] Waiting for Milvus gRPC (port 19530) to accept requests
+pod "milvus-grpc-probe" deleted
+[deploy_fullstack_single_node] Milvus gRPC is ready
+[deploy_fullstack_single_node] Running bootstrap job
+job.batch/llm-service-kernel-bootstrap created
+job.batch/llm-service-kernel-bootstrap condition met
+[bootstrap] mongo semantic-cache indexes: start attempt 1/30
+[bootstrap] mongo semantic-cache indexes: ok
+[bootstrap] milvus semantic-cache collection: start attempt 1/30
+/app/src/service/bootstrap_init.py:211: PyMilvusDeprecationWarning: `connections.connect` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  connections.connect(
+/app/src/service/cache/semantic_schema.py:183: PyMilvusDeprecationWarning: `utility.has_collection` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  if utility.has_collection(collection_name, using=alias, timeout=_MILVUS_RPC_TIMEOUT):
+/app/src/service/cache/semantic_schema.py:156: PyMilvusDeprecationWarning: `utility.has_collection` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  if utility.has_collection(collection_name, using=alias, timeout=_MILVUS_RPC_TIMEOUT):
+/app/src/service/cache/semantic_schema.py:163: PyMilvusDeprecationWarning: `Collection` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  collection = Collection(
+/app/src/service/cache/semantic_schema.py:168: PyMilvusDeprecationWarning: `Collection.create_index` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  collection.create_index(
+/app/src/service/bootstrap_init.py:228: PyMilvusDeprecationWarning: `Collection.load` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  collection.load(timeout=10)
+/app/src/service/bootstrap_init.py:233: PyMilvusDeprecationWarning: `connections.disconnect` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  connections.disconnect(alias)
+[bootstrap] milvus semantic-cache collection: ok
+[bootstrap] seaweed bucket: start attempt 1/30
+[bootstrap] seaweed bucket: ok
+[bootstrap] seed rag manifests: start attempt 1/3
+[bootstrap] rag manifests: seed_count=1 runtime_before=0 seed_dir=/app/fastapi_runtime_assets/rag_store_tenants runtime_dir=/rag_store_tenants
+[bootstrap] seeded tenant manifest dir: /rag_store_tenants/tenantA
+[bootstrap] seed rag manifests: ok
+[bootstrap] rag milvus collection: start attempt 1/30
+/app/src/service/bootstrap_init.py:404: PyMilvusDeprecationWarning: `connections.connect` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  connections.connect(
+/app/src/service/bootstrap_init.py:416: PyMilvusDeprecationWarning: `utility.has_collection` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  exists = utility.has_collection(collection_name, using=alias, timeout=_rpc_timeout)
+[bootstrap] creating RAG Milvus collection 'rag_chunks_seaweed_v2' vector_field=embedding tenant_field=tenant_id vector_dim=768
+/app/src/service/bootstrap_init.py:428: PyMilvusDeprecationWarning: `Collection` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  collection = Collection(
+/app/src/service/bootstrap_init.py:437: PyMilvusDeprecationWarning: `Collection.create_index` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  collection.create_index(
+/app/src/service/bootstrap_init.py:457: PyMilvusDeprecationWarning: `Collection.load` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  collection.load(timeout=10)
+/app/src/service/bootstrap_init.py:461: PyMilvusDeprecationWarning: `Collection.num_entities` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  num_entities = int(getattr(collection, "num_entities", 0) or 0)
+[bootstrap] RAG Milvus collection 'rag_chunks_seaweed_v2' num_entities=0
+/app/src/service/bootstrap_init.py:474: PyMilvusDeprecationWarning: `connections.disconnect` is an ORM-style PyMilvus API and will be removed in PyMilvus 3.1. Use `MilvusClient` instead.
+  connections.disconnect(alias)
+[bootstrap] rag milvus collection: ok
+[bootstrap] complete
+[deploy_fullstack_single_node] Deploying FastAPI
+deployment.apps/llm-service-kernel created
+deployment.apps/llm-service-kernel restarted
+Waiting for deployment "llm-service-kernel" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "llm-service-kernel" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "llm-service-kernel" rollout to finish: 1 old replicas are pending termination...
+deployment "llm-service-kernel" successfully rolled out
+[deploy_fullstack_single_node] Waiting for FastAPI /ready
+[deploy_fullstack_single_node] Starting port-forward svc/llm-service-kernel 18081:8080 in namespace llm-service
+[deploy_fullstack_single_node] FastAPI /ready is healthy
+[deploy_fullstack_single_node] Skipping validation
+
+[deploy_fullstack_single_node] Deployment summary
+NAME                         READY   STATUS    RESTARTS   AGE   IP           NODE                         NOMINATED NODE   READINESS GATES
+pod/istiod-c6869f7bd-jnrr6   1/1     Running   0          10m   10.42.0.10   networking-thinkstation-p7   <none>           <none>
+
+NAME                                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                                 AGE   SELECTOR
+service/istiod                        ClusterIP   10.43.12.252    <none>        15010/TCP,15012/TCP,443/TCP,15014/TCP   10m   app=istiod,istio=pilot
+service/istiod-revision-tag-default   ClusterIP   10.43.153.187   <none>        15010/TCP,15012/TCP,443/TCP,15014/TCP   10m   app=istiod,istio.io/rev=default
+
+NAME                                                       READY   STATUS    RESTARTS   AGE     IP           NODE                         NOMINATED NODE   READINESS GATES
+pod/infra-local-inference-gateway-istio-5cb4577567-tbq7w   1/1     Running   0          7m36s   10.42.0.26   networking-thinkstation-p7   <none>           <none>
+pod/ms-local-llm-d-modelservice-decode-7c5656d746-tlmnt    2/2     Running   0          7m33s   10.42.0.27   networking-thinkstation-p7   <none>           <none>
+
+NAME                                          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)            AGE     SELECTOR
+service/infra-local-inference-gateway-istio   ClusterIP   10.43.128.249   <none>        15021/TCP,80/TCP   7m36s   gateway.networking.k8s.io/gateway-name=infra-local-inference-gateway
+service/ms-local-decode-direct                ClusterIP   10.43.21.159    <none>        8000/TCP           97s     llm-d.ai/inference-serving=true,llm-d.ai/role=decode
+
+NAME                                     READY   STATUS        RESTARTS   AGE   IP           NODE                         NOMINATED NODE   READINESS GATES
+pod/llm-service-kernel-94f544945-9wwgn   1/1     Running       0          13s   10.42.0.32   networking-thinkstation-p7   <none>           <none>
+pod/llm-service-kernel-bootstrap-pm7gh   0/1     Completed     0          27s   10.42.0.30   networking-thinkstation-p7   <none>           <none>
+pod/llm-service-kernel-d4c7f5ddf-mxmwj   1/1     Terminating   0          13s   10.42.0.31   networking-thinkstation-p7   <none>           <none>
+pod/milvus-585b44d749-vj22b              1/1     Running       0          10m   10.42.0.17   networking-thinkstation-p7   <none>           <none>
+pod/milvus-etcd-f66646ddb-6bc6j          1/1     Running       0          10m   10.42.0.19   networking-thinkstation-p7   <none>           <none>
+pod/milvus-minio-587865c544-fl6vn        1/1     Running       0          10m   10.42.0.20   networking-thinkstation-p7   <none>           <none>
+pod/mongodb-554b8c576b-pf9j2             1/1     Running       0          10m   10.42.0.18   networking-thinkstation-p7   <none>           <none>
+pod/seaweed-filer-65ff57796c-bth96       1/1     Running       0          10m   10.42.0.25   networking-thinkstation-p7   <none>           <none>
+pod/seaweed-master-7489569fcb-dgjkd      1/1     Running       0          10m   10.42.0.22   networking-thinkstation-p7   <none>           <none>
+pod/seaweed-s3-66b44f7fb7-kbfqf          1/1     Running       0          10m   10.42.0.15   networking-thinkstation-p7   <none>           <none>
+pod/seaweed-volume-895c47844-6zsd7       1/1     Running       0          10m   10.42.0.24   networking-thinkstation-p7   <none>           <none>
+
+NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)              AGE   SELECTOR
+service/llm-service-kernel   ClusterIP   10.43.57.69     <none>        8080/TCP             31s   app=llm-service-kernel
+service/milvus               ClusterIP   10.43.130.4     <none>        19530/TCP,9091/TCP   10m   app=milvus
+service/milvus-etcd          ClusterIP   10.43.101.42    <none>        2379/TCP             10m   app=milvus-etcd
+service/milvus-minio         ClusterIP   10.43.181.198   <none>        9000/TCP,9001/TCP    10m   app=milvus-minio
+service/mongodb              ClusterIP   10.43.195.96    <none>        27017/TCP            10m   app=mongodb
+service/seaweed-filer        ClusterIP   10.43.254.219   <none>        8888/TCP,18888/TCP   10m   app=seaweed-filer
+service/seaweed-master       ClusterIP   10.43.26.32     <none>        9333/TCP,19333/TCP   10m   app=seaweed-master
+service/seaweed-s3           ClusterIP   10.43.105.91    <none>        8333/TCP             10m   app=seaweed-s3
+service/seaweed-volume       ClusterIP   10.43.142.111   <none>        8080/TCP,18080/TCP   10m   app=seaweed-volume
+
+Useful checks:
+
+  kubectl get crd gateways.gateway.networking.k8s.io
+  kubectl get crd telemetries.telemetry.istio.io
+  kubectl logs -n llm-service deploy/llm-service-kernel --tail=200
+  kubectl logs -n llm-service job/llm-service-kernel-bootstrap
+  curl http://127.0.0.1:18081/health | python3 -m json.tool
+  curl -i http://127.0.0.1:18081/ready
+
+Manual port-forward:
+  kubectl port-forward -n llm-service svc/llm-service-kernel 18081:8080
+
+CLI:
+  python3 scripts/chat_cli.py --show-debug
+[deploy] patching FastAPI configmap for the local run
+configmap/llm-service-kernel-config-fullstack patched
+deployment.apps/llm-service-kernel restarted
+Waiting for deployment "llm-service-kernel" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "llm-service-kernel" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "llm-service-kernel" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "llm-service-kernel" rollout to finish: 1 old replicas are pending termination...
+deployment "llm-service-kernel" successfully rolled out
+[deploy] running open_ragbench ingest job
+job.batch/ragbench-ingest created
+job.batch/ragbench-ingest condition met
+[ragbench-ingest]   310/328 papers | 13482 chunks | 827 chunks/min | ETA 0.9 min
+[ragbench-ingest]   320/328 papers | 14006 chunks | 827 chunks/min | ETA 0.4 min
+[ragbench-ingest]   328/328 papers | 14419 chunks | 826 chunks/min | ETA 0.0 min
+[ok] Ingested 328 papers → 14419 chunks into 'rag_chunks_seaweed_v2'
+[ragbench-ingest] Manifest: {"tenant_id": "tenantA", "source": "vectara/open_ragbench", "n_papers": 328, "n_chunks": 14419, "collection": "rag_chunks_seaweed_v2", "kb_version": "ragbench-v1"}
+[deploy] PHASE 2 DONE. Next: local_service/scripts/capture_tiers.sh

@@ -1,0 +1,246 @@
+[capture] ################ TIER tok64 ################
+deployment.apps/loadgen created
+deployment.apps/loadgen scaled
+Waiting for deployment "loadgen" rollout to finish: 0 of 1 updated replicas are available...
+deployment "loadgen" successfully rolled out
+[capture] waiting for sustained load (vLLM 'Running: N>0')...
+[capture] engine busy (Running: 1)
+[capture] warmup 45s (steady state, prefix caches settle)
+[capture]  vllm            pid=2134389  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod263fb4e2_739b_4510
+[capture]  llmd_gateway    pid=2131254  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod349987fe_1f41_4515
+[capture]  fastapi         pid=2138397  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod276ce794_41fc_45
+[capture]  milvus          pid=2129569  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podd953bb95_8825_4a
+[capture]  mongodb         pid=2128618  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod4ef42b16_a283_49
+[capture]  seaweed_volume  pid=2128119  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podaa7ed38e_859b_46
+[capture]  seaweed_filer   pid=2128360  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-poddda5d02c_2fa1_4a
+[capture] === (A) ATTRIBUTION: parallel perf record task-clock, 25s ===
+[capture]  fastapi         top-dso: 93.53%     0.00%  [unknown]                                
+[capture]  seaweed_volume  top-dso: [capture]  mongodb         top-dso: 100.00%    21.43%  libc.so.6        
+[capture]  seaweed_filer   top-dso: 100.00%    66.67%  weed             
+[capture]  vllm            top-dso: 99.01%     0.00%  [unknown]                                        
+[capture]  llmd_gateway    top-dso: 100.00%    57.14%  envoy            
+[capture]  milvus          top-dso: 98.41%    71.83%  milvus           
+[capture] === (B) MICROARCH+TMA: perf stat 7 groups x 20s on: vllm fastapi milvus mongodb seaweed_filer seaweed_volume ===
+[capture]   vllm done
+[capture]   fastapi done
+[capture]   milvus done
+[capture]   mongodb done
+[capture]   seaweed_filer done
+[capture]   seaweed_volume done
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_fastapi_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_milvus_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_mongodb_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_filer_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_seaweed_volume_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok64/group_vllm_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE: tok64 HAS FAILURES — see above
+[capture] tier tok64 flagged — continuing (re-run later if needed)
+[capture] ################ TIER tok192 ################
+deployment.apps/loadgen configured
+deployment.apps/loadgen scaled
+Waiting for deployment "loadgen" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "loadgen" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "loadgen" rollout to finish: 1 old replicas are pending termination...
+deployment "loadgen" successfully rolled out
+[capture] waiting for sustained load (vLLM 'Running: N>0')...
+[capture] engine busy (Running: 1)
+[capture] warmup 45s (steady state, prefix caches settle)
+[capture]  vllm            pid=2134389  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod263fb4e2_739b_4510
+[capture]  llmd_gateway    pid=2131254  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod349987fe_1f41_4515
+[capture]  fastapi         pid=2138397  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod276ce794_41fc_45
+[capture]  milvus          pid=2129569  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podd953bb95_8825_4a
+[capture]  mongodb         pid=2128618  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod4ef42b16_a283_49
+[capture]  seaweed_volume  pid=2128119  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podaa7ed38e_859b_46
+[capture]  seaweed_filer   pid=2128360  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-poddda5d02c_2fa1_4a
+[capture] === (A) ATTRIBUTION: parallel perf record task-clock, 25s ===
+[capture]  fastapi         top-dso: 88.79%     0.00%  [unknown]                                
+[capture]  seaweed_volume  top-dso: [capture]  mongodb         top-dso: 100.00%     9.68%  libc.so.6        
+[capture]  seaweed_filer   top-dso: 100.00%    66.67%  weed             
+[capture]  vllm            top-dso: 98.88%     0.00%  [unknown]                                        
+[capture]  llmd_gateway    top-dso: 80.00%    40.00%  envoy            
+[capture]  milvus          top-dso: 99.56%    73.80%  milvus           
+[capture] === (B) MICROARCH+TMA: perf stat 7 groups x 20s on: vllm fastapi milvus mongodb seaweed_filer seaweed_volume ===
+[capture]   vllm done
+[capture]   fastapi done
+[capture]   milvus done
+[capture]   mongodb done
+[capture]   seaweed_filer done
+[capture]   seaweed_volume done
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_fastapi_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_milvus_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_mongodb_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_filer_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_seaweed_volume_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok192/group_vllm_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE: tok192 HAS FAILURES — see above
+[capture] tier tok192 flagged — continuing (re-run later if needed)
+[capture] ################ TIER tok320 ################
+deployment.apps/loadgen configured
+deployment.apps/loadgen scaled
+Waiting for deployment "loadgen" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "loadgen" rollout to finish: 1 old replicas are pending termination...
+deployment "loadgen" successfully rolled out
+[capture] waiting for sustained load (vLLM 'Running: N>0')...
+[capture] engine busy (Running: 2)
+[capture] warmup 45s (steady state, prefix caches settle)
+[capture]  vllm            pid=2134389  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod263fb4e2_739b_4510
+[capture]  llmd_gateway    pid=2131254  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod349987fe_1f41_4515
+[capture]  fastapi         pid=2138397  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod276ce794_41fc_45
+[capture]  milvus          pid=2129569  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podd953bb95_8825_4a
+[capture]  mongodb         pid=2128618  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod4ef42b16_a283_49
+[capture]  seaweed_volume  pid=2128119  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podaa7ed38e_859b_46
+[capture]  seaweed_filer   pid=2128360  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-poddda5d02c_2fa1_4a
+[capture] === (A) ATTRIBUTION: parallel perf record task-clock, 25s ===
+[capture]  fastapi         top-dso: 70.00%     0.00%  [unknown]                               
+[capture]  seaweed_volume  top-dso: 100.00%   100.00%  weed         
+[capture]  mongodb         top-dso: 100.00%     6.45%  libc.so.6        
+[capture]  seaweed_filer   top-dso: 100.00%   100.00%  weed         
+[capture]  vllm            top-dso: 98.99%     0.00%  [unknown]                                        
+[capture]  llmd_gateway    top-dso: 100.00%    75.00%  envoy        
+[capture]  milvus          top-dso: 97.39%    78.70%  milvus           
+[capture] === (B) MICROARCH+TMA: perf stat 7 groups x 20s on: vllm fastapi milvus mongodb seaweed_filer seaweed_volume ===
+[capture]   vllm done
+[capture]   fastapi done
+[capture]   milvus done
+[capture]   mongodb done
+[capture]   seaweed_filer done
+[capture]   seaweed_volume done
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_fastapi_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_milvus_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_mongodb_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_filer_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_seaweed_volume_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_cache.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_fp1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_fp2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_mlp.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_tma1.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/tok320/group_vllm_tma2.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE: tok320 HAS FAILURES — see above
+[capture] tier tok320 flagged — continuing (re-run later if needed)
+[capture] ################ IDLE CONTROL ################
+deployment.apps/loadgen scaled
+[capture] draining (90s) so the engine parks
+[capture]  vllm            pid=2134389  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod263fb4e2_739b_4510
+[capture]  llmd_gateway    pid=2131254  cg=kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod349987fe_1f41_4515
+[capture]  fastapi         pid=2138397  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod276ce794_41fc_45
+[capture]  milvus          pid=2129569  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podd953bb95_8825_4a
+[capture]  mongodb         pid=2128618  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod4ef42b16_a283_49
+[capture]  seaweed_volume  pid=2128119  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-podaa7ed38e_859b_46
+[capture]  seaweed_filer   pid=2128360  cg=kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-poddda5d02c_2fa1_4a
+[capture] === (A) ATTRIBUTION: parallel perf record task-clock, 25s ===
+[capture]  fastapi         top-dso: 67.86%     0.00%  [unknown]                               
+[capture]  seaweed_volume  top-dso: 100.00%    50.00%  weed             
+[capture]  mongodb         top-dso: 100.00%    58.14%  mongod           
+[capture]  seaweed_filer   top-dso: 100.00%    33.33%  weed             
+[capture]  vllm            top-dso: 82.09%     0.00%  [unknown]                               
+[capture]  llmd_gateway    top-dso: 100.00%    50.00%  envoy            
+[capture]  milvus          top-dso: 99.36%    69.43%  milvus           
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/idle_control/group_fastapi_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE-FAIL: /home/mohamad/llm-service-kernel-latest/local_service/data/idle_control/group_vllm_core.txt shows multiplexing (<99.5% active)
+[capture] VALIDATE: idle_control HAS FAILURES — see above
+[capture] SOME WINDOWS FAILED VALIDATION: tok64 tok192 tok320 idle_control 
+[capture] DONE. data in /home/mohamad/llm-service-kernel-latest/local_service/data (loadgen left at 0 replicas)

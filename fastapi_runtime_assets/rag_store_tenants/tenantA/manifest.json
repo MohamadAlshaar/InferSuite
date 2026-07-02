@@ -1,11 +1,35 @@
 {
-  "tenant_id": "tenantA",
-  "docs_dir": "/app/docs_RAG",
-  "rag_store_dir": "/rag_store_tenants/tenantA",
-  "embed_model_path": "/app/fastapi_runtime_assets/models/bge-base-en-v1.5",
-  "embed_dim": 768,
+  "tenant": "tenantA",
+  "docs_dir": "/home/mohamad/docs_RAG",
+  "kb_version": "308832c9c4acc339",
+  "collection": "rag_chunks_seaweed_v2",
+  "metric": "COSINE",
+  "dim": 768,
   "chunk_size": 800,
   "chunk_overlap": 120,
-  "num_pdf_files": 30,
-  "kb_version": "pending_ingest"
+  "bge_model_path": "/home/mohamad/bge-base-en-v1.5",
+  "normalize": true,
+  "inserted_rows": 4984,
+  "uploaded_pdfs": 30,
+  "uploaded_chunk_objects": 4984,
+  "partition_key": true,
+  "num_partitions": 64,
+  "object_store": {
+    "type": "seaweedfs_s3",
+    "endpoint_url": "http://127.0.0.1:8333",
+    "bucket": "llm-rag-store",
+    "base_prefix": "rag",
+    "chunks_subprefix": "chunks",
+    "pdfs_subprefix": "pdfs"
+  },
+  "collection_fields": [
+    "tenant_id",
+    "source",
+    "page",
+    "chunk_id",
+    "object_key",
+    "pdf_object_key",
+    "text_sha256",
+    "embedding"
+  ]
 }
