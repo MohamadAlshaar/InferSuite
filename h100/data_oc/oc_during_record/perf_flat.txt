@@ -1,0 +1,649 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 5K of event 'task-clock'
+# Event count (approx.): 58808080220
+#
+# Overhead  Command          Shared Object                                      Symbol                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+# ........  ...............  .................................................  ..............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+#
+    14.43%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000ccb
+     9.96%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618ce
+     5.98%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022b969
+     4.52%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461894
+     3.95%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461860
+     3.28%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461873
+     2.44%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000046189b
+     1.82%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461996
+     1.79%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f106
+     1.70%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bce1
+     1.67%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2b0
+     1.56%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2e0
+     1.53%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618d1
+     1.51%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461901
+     1.43%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618f8
+     1.22%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618c8
+     0.94%  VLLM::EngineCor  python3.10                                         [.] _PyEval_EvalFrameDefault
+     0.93%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0f2
+     0.77%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0fd
+     0.76%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618e1
+     0.69%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0e0
+     0.69%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618cc
+     0.69%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618fd
+     0.67%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a18f
+     0.64%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000d0a
+     0.62%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461999
+     0.58%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000046189d
+     0.58%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618ed
+     0.57%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f112
+     0.53%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bce5
+     0.52%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0e3
+     0.52%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618dd
+     0.52%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000046199b
+     0.52%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2cf
+     0.50%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000046199d
+     0.50%  vllm             python3.10                                         [.] _PyEval_EvalFrameDefault
+     0.45%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] finish_task_switch.isra.0
+     0.45%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b85
+     0.45%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b9b
+     0.45%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000d0f
+     0.45%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618d7
+     0.40%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461980
+     0.38%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000046188f
+     0.36%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0fa
+     0.34%  VLLM::EngineCor  [vdso]                                             [.] __vdso_clock_gettime
+     0.34%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000cef
+     0.33%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0d7
+     0.29%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022b96c
+     0.27%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a176
+     0.26%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b1d
+     0.26%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021eff9
+     0.26%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409ec1
+     0.26%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2b6
+     0.24%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409f33
+     0.22%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b38
+     0.22%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022b93b
+     0.22%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409ecf
+     0.21%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b6c
+     0.21%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022bc53
+     0.21%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bc90
+     0.21%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004075b8
+     0.21%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409eb0
+     0.21%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2bf
+     0.21%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d36b
+     0.21%  VLLM::EngineCor  python3.10                                         [.] _PyObject_GenericGetAttrWithDict
+     0.19%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] _raw_spin_unlock_irqrestore
+     0.19%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b81
+     0.19%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000d1d
+     0.19%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f11c
+     0.19%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a18d
+     0.19%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d232
+     0.19%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d358
+     0.17%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000cd4
+     0.17%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000407560
+     0.17%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a0b8
+     0.17%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a0ce
+     0.17%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618f4
+     0.15%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000ce5
+     0.15%  VLLM::EngineCor  libc.so.6                                          [.] pthread_mutex_lock@@GLIBC_2.2.5
+     0.15%  VLLM::EngineCor  libc.so.6                                          [.] pthread_mutex_unlock@@GLIBC_2.2.5
+     0.15%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021efd0
+     0.15%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040757c
+     0.15%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618e5
+     0.15%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d27f
+     0.15%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d34f
+     0.15%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d640
+     0.14%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000afd
+     0.14%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b7a
+     0.14%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000bb9
+     0.14%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000d16
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021efc0
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022bc20
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022bc36
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000023d320
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000023d33e
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bcd9
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040760c
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000045dc90
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618d4
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d220
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2cb
+     0.14%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d33e
+     0.12%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000b88
+     0.12%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000bdb
+     0.12%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000cae
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] pthread_once@plt
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000025ddf3
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000025de2f
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000025de4a
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409ee6
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409ef3
+     0.12%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d3cb
+     0.12%  VLLM::EngineCor  python3.10                                         [.] _PyObject_GetMethod
+     0.10%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000cf4
+     0.10%  VLLM::EngineCor  libc.so.6                                          [.] pthread_rwlock_unlock@@GLIBC_2.34
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] clock_gettime@plt
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f0d3
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000025dde0
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040760e
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a168
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040a320
+     0.10%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2d8
+     0.10%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000173b27
+     0.10%  vllm             python3.10                                         [.] _PyObject_GenericGetAttrWithDict
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000025de63
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bcab
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004075aa
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000046188b
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618da
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461997
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d352
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d3f8
+     0.09%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d680
+     0.07%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000bde
+     0.07%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000cd1
+     0.07%  VLLM::EngineCor  libc.so.6                                          [.] epoll_wait
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f08f
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bcb4
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bcd2
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bcd5
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409efe
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409f39
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d34b
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d3dc
+     0.07%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d648
+     0.07%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152a6a
+     0.07%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000173be6
+     0.07%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001a1abb
+     0.07%  vllm             [kernel.kallsyms]                                  [k] finish_task_switch.isra.0
+     0.05%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] do_syscall_64
+     0.05%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000bcb
+     0.05%  VLLM::EngineCor  [vdso]                                             [.] 0x0000000000000bcd
+     0.05%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_DiscoverDTypeAndShape_Recursive
+     0.05%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_FromAny_int
+     0.05%  VLLM::EngineCor  ld-linux-x86-64.so.2                               [.] __tls_get_addr
+     0.05%  VLLM::EngineCor  libc.so.6                                          [.] __parse_one_specmb
+     0.05%  VLLM::EngineCor  libc.so.6                                          [.] _int_malloc
+     0.05%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022114c
+     0.05%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000029e6a8
+     0.05%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000031bcb8
+     0.05%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003bfdc4
+     0.05%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000040765a
+     0.05%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d329
+     0.05%  VLLM::EngineCor  python3.10                                         [.] _PyFunction_Vectorcall
+     0.05%  VLLM::EngineCor  python3.10                                         [.] _PyObject_MakeTpCall
+     0.05%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152a55
+     0.05%  ZMQbg/IO/0       [kernel.kallsyms]                                  [k] finish_task_switch.isra.0
+     0.05%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] uv__io_poll
+     0.05%  vllm             python3.10                                         [.] PyIter_Send
+     0.05%  vllm             python3.10                                         [.] _PyFunction_Vectorcall
+     0.05%  vllm             python3.10                                         [.] _PyObject_GetMethod
+     0.03%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] INT_copyswap
+     0.03%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_CastingConverter
+     0.03%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_FromStructInterface
+     0.03%  VLLM::EngineCor  libc.so.6                                          [.] __memset_avx512_unaligned_erms
+     0.03%  VLLM::EngineCor  libc.so.6                                          [.] malloc
+     0.03%  VLLM::EngineCor  libc.so.6                                          [.] unlink_chunk.constprop.0
+     0.03%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::CUDACachingAllocator::Native::DeviceCachingAllocator::alloc_found_block(c10::cuda::CUDACachingAllocator::Native::(anonymous namespace)::AllocParams const&, unsigned long, std::shared_ptr<c10::GatheredContext>, bool)
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000221150
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022126b
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409eb8
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000409f1c
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000426ca9
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618ab
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2b8
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d3fc
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000fb1147
+     0.03%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000fb11fd
+     0.03%  VLLM::EngineCor  libcudart.so.13                                    [.] 0x0000000000026e50
+     0.03%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::detail::empty_strided_generic(c10::ArrayRef<long>, c10::ArrayRef<long>, c10::Allocator*, c10::DispatchKeySet, c10::ScalarType)
+     0.03%  VLLM::EngineCor  libtorch_cpu.so                                    [.] torch::autograd::DifferentiableViewMeta::DifferentiableViewMeta(c10::TensorImpl*, std::optional<torch::autograd::ViewInfo>, std::optional<torch::autograd::ViewInfo>, bool, torch::autograd::CreationMeta)
+     0.03%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::(anonymous namespace)::structured_lt_Tensor_out_functional::set_output_raw_strided(long, c10::ArrayRef<long>, c10::ArrayRef<long>, c10::TensorOptions, c10::ArrayRef<at::Dimname>)
+     0.03%  VLLM::EngineCor  python3.10                                         [.] PyList_New
+     0.03%  VLLM::EngineCor  python3.10                                         [.] PyLong_AsLong
+     0.03%  VLLM::EngineCor  python3.10                                         [.] PyObject_GetAttr
+     0.03%  VLLM::EngineCor  python3.10                                         [.] PyTuple_New
+     0.03%  VLLM::EngineCor  python3.10                                         [.] PyType_GenericAlloc
+     0.03%  VLLM::EngineCor  python3.10                                         [.] PyType_IsSubtype
+     0.03%  VLLM::EngineCor  python3.10                                         [.] _PyObject_GenericSetAttrWithDict
+     0.03%  VLLM::EngineCor  python3.10                                         [.] _PyStack_AsDict
+     0.03%  VLLM::EngineCor  python3.10                                         [.] _PyType_Lookup
+     0.03%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000168940
+     0.03%  VLLM::EngineCor  python3.10                                         [.] 0x00000000002a0b49
+     0.03%  pt_nccl_watchdg  libtorch_cpu.so                                    [.] c10d::C10dLogger::getLogger()
+     0.03%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x0000000000164b4a
+     0.03%  vllm             libc.so.6                                          [.] _int_malloc
+     0.03%  vllm             libc.so.6                                          [.] malloc
+     0.03%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] zmq_getsockopt
+     0.03%  vllm             python3.10                                         [.] PyMem_Free
+     0.03%  vllm             python3.10                                         [.] PyObject_CallFinalizerFromDealloc
+     0.03%  vllm             python3.10                                         [.] PyType_GenericAlloc
+     0.03%  vllm             python3.10                                         [.] _PyDict_GetItemIdWithError
+     0.03%  vllm             python3.10                                         [.] _PyObject_GetAttrId
+     0.03%  vllm             python3.10                                         [.] _PyObject_MakeTpCall
+     0.03%  vllm             python3.10                                         [.] 0x00000000001591ed
+     0.03%  vllm             python3.10                                         [.] 0x0000000000184fcf
+     0.03%  vllm             python3.10                                         [.] 0x00000000001efe20
+     0.03%  vllm             tokenizers.abi3.so                                 [.] <tokenizers::models::PyModel as tokenizers::tokenizer::Model>::id_to_token
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] __fdget
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] __futex_wait
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] __rseq_handle_notify_resume
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] __x64_sys_poll
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] _raw_spin_unlock_irq
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] blkcg_maybe_throttle_current
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] do_futex
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] pvclock_clocksource_read_nowd
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] rseq_update_cpu_node_id
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] schedule_hrtimeout_range_clock
+     0.02%  VLLM::EngineCor  [kernel.kallsyms]                                  [k] syscall_exit_to_user_mode
+     0.02%  VLLM::EngineCor  _C_stable_libtorch.abi3.so                         [.] std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release()
+     0.02%  VLLM::EngineCor  _C_stable_libtorch.abi3.so                         [.] torch::stable::detail::boxer<void (torch::stable::Tensor&, torch::stable::Tensor const&, torch::stable::Tensor const&, torch::stable::Tensor const&), &(apply_repetition_penalties_(torch::stable::Tensor&, torch::stable::Tensor const&, torch::stable::Tensor const&, torch::stable::Tensor const&))>::boxed_fn(unsigned long*, unsigned long, unsigned long)
+     0.02%  VLLM::EngineCor  _core.cpython-310-x86_64-linux-gnu.so              [.] mpack_encode_list
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] LONG_setitem
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] NpyIter_GetIterSize
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_AssignRawScalar
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_CopyObject
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_DiscoverDTypeAndShape
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyArray_FillWithScalar
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyDataMem_GetHandler
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyNumber_Long@plt
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyUFunc_CheckOverride
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyUFunc_GenericReduction
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] PyUFunc_ValidateCasting
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] _aligned_cast_long_to_int
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] _npy_parse_arguments
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] _typenum_fromtypeobj
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] array_array
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] array_empty
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] get_item_pointer
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] get_view_from_index
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] reducelike_promote_and_resolve
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] signed_integers_is_known_scalar_types
+     0.02%  VLLM::EngineCor  _multiarray_umath.cpython-310-x86_64-linux-gnu.so  [.] ufunc_generic_fastcall
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] __GI___pthread_disable_asynccancel
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] __memcmp_evex_movbe
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] __memmove_avx512_unaligned_erms
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] __strlen_evex
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] _int_free
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] cfree@GLIBC_2.2.5
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] getenv
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] malloc_consolidate
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] pthread_rwlock_wrlock@@GLIBC_2.34
+     0.02%  VLLM::EngineCor  libc.so.6                                          [.] sem_post@GLIBC_2.2.5
+     0.02%  VLLM::EngineCor  libc10.so                                          [.] c10::TensorImpl::copy_tensor_metadata_except_version_counter(c10::TensorImpl const*, c10::TensorImpl*, bool)
+     0.02%  VLLM::EngineCor  libc10.so                                          [.] c10::impl::TorchDispatchModeTLS::stack_len()
+     0.02%  VLLM::EngineCor  libc10.so                                          [.] c10::intrusive_ptr<c10::StorageImpl, c10::detail::intrusive_target_default_null_type<c10::StorageImpl> >::reset_not_null_(c10::StorageImpl*)
+     0.02%  VLLM::EngineCor  libc10.so                                          [.] c10::monitor::GaugeHandle::record(long)
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::CUDACachingAllocator::Native::(anonymous namespace)::BlockComparatorSize(c10::cuda::CUDACachingAllocator::Native::(anonymous namespace)::Block const*, c10::cuda::CUDACachingAllocator::Native::(anonymous namespace)::Block const*)
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::CUDACachingAllocator::Native::DeviceCachingAllocator::malloc(unsigned long, CUstream_st*)
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::CUDACachingAllocator::Native::NativeCachingAllocator::get_allocated_block(void*, bool)
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::CUDACachingAllocator::Native::NativeCachingAllocator::memcpyAsync(void*, int, void const*, int, unsigned long, CUstream_st*, bool)
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::CUDAStream::stream() const
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::ExchangeDevice(signed char)
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::ExchangeDevice(signed char)@plt
+     0.02%  VLLM::EngineCor  libc10_cuda.so                                     [.] c10::cuda::impl::CUDAGuardImpl::exchangeDevice(c10::Device) const
+     0.02%  VLLM::EngineCor  libcublasLt.so.13                                  [.] cublasLtMatrixLayoutCreate
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] cuMemsetD8Async
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000017999c
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000001ac000
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000001d6255
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000001d6274
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000020f3b8
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000020f453
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f10e
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000021f6e0
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002210b8
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002211c7
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022440f
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022709c
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000022b650
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000259fd0
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000025a0f0
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000269e10
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002812d5
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000028d520
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002b9d54
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002baba1
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002c7ac7
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002e5e54
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000002e66de
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003185e0
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000332fc0
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000335750
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000336a00
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000039cf50
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003a9383
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003ba8fe
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003c5dd6
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003c5df2
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003c5e46
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003caa6a
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003caa7a
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003d25de
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003d26bb
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000003e6e8e
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004075ae
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618a3
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x00000000004618e9
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000461990
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000049cc5a
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x000000000049daf0
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9cf80
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d283
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d2bd
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000f9d8a3
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000fb6014
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000fb933f
+     0.02%  VLLM::EngineCor  libcuda.so.580.105.08                              [.] 0x0000000000fba674
+     0.02%  VLLM::EngineCor  libcudart.so.13                                    [.] cudaDeviceGetAttribute
+     0.02%  VLLM::EngineCor  libcudart.so.13                                    [.] cudaGetLastError
+     0.02%  VLLM::EngineCor  libcudart.so.13                                    [.] 0x000000000003cd37
+     0.02%  VLLM::EngineCor  libstdc++.so.6.0.30                                [.] malloc@plt
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::Context::float32Precision(at::Float32Backend, at::Float32Op) const
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::TensorIteratorBase::build(at::TensorIteratorConfig&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::TensorIteratorBase::build_borrowing_binary_op(at::TensorBase const&, at::TensorBase const&, at::TensorBase const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::TensorIteratorBase::compute_types(at::TensorIteratorConfig const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::TensorIteratorBase::fast_set_up(at::TensorIteratorConfig const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::TensorIteratorBase::mark_resize_outputs(at::TensorIteratorConfig const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::cumsum_out::call(at::Tensor const&, long, std::optional<c10::ScalarType>, at::Tensor&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::gt_Scalar::call(at::Tensor const&, c10::Scalar const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::index_select_out::call(at::Tensor const&, long, at::Tensor const&, at::Tensor&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::masked_fill__Scalar::call(at::Tensor&, at::Tensor const&, c10::Scalar const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::scatter__src::call(at::Tensor&, long, at::Tensor const&, at::Tensor const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::to_dtype_layout::call(at::Tensor const&, std::optional<c10::ScalarType>, std::optional<c10::Layout>, std::optional<c10::Device>, std::optional<bool>, bool, bool, std::optional<c10::MemoryFormat>)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::_ops::unsqueeze::call(at::Tensor const&, long)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::accelerator::getAccelerator(bool)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::detail::empty_strided_cpu(c10::ArrayRef<long>, c10::ArrayRef<long>, std::optional<c10::ScalarType>, std::optional<c10::Layout>, std::optional<c10::Device>, std::optional<bool>)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::detail::getMPSHooks()
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::detail::scalar_tensor_static(c10::Scalar const&, std::optional<c10::ScalarType>, std::optional<c10::Device>)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::native::(anonymous namespace)::add_kernel(at::TensorIteratorBase&, c10::Scalar const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::native::empty_like(at::Tensor const&, std::optional<c10::ScalarType>, std::optional<c10::Layout>, std::optional<c10::Device>, std::optional<bool>, std::optional<c10::MemoryFormat>)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::native::maybe_resize_storage_cpu(c10::TensorImpl*, unsigned long)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::native::review_reduce_result(at::Tensor const&, int, std::bitset<64ul>, bool)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::native::sort(at::Tensor const&, long, bool)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] at::native::structured_scatter_add::impl(at::Tensor const&, long, at::Tensor const&, at::Tensor const&, at::Tensor const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] c10::GetCPUAllocator()@plt
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] c10::SymInt::operator+(c10::SymInt const&) const
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] c10::TensorImpl::sym_strides() const
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] c10::impl::OperatorEntry::lookup(c10::DispatchKeySet) const
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] c10::impl::wrap_kernel_functor_unboxed_<c10::impl::detail::WrapFunctionIntoFunctor_<c10::CompileTimeFunctionPointer<at::Tensor (c10::DispatchKeySet, at::Tensor const&), &torch::ADInplaceOrView::(anonymous namespace)::t>, at::Tensor, c10::guts::typelist::typelist<c10::DispatchKeySet, at::Tensor const&> >, at::Tensor (c10::DispatchKeySet, at::Tensor const&)>::call(c10::OperatorKernel*, c10::DispatchKeySet, at::Tensor const&)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] gloo::transport::tcp::Loop::run()
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] torch::autograd::AutogradMeta::AutogradMeta(c10::TensorImpl*, bool, torch::autograd::Edge)
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] torch::autograd::DifferentiableViewMeta::~DifferentiableViewMeta()
+     0.02%  VLLM::EngineCor  libtorch_cpu.so                                    [.] torch::autograd::ViewInfo::chain(at::Tensor const&, at::Tensor const&, std::unique_ptr<torch::autograd::ViewFunc, std::default_delete<torch::autograd::ViewFunc> >, std::function<at::Tensor (at::Tensor const&)>) const
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] OffsetCalculator<3, unsigned int, false> make_offset_calculator<3, false>(at::TensorIteratorBase const&)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::(anonymous namespace)::structured_index_out_functional::set_output_raw_strided(long, c10::ArrayRef<long>, c10::ArrayRef<long>, c10::TensorOptions, c10::ArrayRef<at::Dimname>)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::(anonymous namespace)::structured_le_Tensor_out_functional::set_output_raw_strided(long, c10::ArrayRef<long>, c10::ArrayRef<long>, c10::TensorOptions, c10::ArrayRef<at::Dimname>)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::CachingHostAllocatorImpl<c10::cuda::CUDAStream, std::unique_ptr<c10::cuda::CUDAEvent, std::function<void (c10::cuda::CUDAEvent*)> >, at::HostBlock<c10::cuda::CUDAStream> >::process_events_for_specific_size(long, at::HostBlockPool<c10::cuda::CUDAStream, std::unique_ptr<c10::cuda::CUDAEvent, std::function<void (c10::cuda::CUDAEvent*)> >, at::HostBlock<c10::cuda::CUDAStream> >&)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::TensorBase::sizes() const
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::TensorIteratorBase::~TensorIteratorBase()
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::cuda::CUDAGraph::replay()
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::cuda::detail::(anonymous namespace)::_hasPrimaryContext(signed char)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::cuda::getCUDABlasLtWorkspace()
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::detail::empty_cuda(c10::ArrayRef<long>, c10::ScalarType, std::optional<c10::Device>, std::optional<c10::MemoryFormat>)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::native::add_kernel(at::TensorIteratorBase&, c10::Scalar const&)::{lambda()#1}::operator()() const [clone .isra.0]
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::native::copy_device_to_device(at::TensorIterator&, bool, bool)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] at::native::index_kernel(at::TensorIteratorBase&, c10::ArrayRef<long>, c10::ArrayRef<long>)::{lambda()#1}::operator()() const [clone .isra.0]
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] c10::impl::check_and_update_common_device(std::optional<c10::Device>&, at::Tensor const&, char const*, char const*)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] cudaError at_cuda_detail::cub::DeviceRadixSort::SortPairs<float, at::cuda::cub::detail::OpaqueType<8>, long>(void*, unsigned long&, float const*, float*, at::cuda::cub::detail::OpaqueType<8> const*, at::cuda::cub::detail::OpaqueType<8>*, long, int, int, CUstream_st*)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] cudaError thrust::THRUST_300001_SM_750_800_860_900_1000_1200_NS::cuda_cub::detail::triple_chevron::doit_host<void (*)(int*, int*, unsigned long long*, unsigned long long const*, float*, float const*, at::cuda::cub::detail::OpaqueType<8>*, at::cuda::cub::detail::OpaqueType<8> const*, int, int, int, at_cuda_detail::cub::detail::identity_decomposer_t), int*, int*, unsigned long long*, unsigned long long*, float*, float*, at::cuda::cub::detail::OpaqueType<8>*, at::cuda::cub::detail::OpaqueType<8>*, int, int, int, at_cuda_detail::cub::detail::identity_decomposer_t>(void (*)(int*, int*, unsigned long long*, unsigned long long const*, float*, float const*, at::cuda::cub::detail::OpaqueType<8>*, at::cuda::cub::detail::OpaqueType<8> const*, int, int, int, at_cuda_detail::cub::detail::identity_decomposer_t), int* const&, int* const&, unsigned long long* const&, unsigned long long* const&, float* const&, float* const&, at::cuda::cub::detail::OpaqueType<8>* const&, at::cuda::cub::detail::OpaqueType<8>* const&, int const&, int const&, int const&, at_cuda_detail::cub::detail::identity_decomposer_t const&) const [clone .isra.0]
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] void at::native::gpu_kernel<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] void at::native::gpu_kernel_impl<__nv_hdl_wrapper_t<false, true, false, __nv_dl_tag<void (*)(at::TensorIteratorBase&), &at::native::direct_copy_kernel_cuda, 12u>, int (int)> >(at::TensorIteratorBase&, __nv_hdl_wrapper_t<false, true, false, __nv_dl_tag<void (*)(at::TensorIteratorBase&), &at::native::direct_copy_kernel_cuda, 12u>, int (int)> const&) [clone .isra.0]
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] void at::native::gpu_kernel_impl<at::native::CUDAFunctor_add<long> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<long> const&)
+     0.02%  VLLM::EngineCor  libtorch_cuda.so                                   [.] void at::native::gpu_kernel_impl<at::native::FillFunctor<long> >(at::TensorIteratorBase&, at::native::FillFunctor<long> const&)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] THCPModule_isInBadFork(_object*, _object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] THPUtils_checkLong(_object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] THPVariable_dealloc(_object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] _object* torch::autograd::TypeError_to_NotImplemented_<&torch::autograd::THPVariable_mul>(_object*, _object*, _object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] c10::IValue::destroy()
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] c10::intrusive_ptr<c10::TensorImpl, c10::UndefinedTensorImpl>::retain_()
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] pybind11::cpp_function::initialize<torch::impl::py_context_manager_DEPRECATED<c10::InferenceMode, bool>(pybind11::module_ const&, char const*)::{lambda(torch::impl::DeprecatedRAIIContextManager<c10::InferenceMode, bool>&)#1}, void, torch::impl::DeprecatedRAIIContextManager<c10::InferenceMode, bool>&, pybind11::name, pybind11::is_method, pybind11::sibling>(torch::impl::py_context_manager_DEPRECATED<c10::InferenceMode, bool>(pybind11::module_ const&, char const*)::{lambda(torch::impl::DeprecatedRAIIContextManager<c10::InferenceMode, bool>&)#1}&&, void (*)(torch::impl::DeprecatedRAIIContextManager<c10::InferenceMode, bool>&), pybind11::name const&, pybind11::is_method const&, pybind11::sibling const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] pybind11::cpp_function::initialize<torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}, pybind11::object, pybind11::args const&, pybind11::kwargs const&, pybind11::name, pybind11::doc>(torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}&&, pybind11::object (*)(pybind11::args const&, pybind11::kwargs const&), pybind11::name const&, pybind11::doc const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] pybind11::cpp_function::initialize<torch::jit::tracer::initPythonTracerBindings(_object*)::{lambda()#2}, std::shared_ptr<torch::jit::tracer::TracingState>, , pybind11::name, pybind11::scope, pybind11::sibling>(torch::jit::tracer::initPythonTracerBindings(_object*)::{lambda()#2}&&, std::shared_ptr<torch::jit::tracer::TracingState> (*)(), pybind11::name const&, pybind11::scope const&, pybind11::sibling const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] pybind11::detail::clear_instance(_object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] pybind11::detail::get_internals()
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] pybind11::gil_scoped_release::gil_scoped_release(bool) [clone .constprop.0]
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] std::_Hashtable<void const*, std::pair<void const* const, pybind11::detail::instance*>, std::allocator<std::pair<void const* const, pybind11::detail::instance*> >, std::__detail::_Select1st, std::equal_to<void const*>, std::hash<void const*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, false> >::_M_insert_multi_node(std::__detail::_Hash_node<std::pair<void const* const, pybind11::detail::instance*>, false>*, unsigned long, std::__detail::_Hash_node<std::pair<void const* const, pybind11::detail::instance*>, false>*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] std::vector<at::Tensor, std::allocator<at::Tensor> >::_M_default_append(unsigned long)@plt
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::PythonArgParser::raw_parse(_object*, _object*, _object*, _object**)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::PythonArgs::deviceOptional(int) [clone .part.0] [clone .isra.0]
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::autograd::THPVariable_data_ptr(_object*, _object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::autograd::THPVariable_masked_fill_(_object*, _object*, _object*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::detail::(anonymous namespace)::ConcretePyInterpreterVTable::incref(_object*) const
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::getTHPDtype(c10::ScalarType)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::is_tensor_and_append_overloaded(_object*, std::vector<_object*, std::allocator<_object*> >*)
+     0.02%  VLLM::EngineCor  libtorch_python.so                                 [.] torch::utils::tensor_to_numpy(at::Tensor const&, bool)@plt
+     0.02%  VLLM::EngineCor  libzmq-7b073b3d.so.5.2.5                           [.] 0x0000000000069762
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyDict_GetItemWithError
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyDict_SetDefault
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyErr_CheckSignals
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyErr_Fetch
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyErr_Occurred
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyFloat_FromDouble
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyImport_GetModule
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyLong_FromLong
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyLong_FromUnsignedLong
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyMem_Calloc
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyMemoryView_FromObject
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyObject_GetIter
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyObject_IsTrue
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyObject_Malloc
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyObject_SetAttr
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PySet_Contains
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyUnicode_FromFormatV
+     0.02%  VLLM::EngineCor  python3.10                                         [.] PyUnicode_RichCompare
+     0.02%  VLLM::EngineCor  python3.10                                         [.] _PyErr_NormalizeException
+     0.02%  VLLM::EngineCor  python3.10                                         [.] _PyObject_GC_New
+     0.02%  VLLM::EngineCor  python3.10                                         [.] _PyObject_LookupSpecial
+     0.02%  VLLM::EngineCor  python3.10                                         [.] _Py_Dealloc
+     0.02%  VLLM::EngineCor  python3.10                                         [.] _Py_parse_inf_or_nan
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000000db8c9
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001529e0
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152a28
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152a5f
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152a91
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152aa3
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000152e5e
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000153d31
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000158e85
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000015c550
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000167031
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000168a0b
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000168a57
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001693b5
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000169580
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000173b4c
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000173c38
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000017f317
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000017f338
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000017f56b
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000017f59d
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000180b70
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000180c03
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000180c31
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000180c4d
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000184f40
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000184fcf
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000187fda
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000018a170
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000018a7db
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000018af21
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000018ba7b
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000018cf18
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000018e67c
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000192bd0
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000194be5
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000019760a
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001980bd
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000198905
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000198926
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x000000000019970f
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000199c50
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001a0c30
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001a1b2b
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001a1ba3
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001a1bb2
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001b7cf7
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001b9e03
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001bdd0c
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001c4af7
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001e0cfb
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001ec7cd
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001ee173
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001efdea
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001efec3
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000001f23dd
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x0000000000224428
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000002a258f
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000002b1c50
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000002b565d
+     0.02%  VLLM::EngineCor  python3.10                                         [.] 0x00000000002db060
+     0.02%  ZMQbg/IO/0       [kernel.kallsyms]                                  [k] __check_heap_object
+     0.02%  ZMQbg/IO/0       [kernel.kallsyms]                                  [k] __x64_sys_epoll_wait
+     0.02%  ZMQbg/IO/0       [kernel.kallsyms]                                  [k] do_syscall_64
+     0.02%  ZMQbg/IO/0       [kernel.kallsyms]                                  [k] mutex_lock
+     0.02%  ZMQbg/IO/0       libzmq-7b073b3d.so.5.2.5                           [.] 0x000000000007c2af
+     0.02%  ZMQbg/IO/0       libzmq-7b073b3d.so.5.2.5                           [.] 0x000000000008b6e6
+     0.02%  ZMQbg/IO/1       [kernel.kallsyms]                                  [k] __skb_datagram_iter
+     0.02%  ZMQbg/IO/1       [kernel.kallsyms]                                  [k] _raw_spin_unlock_irq
+     0.02%  ZMQbg/IO/1       libzmq-7b073b3d.so.5.2.5                           [.] 0x0000000000036cd4
+     0.02%  ZMQbg/IO/1       libzmq-7b073b3d.so.5.2.5                           [.] 0x0000000000045d21
+     0.02%  ZMQbg/IO/1       libzmq-7b073b3d.so.5.2.5                           [.] 0x000000000005e521
+     0.02%  cuda-EvtHandlr   [kernel.kallsyms]                                  [k] _raw_spin_unlock_irqrestore
+     0.02%  cuda-EvtHandlr   libcuda.so.580.105.08                              [.] 0x000000000021ffd9
+     0.02%  cuda-EvtHandlr   libcuda.so.580.105.08                              [.] 0x00000000004618cc
+     0.02%  pt_nccl_watchdg  [kernel.kallsyms]                                  [k] __get_user_8
+     0.02%  pt_nccl_watchdg  [kernel.kallsyms]                                  [k] finish_task_switch.isra.0
+     0.02%  pt_nccl_watchdg  [kernel.kallsyms]                                  [k] x64_sys_call
+     0.02%  pt_nccl_watchdg  libc.so.6                                          [.] pthread_cond_timedwait@@GLIBC_2.3.2
+     0.02%  pt_nccl_watchdg  libstdc++.so.6.0.30                                [.] std::chrono::_V2::system_clock::now()
+     0.02%  vllm             [kernel.kallsyms]                                  [k] __inet_lookup_established
+     0.02%  vllm             [kernel.kallsyms]                                  [k] __nf_conntrack_find_get
+     0.02%  vllm             [kernel.kallsyms]                                  [k] __raw_callee_save___pv_queued_spin_unlock
+     0.02%  vllm             [kernel.kallsyms]                                  [k] __raw_spin_lock_irqsave
+     0.02%  vllm             [kernel.kallsyms]                                  [k] _raw_spin_unlock_irqrestore
+     0.02%  vllm             [kernel.kallsyms]                                  [k] br_fdb_update
+     0.02%  vllm             [kernel.kallsyms]                                  [k] mod_memcg_state
+     0.02%  vllm             [kernel.kallsyms]                                  [k] napi_consume_skb
+     0.02%  vllm             [kernel.kallsyms]                                  [k] tcp_measure_rcv_mss
+     0.02%  vllm             [kernel.kallsyms]                                  [k] tcp_v4_early_demux
+     0.02%  vllm             [kernel.kallsyms]                                  [k] tcp_wfree
+     0.02%  vllm             [vdso]                                             [.] 0x0000000000000af0
+     0.02%  vllm             _core.cpython-310-x86_64-linux-gnu.so              [.] mpack_decode
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x0000000000133347
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x000000000015178c
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x0000000000151928
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x00000000001524cd
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x0000000000159db2
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x0000000000164d84
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x000000000019e4bd
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x00000000001b06d0
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x00000000001b2740
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x00000000001ca610
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x00000000001ca670
+     0.02%  vllm             _pydantic_core.cpython-310-x86_64-linux-gnu.so     [.] 0x000000000021c607
+     0.02%  vllm             _yaml.cpython-310-x86_64-linux-gnu.so              [.] __Pyx_PyMethod_New
+     0.02%  vllm             _zmq.cpython-310-x86_64-linux-gnu.so               [.] 0x00000000000262f3
+     0.02%  vllm             _zmq.cpython-310-x86_64-linux-gnu.so               [.] 0x0000000000028382
+     0.02%  vllm             libc.so.6                                          [.] _int_free
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] zmq_msg_data
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] 0x0000000000034fbb
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] 0x000000000005549b
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] 0x0000000000058ecc
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] 0x000000000006f49c
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] 0x000000000006f4af
+     0.02%  vllm             libzmq-7b073b3d.so.5.2.5                           [.] 0x0000000000095b07
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] __Pyx_CyFunction_Vectorcall_FASTCALL_KEYWORDS
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] __pyx_f_6uvloop_4loop_15UVBaseTransport__maybe_pause_protocol
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] __pyx_f_6uvloop_4loop_4Loop__new_future
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] __pyx_f_6uvloop_4loop_4Loop__on_idle
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] __pyx_pw_6uvloop_4loop_4Loop_13call_soon
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] __pyx_pw_6uvloop_4loop_4Loop_37create_future
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] uv_fileno
+     0.02%  vllm             loop.cpython-310-x86_64-linux-gnu.so               [.] uv_timer_start
+     0.02%  vllm             python3.10                                         [.] PyBytes_FromStringAndSize
+     0.02%  vllm             python3.10                                         [.] PyDict_GetItemWithError
+     0.02%  vllm             python3.10                                         [.] PyDict_New
+     0.02%  vllm             python3.10                                         [.] PyErr_Occurred
+     0.02%  vllm             python3.10                                         [.] PyImport_ImportModuleLevelObject
+     0.02%  vllm             python3.10                                         [.] PyList_New
+     0.02%  vllm             python3.10                                         [.] PyMem_Calloc
+     0.02%  vllm             python3.10                                         [.] PyMember_SetOne
+     0.02%  vllm             python3.10                                         [.] PyObject_Call
+     0.02%  vllm             python3.10                                         [.] PyObject_GC_Del
+     0.02%  vllm             python3.10                                         [.] PyObject_GetItem
+     0.02%  vllm             python3.10                                         [.] PyObject_IsTrue
+     0.02%  vllm             python3.10                                         [.] PyObject_SelfIter
+     0.02%  vllm             python3.10                                         [.] PySet_Add
+     0.02%  vllm             python3.10                                         [.] PySlice_Unpack
+     0.02%  vllm             python3.10                                         [.] PyUnicode_FromFormatV
+     0.02%  vllm             python3.10                                         [.] _PyBytes_FormatEx
+     0.02%  vllm             python3.10                                         [.] _PyObject_GenericSetAttrWithDict
+     0.02%  vllm             python3.10                                         [.] _PyObject_LookupSpecial
+     0.02%  vllm             python3.10                                         [.] _PyStack_AsDict
+     0.02%  vllm             python3.10                                         [.] _Py_HashPointer
+     0.02%  vllm             python3.10                                         [.] 0x000000000007c84b
+     0.02%  vllm             python3.10                                         [.] 0x000000000014cc36
+     0.02%  vllm             python3.10                                         [.] 0x000000000014ee1c
+     0.02%  vllm             python3.10                                         [.] 0x0000000000150029
+     0.02%  vllm             python3.10                                         [.] 0x000000000015233c
+     0.02%  vllm             python3.10                                         [.] 0x00000000001529e0
+     0.02%  vllm             python3.10                                         [.] 0x0000000000153a68
+     0.02%  vllm             python3.10                                         [.] 0x000000000015b07b
+     0.02%  vllm             python3.10                                         [.] 0x000000000015c554
+     0.02%  vllm             python3.10                                         [.] 0x000000000015c5a4
+     0.02%  vllm             python3.10                                         [.] 0x0000000000168570
+     0.02%  vllm             python3.10                                         [.] 0x0000000000169498
+     0.02%  vllm             python3.10                                         [.] 0x0000000000173afe
+     0.02%  vllm             python3.10                                         [.] 0x0000000000173b27
+     0.02%  vllm             python3.10                                         [.] 0x0000000000173be6
+     0.02%  vllm             python3.10                                         [.] 0x0000000000173cc2
+     0.02%  vllm             python3.10                                         [.] 0x0000000000173df0
+     0.02%  vllm             python3.10                                         [.] 0x00000000001806b0
+     0.02%  vllm             python3.10                                         [.] 0x00000000001808f8
+     0.02%  vllm             python3.10                                         [.] 0x0000000000180bff
+     0.02%  vllm             python3.10                                         [.] 0x0000000000180c0d
+     0.02%  vllm             python3.10                                         [.] 0x0000000000194c72
+     0.02%  vllm             python3.10                                         [.] 0x0000000000195c54
+     0.02%  vllm             python3.10                                         [.] 0x0000000000195c87
+     0.02%  vllm             python3.10                                         [.] 0x00000000001980e4
+     0.02%  vllm             python3.10                                         [.] 0x0000000000198a1c
+     0.02%  vllm             python3.10                                         [.] 0x00000000001a1760
+     0.02%  vllm             python3.10                                         [.] 0x00000000001a650c
+     0.02%  vllm             python3.10                                         [.] 0x00000000001a74a9
+     0.02%  vllm             python3.10                                         [.] 0x00000000001aa487
+     0.02%  vllm             python3.10                                         [.] 0x00000000001b6917
+     0.02%  vllm             python3.10                                         [.] 0x00000000001b7f46
+     0.02%  vllm             python3.10                                         [.] 0x00000000001b9526
+     0.02%  vllm             python3.10                                         [.] 0x00000000001b9eba
+     0.02%  vllm             python3.10                                         [.] 0x00000000001e4761
+     0.02%  vllm             python3.10                                         [.] 0x00000000001ec219
+     0.02%  vllm             python3.10                                         [.] 0x00000000001efe48
+     0.02%  vllm             python3.10                                         [.] 0x00000000001efe88
+     0.02%  vllm             python3.10                                         [.] 0x00000000001f167a
+     0.02%  vllm             python3.10                                         [.] 0x00000000001fd1d1
+     0.02%  vllm             python3.10                                         [.] 0x0000000000204410
+     0.02%  vllm             python3.10                                         [.] 0x000000000021a850
+     0.02%  vllm             python3.10                                         [.] 0x000000000021ba2e
+     0.02%  vllm             python3.10                                         [.] 0x000000000022ae80
+     0.02%  vllm             python3.10                                         [.] 0x000000000022f7e0
+     0.02%  vllm             python3.10                                         [.] 0x0000000000277073
+     0.02%  vllm             python3.10                                         [.] 0x00000000002c80e0
+     0.02%  vllm             python3.10                                         [.] 0x0000000000316ebd
+     0.02%  vllm             tokenizers.abi3.so                                 [.] <core::iter::adapters::map::Map<I,F> as core::iter::traits::iterator::Iterator>::fold
+     0.02%  vllm             tokenizers.abi3.so                                 [.] _RNvCsiGVaDesi5rv_7___rustc13___rdl_realloc
+     0.02%  vllm             tokenizers.abi3.so                                 [.] _ZN5alloc7raw_vec20RawVecInner$LT$A$GT$11finish_grow17hc41c98eec40d3be1E.llvm.1919663861007204860
+     0.02%  vllm             tokenizers.abi3.so                                 [.] alloc::str::join_generic_copy
+     0.02%  vllm             tokenizers.abi3.so                                 [.] hashbrown::map::HashMap<K,V,S,A>::insert
+     0.02%  vllm             tokenizers.abi3.so                                 [.] match_at
+     0.02%  vllm             tokenizers.abi3.so                                 [.] pyo3::impl_::extract_argument::FunctionDescription::extract_arguments_tuple_dict
+     0.02%  vllm             tokenizers.abi3.so                                 [.] tokenizers::tokenizer::normalizer::NormalizedString::convert_offsets
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

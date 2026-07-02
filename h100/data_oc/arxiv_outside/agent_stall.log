@@ -1,0 +1,56 @@
+20:52:53 [INFO] Single task mode: 01_Productivity_Flow_task_1_arxiv_digest
+20:52:53 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Starting container, mounting /home/ubuntu/oc/WildClawBench/workspace/01_Productivity_Flow/task_1_arxiv_digest/exec → /app (ro)
+20:52:53 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Container ID: 1d0332b32075
+20:52:53 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Copying /app → /tmp_workspace
+20:52:54 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Running warmup (1 commands)
+20:52:54 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] warmup: npm install -g agent-browser
+20:52:57 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Injected custom models config
+20:53:00 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Model set: my-openai-proxy/instruct-32b
+20:53:00 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Injected OPENROUTER_API_KEY into auth-profiles.json
+20:53:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] imageModel set: my-openai-proxy/instruct-32b
+20:53:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Started process PID=62048 → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_1_arxiv_digest/instruct-32b_20260701_2052_88c6b3/gateway.log
+20:53:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Waiting for gateway to be ready (2s)...
+20:53:04 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Started process PID=62095 → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_1_arxiv_digest/instruct-32b_20260701_2052_88c6b3/agent.log
+20:53:04 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Waiting for agent to finish...
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Agent finished successfully, elapsed: 177.32 seconds
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Agent exit code: 0
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Starting in-container grading...
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Grading results written to → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_1_arxiv_digest/instruct-32b_20260701_2052_88c6b3/score.json
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Grading complete
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Token usage - input:0 output:0 cache_read:0 total:0 cost:$0.0000
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Usage written to /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_1_arxiv_digest/instruct-32b_20260701_2052_88c6b3/usage.json
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Collected container directory /tmp/openclaw/. → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_1_arxiv_digest/instruct-32b_20260701_2052_88c6b3/task_output
+20:56:02 [WARNING] [01_task_1_instruct-32b_20260701_2052_88c6b3] results/ directory does not exist or is empty
+20:56:02 [INFO] [01_task_1_instruct-32b_20260701_2052_88c6b3] Container cleaned up
+
+============================================================
+  01_task_1_instruct-32b_20260701_2052_88c6b3
+============================================================
+  ░░░░░░░░░░ 0.00  classify_multimodal
+  ░░░░░░░░░░ 0.00  classify_medical
+  ░░░░░░░░░░ 0.00  classify_generation
+  ░░░░░░░░░░ 0.00  classify_driving
+  ░░░░░░░░░░ 0.00  classify_3d
+  ░░░░░░░░░░ 0.00  metadata_appendix_flags
+  ░░░░░░░░░░ 0.00  metadata_split_consistency
+  ░░░░░░░░░░ 0.00  metadata_simpleocr
+  ░░░░░░░░░░ 0.00  metadata_exploring_multimodal_lmms
+  ░░░░░░░░░░ 0.00  metadata_nolan
+  ░░░░░░░░░░ 0.00  metadata_weavetime
+  ░░░░░░░░░░ 0.00  metadata_global_local_dual_perception
+  ░░░░░░░░░░ 0.00  metadata_see_it_say_it_sorted
+  ░░░░░░░░░░ 0.00  metadata_dynamicgtr
+  ░░░░░░░░░░ 0.00  metadata_dynamic_multimodal_activation_steering
+  ░░░░░░░░░░ 0.00  metadata_dr_seg
+  ░░░░░░░░░░ 0.00  metadata_cccaption
+  ░░░░░░░░░░ 0.00  interest_count
+  ░░░░░░░░░░ 0.00  interest_selection
+  ░░░░░░░░░░ 0.00  benchmark_charxiv
+  ░░░░░░░░░░ 0.00  benchmark_caprl_avg
+  ░░░░░░░░░░ 0.00  benchmark_cccaption_avg
+  ░░░░░░░░░░ 0.00  benchmark_caprl_infovqa
+  ░░░░░░░░░░ 0.00  classify_score
+  ░░░░░░░░░░ 0.00  metadata_score
+  ░░░░░░░░░░ 0.00  interest_score
+  ░░░░░░░░░░ 0.00  overall_score
+============================================================

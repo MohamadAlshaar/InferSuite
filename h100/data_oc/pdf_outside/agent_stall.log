@@ -1,0 +1,38 @@
+20:48:25 [INFO] Single task mode: 01_Productivity_Flow_task_10_pdf_digest
+20:48:25 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Starting container, mounting /home/ubuntu/oc/WildClawBench/workspace/01_Productivity_Flow/task_10_pdf_digest/exec → /app (ro)
+20:48:25 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Container ID: fe47840963ed
+20:48:25 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Copying /app → /tmp_workspace
+20:48:27 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Injected custom models config
+20:48:29 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Model set: my-openai-proxy/instruct-32b
+20:48:29 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Injected OPENROUTER_API_KEY into auth-profiles.json
+20:48:32 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] imageModel set: my-openai-proxy/instruct-32b
+20:48:32 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Started process PID=58382 → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_10_pdf_digest/instruct-32b_20260701_2048_590533/gateway.log
+20:48:32 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Waiting for gateway to be ready (2s)...
+20:48:34 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Started process PID=58429 → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_10_pdf_digest/instruct-32b_20260701_2048_590533/agent.log
+20:48:34 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Waiting for agent to finish...
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Agent finished successfully, elapsed: 41.93 seconds
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Agent exit code: 0
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] gt directory copied to container /tmp_workspace/gt
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Starting in-container grading...
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Grading results written to → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_10_pdf_digest/instruct-32b_20260701_2048_590533/score.json
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Grading complete
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Token usage - input:0 output:0 cache_read:0 total:0 cost:$0.0000
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Usage written to /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_10_pdf_digest/instruct-32b_20260701_2048_590533/usage.json
+20:49:16 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Collected container directory /tmp/openclaw/. → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_10_pdf_digest/instruct-32b_20260701_2048_590533/task_output
+20:49:17 [WARNING] [01_task_10_instruct-32b_20260701_2048_590533] results/ directory does not exist or is empty
+20:49:17 [INFO] [01_task_10_instruct-32b_20260701_2048_590533] Container cleaned up
+
+============================================================
+  01_task_10_instruct-32b_20260701_2048_590533
+============================================================
+  ░░░░░░░░░░ 0.00  papers_dir_exists
+  ░░░░░░░░░░ 0.00  rename_accuracy
+  ░░░░░░░░░░ 0.00  classification_sections_exist
+  ░░░░░░░░░░ 0.00  classification_accuracy
+  ░░░░░░░░░░ 0.00  caption_papers_found
+  ░░░░░░░░░░ 0.00  table_caption_correct
+  ░░░░░░░░░░ 0.00  table_columns_correct
+  ░░░░░░░░░░ 0.00  table_rows_correct
+  ░░░░░░░░░░ 0.00  table_key_cells_correct
+  ░░░░░░░░░░ 0.00  overall_score
+============================================================

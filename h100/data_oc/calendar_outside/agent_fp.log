@@ -1,0 +1,48 @@
+20:22:36 [INFO] Single task mode: 01_Productivity_Flow_task_6_calendar_scheduling
+20:22:36 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Starting container, mounting /home/ubuntu/oc/WildClawBench/workspace/01_Productivity_Flow/task_6_calendar_scheduling/exec → /app (ro)
+20:22:36 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Container ID: 00f1ab65ee24
+20:22:36 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Copying /app → /tmp_workspace
+20:22:37 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Running warmup (2 commands)
+20:22:37 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] warmup: pip install ortools>=9.0
+20:22:49 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] warmup: pip install PyYAML>=6.0
+20:22:51 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Injected custom models config
+20:22:54 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Model set: my-openai-proxy/instruct-32b
+20:22:54 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Injected OPENROUTER_API_KEY into auth-profiles.json
+20:22:56 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] imageModel set: my-openai-proxy/instruct-32b
+20:22:56 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Started process PID=50857 → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_6_calendar_scheduling/instruct-32b_20260701_2022_1fb601/gateway.log
+20:22:56 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Waiting for gateway to be ready (2s)...
+20:22:58 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Started process PID=50904 → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_6_calendar_scheduling/instruct-32b_20260701_2022_1fb601/agent.log
+20:22:58 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Waiting for agent to finish...
+20:23:51 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Agent finished successfully, elapsed: 52.91 seconds
+20:23:51 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Agent exit code: 0
+20:23:51 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] gt directory copied to container /tmp_workspace/gt
+20:23:51 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Starting in-container grading...
+20:23:52 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Grading results written to → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_6_calendar_scheduling/instruct-32b_20260701_2022_1fb601/score.json
+20:23:52 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Grading complete
+20:23:52 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Token usage - input:0 output:0 cache_read:0 total:0 cost:$0.0000
+20:23:52 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Usage written to /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_6_calendar_scheduling/instruct-32b_20260701_2022_1fb601/usage.json
+20:23:52 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Collected container directory /tmp/openclaw/. → /home/ubuntu/oc/WildClawBench/output/openclaw/01_Productivity_Flow/01_Productivity_Flow_task_6_calendar_scheduling/instruct-32b_20260701_2022_1fb601/task_output
+20:23:52 [WARNING] [01_task_6_instruct-32b_20260701_2022_1fb601] results/ directory does not exist or is empty
+20:23:52 [INFO] [01_task_6_instruct-32b_20260701_2022_1fb601] Container cleaned up
+
+============================================================
+  01_task_6_instruct-32b_20260701_2022_1fb601
+============================================================
+  ░░░░░░░░░░ 0.00  output_files_valid
+  ░░░░░░░░░░ 0.00  scheduled_ics_parseable
+  ░░░░░░░░░░ 0.00  preserve_original_events
+  ░░░░░░░░░░ 0.00  unscheduled_json_valid
+  ░░░░░░░░░░ 0.00  decision_log_exists
+  ░░░░░░░░░░ 0.00  request_coverage_consistent
+  ░░░░░░░░░░ 0.00  required_attendees_respected
+  ░░░░░░░░░░ 0.00  duration_respected
+  ░░░░░░░░░░ 0.00  within_preferred_windows
+  ░░░░░░░░░░ 0.00  no_lunch_violation
+  ░░░░░░░░░░ 0.00  no_attendee_conflicts
+  ░░░░░░░░░░ 0.00  daily_limit_respected
+  ░░░░░░░░░░ 0.00  attendee_unavailability_respected
+  ░░░░░░░░░░ 0.00  reason_codes_valid
+  ░░░░░░░░░░ 0.00  hard_constraint_pass
+  ░░░░░░░░░░ 0.00  optimality_ratio
+  ░░░░░░░░░░ 0.00  overall_score
+============================================================

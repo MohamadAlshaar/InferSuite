@@ -1,0 +1,68 @@
+INFO 07-01 23:18:36 [api_utils.py:273] non-default args: {'max_model_len': 18000, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.95, 'max_num_seqs': 1, 'disable_log_stats': True, 'enforce_eager': True, 'model': 'Qwen/Qwen2.5-32B-Instruct'}
+WARNING 07-01 23:18:36 [envs.py:2004] Unknown vLLM environment variable detected: VLLM_ATTENTION_BACKEND
+WARNING 07-01 23:18:36 [envs.py:2004] Unknown vLLM environment variable detected: VLLM_FLASH_ATTN_VERSION
+WARNING 07-01 23:18:37 [arg_utils.py:1590] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+INFO 07-01 23:18:37 [model.py:598] Resolved architecture: Qwen2ForCausalLM
+INFO 07-01 23:18:37 [model.py:1725] Using max model len 18000
+INFO 07-01 23:18:37 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=16384.
+INFO 07-01 23:18:37 [vllm.py:1006] Asynchronous scheduling is enabled.
+WARNING 07-01 23:18:37 [vllm.py:1062] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+WARNING 07-01 23:18:37 [vllm.py:1110] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+INFO 07-01 23:18:37 [kernel.py:276] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 07-01 23:18:37 [vllm.py:1288] Cudagraph is disabled under eager mode
+INFO 07-01 23:18:37 [compilation.py:310] Enabled custom fusions: norm_quant, act_quant
+INFO 07-01 23:18:40 [core.py:114] Initializing a V1 LLM engine (v0.24.0) with config: model='Qwen/Qwen2.5-32B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-32B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=18000, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_verbose=False), seed=0, served_model_name=Qwen/Qwen2.5-32B-Instruct, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [16384], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=True, moe_backend='auto', linear_backend='auto')
+==PROF== Connected to process 89348 (/usr/bin/python3.10)
+INFO 07-01 23:18:42 [parallel_state.py:1588] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://172.29.150.13:37217 backend=nccl
+INFO 07-01 23:18:42 [parallel_state.py:1923] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+INFO 07-01 23:18:43 [topk_topp_sampler.py:39] FlashInfer top-p/top-k sampling disabled via VLLM_USE_FLASHINFER_SAMPLER=0.
+INFO 07-01 23:18:43 [gpu_model_runner.py:5160] Starting to load model Qwen/Qwen2.5-32B-Instruct...
+INFO 07-01 23:18:44 [cuda.py:480] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+INFO 07-01 23:18:44 [flash_attn.py:670] Using FlashAttention version 3
+INFO 07-01 23:18:45 [weight_utils.py:849] Filesystem type for checkpoints: EXT4. Checkpoint size: 61.03 GiB. Available RAM: 214.59 GiB.
+INFO 07-01 23:18:45 [weight_utils.py:872] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+Loading safetensors checkpoint shards:   0% Completed | 0/17 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:   6% Completed | 1/17 [00:00<00:10,  1.57it/s]
+Loading safetensors checkpoint shards:  12% Completed | 2/17 [00:01<00:09,  1.57it/s]
+Loading safetensors checkpoint shards:  18% Completed | 3/17 [00:01<00:08,  1.57it/s]
+Loading safetensors checkpoint shards:  24% Completed | 4/17 [00:02<00:08,  1.58it/s]
+Loading safetensors checkpoint shards:  29% Completed | 5/17 [00:03<00:07,  1.58it/s]
+Loading safetensors checkpoint shards:  35% Completed | 6/17 [00:03<00:06,  1.57it/s]
+Loading safetensors checkpoint shards:  41% Completed | 7/17 [00:04<00:06,  1.57it/s]
+Loading safetensors checkpoint shards:  47% Completed | 8/17 [00:05<00:05,  1.57it/s]
+Loading safetensors checkpoint shards:  53% Completed | 9/17 [00:05<00:05,  1.57it/s]
+Loading safetensors checkpoint shards:  59% Completed | 10/17 [00:06<00:04,  1.57it/s]
+Loading safetensors checkpoint shards:  65% Completed | 11/17 [00:07<00:03,  1.57it/s]
+Loading safetensors checkpoint shards:  71% Completed | 12/17 [00:07<00:03,  1.57it/s]
+Loading safetensors checkpoint shards:  76% Completed | 13/17 [00:08<00:02,  1.57it/s]
+Loading safetensors checkpoint shards:  82% Completed | 14/17 [00:08<00:01,  1.57it/s]
+Loading safetensors checkpoint shards:  88% Completed | 15/17 [00:09<00:01,  1.57it/s]
+Loading safetensors checkpoint shards:  94% Completed | 16/17 [00:10<00:00,  1.56it/s]
+Loading safetensors checkpoint shards: 100% Completed | 17/17 [00:10<00:00,  1.66it/s]
+Loading safetensors checkpoint shards: 100% Completed | 17/17 [00:10<00:00,  1.59it/s]
+
+INFO 07-01 23:18:55 [default_loader.py:430] Loading weights took 10.76 seconds
+INFO 07-01 23:18:56 [gpu_model_runner.py:5255] Model loading took 61.04 GiB memory and 12.029785 seconds
+INFO 07-01 23:19:00 [gpu_worker.py:508] Available KV cache memory: 10.86 GiB
+INFO 07-01 23:19:00 [kv_cache_utils.py:2146] GPU KV cache size: 44,464 tokens
+INFO 07-01 23:19:00 [kv_cache_utils.py:2147] Maximum concurrency for 18,000 tokens per request: 2.47x
+INFO 07-01 23:19:00 [deep_gemm.py:175] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+INFO 07-01 23:19:00 [deep_gemm.py:202] DeepGEMM PDL enabled on vllm.third_party.deep_gemm.
+2026-07-01 23:19:00,464 - INFO - autotuner.py:622 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-07-01 23:19:00,522 - INFO - autotuner.py:641 - flashinfer.jit: [Autotuner]: Autotuning process ends
+INFO 07-01 23:19:02 [jit_monitor.py:60] Kernel JIT monitor activated — Triton JIT compilations during inference will be logged as warnings.
+INFO 07-01 23:19:03 [core.py:344] init engine (profile, create kv cache, warmup model) took 6.68 s
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 120.82it/s]
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]WARNING 07-01 23:19:03 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _compute_slot_mapping_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+Processed prompts: 100%|██████████| 1/1 [00:00<00:00,  1.15it/s, est. speed input: 11.47 toks/s, output: 9.17 toks/s]Processed prompts: 100%|██████████| 1/1 [00:00<00:00,  1.15it/s, est. speed input: 11.47 toks/s, output: 9.17 toks/s]Processed prompts: 100%|██████████| 1/1 [00:00<00:00,  1.15it/s, est. speed input: 11.47 toks/s, output: 9.17 toks/s]
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 49.29it/s]
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]==PROF== Profiling "rms_norm_kernel": 0%
+==WARNING== Backing up device memory in system memory. Kernel replay might be slow. Consider using "--replay-mode application" to avoid memory save-and-restore.
+....50%....100% - 17 passes
+==PROF== Profiling "nvjet_sm90_tst_192x208_64x4_2x1_v_bz_coopB_bias_TNT": 0%....50%....100% - 17 passes
+==PROF== Profiling "rotary_embedding_kernel": 0%....50%....100% - 17 passes
+==PROF== Profiling "reshape_and_cache_flash_kernel": 0%....50%....100% - 17 passes
+==PROF== Profiling "nvjet_sm90_tst_256x160_64x4_1x2_h_bz_coopA_TNT": 0%....50%....100% - 17 passes
+==PROF== Profiling "fused_add_rms_norm_kernel": 0%....50%....100% - 17 passes
+==PROF== Profiling "nvjet_sm90_tst_192x208_64x4_2x1_v_bz_coopB_TNT": 

@@ -1,0 +1,40 @@
+21:01:07 [INFO] Single task mode: 05_Creative_Synthesis_task_10_social_poster_multi_crop
+21:01:07 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injecting env var: OPENROUTER_API_KEY=dumm***
+21:01:07 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injecting env var: OPENROUTER_BASE_URL=http***
+21:01:07 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injecting env var: JUDGE_MODEL=clau***
+21:01:07 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Starting container, mounting /home/ubuntu/oc/WildClawBench/workspace/05_Creative_Synthesis/task_10_social_poster_multi_crop/exec → /app (ro)
+21:01:08 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Container ID: d241c4ecbaa6
+21:01:08 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Copying /app → /tmp_workspace
+21:01:08 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Running warmup (1 commands)
+21:01:08 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] warmup: pip install requests Pillow
+21:01:11 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injected custom models config
+21:01:14 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Model set: my-openai-proxy/instruct-32b
+21:01:14 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injected OPENROUTER_API_KEY into auth-profiles.json
+21:01:17 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] imageModel set: my-openai-proxy/instruct-32b
+21:01:17 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Started process PID=65347 → /home/ubuntu/oc/WildClawBench/output/openclaw/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop/instruct-32b_20260701_2101_552483/gateway.log
+21:01:17 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Waiting for gateway to be ready (2s)...
+21:01:19 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Started process PID=65412 → /home/ubuntu/oc/WildClawBench/output/openclaw/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop/instruct-32b_20260701_2101_552483/agent.log
+21:01:19 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Waiting for agent to finish...
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Agent finished successfully, elapsed: 46.24 seconds
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Agent exit code: 0
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] gt directory copied to container /tmp_workspace/gt
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Starting in-container grading...
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injecting grading env: OPENROUTER_API_KEY=dumm***
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injecting grading env: OPENROUTER_BASE_URL=http***
+21:02:05 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Injecting grading env: JUDGE_MODEL=clau***
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Grading results written to → /home/ubuntu/oc/WildClawBench/output/openclaw/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop/instruct-32b_20260701_2101_552483/score.json
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Grading complete
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Token usage - input:0 output:0 cache_read:0 total:0 cost:$0.0000
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Usage written to /home/ubuntu/oc/WildClawBench/output/openclaw/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop/instruct-32b_20260701_2101_552483/usage.json
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Collected container directory /tmp/openclaw/. → /home/ubuntu/oc/WildClawBench/output/openclaw/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop/instruct-32b_20260701_2101_552483/task_output
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Collected container directory /tmp_workspace/results/. → /home/ubuntu/oc/WildClawBench/output/openclaw/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop/instruct-32b_20260701_2101_552483/task_output/workspace/results
+21:02:06 [INFO] [05_task_10_instruct-32b_20260701_2101_552483] Container cleaned up
+
+============================================================
+  05_task_10_instruct-32b_20260701_2101_552483
+============================================================
+  █████░░░░░ 0.50  basic_requirements
+  ░░░░░░░░░░ 0.00  subject_preserved
+  ░░░░░░░░░░ 0.00  visual_quality
+  ░░░░░░░░░░ 0.00  overall_score
+============================================================

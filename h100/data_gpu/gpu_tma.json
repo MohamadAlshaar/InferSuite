@@ -1,0 +1,679 @@
+{
+ "prefill": {
+  "kernels": 6,
+  "by_reason": {
+   "selected": 5.6904348130441935,
+   "long_scoreboard": 34.15684918482981,
+   "short_scoreboard": 0.6127867208417612,
+   "lg_throttle": 0.009150383222132118,
+   "tex_throttle": 0.0,
+   "imc_miss": 0.04920746332289221,
+   "mio_throttle": 16.351199305660856,
+   "math_pipe_throttle": 2.0224041918812006,
+   "no_instruction": 0.3532196519741117,
+   "branch_resolving": 0.39058782645152573,
+   "barrier": 28.862095179787335,
+   "membar": 0.0,
+   "wait": 9.135445753502802,
+   "not_selected": 1.6678711817664056,
+   "drain": 0.11027099989028777,
+   "dispatch_stall": 0.5747826249187413,
+   "misc": 0.0036149313078357695,
+   "sleeping": 0.010079787598102801
+  },
+  "by_category": {
+   "Issued": 5.6904348130441935,
+   "Mem \u00b7 global/L2": 34.15684918482981,
+   "Mem \u00b7 L1/shared": 0.6127867208417612,
+   "Mem \u00b7 LSU throttle": 16.360349688882987,
+   "Mem \u00b7 const-cache": 0.04920746332289221,
+   "Compute \u00b7 math pipe": 2.0224041918812006,
+   "Front-end (fetch)": 0.3532196519741117,
+   "Branch resolve": 0.39058782645152573,
+   "Synchronization": 28.862095179787335,
+   "Latency (fixed deps)": 9.135445753502802,
+   "Scheduler-covered": 1.6678711817664056,
+   "Other": 0.6987483437149676
+  },
+  "sol_compute_pct": 85.19723506459825,
+  "sol_memory_pct": 72.95113261412558,
+  "issue_eff_per_cycle": 0.1761500324934176,
+  "by_kernel_class": {
+   "RMSNorm": {
+    "time_pct": 1.57,
+    "sol_compute": 30.865155558237007,
+    "sol_memory": 86.78807107429189,
+    "issued_pct": 2.2308368612367193,
+    "issue_eff": 0.31768944771175556,
+    "by_category": {
+     "Issued": 2.2308368612367193,
+     "Mem \u00b7 global/L2": 65.48923761866031,
+     "Mem \u00b7 L1/shared": 2.9726057789762823,
+     "Mem \u00b7 LSU throttle": 0.5095311350502131,
+     "Mem \u00b7 const-cache": 0.06816667723461738,
+     "Compute \u00b7 math pipe": 0.6447523314266919,
+     "Front-end (fetch)": 0.20687505979089096,
+     "Branch resolve": 0.3890057750264516,
+     "Synchronization": 21.06932074194074,
+     "Latency (fixed deps)": 3.0103417455552255,
+     "Scheduler-covered": 2.0793008923179745,
+     "Other": 1.3300253827838842
+    },
+    "uarch": {
+     "IPC": 1.2820465827080376,
+     "Occupancy": 90.10522417738119,
+     "Eligible warps": 0.6178949266544989,
+     "SIMT eff": 30.875162576894475,
+     "Tensor pipe": 0.6854579362536335,
+     "FMA pipe": 13.8995479556547,
+     "ALU pipe": 23.7439600582032,
+     "L1 hit": 50.8012745447171,
+     "L2 hit": 53.72511910511729,
+     "DRAM BW": 86.78807107429189,
+     "Registers": 29.321300615155817
+    }
+   },
+   "GEMM (bf16)": {
+    "time_pct": 77.84,
+    "sol_compute": 95.78417663860522,
+    "sol_memory": 75.0557953897138,
+    "issued_pct": 6.205135683431048,
+    "issue_eff": 0.10746607094866971,
+    "by_category": {
+     "Issued": 6.205135683431048,
+     "Mem \u00b7 global/L2": 26.867609300157962,
+     "Mem \u00b7 L1/shared": 0.10728449372336693,
+     "Mem \u00b7 LSU throttle": 20.35451036080319,
+     "Mem \u00b7 const-cache": 0.030302263479432583,
+     "Compute \u00b7 math pipe": 1.535884413779753,
+     "Front-end (fetch)": 0.34250116862251667,
+     "Branch resolve": 0.3460510540976732,
+     "Synchronization": 33.56210298722376,
+     "Latency (fixed deps)": 9.758389312113692,
+     "Scheduler-covered": 0.4881327686033058,
+     "Other": 0.40209619396428686
+    },
+    "uarch": {
+     "IPC": 0.4469432633700618,
+     "Occupancy": 14.80130108183284,
+     "Eligible warps": 0.12050916403520559,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 96.76364224328137,
+     "FMA pipe": 0.1986294354340231,
+     "ALU pipe": 2.248841202768073,
+     "L1 hit": 0.0,
+     "L2 hit": 74.53984970206261,
+     "DRAM BW": 29.123041713551466,
+     "Registers": 167.99999999999997
+    }
+   },
+   "RoPE": {
+    "time_pct": 0.9,
+    "sol_compute": 59.858354000000006,
+    "sol_memory": 47.359511999999995,
+    "issued_pct": 4.343790906170705,
+    "issue_eff": 0.61,
+    "by_category": {
+     "Issued": 4.343790906170705,
+     "Mem \u00b7 global/L2": 68.7849953749625,
+     "Mem \u00b7 L1/shared": 1.0606854003670927,
+     "Mem \u00b7 LSU throttle": 0.35592481528627556,
+     "Mem \u00b7 const-cache": 0.05700339705148701,
+     "Compute \u00b7 math pipe": 6.186013165556361,
+     "Front-end (fetch)": 0.2717554314055575,
+     "Branch resolve": 0.3360172812858972,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 7.236890315482071,
+     "Scheduler-covered": 9.223886347658171,
+     "Other": 2.143037564773873
+    },
+    "uarch": {
+     "IPC": 2.43491,
+     "Occupancy": 87.759756,
+     "Eligible warps": 1.914642,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 0.0,
+     "FMA pipe": 26.388315,
+     "ALU pipe": 51.18537400000001,
+     "L1 hit": 58.226422,
+     "L2 hit": 49.650763,
+     "DRAM BW": 47.359511999999995,
+     "Registers": 32.0
+    }
+   },
+   "KV-cache write": {
+    "time_pct": 0.4,
+    "sol_compute": 45.273158,
+    "sol_memory": 33.969159,
+    "issued_pct": 6.665027535536799,
+    "issue_eff": 0.48,
+    "by_category": {
+     "Issued": 6.665027535536799,
+     "Mem \u00b7 global/L2": 40.668196315034166,
+     "Mem \u00b7 L1/shared": 5.077838511681375,
+     "Mem \u00b7 LSU throttle": 1.512268423296261,
+     "Mem \u00b7 const-cache": 0.46132721367347285,
+     "Compute \u00b7 math pipe": 9.2901344745134,
+     "Front-end (fetch)": 1.2976173369508857,
+     "Branch resolve": 1.6833307962125006,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 17.213662808910012,
+     "Scheduler-covered": 13.168636867627075,
+     "Other": 2.9619597165640577
+    },
+    "uarch": {
+     "IPC": 1.912857,
+     "Occupancy": 45.226911,
+     "Eligible warps": 1.409568,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 0.0,
+     "FMA pipe": 7.408327,
+     "ALU pipe": 15.956396000000002,
+     "L1 hit": 5.526346,
+     "L2 hit": 50.465286,
+     "DRAM BW": 33.969159,
+     "Registers": 40.0
+    }
+   },
+   "Elementwise/index": {
+    "time_pct": 0.01
+   },
+   "Attention (flash)": {
+    "time_pct": 16.14
+   },
+   "Activation (SwiGLU)": {
+    "time_pct": 3.15
+   },
+   "Other": {
+    "time_pct": 0.0
+   }
+  },
+  "uarch": {
+   "IPC": 0.7187556101928836,
+   "Occupancy": 28.485830025813843,
+   "Eligible warps": 0.3393779444329061,
+   "SIMT eff": 31.88851930510984,
+   "Tensor pipe": 77.2605060159251,
+   "FMA pipe": 3.6759120581263693,
+   "ALU pipe": 8.346623743878173,
+   "L1 hit": 9.424759311541528,
+   "L2 hit": 69.93465064259921,
+   "DRAM BW": 36.30857464032132,
+   "Registers": 140.47295676700543
+  },
+  "lane_eff_pct": 99.65162282846825,
+  "lwr_pct": 5.6706106371946525
+ },
+ "decode": {
+  "kernels": 60,
+  "by_reason": {
+   "selected": 3.288536395368568,
+   "long_scoreboard": 83.76582623479452,
+   "short_scoreboard": 0.6711387958892991,
+   "lg_throttle": 0.0,
+   "tex_throttle": 0.0,
+   "imc_miss": 0.8837852984952748,
+   "mio_throttle": 0.23316069954547408,
+   "math_pipe_throttle": 0.9427478218563032,
+   "no_instruction": 1.4385239540289572,
+   "branch_resolving": 0.7406478449338987,
+   "barrier": 0.7281848545646458,
+   "membar": 0.0,
+   "wait": 6.005170737833638,
+   "not_selected": 0.9030470079006776,
+   "drain": 0.03728877530263357,
+   "dispatch_stall": 0.22371324358869682,
+   "misc": 0.024698148297478854,
+   "sleeping": 0.11353018759994367
+  },
+  "by_category": {
+   "Issued": 3.288536395368568,
+   "Mem \u00b7 global/L2": 83.76582623479452,
+   "Mem \u00b7 L1/shared": 0.6711387958892991,
+   "Mem \u00b7 LSU throttle": 0.23316069954547408,
+   "Mem \u00b7 const-cache": 0.8837852984952748,
+   "Compute \u00b7 math pipe": 0.9427478218563032,
+   "Front-end (fetch)": 1.4385239540289572,
+   "Branch resolve": 0.7406478449338987,
+   "Synchronization": 0.7281848545646458,
+   "Latency (fixed deps)": 6.005170737833638,
+   "Scheduler-covered": 0.9030470079006776,
+   "Other": 0.3992303547887529
+  },
+  "sol_compute_pct": 4.848685994628573,
+  "sol_memory_pct": 75.9689723861714,
+  "issue_eff_per_cycle": 0.09100155102040818,
+  "by_kernel_class": {
+   "RMSNorm": {
+    "time_pct": 1.02,
+    "sol_compute": 0.11353910474820143,
+    "sol_memory": 5.559457329208634,
+    "issued_pct": 4.807480783262923,
+    "issue_eff": 0.3265007194244604,
+    "by_category": {
+     "Issued": 4.807480783262923,
+     "Mem \u00b7 global/L2": 28.1718788398382,
+     "Mem \u00b7 L1/shared": 8.671357808447667,
+     "Mem \u00b7 LSU throttle": 1.5751390381203552,
+     "Mem \u00b7 const-cache": 6.715111350462712,
+     "Compute \u00b7 math pipe": 2.0137635943673535,
+     "Front-end (fetch)": 6.66511973373638,
+     "Branch resolve": 2.4616068665506434,
+     "Synchronization": 24.613992399152618,
+     "Latency (fixed deps)": 7.686299510106986,
+     "Scheduler-covered": 5.1381811158037625,
+     "Other": 1.4800689601504082
+    },
+    "uarch": {
+     "IPC": 1.2662878549640288,
+     "Occupancy": 41.84989761611511,
+     "Eligible warps": 0.6731322152517987,
+     "SIMT eff": 29.448273381294968,
+     "Tensor pipe": 0.8005150935251799,
+     "FMA pipe": 9.614007635971223,
+     "ALU pipe": 17.818239326330936,
+     "L1 hit": 55.15416225035972,
+     "L2 hit": 94.11652982446046,
+     "DRAM BW": 0.25245962791366905,
+     "Registers": 29.876258992805756
+    }
+   },
+   "GEMM (bf16)": {
+    "time_pct": 94.35,
+    "sol_compute": 5.283068057696769,
+    "sol_memory": 82.60247723757648,
+    "issued_pct": 2.9761436221596353,
+    "issue_eff": 0.06543065146405438,
+    "by_category": {
+     "Issued": 2.9761436221596353,
+     "Mem \u00b7 global/L2": 88.25809946803709,
+     "Mem \u00b7 L1/shared": 0.15150489648605692,
+     "Mem \u00b7 LSU throttle": 0.0001960494247885492,
+     "Mem \u00b7 const-cache": 0.46583860796080306,
+     "Compute \u00b7 math pipe": 0.7918139625801334,
+     "Front-end (fetch)": 0.9457402101576667,
+     "Branch resolve": 0.6025545242671089,
+     "Synchronization": 0.03273398191668674,
+     "Latency (fixed deps)": 5.420477378126886,
+     "Scheduler-covered": 0.15618345435291017,
+     "Other": 0.19871384453022325
+    },
+    "uarch": {
+     "IPC": 0.2726932337669289,
+     "Occupancy": 14.571634386863655,
+     "Eligible warps": 0.07218593352425816,
+     "SIMT eff": 31.954059561408204,
+     "Tensor pipe": 3.510890552102849,
+     "FMA pipe": 0.018084293542458465,
+     "ALU pipe": 1.5448453715807504,
+     "L1 hit": 0.0,
+     "L2 hit": 3.1745715588387484,
+     "DRAM BW": 82.60247723757648,
+     "Registers": 167.99999999999994
+    }
+   },
+   "RoPE": {
+    "time_pct": 0.66,
+    "sol_compute": 0.14104029342105262,
+    "sol_memory": 4.247087654824561,
+    "issued_pct": 7.294715186211498,
+    "issue_eff": 0.28571929824561404,
+    "by_category": {
+     "Issued": 7.294715186211498,
+     "Mem \u00b7 global/L2": 61.60949035144133,
+     "Mem \u00b7 L1/shared": 2.09086412141522,
+     "Mem \u00b7 LSU throttle": 0.44777681432735067,
+     "Mem \u00b7 const-cache": 3.0981605814189495,
+     "Compute \u00b7 math pipe": 3.611966582417131,
+     "Front-end (fetch)": 3.0492371642785723,
+     "Branch resolve": 0.5517317281150976,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 11.891738809389393,
+     "Scheduler-covered": 4.430046953049352,
+     "Other": 1.9242717079361025
+    },
+    "uarch": {
+     "IPC": 1.1013669811403508,
+     "Occupancy": 23.870335751754386,
+     "Eligible warps": 0.4557343,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 0.0,
+     "FMA pipe": 11.842583685964911,
+     "ALU pipe": 22.97104160438596,
+     "L1 hit": 58.72157892587719,
+     "L2 hit": 95.84000421885965,
+     "DRAM BW": 0.10279189736842104,
+     "Registers": 32.0
+    }
+   },
+   "KV-cache write": {
+    "time_pct": 0.47,
+    "sol_compute": 0.05991737272727274,
+    "sol_memory": 5.619957846022729,
+    "issued_pct": 5.652477027543095,
+    "issue_eff": 0.15560227272727273,
+    "by_category": {
+     "Issued": 5.652477027543095,
+     "Mem \u00b7 global/L2": 31.31226161677923,
+     "Mem \u00b7 L1/shared": 2.616627607483014,
+     "Mem \u00b7 LSU throttle": 0.9149556844539568,
+     "Mem \u00b7 const-cache": 13.980669407757903,
+     "Compute \u00b7 math pipe": 4.470397830933705,
+     "Front-end (fetch)": 19.026020759637717,
+     "Branch resolve": 1.3230538922547266,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 13.897802879905747,
+     "Scheduler-covered": 5.208865940516656,
+     "Other": 1.5968673527342583
+    },
+    "uarch": {
+     "IPC": 0.6223533767045455,
+     "Occupancy": 17.45107511420455,
+     "Eligible warps": 0.3019855852272728,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 0.0,
+     "FMA pipe": 2.3278575346590915,
+     "ALU pipe": 5.013846688636364,
+     "L1 hit": 5.514706,
+     "L2 hit": 94.68687090795456,
+     "DRAM BW": 0.20213645625000004,
+     "Registers": 40.00000000000001
+    }
+   },
+   "Activation (SwiGLU)": {
+    "time_pct": 1.26,
+    "sol_compute": 0.3395975139703346,
+    "sol_memory": 3.009401094860297,
+    "issued_pct": 8.960113309550819,
+    "issue_eff": 0.6050155225939979,
+    "by_category": {
+     "Issued": 8.960113309550819,
+     "Mem \u00b7 global/L2": 25.98823020788749,
+     "Mem \u00b7 L1/shared": 8.874619351000526,
+     "Mem \u00b7 LSU throttle": 7.0491031389169265,
+     "Mem \u00b7 const-cache": 0.3604403682751086,
+     "Compute \u00b7 math pipe": 1.2536515649739095,
+     "Front-end (fetch)": 2.2820278808428927,
+     "Branch resolve": 3.811944651833455,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 17.175094732054806,
+     "Scheduler-covered": 19.3149325000182,
+     "Other": 4.929842294645859
+    },
+    "uarch": {
+     "IPC": 2.3834079744739562,
+     "Occupancy": 41.36179425905485,
+     "Eligible warps": 1.894768936529838,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 3.889238357019662,
+     "FMA pipe": 30.64575726664367,
+     "ALU pipe": 28.0889436167644,
+     "L1 hit": 0.0,
+     "L2 hit": 86.91944943325284,
+     "DRAM BW": 0.3833948665056916,
+     "Registers": 30.999999999999996
+    }
+   },
+   "Elementwise/index": {
+    "time_pct": 0.31
+   },
+   "Attention (flash)": {
+    "time_pct": 1.79
+   },
+   "Other": {
+    "time_pct": 0.14
+   }
+  },
+  "uarch": {
+   "IPC": 0.37127675488979583,
+   "Occupancy": 16.19388330917551,
+   "Eligible warps": 0.14280547733877552,
+   "SIMT eff": 31.885579346938776,
+   "Tensor pipe": 3.327170370367347,
+   "FMA pipe": 1.2683742289142856,
+   "ALU pipe": 3.083282551453061,
+   "L1 hit": 2.7367493578040816,
+   "L2 hit": 10.775702491493881,
+   "DRAM BW": 75.6013073327755,
+   "Registers": 156.4693632653061
+  },
+  "lane_eff_pct": 99.64243545918367,
+  "lwr_pct": 3.27677775530689
+ },
+ "normal": {
+  "kernels": 21,
+  "by_reason": {
+   "selected": 5.977897654689334,
+   "long_scoreboard": 28.725929077523055,
+   "short_scoreboard": 0.33528883680796,
+   "lg_throttle": 0.0028132778571694117,
+   "tex_throttle": 0.0,
+   "imc_miss": 0.012533902364897891,
+   "mio_throttle": 19.277911061950242,
+   "math_pipe_throttle": 1.5759176256490397,
+   "no_instruction": 0.33460488473807654,
+   "branch_resolving": 0.4212315030547033,
+   "barrier": 32.23475580367023,
+   "membar": 0.0,
+   "wait": 9.586893176346893,
+   "not_selected": 1.030787561364,
+   "drain": 0.03536748133638506,
+   "dispatch_stall": 0.4320260700612524,
+   "misc": 0.012366534238242573,
+   "sleeping": 0.00367554834851754
+  },
+  "by_category": {
+   "Issued": 5.977897654689334,
+   "Mem \u00b7 global/L2": 28.725929077523055,
+   "Mem \u00b7 L1/shared": 0.33528883680796,
+   "Mem \u00b7 LSU throttle": 19.28072433980741,
+   "Mem \u00b7 const-cache": 0.012533902364897891,
+   "Compute \u00b7 math pipe": 1.5759176256490397,
+   "Front-end (fetch)": 0.33460488473807654,
+   "Branch resolve": 0.4212315030547033,
+   "Synchronization": 32.23475580367023,
+   "Latency (fixed deps)": 9.586893176346893,
+   "Scheduler-covered": 1.030787561364,
+   "Other": 0.48343563398439754
+  },
+  "sol_compute_pct": 93.13208837573114,
+  "sol_memory_pct": 75.65779602221185,
+  "issue_eff_per_cycle": 0.13945784840003872,
+  "by_kernel_class": {
+   "RMSNorm": {
+    "time_pct": 1.27,
+    "sol_compute": 27.53008052766182,
+    "sol_memory": 87.57070794582793,
+    "issued_pct": 1.9682518654697465,
+    "issue_eff": 0.27923420181373254,
+    "by_category": {
+     "Issued": 1.9682518654697465,
+     "Mem \u00b7 global/L2": 66.64561131513398,
+     "Mem \u00b7 L1/shared": 3.1327399006220666,
+     "Mem \u00b7 LSU throttle": 0.5662040597125563,
+     "Mem \u00b7 const-cache": 0.04362955616866113,
+     "Compute \u00b7 math pipe": 0.5464118619063982,
+     "Front-end (fetch)": 0.1893334754723513,
+     "Branch resolve": 0.3163473094644892,
+     "Synchronization": 20.85440443122798,
+     "Latency (fixed deps)": 2.4939952609833638,
+     "Scheduler-covered": 1.6990449037625481,
+     "Other": 1.544026060075871
+    },
+    "uarch": {
+     "IPC": 1.1337224459239,
+     "Occupancy": 90.17695348610911,
+     "Eligible warps": 0.5302253294707547,
+     "SIMT eff": 30.93171440909746,
+     "Tensor pipe": 0.8210164012523391,
+     "FMA pipe": 12.001679855237274,
+     "ALU pipe": 20.96089698109496,
+     "L1 hit": 56.48968948879613,
+     "L2 hit": 52.14045136608128,
+     "DRAM BW": 87.57070794582793,
+     "Registers": 29.77371527277962
+    }
+   },
+   "GEMM (bf16)": {
+    "time_pct": 84.01,
+    "sol_compute": 96.81021076837715,
+    "sol_memory": 75.37483723589756,
+    "issued_pct": 6.127714365733945,
+    "issue_eff": 0.10785467177817512,
+    "by_category": {
+     "Issued": 6.127714365733945,
+     "Mem \u00b7 global/L2": 25.88472596369511,
+     "Mem \u00b7 L1/shared": 0.07092025367311251,
+     "Mem \u00b7 LSU throttle": 20.751629275829373,
+     "Mem \u00b7 const-cache": 0.009093486072357855,
+     "Compute \u00b7 math pipe": 1.512813471080847,
+     "Front-end (fetch)": 0.3244789029769745,
+     "Branch resolve": 0.34635865895985707,
+     "Synchronization": 34.51362139889918,
+     "Latency (fixed deps)": 9.739206829796938,
+     "Scheduler-covered": 0.4010970053022928,
+     "Other": 0.31834038798002084
+    },
+    "uarch": {
+     "IPC": 0.4363921073184338,
+     "Occupancy": 14.819219509234308,
+     "Eligible warps": 0.11624061826838518,
+     "SIMT eff": 31.99936239521435,
+     "Tensor pipe": 97.46274927878474,
+     "FMA pipe": 0.049755974560892306,
+     "ALU pipe": 2.1449894002107475,
+     "L1 hit": 0.0,
+     "L2 hit": 74.54075647699185,
+     "DRAM BW": 30.181931900458412,
+     "Registers": 168.0
+    }
+   },
+   "RoPE": {
+    "time_pct": 0.77,
+    "sol_compute": 59.79725859590535,
+    "sol_memory": 47.13013423252938,
+    "issued_pct": 4.338976229437614,
+    "issue_eff": 0.61,
+    "by_category": {
+     "Issued": 4.338976229437614,
+     "Mem \u00b7 global/L2": 68.76004298523982,
+     "Mem \u00b7 L1/shared": 1.058557848288157,
+     "Mem \u00b7 LSU throttle": 0.3625176528474279,
+     "Mem \u00b7 const-cache": 0.054228383955935225,
+     "Compute \u00b7 math pipe": 6.176980848620276,
+     "Front-end (fetch)": 0.27472220462794555,
+     "Branch resolve": 0.33565089057650616,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 7.229720899996436,
+     "Scheduler-covered": 9.258666829634196,
+     "Other": 2.1499352267756957
+    },
+    "uarch": {
+     "IPC": 2.4371596923477523,
+     "Occupancy": 87.91546539097745,
+     "Eligible warps": 1.9117268812290467,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 0.0,
+     "FMA pipe": 26.41260448924259,
+     "ALU pipe": 51.232489770725515,
+     "L1 hit": 58.19797839393939,
+     "L2 hit": 49.63556910435179,
+     "DRAM BW": 47.13013423252938,
+     "Registers": 32.0
+    }
+   },
+   "KV-cache write": {
+    "time_pct": 0.42,
+    "sol_compute": 44.65261897644614,
+    "sol_memory": 33.61806627664242,
+    "issued_pct": 6.64695925391494,
+    "issue_eff": 0.4750386791363584,
+    "by_category": {
+     "Issued": 6.64695925391494,
+     "Mem \u00b7 global/L2": 40.744576460557504,
+     "Mem \u00b7 L1/shared": 5.05833943927108,
+     "Mem \u00b7 LSU throttle": 1.5201277243409728,
+     "Mem \u00b7 const-cache": 0.4942106046439855,
+     "Compute \u00b7 math pipe": 9.315199641550247,
+     "Front-end (fetch)": 1.3293383019093914,
+     "Branch resolve": 1.678864589639414,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 17.16847933608469,
+     "Scheduler-covered": 13.111802973095015,
+     "Other": 2.9321016749927664
+    },
+    "uarch": {
+     "IPC": 1.8987219498903134,
+     "Occupancy": 44.99360986710541,
+     "Eligible warps": 1.4061344284724628,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 0.0,
+     "FMA pipe": 7.353391812030945,
+     "ALU pipe": 15.838075172959243,
+     "L1 hit": 5.526936893892161,
+     "L2 hit": 50.57885881584113,
+     "DRAM BW": 33.61806627664242,
+     "Registers": 40.0
+    }
+   },
+   "Activation (SwiGLU)": {
+    "time_pct": 2.16,
+    "sol_compute": 59.62411272733938,
+    "sol_memory": 92.703823881126,
+    "issued_pct": 5.176491258615529,
+    "issue_eff": 0.6,
+    "by_category": {
+     "Issued": 5.176491258615529,
+     "Mem \u00b7 global/L2": 58.86061829121814,
+     "Mem \u00b7 L1/shared": 4.381373159706436,
+     "Mem \u00b7 LSU throttle": 3.763888392876342,
+     "Mem \u00b7 const-cache": 0.005304071184310875,
+     "Compute \u00b7 math pipe": 0.8772111782486313,
+     "Front-end (fetch)": 0.5732797962411446,
+     "Branch resolve": 2.2055185519132836,
+     "Synchronization": 0.0,
+     "Latency (fixed deps)": 9.956055187524917,
+     "Scheduler-covered": 11.249505979550106,
+     "Other": 2.950754132921141
+    },
+    "uarch": {
+     "IPC": 2.4074157136513628,
+     "Occupancy": 72.88578923371492,
+     "Eligible warps": 1.8942834281582268,
+     "SIMT eff": 32.0,
+     "Tensor pipe": 3.94932852723347,
+     "FMA pipe": 31.11924677455493,
+     "ALU pipe": 28.522928585326106,
+     "L1 hit": 0.0,
+     "L2 hit": 34.071925489672864,
+     "DRAM BW": 92.703823881126,
+     "Registers": 30.999999999999996
+    }
+   },
+   "Elementwise/index": {
+    "time_pct": 0.06
+   },
+   "Attention (flash)": {
+    "time_pct": 11.23
+   },
+   "Other": {
+    "time_pct": 0.07
+   }
+  },
+  "uarch": {
+   "IPC": 0.5629968319319334,
+   "Occupancy": 19.87844009121487,
+   "Eligible warps": 0.2256033641977763,
+   "SIMT eff": 31.976712817532537,
+   "Tensor pipe": 89.94182746203118,
+   "FMA pipe": 1.9152496497061087,
+   "ALU pipe": 4.364336553354643,
+   "L1 hit": 2.1362495745367327,
+   "L2 hit": 72.04966458427972,
+   "DRAM BW": 34.02913577408864,
+   "Registers": 157.2245140471347
+  },
+  "lane_eff_pct": 99.92722755478918,
+  "lwr_pct": 5.973547392393817
+ }
+}
