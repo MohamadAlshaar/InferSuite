@@ -15,7 +15,7 @@ It contains three things:
 
 1. **The Service** — a deployable RAG + semantic-cache + vLLM chatbot on Kubernetes.
 2. **The Benchmark Suite** — a load generator + CPU/GPU profiler that measures that service.
-3. **The Agentic Workloads** — three agents (SWE-agent, BigCodeBench, OpenClaw) profiled the same way.
+3. **The Agentic Workloads** — three agent benchmarks, profiled the same way: SWE-agent on SWE-bench, our own driver on BigCodeBench, and OpenClaw on WildClawBench.
 
 ## Repository map
 
@@ -103,7 +103,7 @@ Three agents chosen to span different kinds of tool-execution work:
 |---|---|---|
 | SWE-agent (`swe_agent/`) | SWE-bench repo bug-fixing, external SWE-agent harness | repo navigation, edits, builds, test suites |
 | BigCodeBench (`bigcodebench/`) | own driver: generate → run tests → fix loop | executing numeric/library Python every turn |
-| OpenClaw (`openclaw/`) | live browser / computer-use tasks | browser control, documents, images |
+| OpenClaw (`openclaw/`) | WildClawBench live browser / computer-use tasks | browser control, documents, images |
 
 Shared measurement harness in `agentic/common/`; corrected canonical data and derivations in
 `agentic/CANONICAL/` (`microarch.py` is the single source of truth for derived metrics).
