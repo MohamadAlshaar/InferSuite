@@ -1,0 +1,95 @@
+    88.24%     0.00%  ftdc      libc.so.6          [.] 0x00007c4637b6cc6c
+    88.24%     0.00%  ftdc      mongod             [.] execute_native_thread_routine
+    88.24%     0.00%  ftdc      mongod             [.] mongo::FTDCController::doLoop(mongo::Service*)
+    88.24%     0.00%  ftdc      mongod             [.] std::thread::_State_impl<std::thread::_Invoker<std::tuple<mongo::stdx::thread::thread<mongo::FTDCController::start(mongo::Service*)::{lambda()#1}, , 0>(mongo::FTDCController::start(mongo::Service*)::{lambda()#1})::{lambda()#1}> > >::_M_run()
+    64.71%     0.00%  ftdc      mongod             [.] mongo::FTDCCollectorCollection::collect(mongo::Client*, mongo::UseMultiServiceSchema, std::vector<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int>, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int> > >&)
+    64.71%     0.00%  ftdc      mongod             [.] mongo::SyncFTDCCollectorCollection::_collect(mongo::OperationContext*, mongo::ClusterRole, mongo::BSONObjBuilder*, std::vector<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int>, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int> > >&)
+    35.29%     0.00%  ftdc      mongod             [.] mongo::(anonymous namespace)::LinuxSystemMetricsCollector::collect(mongo::OperationContext*, mongo::BSONObjBuilder&)
+    29.41%     0.00%  ftdc      mongod             [.] mongo::BasicCommandWithReplyBuilderInterface::Invocation::run(mongo::OperationContext*, mongo::rpc::ReplyBuilderInterface*)
+    29.41%     0.00%  ftdc      mongod             [.] mongo::CommandHelpers::runCommandDirectly(mongo::OperationContext*, mongo::OpMsgRequest const&)
+    29.41%     0.00%  ftdc      mongod             [.] mongo::FTDCServerStatusCommandCollector::collect(mongo::OperationContext*, mongo::BSONObjBuilder&)
+    23.53%     0.00%  ftdc      mongod             [.] mongo::(anonymous namespace)::CmdServerStatus::run(mongo::OperationContext*, mongo::DatabaseName const&, mongo::BSONObj const&, mongo::BSONObjBuilder&)
+    23.53%     0.00%  ftdc      mongod             [.] mongo::FTDCFileManager::writeSampleAndRotateIfNeeded(mongo::Client*, mongo::BSONObj const&, mongo::Date_t)
+    23.53%     0.00%  ftdc      mongod             [.] mongo::FTDCFileWriter::writeSample(mongo::BSONObj const&, mongo::Date_t)
+    17.65%     0.00%  ftdc      [kernel.kallsyms]  [k] do_syscall_64
+    17.65%     0.00%  ftdc      [kernel.kallsyms]  [k] entry_SYSCALL_64_after_hwframe
+    17.65%     0.00%  ftdc      [kernel.kallsyms]  [k] x64_sys_call
+    17.65%     0.00%  ftdc      mongod             [.] mongo::FTDCCompressor::getCompressedSamples()
+    11.76%    11.76%  ftdc      mongod             [.] longest_match
+    11.76%    11.76%  ftdc      mongod             [.] std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
+    11.76%     0.00%  ftdc      [kernel.kallsyms]  [k] __x64_sys_read
+    11.76%     0.00%  ftdc      [kernel.kallsyms]  [k] ksys_read
+    11.76%     0.00%  ftdc      [kernel.kallsyms]  [k] proc_reg_read_iter
+    11.76%     0.00%  ftdc      [kernel.kallsyms]  [k] seq_read_iter
+    11.76%     0.00%  ftdc      [kernel.kallsyms]  [k] vfs_read
+    11.76%     0.00%  ftdc      libc.so.6          [.] read
+    11.76%     0.00%  ftdc      mongod             [.] deflate
+    11.76%     0.00%  ftdc      mongod             [.] deflate_slow
+    11.76%     0.00%  ftdc      mongod             [.] mongo::(anonymous namespace)::readFileAsString(mongo::StringData)
+    11.76%     0.00%  ftdc      mongod             [.] mongo::BlockCompressor::compress(mongo::ConstDataRange)
+    11.76%     0.00%  ftdc      mongod             [.] mongo::ServerStatusSection::appendSection(mongo::OperationContext*, mongo::BSONElement const&, mongo::BSONObjBuilder*) const
+    11.76%     0.00%  ftdc      mongod             [.] mongo::procparser::parseProcDiskStatsFile(mongo::StringData, std::vector<mongo::StringData, std::allocator<mongo::StringData> > const&, mongo::BSONObjBuilder*)
+    11.76%     0.00%  ftdc      mongod             [.] mongo::procparser::parseProcSelfMountStatsFile(mongo::StringData, mongo::BSONObjBuilder*)
+    11.76%     0.00%  ftdc      mongod             [.] mongo::procparser::parseProcSelfMountStatsImpl(mongo::StringData, mongo::BSONObjBuilder*, std::function<boost::filesystem::space_info (boost::filesystem::path const&, boost::system::error_code&)>)
+     5.88%     5.88%  conn119   mongod             [.] mongo::transport::CommonAsioSession::sourceMessageImpl(std::shared_ptr<mongo::Baton> const&)
+     5.88%     5.88%  conn7925  [kernel.kallsyms]  [k] _raw_write_unlock_irq
+     5.88%     5.88%  ftdc      [kernel.kallsyms]  [k] __legitimize_mnt
+     5.88%     5.88%  ftdc      [kernel.kallsyms]  [k] class_to_subsys
+     5.88%     5.88%  ftdc      [kernel.kallsyms]  [k] xas_start
+     5.88%     5.88%  ftdc      libc.so.6          [.] 0x00000000001a16d2
+     5.88%     5.88%  ftdc      mongod             [.] match.constprop.0
+     5.88%     5.88%  ftdc      mongod             [.] mongo::(anonymous namespace)::CmdServerStatus::allowedWithSecurityToken() const
+     5.88%     5.88%  ftdc      mongod             [.] mongo::DataType::Handler<mongo::VarInt, void>::store(mongo::VarInt const&, char*, unsigned long, unsigned long*, long)
+     5.88%     5.88%  ftdc      mongod             [.] mongo::FTDCBSONUtil::(anonymous namespace)::extractMetricsFromDocument(mongo::BSONObj const&, mongo::BSONObj const&, std::vector<unsigned long, std::allocator<unsigned long> >*, bool, unsigned long)
+     5.88%     5.88%  ftdc      mongod             [.] operator new[](unsigned long)
+     5.88%     5.88%  ftdc      mongod             [.] strlen@plt
+     5.88%     5.88%  ftdc      mongod             [.] tcmalloc::tcmalloc_internal::cpu_cache_internal::CpuCache<tcmalloc::tcmalloc_internal::cpu_cache_internal::StaticForwarder>::FetchFromBackingCache(unsigned long, void**, unsigned long) [clone .isra.0]
+     5.88%     0.00%  conn119   libc.so.6          [.] 0x00007c4637adfaa4
+     5.88%     0.00%  conn119   libc.so.6          [.] 0x00007c4637b6cc6c
+     5.88%     0.00%  conn119   mongod             [.] mongo::transport::(anonymous namespace)::runFunc(void*)
+     5.88%     0.00%  conn119   mongod             [.] mongo::transport::CommonAsioSession::sourceMessage()
+     5.88%     0.00%  conn119   mongod             [.] mongo::transport::SessionWorkflow::Impl::_doOneIteration()
+     5.88%     0.00%  conn119   mongod             [.] mongo::transport::SessionWorkflow::Impl::_receiveRequest()
+     5.88%     0.00%  conn119   mongod             [.] mongo::transport::service_executor_synchronous_detail::ServiceExecutorSyncImpl::SharedState::schedule(mongo::unique_function<void (mongo::Status)>, mongo::StringData)::{lambda()#1}::operator()() const
+     5.88%     0.00%  conn119   mongod             [.] mongo::unique_function<void (mongo::Status)>::makeImpl<mongo::transport::SessionWorkflow::Impl::_captureContext(mongo::unique_function<void (mongo::Status)>)::{lambda(mongo::Status)#1}>(mongo::transport::SessionWorkflow::Impl::_captureContext(mongo::unique_function<void (mongo::Status)>)::{lambda(mongo::Status)#1}&&)::SpecificImpl::call(mongo::Status&&)
+     5.88%     0.00%  conn119   mongod             [.] mongo::unique_function<void (mongo::Status)>::makeImpl<mongo::transport::SessionWorkflow::Impl::_scheduleIteration()::{lambda(mongo::Status)#1}>(mongo::transport::SessionWorkflow::Impl::_scheduleIteration()::{lambda(mongo::Status)#1}&&)::SpecificImpl::call(mongo::Status&&)
+     5.88%     0.00%  conn7925  [kernel.kallsyms]  [k] __x64_sys_exit
+     5.88%     0.00%  conn7925  [kernel.kallsyms]  [k] do_exit
+     5.88%     0.00%  conn7925  [kernel.kallsyms]  [k] do_syscall_64
+     5.88%     0.00%  conn7925  [kernel.kallsyms]  [k] entry_SYSCALL_64_after_hwframe
+     5.88%     0.00%  conn7925  [kernel.kallsyms]  [k] exit_notify
+     5.88%     0.00%  conn7925  [kernel.kallsyms]  [k] x64_sys_call
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] __do_sys_statfs
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] __legitimize_path
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] __x64_sys_statfs
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] class_dev_iter_init
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] complete_walk
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] disk_seqf_start
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] diskstats_show
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] filename_lookup
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] path_lookupat
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] try_to_unlazy
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] user_path_at_empty
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] user_statfs
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] xa_find
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] xas_find
+     5.88%     0.00%  ftdc      [kernel.kallsyms]  [k] xas_load
+     5.88%     0.00%  ftdc      libc.so.6          [.] statfs64
+     5.88%     0.00%  ftdc      libc.so.6          [.] 0x00007c4637be46d2
+     5.88%     0.00%  ftdc      mongod             [.] _ZNSt17_Function_handlerIFN5boost10filesystem10space_infoERKNS1_4pathERNS0_6system10error_codeEEZN5mongo10procparser23parseProcSelfMountStatsENSA_10StringDataEPNSA_14BSONObjBuilderEEUlDpOT_E_E9_M_invokeERKSt9_Any_dataS5_S8_
+     5.88%     0.00%  ftdc      mongod             [.] boost::filesystem::detail::space(boost::filesystem::path const&, boost::system::error_code*)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::FTDCBSONUtil::extractMetricsFromDocument(mongo::BSONObj const&, mongo::BSONObj const&, std::vector<unsigned long, std::allocator<unsigned long> >*)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::FTDCCompressor::addSample(mongo::BSONObj const&, mongo::Date_t)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::SpillWiredTigerServerStatusSection::generateSection(mongo::OperationContext*, mongo::BSONElement const&) const
+     5.88%     0.00%  ftdc      mongod             [.] mongo::WiredTigerUtil::collectConnectionStatistics(mongo::WiredTigerKVEngineBase&, mongo::BSONObjBuilder&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::WiredTigerUtil::exportTableToBSON(mongo::WiredTigerSession&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, mongo::BSONObjBuilder&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, mongo::WiredTigerUtil::FilterBehavior)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::pcre::Regex::matchView(mongo::StringData, mongo::pcre::MatchOptions, unsigned long) const
+     5.88%     0.00%  ftdc      mongod             [.] mongo::pcre::detail::RegexImpl::_doMatch(std::unique_ptr<mongo::pcre::detail::MatchDataImpl, std::default_delete<mongo::pcre::detail::MatchDataImpl> >, mongo::pcre::MatchOptions, unsigned long) const
+     5.88%     0.00%  ftdc      mongod             [.] mongo::pcre::detail::RegexImpl::matchView(mongo::StringData, mongo::pcre::MatchOptions, unsigned long) const
+     5.88%     0.00%  ftdc      mongod             [.] mongo::procparser::parseProcNetstat(std::vector<mongo::StringData, std::allocator<mongo::StringData> > const&, mongo::StringData, mongo::BSONObjBuilder*)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::procparser::parseProcNetstatFile(std::vector<mongo::StringData, std::allocator<mongo::StringData> > const&, mongo::StringData, mongo::BSONObjBuilder*)
+     5.88%     0.00%  ftdc      mongod             [.] mongo::procparser::parseProcStatFile(mongo::StringData, std::vector<mongo::StringData, std::allocator<mongo::StringData> > const&, mongo::BSONObjBuilder*)
+     5.88%     0.00%  ftdc      mongod             [.] pcre2_match_8
+     5.88%     0.00%  ftdc      mongod             [.] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long)
+     5.88%     0.00%  ftdc      mongod             [.] tcmalloc::tcmalloc_internal::TCMallocPolicy<tcmalloc::tcmalloc_internal::CppOomPolicy, tcmalloc::tcmalloc_internal::DefaultAlignPolicy, tcmalloc::tcmalloc_internal::AllocationAccessHotPolicy, tcmalloc::tcmalloc_internal::InvokeHooksPolicy, tcmalloc::tcmalloc_internal::NonSizeReturningPolicy, tcmalloc::tcmalloc_internal::LocalNumaPartitionPolicy>::pointer_type tcmalloc::tcmalloc_internal::slow_alloc_small<tcmalloc::tcmalloc_internal::TCMallocPolicy<tcmalloc::tcmalloc_internal::CppOomPolicy, tcmalloc::tcmalloc_internal::DefaultAlignPolicy, tcmalloc::tcmalloc_internal::AllocationAccessHotPolicy, tcmalloc::tcmalloc_internal::InvokeHooksPolicy, tcmalloc::tcmalloc_internal::NonSizeReturningPolicy, tcmalloc::tcmalloc_internal::LocalNumaPartitionPolicy> >(unsigned long, unsigned int, tcmalloc::tcmalloc_internal::TCMallocPolicy<tcmalloc::tcmalloc_internal::CppOomPolicy, tcmalloc::tcmalloc_internal::DefaultAlignPolicy, tcmalloc::tcmalloc_internal::AllocationAccessHotPolicy, tcmalloc::tcmalloc_internal::InvokeHooksPolicy, tcmalloc::tcmalloc_internal::NonSizeReturningPolicy, tcmalloc::tcmalloc_internal::LocalNumaPartitionPolicy>) [clone .isra.0]
+     5.88%     0.00%  ftdc      mongod             [.] tcmalloc::tcmalloc_internal::cpu_cache_internal::CpuCache<tcmalloc::tcmalloc_internal::cpu_cache_internal::StaticForwarder>::Refill(int, unsigned long)
