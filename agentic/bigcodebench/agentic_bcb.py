@@ -41,7 +41,7 @@ def run_test(code, test, tid):
         passed = (p.returncode == 0)
         out = (p.stderr or p.stdout)[-1500:]
     except subprocess.TimeoutExpired:
-        passed, out = False, "TIMEOUT (60s)"
+        passed, out = False, "TIMEOUT (20s)"
     finally:
         mark(f"toolexec_end {tid}"); os.unlink(path)
     return passed, out
