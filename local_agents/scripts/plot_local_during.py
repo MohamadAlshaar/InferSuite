@@ -260,6 +260,7 @@ if panels:
     handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
     if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
     fig.legend(handles=handles, loc="lower center", ncol=len(handles), fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.05))
+    fig.suptitle("Outside-inference CPU by software component (agent harness + tools)", fontsize=13, y=1.0)
     fig.savefig(os.path.join(OUT, "local_agents_two_view_software.png")); plt.close(fig)
 
 print("wrote figures to", OUT)
