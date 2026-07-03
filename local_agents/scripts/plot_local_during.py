@@ -246,6 +246,7 @@ if panels:
     handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
     if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
     fig.legend(handles=handles, loc="lower center", ncol=2, fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.04))
+    fig.suptitle("Model side: engine CPU during inference", fontsize=12.5, y=1.02)
     fig.savefig(os.path.join(OUT, "local_agents_engine_software.png")); plt.close(fig)
 
     # outside: one donut per live agent
@@ -260,7 +261,7 @@ if panels:
     handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
     if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
     fig.legend(handles=handles, loc="lower center", ncol=len(handles), fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.05))
-    fig.suptitle("Outside-inference CPU by software component (agent harness + tools)", fontsize=13, y=1.0)
+    fig.suptitle("Agent machinery: CPU of the harness and its tools during the live loops", fontsize=13, y=1.0)
     fig.savefig(os.path.join(OUT, "local_agents_two_view_software.png")); plt.close(fig)
 
 print("wrote figures to", OUT)

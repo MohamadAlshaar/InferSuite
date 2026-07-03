@@ -71,6 +71,6 @@ for ax, (key, title, tcol) in zip(axes, TASKS):
 handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
 if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
 fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.06))
-fig.suptitle("Tool-execution CPU by software component", fontsize=13.5, y=1.02)
+fig.suptitle("Delegated work: CPU of the tool executions themselves", fontsize=13.5, y=1.02)
 fig.savefig(os.path.join(OUT, "tool_attribution.png")); plt.close(fig)
 print("wrote", os.path.join(OUT, "tool_attribution.png"))
