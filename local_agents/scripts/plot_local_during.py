@@ -70,10 +70,10 @@ WORKLOADS = [
     ("sympy",           "sympy\n(SWE replay)",        "group_engine_", ENG, None,            True),
     ("swe_live",        "SWE astropy\n(live)",        "group_",        ENG, ["swe-live", "docker-"], True),
     ("bcb_live",        "BigCodeBench\n(live loop)",  "group_",        ENG, "bcb-live",      True),
-    ("oc_live_calendar",   "OC calendar\n(live)",     "group_",        ENG, "docker-",       False),
-    ("oc_live_pdf-digest", "OC pdf-digest\n(live)",   "group_",        ENG, "docker-",       False),
-    ("oc_live_web-digest", "OC web-digest\n(live)",   "group_",        ENG, "docker-",       False),
-    ("oc_live_image-crop", "OC image-crop\n(live)",   "group_",        ENG, "docker-",       False),
+    ("oc_live_calendar",   "OC calendar\n(live)",     "group_",        ENG, "docker-",       True),
+    ("oc_live_pdf-digest", "OC pdf-digest\n(live)",   "group_",        ENG, "docker-",       True),
+    ("oc_live_web-digest", "OC web-digest\n(live)",   "group_",        ENG, "docker-",       True),
+    ("oc_live_image-crop", "OC image-crop\n(live)",   "group_",        ENG, "docker-",       True),
 ]
 
 rows = []
@@ -142,6 +142,38 @@ if live:
                         Patch(color=OUTSIDECOL, label="Outside inference (agent + tools)")],
                loc="lower center", ncol=2, fontsize=10.5, frameon=False, bbox_to_anchor=(0.5, -0.04))
     fig.savefig(os.path.join(OUT, "local_agents_two_view_cpu.png")); plt.close(fig)
+
+# ---- Fig 5: GPU vs CPU wall time per live loop (nvidia-smi timeline, guard -> exit) ----
+GPU_COL, CPU_COL = "#6a51a3", "#1b9e77"
+def gpu_split(path, thresh=10):
+    if not os.path.exists(path): return None
+    utils = []
+    for ln in open(path):
+        parts = ln.strip().split(",")
+        if len(parts) != 2 or parts[0] == "guard": continue
+        try: utils.append(float(parts[1]))
+        except ValueError: pass
+    if len(utils) < 20: return None
+    busy = sum(1 for u in utils if u >= thresh)
+    return busy/len(utils)*100
+
+gpu_rows = []
+for d in SHORT:
+    g = gpu_split(os.path.join(DATA, d, "gpu_timeline.csv"))
+    if g is not None: gpu_rows.append((SHORT[d], g))
+if gpu_rows:
+    fig, axes = plt.subplots(1, len(gpu_rows), figsize=(3.0*len(gpu_rows), 3.6))
+    for ax, (lab, g) in zip(np.atleast_1d(axes), gpu_rows):
+        ax.pie([g, 100-g], colors=[GPU_COL, CPU_COL], startangle=90, counterclock=False,
+               wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.5))
+        ax.text(0, 0.16, lab, ha="center", fontweight="bold", fontsize=11)
+        ax.text(0, -0.14, f"GPU {g:.0f}%", ha="center", fontsize=9.5, color=GPU_COL)
+        ax.text(0, -0.38, f"CPU {100-g:.0f}%", ha="center", fontsize=9.5, color=CPU_COL)
+        ax.axis("off")
+    fig.legend(handles=[Patch(color=GPU_COL, label="GPU generating"),
+                        Patch(color=CPU_COL, label="CPU only (tools, agent, orchestration)")],
+               loc="lower center", ncol=2, fontsize=10.5, frameon=False, bbox_to_anchor=(0.5, -0.04))
+    fig.savefig(os.path.join(OUT, "local_agents_gpu_time.png")); plt.close(fig)
 
 # ---- Fig 4: software view, engine vs tool per live agent (DSO roles) ----
 ROLES = [
