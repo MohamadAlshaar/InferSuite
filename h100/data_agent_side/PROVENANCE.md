@@ -19,3 +19,10 @@ Agent-work evidence (all VALIDATE-OK, 5/5 groups in-window):
   gateway.log, scores) under oc_harness_output/
 Known blemish: oc-crop group_fp2 engine rows <not counted> (engine idle after episode end);
 agent-side rows counted.
+
+Rerun 2026-07-03 (audit): SWE x3 recaptured with max_input 28000 / max_output 4096 (was 14000/2048,
+a leftover of the 16K serve config; episodes doubled-to-8x in length: astropy 188, scikit 702, sympy
+332 gpu-samples) and 8 s stat groups. BCB uses HEAVY_LIBS=1 numeric tasks. Finding upheld by the
+longer episodes: live Coder-32B performs ZERO test executions on SWE (scikit: 54 steps, 0 python/
+pytest invocations) — tool-side packed FP is genuinely zero; the BLAS-heavy verification phase exists
+only in the canonical (Claude-driven) trajectories. GPU sampler cadence ~1.8 Hz (shares unbiased).

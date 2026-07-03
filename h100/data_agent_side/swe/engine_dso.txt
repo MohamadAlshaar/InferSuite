@@ -1,49 +1,48 @@
-    92.95%     0.00%  [unknown]                                        
-    84.01%    66.65%  libcuda.so.580.105.08                            
-                       0x7e33cb5631dc
-                       0x7e33cb4812d2
-    83.91%     0.18%  libcudart.so.13                                  
-                       0x7e33f741376d
-                       0x7e33cb5a93f7
-    82.89%     0.33%  libc10_cuda.so                                   
-                       0x7e33f7412a22
-                       0x7e33cb5631dc
-    22.88%     1.69%  libc.so.6                                        
-    16.95%    16.95%  [vdso]                                           
-               0x635a3c1a99d0
-               0x635a2b3caeb0
-               0x635a3e52bc60
-               0x635a3c1c68f0
-               0x635a3c1abf90
-               0x635a3275d8d0
-               0x635a265f9af0
-               0
-               0x7e33f7412a22
-               0x7e33cb5631dc
-               0x7e33cb4812d2
-               0x7e33cb42bc4c
-     5.86%     5.01%  python3.10                                       
-     4.83%     4.83%  [kernel.kallsyms]                                
-     2.63%     0.37%  libtorch_cuda.so                                 
-     2.41%     1.45%  libtorch_cpu.so                                  
-     1.27%     0.51%  libtorch_python.so                               
-     0.95%     0.24%  libc10.so                                        
-     0.57%     0.53%  tokenizers.abi3.so                               
-     0.57%     0.29%  libcublasLt.so.13                                
-     0.44%     0.00%  libcublas.so.13                                  
-     0.40%     0.06%  libzmq-7b073b3d.so.5.2.5                         
-     0.37%     0.37%  _multiarray_umath.cpython-310-x86_64-linux-gnu.so
-     0.18%     0.18%  libxgrammar_bindings.so                          
-     0.13%     0.06%  libstdc++.so.6.0.30                              
-     0.11%     0.04%  _zmq.cpython-310-x86_64-linux-gnu.so             
-     0.09%     0.02%  _vllm_fa3_C.abi3.so                              
-     0.07%     0.06%  _pydantic_core.cpython-310-x86_64-linux-gnu.so   
-     0.06%     0.06%  ld-linux-x86-64.so.2                             
-     0.04%     0.04%  libtriton.so                                     
-     0.02%     0.02%  _core.cpython-310-x86_64-linux-gnu.so            
-     0.02%     0.02%  libcrypto.so.3                                   
+    92.08%     0.00%  [unknown]                                        
+    82.84%    66.90%  libcuda.so.580.105.08                            
+                       0x77a1f13631dc
+                       0x77a1f12812d2
+    82.73%     0.22%  libcudart.so.13                                  
+                                  0x77a1f13a93f7
+                                             0x77a1f11d59a8
+                                             0x77a1f11c9ad5
+    81.41%     0.16%  libc10_cuda.so                                   
+                                  0x77a1f13631dc
+    22.12%     1.83%  libc.so.6                                        
+    15.41%    15.41%  [vdso]                                           
+                       0x58dd2ece6bb0
+                       0x58dd2ece39f0
+                       0x58dd18ecf640
+                       0x58dd16b5a130
+                       0x58dd16b4a350
+                       0x58dd0cef06b0
+                       0x58dd00e57af0
+                       0
+                       0x77a21d212a22
+                       0x77a1f13631dc
+                       0x77a1f12812d2
+                       0x77a1f122bc4c
+     6.40%     5.69%  python3.10                                       
+     5.34%     5.34%  [kernel.kallsyms]                                
+     2.56%     0.38%  libtorch_cuda.so                                 
+     2.01%     0.97%  libtorch_cpu.so                                  
+     1.24%     1.17%  tokenizers.abi3.so                               
+     1.08%     0.57%  libtorch_python.so                               
+     0.71%     0.18%  libc10.so                                        
+     0.59%     0.05%  libzmq-7b073b3d.so.5.2.5                         
+     0.42%     0.22%  libcublasLt.so.13                                
+     0.42%     0.04%  libcublas.so.13                                  
+     0.42%     0.42%  _multiarray_umath.cpython-310-x86_64-linux-gnu.so
+     0.15%     0.15%  libxgrammar_bindings.so                          
+     0.09%     0.07%  libstdc++.so.6.0.30                              
+     0.09%     0.00%  _zmq.cpython-310-x86_64-linux-gnu.so             
+     0.07%     0.04%  _vllm_fa3_C.abi3.so                              
+     0.05%     0.05%  ld-linux-x86-64.so.2                             
+     0.05%     0.00%  __triton_launcher.cpython-310-x86_64-linux-gnu.so
+     0.04%     0.04%  _core.cpython-310-x86_64-linux-gnu.so            
+     0.02%     0.02%  _json.cpython-310-x86_64-linux-gnu.so            
+     0.02%     0.02%  _pydantic_core.cpython-310-x86_64-linux-gnu.so   
+     0.02%     0.02%  _regex.cpython-310-x86_64-linux-gnu.so           
+     0.02%     0.02%  loop.cpython-310-x86_64-linux-gnu.so             
      0.02%     0.00%  _C_stable_libtorch.abi3.so                       
-     0.02%     0.02%  core.cpython-310-x86_64-linux-gnu.so             
-     0.02%     0.02%  libcufile.so.0                                   
-     0.02%     0.02%  libtorch.so                                      
-     0.02%     0.00%  __triton_launcher.cpython-310-x86_64-linux-gnu.so
+     0.02%     0.02%  libtriton.so                                     

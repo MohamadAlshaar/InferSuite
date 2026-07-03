@@ -1,24 +1,24 @@
 
  Performance counter stats for 'system wide':
 
-       20381003846      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
-       60498693576      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    2.97  insn per cycle            
-       20421342181      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
-          43738882      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
-           6323125      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
-            474345      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
-         412762680      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
-         826429245      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope #    2.00  insn per cycle            
-         211351020      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
-           2361838      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
-            215132      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
-            215515      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
-        3769898912      cycles                           system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
-        7123371802      instructions                     system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope #    1.89  insn per cycle            
-        2087321413      mem_load_retired.l1_hit          system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
-          27193784      mem_load_retired.l2_hit          system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
-           4550817      mem_load_retired.l3_hit          system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
-            371418      mem_load_retired.l3_miss         system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+       18477819673      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve6.scope                                      
+       55565810504      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve6.scope #    3.01  insn per cycle            
+       17847429185      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve6.scope                                      
+         259603760      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve6.scope                                      
+           5242434      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve6.scope                                      
+            372777      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve6.scope                                      
+         332598970      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-71522.scope                                      
+         629758224      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-71522.scope #    1.89  insn per cycle            
+         166023798      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-71522.scope                                      
+           2331229      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-71522.scope                                      
+            200514      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-71522.scope                                      
+            178160      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-71522.scope                                      
+         958422030      cycles                           system.slice/docker-b2765ffa36c5c60ea9c14bfbf051575d15157d79b20df74a3f52515eb8014c41.scope                                      
+        1456526883      instructions                     system.slice/docker-b2765ffa36c5c60ea9c14bfbf051575d15157d79b20df74a3f52515eb8014c41.scope #    1.52  insn per cycle            
+         398945691      mem_load_retired.l1_hit          system.slice/docker-b2765ffa36c5c60ea9c14bfbf051575d15157d79b20df74a3f52515eb8014c41.scope                                      
+           9814801      mem_load_retired.l2_hit          system.slice/docker-b2765ffa36c5c60ea9c14bfbf051575d15157d79b20df74a3f52515eb8014c41.scope                                      
+            872523      mem_load_retired.l3_hit          system.slice/docker-b2765ffa36c5c60ea9c14bfbf051575d15157d79b20df74a3f52515eb8014c41.scope                                      
+            147365      mem_load_retired.l3_miss         system.slice/docker-b2765ffa36c5c60ea9c14bfbf051575d15157d79b20df74a3f52515eb8014c41.scope                                      
 
-      10.007489295 seconds time elapsed
+       8.003964698 seconds time elapsed
 

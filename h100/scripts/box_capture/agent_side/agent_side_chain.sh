@@ -70,7 +70,7 @@ case "$WORK" in
          --agent.model.name hosted_vllm/coder-32b \
          --agent.model.api_base http://localhost:8000/v1 --agent.model.api_key dummy \
          --agent.model.per_instance_cost_limit 0 --agent.model.total_cost_limit 0 \
-         --agent.model.max_input_tokens 14000 --agent.model.max_output_tokens 2048 \
+         --agent.model.max_input_tokens 28000 --agent.model.max_output_tokens 4096 \
          --agent.model.temperature 0.4 \
          --agent.model.completion_kwargs '{\"tool_choice\":\"required\",\"frequency_penalty\":0.5,\"presence_penalty\":0.3}' \
          --agent.tools.execution_timeout 120 --agent.tools.max_consecutive_execution_timeouts 6 \
