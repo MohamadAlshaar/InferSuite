@@ -1,0 +1,18 @@
+
+ Performance counter stats for 'system wide':
+
+       25652004574      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+       76052101916      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope #    2.96  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+                 0      fp_arith_inst_retired.256b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+       17657985848      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+       27656053063      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope #    1.57  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+               941      fp_arith_inst_retired.256b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+               941      fp_arith_inst_retired.512b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+
+      10.004740083 seconds time elapsed
+

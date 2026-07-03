@@ -1,0 +1,60 @@
+2026-06-26T13:27:34.116+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-26T13:27:34.166+00:00 [heartbeat] started
+2026-06-26T13:27:34.173+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-26T13:27:34.177+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-26T13:27:34.179+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 130)
+2026-06-26T13:27:34.181+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-26.log
+2026-06-26T13:27:34.202+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-26T13:27:34.303+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-26T13:27:36.328+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-26T13:27:40.800+00:00 [tools] read failed: Missing required parameter: path (path or file_path). Supply correct parameters before retrying.
+2026-06-26T13:27:40.808+00:00 [agent/embedded] read tool called without path: toolCallId=toolu_01XLYDYdySsat2Wrn3E6f3i7|toolu_01XLYDYdySsat2Wrn3E6f3i7 argsType=object
+2026-06-26T13:30:46.458+00:00 I'll solve this systematically. Let me start by reading all the input files.
+2026-06-26T13:30:46.460+00:00 Now I have all the data. Let me write a comprehensive Python scheduling script:
+2026-06-26T13:30:46.462+00:00 All diagnoses confirmed. Now let me produce a polished final `decision_log.md` with complete, accurate detail:
+2026-06-26T13:30:46.464+00:00 All validations pass. Here's a complete summary of what was produced:
+
+---
+
+## Results Summary
+
+### Files written to `/tmp_workspace/results/`
+
+| File | Size | Contents |
+|------|------|----------|
+| `scheduled.ics` | 9,662 bytes | Valid iCal with all 30 original events + 10 newly scheduled |
+| `unscheduled.json` | 1,269 bytes | 5 unscheduled requests with reason codes |
+| `decision_log.md` | 4,526 bytes | Full structured decision log |
+
+---
+
+### Scheduling Results
+
+**10 of 15 requests scheduled** — Total priority weight: **26/45**
+
+| ID | Title | Priority | Slot (Asia/Shanghai) |
+|----|-------|----------|----------------------|
+| req_003 | Q2 Budget Alignment | P2 | Mon 04-13 09:00–09:45 |
+| req_002 | Dataset Labeling Escalation | P1 | Mon 04-13 13:00–13:30 |
+| req_004 | Vision Demo Rehearsal | **P0** | Tue 04-14 11:00–12:00 |
+| req_005 | Red Team Security Review | P1 | Tue 04-14 13:30–14:30 |
+| req_015 | Ops Overflow Triage | P2 | Tue 04-14 17:30–18:00 |
+| req_006 | Offline Eval Deep Dive | **P0** | Wed 04-15 10:00–11:30 |
+| req_007 | Hiring Panel Calibration | P2 | Wed 04-15 14:30–15:15 |
+| req_009 | Infra Cost Reduction Workshop | P1 | Thu 04-16 13:00–14:30 |
+| req_010 | Design Partner Feedback Review | P2 | Thu 04-16 15:00–16:00 |
+| req_012 | Compliance Follow-up | P1 | Fri 04-17 13:30–14:00 |
+
+---
+
+### 5 Unscheduled (with root cause)
+
+| ID | Title | Priority | Reason |
+|----|-------|----------|--------|
+| `req_001` | CapRL Launch Readiness | **P0** | `time_conflict` — Alice blocked 10:30–11:30 (Window 1); Bob blocked 16:30–17:30 (Window 2); no 60-min gap fits |
+| `req_011` | Friday Research Sync | **P0** | `time_conflict` — Alice in Hiring Debrief 10:30–11:30; only remaining slot (11:30–12:30) crosses lunch hard constraint |
+| `req_008` | Customer Renewal Strategy | P1 | `attendee_unavailable` — Alice fully unavailable Wednesday; both windows are on Wednesday |
+| `req_014` | Wednesday Cross-team Planning | P1 | `attendee_unavailable` — Alice fully unavailable Wednesday; both windows are on Wednesday |
+| `req_013` | Late Friday Launch Retro | P2 | `attendee_unavailable` — Frank unavailable Friday 17:00–23:59; single window is Fri 17:00–18:00 |
+
+All hard constraints respected: lunch block (12:00–13:00 Asia/Shanghai), ≤4 meetings/attendee/day, attendee unavailability rules, no conflicts with existing events, and scheduling only within preferred windows.

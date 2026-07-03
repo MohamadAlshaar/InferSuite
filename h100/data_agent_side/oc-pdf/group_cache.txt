@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       27309596866      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+       83808217351      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope #    3.07  insn per cycle            
+       26755829841      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+         501131254      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           7706037      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+             54047      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           6145068      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+           4170698      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope #    0.68  insn per cycle            
+            971421      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+             78866      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+              7643      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+               640      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+        3656452560      cycles                           system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+        5610341638      instructions                     system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope #    1.53  insn per cycle            
+        1371518883      mem_load_retired.l1_hit          system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+          13368909      mem_load_retired.l2_hit          system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+           3105821      mem_load_retired.l3_hit          system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+           1676990      mem_load_retired.l3_miss         system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+
+      10.004890420 seconds time elapsed
+

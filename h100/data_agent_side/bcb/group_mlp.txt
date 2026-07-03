@@ -1,0 +1,16 @@
+
+ Performance counter stats for 'system wide':
+
+       27876980622      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+       81821033152      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope #    2.94  insn per cycle            
+        4494451217      l1d_pend_miss.pending            user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+        3755885945      l1d_pend_miss.pending_cycles     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+       80645420691      uops_executed.thread             user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+         228738030      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+         362695838      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope #    1.59  insn per cycle            
+         109985349      l1d_pend_miss.pending            user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+          57932730      l1d_pend_miss.pending_cycles     user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+         460436351      uops_executed.thread             user.slice/user-1000.slice/user@1000.service/app.slice/agent-bcb-29469.scope                                      
+
+      10.003912641 seconds time elapsed
+

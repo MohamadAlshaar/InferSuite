@@ -1,0 +1,41 @@
+2026-06-20T17:25:58.894+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-20T17:25:58.928+00:00 [heartbeat] started
+2026-06-20T17:25:58.932+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-20T17:25:58.935+00:00 [gateway] agent model: my-openai-proxy/qwen2.5-7b
+2026-06-20T17:25:58.936+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 94)
+2026-06-20T17:25:58.937+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-20.log
+2026-06-20T17:25:58.951+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-20T17:25:59.017+00:00 [gateway] update available (latest): v2026.6.8 (current v2026.3.11). Run: openclaw update
+2026-06-20T17:26:01.103+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-20T17:26:14.134+00:00 Total number of searches: 4
+
+Search 1: When did Python add tomllib to stdlib?
+Finding: Python 3.11 added tomllib to the stdlib in March 2023.
+
+Search 2: What is the CPython PR for adding tomllib to stdlib?
+Finding: The PR is #31974.
+
+Search 3: Confirm the CPython PR for adding tomllib to stdlib.
+Finding: The PR #31974 confirms the addition of tomllib.
+
+Search 4: Verify the release notes for Python 3.11.
+Finding: Python 3.11 release notes confirm the inclusion of tomllib.
+
+Final Answer:
+
+First introduced in version: 3.11
+
+Corresponding PR: #31974
+
+Evidence Chain:
+
+Evidence 1: Python Release Schedule - March 2023 - Python 3.11 adds tomllib to the stdlib - https://devguide.python.org/versions/
+
+Evidence 2: Pull Request #31974 - Add tomllib to the stdlib - https://github.com/python/cpython/pull/31974
+
+Evidence 3: Pull Request #31974 - Add tomllib to the stdlib - https://github.com/python/cpython/pull/31974/files
+
+Evidence 4: Python 3.11 Release Notes - tomllib is included in the stdlib - https://docs.python.org/3.11/whatsnew/3.11.html
+
+Reasoning:
+The Python release schedule and Python 3.11 release notes both confirm that tomllib was added in version 3.11. The corresponding GitHub pull request (#31974) provides detailed information on the changes made, confirming the addition of tomllib. These pieces of evidence are sufficient to support the final answer.

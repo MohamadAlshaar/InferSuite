@@ -1,0 +1,72 @@
+2026-06-27T14:59:14.230+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-27T14:59:14.268+00:00 [heartbeat] started
+2026-06-27T14:59:14.272+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-27T14:59:14.274+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-27T14:59:14.275+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 100)
+2026-06-27T14:59:14.277+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-27.log
+2026-06-27T14:59:14.291+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-27T14:59:14.362+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-27T14:59:16.053+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-27T15:14:09.196+00:00 I'll solve this systematically. Let me start by extracting the tar archive and then processing the PDFs.
+2026-06-27T15:14:09.219+00:00 Now let me write a comprehensive Python script to extract titles from all PDFs:
+2026-06-27T15:14:09.221+00:00 All 65 titles extracted. Now let me verify a few and then copy the files with new names:
+2026-06-27T15:14:09.223+00:00 All 65 files have unique titles. Now let me copy files to the results directory:
+2026-06-27T15:14:09.224+00:00 Now let me look more carefully at the papers to identify caption-related ones, and also extract their text for table extraction:
+2026-06-27T15:14:09.226+00:00 Let me look more carefully - the caption detection might miss some. Let me also check more broadly:
+2026-06-27T15:14:09.229+00:00 Now I need to identify the truly "caption-focused" papers vs. ones that just mention caption in passing. Let me check the abstracts of the most promising candidates:
+2026-06-27T15:14:09.231+00:00 The metadata-based title extraction worked for some files (like 0ac003004d66 which used SignAgent's metadata but actually has a different real title from the PDF content). I need to recheck which PDFs have wrong titles. The real title from the page is "Cytoarchitecture in Words: Weakly Supervised Vision–Language Modeling for Human Brain Microscopy". Let me re-examine the title extraction more carefully:
+2026-06-27T15:14:09.232+00:00 The metadata titles are incorrect (they're from wrong papers). The PDF visual content (large font) is the actual title. My extraction strategy used metadata first when available - this was wrong. I need to re-extract all titles using **only** the visual text (large fonts), ignoring metadata. Let me fix this:
+2026-06-27T15:14:09.234+00:00 The visual approach is picking up arxiv watermarks at the top. The metadata approach was better for most. I need a hybrid: use page text content more carefully, looking past the arxiv header. Let me write a better approach:
+2026-06-27T15:14:09.235+00:00 The visual extraction is pulling wrong titles because the arxiv watermark font is often not the largest, but the actual paper content fonts vary. The metadata was correct but being pulled from wrong papers. Let me check what's happening - the PDFs have wrong metadata! Let me verify this:
+2026-06-27T15:14:09.237+00:00 The PDF metadata is completely wrong - they contain metadata from different papers. The actual titles are in the visual text. The v3 approach is getting wrong answers too because it's picking up arxiv stamps. Let me look at the issue more carefully:
+2026-06-27T15:14:09.238+00:00 Now I see the issue clearly. The arxiv watermark is at size 20 (y=217) but the actual title is at size 14.3 (y=98, 114). The arxiv stamp is being placed in the body of the document and has a larger font size. I need to skip the arxiv stamp specifically. Let me write a better version:
+2026-06-27T15:14:09.240+00:00 Good progress! But some titles are incomplete or wrong (e.g., "Highlights", "O-G 3D S", etc.). Let me fix the remaining problematic ones:
+2026-06-27T15:14:09.241+00:00 Now I understand the issue - ICLR papers use alternating large/small letters for acronyms (e.g., "SCENETRANSPORTER" is split into "S" (17.2pt) + "CENE" (13.8pt)). The text extraction handles these by getting the raw text. Let me use a better approach combining raw text and font size filtering:
+2026-06-27T15:14:09.245+00:00 Good progress. Now some titles still have noise (IEEE header, journal prefixes, author names mixed in). Let me do a final cleanup and manual fixes for the problematic ones:
+2026-06-27T15:14:09.247+00:00 Now I can fix these manually. Let me also check more:
+2026-06-27T15:14:09.248+00:00 Now I have a clear picture. Let me write the final, corrected version with manual fixes for the problematic files:
+2026-06-27T15:14:09.250+00:00 All 65 files copied successfully. Now let me verify and then extract the second table from the caption-related papers. First, let me find the caption papers more carefully:
+2026-06-27T15:14:09.251+00:00 MovieTeller is about video summarization, not primarily image captioning. Let me check the 77da4293cd70 (Asymmetric Idiosyncrasies):
+2026-06-27T15:14:09.252+00:00 This IS caption-related - it studies caption models. And CAPRL is very directly about image captioning. Let me now extract the 2nd table from each of these papers:
+2026-06-27T15:14:09.254+00:00 Now let me get Table 1 (TABLE I) from MovieTeller to understand the table numbering and then get TABLE II properly:
+2026-06-27T15:14:09.255+00:00 Now let me get the full Table 2 data for Asymmetric Idiosyncrasies and CAPRL:
+2026-06-27T15:14:09.256+00:00 Excellent! Now I have all the table data. Let me now write the comprehensive classification of all 65 papers and then generate the final markdown:
+2026-06-27T15:14:09.260+00:00 Now I have all information needed. Let me clean up some titles with author names mixed in and write the final markdown:
+2026-06-27T15:14:09.261+00:00 Now let me also check what `9521e9de58b7.pdf` is about:
+2026-06-27T15:14:09.262+00:00 Now I have enough information to write the complete markdown. Let me also update the files in results/papers with the final corrected titles:
+2026-06-27T15:14:09.264+00:00 Now let me write the complete `paper_digest.md`:
+2026-06-27T15:14:09.265+00:00 Now let me re-examine the classification more carefully - I made some errors (including duplicates and wrong entries). Let me do a proper classification:
+2026-06-27T15:14:09.266+00:00 Now I have a clear picture. Let me write the clean, corrected final version of the markdown:
+2026-06-27T15:14:09.267+00:00 The classification has some issues - let me fix it (duplicates, papers in wrong categories, and count):
+2026-06-27T15:14:09.269+00:00 All 65 papers classified. Now let me write the final, clean version of the digest. First let me also fix the filenames in results/papers with proper names:
+2026-06-27T15:14:09.272+00:00 Good, 65 files. Now let me write the final clean markdown file:
+2026-06-27T15:14:09.273+00:00 Now let me do a final verification of the output:
+2026-06-27T15:14:09.275+00:00 Everything looks correct. Let me do a final sanity check on the number of renamed files matching the mapping:
+2026-06-27T15:14:09.276+00:00 All checks pass. Here's a summary of what was accomplished:
+
+---
+
+## ✅ 任务完成
+
+所有结果已保存到 `/tmp_workspace/results/paper_digest.md`，重命名后的 PDF 文件放入 `/tmp_workspace/results/papers/`。
+
+### 任务完成情况：
+
+**1. 文件重命名（65/65）**
+- 从每个 PDF 的视觉文本内容（字体大小分析）提取标题
+- PDF 元数据被忽略（发现元数据与实际内容不匹配）
+- 空格和 `/` 替换为 `_`，保留 `.pdf` 后缀
+- 无重名文件
+
+**2. 论文分类（65篇）**
+- 🤖 Multimodal / Vision-Language Models: **15篇**（HulluEdit、CAPRL、ViCLIP-OT、SUPERGLASSES等）
+- 🏥 Medical Image Analysis: **8篇**（HARU-Net、SGDC、MediX-R1等）
+- 🎨 Image / Video Generation & Editing: **17篇**（PhotoAgent、SPATIALALIGN、DyaDiT等）
+- 🚗 Autonomous Driving / Robotics / Embodied AI: **5篇**（DrivePTS、SkillNet等）
+- 🧊 3D Vision / Reconstruction / Gaussian Splatting: **8篇**（Latent GS、SwiftNDC等）
+- 📦 Others: **12篇**（SPMamba-YOLO、LoR-LUT等）
+
+**3. Caption 相关论文（3篇）**
+- **MovieTeller** — Table II：LLM-as-a-Judge评估结果（3个VLM基底模型对比）
+- **Asymmetric Idiosyncrasies in Multimodal Models** — Table 2：各captioning模型的TF-IDF特征词（10行×4模型）
+- **CAPRL** — Table 2：图像来源消融实验（5组数据集×13个基准测试指标）

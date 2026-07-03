@@ -1,0 +1,36 @@
+I'll start by reading all the input files to understand the data, then build a scheduling solution.
+Now I have all the data. Let me write a comprehensive Python scheduling script:
+The script ran successfully. Let me verify the outputs look correct:
+All three output files are correctly generated. Here's a summary of what was done:
+
+---
+
+## Results Summary
+
+### What the scheduler did
+
+1. **Parsed all inputs** — 30 existing events (no conflicts found among originals), 15 new requests, and the constraints from `constraints.yaml` (Asia/Shanghai timezone, 12:00–13:00 lunch block, 4-meeting daily cap, attendee unavailability rules).
+
+2. **Sorted requests by priority** (P0→P1→P2, earlier window first) and greedily assigned the earliest valid slot in each preferred window.
+
+3. **10 of 15 requests scheduled** (total priority weight: 26/43 maximum):
+
+| ID | Title | Priority | Scheduled Time (CST) |
+|---|---|---|---|
+| req_004 | Vision Demo Rehearsal | **P0** | Apr 14 11:00–12:00 |
+| req_006 | Offline Eval Deep Dive | **P0** | Apr 15 10:00–11:30 |
+| req_002 | Dataset Labeling Escalation | P1 | Apr 13 13:00–13:30 |
+| req_005 | Red Team Security Review | P1 | Apr 14 13:30–14:30 |
+| req_009 | Infra Cost Reduction Workshop | P1 | Apr 16 13:00–14:30 |
+| req_012 | Compliance Follow-up | P1 | Apr 17 13:30–14:00 |
+| req_003 | Q2 Budget Alignment | P2 | Apr 13 09:00–09:45 |
+| req_007 | Hiring Panel Calibration | P2 | Apr 15 14:30–15:15 |
+| req_010 | Design Partner Feedback Review | P2 | Apr 16 15:00–16:00 |
+| req_015 | Ops Overflow Triage | P2 | Apr 14 17:30–18:00 |
+
+4. **5 requests could not be scheduled:**
+   - **req_001** (P0) — alice & bob both have back-to-back existing meetings in all preferred windows
+   - **req_011** (P0) — alice already at 3 meetings on Friday; her preferred window (10:30–12:00) overlaps existing Engineering Standup
+   - **req_014** (P1) — alice is unavailable all day Wednesday (hard constraint)
+   - **req_008** (P1) — alice is unavailable all day Wednesday (hard constraint)
+   - **req_013** (P2) — frank is unavailable Friday 17:00–23:59 (hard constraint)

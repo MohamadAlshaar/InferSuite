@@ -1,0 +1,31 @@
+2026-06-27T12:51:47.865+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-27T12:51:47.913+00:00 [heartbeat] started
+2026-06-27T12:51:47.919+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-27T12:51:47.923+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-27T12:51:47.925+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 155)
+2026-06-27T12:51:47.927+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-27.log
+2026-06-27T12:51:47.948+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-27T12:51:48.041+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-27T12:51:50.099+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-27T13:00:04.443+00:00 [tools] web_search failed: Brave Search API error (422): {"error":{"code":"SUBSCRIPTION_TOKEN_INVALID","detail":"The provided subscription token is invalid.","meta":{"component":"authentication"},"status":422},"type":"ErrorResponse"}
+2026-06-27T13:07:56.738+00:00 [agent/embedded] embedded run agent end: runId=49ad7524-6449-4fe9-8937-a11c17b5c71c isError=true model=claude-sonnet-4-6 provider=my-openai-proxy error=LLM request rejected: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+2026-06-27T13:07:56.751+00:00 [agent/embedded] embedded run failover decision: runId=49ad7524-6449-4fe9-8937-a11c17b5c71c stage=assistant decision=surface_error reason=billing provider=my-openai-proxy/claude-sonnet-4-6 profile=-
+2026-06-27T13:07:56.759+00:00 LLM request rejected: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+2026-06-27T13:07:56.760+00:00 I'll solve this systematically. Let me start by fetching the arxiv papers and then processing them.
+2026-06-27T13:07:56.762+00:00 The direct URL didn't work. Let me try the correct arxiv listing format:
+2026-06-27T13:07:56.764+00:00 283 papers total. Let me fetch all of them:
+2026-06-27T13:07:56.767+00:00 Now I have all 283 papers. Let me classify them systematically:
+2026-06-27T13:07:56.769+00:00 Now I have all the data. Let me classify all papers:
+2026-06-27T13:07:56.770+00:00 Good, no issues. Now let me search specifically for CapRL to understand what it is:
+2026-06-27T13:07:56.771+00:00 Now I know CapRL is about Dense Image Captioning with Reinforcement Learning. Let me check if any of today's papers benchmark against CapRL:
+2026-06-27T13:07:56.773+00:00 Excellent! I found the Prism evaluation table in CCCaption. The CCCaption paper (2602.21655) benchmarks against CapRL-3B. Let me extract the key data. Now let me fetch the HTML for the multimodal papers I need to audit:
+2026-06-27T13:07:56.775+00:00 53 multimodal papers to audit. Let me fetch them in batches to check for appendix, figures, and tables:
+2026-06-27T13:07:56.777+00:00 Now I have a clear picture of CCCaption. The Prism evaluation table (Table 2) is the key comparison. Let me now spawn a sub-agent to handle all the metadata fetching for the 53 multimodal papers in parallel, while I prepare the structure:
+2026-06-27T13:07:56.778+00:00 Tables are also in `<figcaption>`. Let me update the script to count both figures and tables from figcaptions:
+2026-06-27T13:07:56.780+00:00 Now 5 figures and 5 tables. Let me now batch-process all 53 multimodal papers. I'll do this in parallel with multiple processes:
+2026-06-27T13:07:56.781+00:00 Excellent! Now I need to handle the 2 errors (404 - HTML not available yet) and also fetch author data. Let me now get authors for all 53 papers from the papers.json I already have:
+2026-06-27T13:07:56.782+00:00 All 53 rows look good. Now let me also gather the complete classification lists with proper paper titles, and then build the final digest:
+2026-06-27T13:07:56.784+00:00 Now I have all data. Let me build the final digest:
+2026-06-27T13:07:56.785+00:00 The digest looks excellent. Now let me verify the Prism table data from the actual paper:
+2026-06-27T13:07:56.787+00:00 The Prism table data is confirmed. Now let me update the benchmark table to be accurate and clean:
+2026-06-27T13:07:56.790+00:00 Now let me rebuild the final digest with the updated appendix evidence:

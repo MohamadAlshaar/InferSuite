@@ -1,0 +1,49 @@
+I'll solve this systematically. Let me start by reading all the input files.
+Now I have all the data. Let me write a comprehensive Python scheduling script:
+All diagnoses confirmed. Now let me produce a polished final `decision_log.md` with complete, accurate detail:
+All validations pass. Here's a complete summary of what was produced:
+
+---
+
+## Results Summary
+
+### Files written to `/tmp_workspace/results/`
+
+| File | Size | Contents |
+|------|------|----------|
+| `scheduled.ics` | 9,662 bytes | Valid iCal with all 30 original events + 10 newly scheduled |
+| `unscheduled.json` | 1,269 bytes | 5 unscheduled requests with reason codes |
+| `decision_log.md` | 4,526 bytes | Full structured decision log |
+
+---
+
+### Scheduling Results
+
+**10 of 15 requests scheduled** — Total priority weight: **26/45**
+
+| ID | Title | Priority | Slot (Asia/Shanghai) |
+|----|-------|----------|----------------------|
+| req_003 | Q2 Budget Alignment | P2 | Mon 04-13 09:00–09:45 |
+| req_002 | Dataset Labeling Escalation | P1 | Mon 04-13 13:00–13:30 |
+| req_004 | Vision Demo Rehearsal | **P0** | Tue 04-14 11:00–12:00 |
+| req_005 | Red Team Security Review | P1 | Tue 04-14 13:30–14:30 |
+| req_015 | Ops Overflow Triage | P2 | Tue 04-14 17:30–18:00 |
+| req_006 | Offline Eval Deep Dive | **P0** | Wed 04-15 10:00–11:30 |
+| req_007 | Hiring Panel Calibration | P2 | Wed 04-15 14:30–15:15 |
+| req_009 | Infra Cost Reduction Workshop | P1 | Thu 04-16 13:00–14:30 |
+| req_010 | Design Partner Feedback Review | P2 | Thu 04-16 15:00–16:00 |
+| req_012 | Compliance Follow-up | P1 | Fri 04-17 13:30–14:00 |
+
+---
+
+### 5 Unscheduled (with root cause)
+
+| ID | Title | Priority | Reason |
+|----|-------|----------|--------|
+| `req_001` | CapRL Launch Readiness | **P0** | `time_conflict` — Alice blocked 10:30–11:30 (Window 1); Bob blocked 16:30–17:30 (Window 2); no 60-min gap fits |
+| `req_011` | Friday Research Sync | **P0** | `time_conflict` — Alice in Hiring Debrief 10:30–11:30; only remaining slot (11:30–12:30) crosses lunch hard constraint |
+| `req_008` | Customer Renewal Strategy | P1 | `attendee_unavailable` — Alice fully unavailable Wednesday; both windows are on Wednesday |
+| `req_014` | Wednesday Cross-team Planning | P1 | `attendee_unavailable` — Alice fully unavailable Wednesday; both windows are on Wednesday |
+| `req_013` | Late Friday Launch Retro | P2 | `attendee_unavailable` — Frank unavailable Friday 17:00–23:59; single window is Fri 17:00–18:00 |
+
+All hard constraints respected: lunch block (12:00–13:00 Asia/Shanghai), ≤4 meetings/attendee/day, attendee unavailability rules, no conflicts with existing events, and scheduling only within preferred windows.

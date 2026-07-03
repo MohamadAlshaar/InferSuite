@@ -1,0 +1,124 @@
+2026-07-03T18:49:38.313+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-07-03T18:49:38.353+00:00 [heartbeat] started
+2026-07-03T18:49:38.359+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-07-03T18:49:38.362+00:00 [gateway] agent model: my-openai-proxy/instruct-32b
+2026-07-03T18:49:38.363+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 101)
+2026-07-03T18:49:38.365+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-07-03.log
+2026-07-03T18:49:38.384+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-07-03T18:49:38.481+00:00 [gateway] update available (latest): v2026.6.11 (current v2026.3.11). Run: openclaw update
+2026-07-03T18:49:40.418+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-07-03T18:50:58.527+00:00 为了完成这些任务，我们需要按顺序执行以下步骤：
+
+1. 解压并读取 PDF 文件。
+2. 重命名文件并将它们移动到指定目录。
+3. 将重命名映射记录到 `paper_digest.md`。
+4. 对论文进行分类并记录分类结果。
+5. 提取与 image caption 相关的论文及其第二个表格，并将其记录到 `paper_digest.md`。
+
+由于需要处理多个文件并且涉及到复杂的文本处理和提取，我们将使用 Python 脚本来完成这些任务。以下是实现该脚本的步骤：
+
+首先，确保安装了必要的库，如 `PyMuPDF` 用于读取 PDF 文件，`os` 用于文件操作，`re` 用于正则表达式匹配等。
+
+接下来是具体的脚本内容：
+
+```python
+import os
+import re
+import fitz  # PyMuPDF
+import tarfile
+
+def extract_pdf_title(pdf_file):
+    doc = fitz.open(pdf_file)
+    title = doc.metadata.get('title', '')
+    if not title:
+        title = doc[0].get_text().split('\n')[0]
+    return re.sub(r'[ /]', '_', title) + '.pdf'
+
+def rename_and_move_pdfs(tar_file, dest_dir):
+    os.makedirs(dest_dir, exist_ok=True)
+    tar = tarfile.open(tar_file, 'r')
+    rename_mapping = []
+    for member in tar.getmembers():
+        if member.isfile() and member.name.endswith('.pdf'):
+            pdf_file = tar.extractfile(member)
+            with open(os.path.join('/tmp', member.name), 'wb') as f:
+                f.write(pdf_file.read())
+            new_name = extract_pdf_title(os.path.join('/tmp', member.name))
+            os.rename(os.path.join('/tmp', member.name), os.path.join(dest_dir, new_name))
+            rename_mapping.append((member.name, new_name))
+    tar.close()
+    return rename_mapping
+
+def classify_papers(papers_dir):
+    categories = {
+        'Multimodal / Vision-Language Models': [],
+        'Medical Image Analysis': [],
+        'Image / Video Generation & Editing': [],
+        'Autonomous Driving / Robotics / Embodied AI': [],
+        '3D Vision / Reconstruction / Gaussian Splatting': [],
+        'Others': []
+    }
+    for filename in os.listdir(papers_dir):
+        if filename.endswith('.pdf'):
+            with fitz.open(os.path.join(papers_dir, filename)) as doc:
+                text = doc[0].get_text()
+                if 'multimodal' in text.lower() or 'vision-language' in text.lower():
+                    categories['Multimodal / Vision-Language Models'].append(filename[:-4])
+                elif 'medical image' in text.lower():
+                    categories['Medical Image Analysis'].append(filename[:-4])
+                elif 'image generation' in text.lower() or 'video editing' in text.lower():
+                    categories['Image / Video Generation & Editing'].append(filename[:-4])
+                elif 'autonomous driving' in text.lower() or 'robotics' in text.lower() or 'embodied ai' in text.lower():
+                    categories['Autonomous Driving / Robotics / Embodied AI'].append(filename[:-4])
+                elif '3d vision' in text.lower() or 'reconstruction' in text.lower() or 'gaussian splatting' in text.lower():
+                    categories['3D Vision / Reconstruction / Gaussian Splatting'].append(filename[:-4])
+                else:
+                    categories['Others'].append(filename[:-4])
+    return categories
+
+def extract_caption_tables(papers_dir):
+    caption_related_papers = {}
+    for filename in os.listdir(papers_dir):
+        if filename.endswith('.pdf'):
+            with fitz.open(os.path.join(papers_dir, filename)) as doc:
+                text = doc[0].get_text()
+                if 'caption' in text.lower():
+                    tables = [table for page in doc for table in page.get_tables()]
+                    if len(tables) > 1:
+                        caption_related_papers[filename[:-4]] = tables[1]
+    return caption_related_papers
+
+def generate_paper_digest(rename_mapping, categories, caption_related_papers, output_file):
+    with open(output_file, 'w') as f:
+        f.write('### Rename Mapping\n')
+        f.write('| Original Filename | New Filename |\n')
+        f.write('|---|---|\n')
+        for original, new in rename_mapping:
+            f.write(f'|{original}|{new}|\n')
+
+        f.write('\n### Classification\n')
+        for category, papers in categories.items():
+            f.write(f'#### {category}\n')
+            for paper in papers:
+                f.write(f'- {paper}\n')
+
+        f.write('\n### Caption-Related Papers\n')
+        for title, table in caption_related_papers.items():
+            f.write(f'\n#### {title}\n')
+            f.write(f'Table 2: 表格标题描述...\n')
+            f.write(f'| {" | ".join(table[0])} |\n')
+            f.write(f'| {" | ".join(["---"] * len(table[0]))} |\n')
+            for row in table[1:]:
+                f.write(f'| {" | ".join(row)} |\n')
+
+tar_file = '/tmp_workspace/papers.tar'
+papers_dir = '/tmp_workspace/results/papers/'
+output_file = '/tmp_workspace/results/paper_digest.md'
+
+rename_mapping = rename_and_move_pdfs(tar_file, papers_dir)
+categories = classify_papers(papers_dir)
+caption_related_papers = extract_caption_tables(papers_dir)
+generate_paper_digest(rename_mapping, categories, caption_related_papers, output_file)
+```
+
+现在让我们执行这段脚本：

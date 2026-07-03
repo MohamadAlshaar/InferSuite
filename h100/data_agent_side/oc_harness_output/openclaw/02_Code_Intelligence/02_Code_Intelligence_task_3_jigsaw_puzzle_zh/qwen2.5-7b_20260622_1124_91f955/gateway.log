@@ -1,0 +1,21 @@
+2026-06-22T09:24:25.245+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-22T09:24:25.285+00:00 [heartbeat] started
+2026-06-22T09:24:25.290+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-22T09:24:25.293+00:00 [gateway] agent model: my-openai-proxy/qwen2.5-7b
+2026-06-22T09:24:25.294+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 102)
+2026-06-22T09:24:25.296+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-22.log
+2026-06-22T09:24:25.312+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-22T09:24:25.385+00:00 [gateway] update available (latest): v2026.6.9 (current v2026.3.11). Run: openclaw update
+2026-06-22T09:24:27.621+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-22T09:24:35.499+00:00 ```json
+{
+  "grid": [
+    ["piece_01.png", "piece_04.png", "piece_07.png"],
+    ["piece_02.png", "piece_05.png", "piece_08.png"],
+    ["piece_03.png", "piece_06.png", "piece_09.png"]
+  ],
+  "transforms": {},
+  "distractors": ["piece_10.png", "piece_11.png", "piece_12.png", "piece_13.png", "piece_14.png", "piece_15.png"],
+  "description": "拼好后的图片是一个正方形房间的平面图，包含床、书桌和衣柜等家具。"
+}
+```

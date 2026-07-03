@@ -1,0 +1,11 @@
+Config (/root/.openclaw/openclaw.json): missing env var "BRAVE_API_KEY" at tools.web.search.apiKey — feature using this value will be unavailable
+│
+◇  Config warnings ──────────────────────────────────────────────────────╮
+│                                                                        │
+│  - tools.web.search.apiKey: Missing env var "BRAVE_API_KEY" — feature  │
+│    using this value will be unavailable                                │
+│                                                                        │
+├────────────────────────────────────────────────────────────────────────╯
+2026-06-19T15:00:54.775+00:00 Config (/root/.openclaw/openclaw.json): missing env var "BRAVE_API_KEY" at tools.web.search.apiKey — feature using this value will be unavailable
+2026-06-19T15:00:54.821+00:00 [secrets] [SECRETS_RELOADER_DEGRADED] Error: [WEB_SEARCH_KEY_UNRESOLVED_NO_FALLBACK] tools.web.search.apiKey SecretRef is unresolved (env:default:BRAVE_API_KEY).
+2026-06-19T15:00:54.848+00:00 Gateway failed to start: Error: Startup failed: required secrets are unavailable. Error: [WEB_SEARCH_KEY_UNRESOLVED_NO_FALLBACK] tools.web.search.apiKey SecretRef is unresolved (env:default:BRAVE_API_KEY).

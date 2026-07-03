@@ -1,0 +1,12 @@
+2026-06-27T13:08:05.433+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-27T13:08:05.472+00:00 [heartbeat] started
+2026-06-27T13:08:05.478+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-27T13:08:05.481+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-27T13:08:05.482+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 153)
+2026-06-27T13:08:05.484+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-27.log
+2026-06-27T13:08:05.503+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-27T13:08:05.580+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-27T13:08:07.340+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-27T13:08:07.918+00:00 [agent/embedded] embedded run agent end: runId=29d96727-77f6-4d58-a554-101fbc82da7e isError=true model=claude-sonnet-4-6 provider=my-openai-proxy error=LLM request rejected: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+2026-06-27T13:08:07.926+00:00 [agent/embedded] embedded run failover decision: runId=29d96727-77f6-4d58-a554-101fbc82da7e stage=assistant decision=surface_error reason=billing provider=my-openai-proxy/claude-sonnet-4-6 profile=-
+2026-06-27T13:08:07.930+00:00 LLM request rejected: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.

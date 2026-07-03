@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+          69892781      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+          60026143      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope #    0.86  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.256b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+     <not counted>      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+     <not counted>      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+     <not counted>      fp_arith_inst_retired.256b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+     <not counted>      fp_arith_inst_retired.256b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+     <not counted>      fp_arith_inst_retired.512b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+     <not counted>      fp_arith_inst_retired.512b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+        3339463343      cycles                           system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+        4100353557      instructions                     system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope #    1.23  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+                 0      fp_arith_inst_retired.256b_packed_double system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_double system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+
+      10.005069833 seconds time elapsed
+

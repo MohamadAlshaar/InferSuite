@@ -1,0 +1,125 @@
+为了完成这个任务，我们需要使用图像处理工具来裁剪和保存不同的版本。由于没有直接的图像处理库调用，我们可以使用 `exec` 命令来运行一个图像处理脚本。这里我们将使用 Python 的 Pillow 库来进行图像处理。
+
+首先，我们需要安装 Pillow 库。由于我们已经在 `/tmp_workspace/` 目录下，我们可以直接运行安装命令。
+
+```bash
+pip install pillow
+```
+
+然后，我们可以编写一个 Python 脚本来进行图像处理，并将其保存到 `/tmp_workspace/results/` 目录中。
+
+```python
+from PIL import Image
+import os
+
+def crop_image(image_path, output_path, size):
+    img = Image.open(image_path)
+    width, height = img.size
+    left = (width - size[0]) / 2
+    top = (height - size[1]) / 2
+    right = left + size[0]
+    bottom = top + size[1]
+    cropped_img = img.crop((left, top, right, bottom))
+    cropped_img.save(output_path)
+
+def process_poster(input_path, output_dir):
+    # 创建输出目录
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Instagram 正方形信息流帖子
+    crop_image(input_path, os.path.join(output_dir, 'crop_ins_square.png'), (1080, 1080))
+
+    # TikTok / Instagram Reels 全屏竖版
+    crop_image(input_path, os.path.join(output_dir, 'crop_tiktok.png'), (1080, 1920))
+
+    # Instagram 竖版帖子（Portrait）
+    crop_image(input_path, os.path.join(output_dir, 'crop_ins_portrait.png'), (1080, 1080))
+
+# 处理原始海报
+process_poster('/tmp_workspace/poster_original.png', '/tmp_workspace/results/')
+```
+
+接下来，我们需要将这个脚本保存为一个文件，并在前台运行它。
+
+```bash
+exec("python /tmp_workspace/process_poster.py")
+```
+
+完整解决方案如下：
+
+```bash
+exec("pip install pillow")
+exec("python /tmp_workspace/process_poster.py")
+```
+
+由于我们无法直接运行 Python 脚本，我们可以将其内容嵌入到 `exec` 命令中，以确保在前台运行并提供完整的功能解决方案。
+
+```bash
+exec("""
+from PIL import Image
+import os
+
+def crop_image(image_path, output_path, size):
+    img = Image.open(image_path)
+    width, height = img.size
+    left = (width - size[0]) / 2
+    top = (height - size[1]) / 2
+    right = left + size[0]
+    bottom = top + size[1]
+    cropped_img = img.crop((left, top, right, bottom))
+    cropped_img.save(output_path)
+
+def process_poster(input_path, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Instagram 正方形信息流帖子
+    crop_image(input_path, os.path.join(output_dir, 'crop_ins_square.png'), (1080, 1080))
+
+    # TikTok / Instagram Reels 全屏竖版
+    crop_image(input_path, os.path.join(output_dir, 'crop_tiktok.png'), (1080, 1920))
+
+    # Instagram 竖版帖子（Portrait）
+    crop_image(input_path, os.path.join(output_dir, 'crop_ins_portrait.png'), (1080, 1080))
+
+# 处理原始海报
+process_poster('/tmp_workspace/poster_original.png', '/tmp_workspace/results/')
+""")
+```
+
+请注意，由于我们无法直接运行 Python 脚本，上述命令仅展示了如何将脚本内容嵌入到 `exec` 命令中。实际执行时，你需要确保在目标环境中安装了 Pillow 库，并且能够运行 Python 脚本。
+
+最终，完整的 `exec` 命令如下：
+
+```bash
+exec("""
+from PIL import Image
+import os
+
+def crop_image(image_path, output_path, size):
+    img = Image.open(image_path)
+    width, height = img.size
+    left = (width - size[0]) / 2
+    top = (height - size[1]) / 2
+    right = left + size[0]
+    bottom = top + size[1]
+    cropped_img = img.crop((left, top, right, bottom))
+    cropped_img.save(output_path)
+
+def process_poster(input_path, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Instagram 正方形信息流帖子
+    crop_image(input_path, os.path.join(output_dir, 'crop_ins_square.png'), (1080, 1080))
+
+    # TikTok / Instagram Reels 全屏竖版
+    crop_image(input_path, os.path.join(output_dir, 'crop_tiktok.png'), (1080, 1920))
+
+    # Instagram 竖版帖子（Portrait）
+    crop_image(input_path, os.path.join(output_dir, 'crop_ins_portrait.png'), (1080, 1080))
+
+# 处理原始海报
+process_poster('/tmp_workspace/poster_original.png', '/tmp_workspace/results/')
+""")
+```
+
+这将确保在前台运行 Python 脚本并生成所需的裁剪版本。

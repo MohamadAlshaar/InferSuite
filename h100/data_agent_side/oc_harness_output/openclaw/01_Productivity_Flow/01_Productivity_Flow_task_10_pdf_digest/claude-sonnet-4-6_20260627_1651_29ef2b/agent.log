@@ -1,0 +1,59 @@
+I'll solve this systematically. Let me start by extracting the tar file and examining the PDFs.
+Now let me write a comprehensive script to extract titles from all PDFs:
+Excellent! Now let me check the full titles (some were truncated) and fix any issues:
+All 65 titles extracted. Now let me check the `d0a480b001f5.pdf` title more carefully (it has "Captioning" based on the keyword) and identify caption-related papers:
+The title extraction got it wrong for `d0a480b001f5.pdf`. Let me re-examine and fix titles more carefully:
+The second method is getting confused by the arXiv headers. The first extraction (titles.json) is clearly much better. Let me verify the one that was wrong (`d0a480b001f5.pdf`):
+So the correct title for `d0a480b001f5.pdf` is "Scale Can't Overcome Pragmatics: The Impact of Reporting Bias on Vision-Language Reasoning". The first extraction had it wrong. Let me check other problematic ones and do a more careful extraction:
+Neither pass is consistently correct - they both have issues with different PDFs. The first pass (`titles.json`) was actually the best overall. Let me do a careful manual comparison and use the best approach per PDF:
+Both passes have very different results for many PDFs. I need to inspect PDFs individually and use a better approach. Let me look at the first page of each PDF carefully:
+I still have many truncated and wrong titles. Let me take a different, more careful approach - debug each PDF with confusing output and find its real title:
+Now I have a clear picture. Let me check a few more problematic ones and then build the definitive title list:
+Now I have a comprehensive picture. Let me also check the remaining ones I haven't verified yet:
+Now I have all the information I need. Let me build the definitive title mapping:
+Now let me copy the PDFs with new names and verify a few more edge cases:
+Now let me find the caption-related papers and extract their second tables:
+The paper `42e93f81aeab.pdf` mentions "3D dense captioning" but is primarily about a 3D multimodal model. The papers `77da4293cd70.pdf` (Asymmetric Idiosyncrasies) and `cc223dd1ad70.pdf` (Pix2Key) only mention captioning incidentally. The truly caption-focused papers are:
+
+1. `9eac27775c25.pdf` - CAPRL: Stimulating Dense Image Caption Capabilities via Reinforcement Learning
+2. `339cb1dcc7d5.pdf` - MovieTeller: Tool-augmented Movie Synopsis with ID Consistent Progressive Abstraction
+
+Now let me extract the second tables from these papers:
+I found both tables in MovieTeller. Let me get the complete Table 2:
+Now let me get the full CAPRL Table 2:
+Now I have all the data I need. Let me also check if there are any other caption-focused papers I might have missed by checking for papers where captioning is the primary topic:
+This paper is caption-related (it studies captioning models). Let me check its Table 2:
+This paper is about idiosyncrasies in captioning models - it is caption-related. Let me continue getting the full Table 2:
+Now I have all three caption papers and their Table 2 data. Now let me write the comprehensive script to create the final markdown output:
+The digest looks great. Let me verify the file count and check for any remaining issues:
+All 65 papers are classified. Let me do a final verification count per category:
+Everything is complete. Let me do a final summary verification:
+The rename mapping count shows 95 because some table rows have `|` in the content. The actual mapping is 65 entries (one per paper). Everything is complete and working correctly.
+
+---
+
+## Summary
+
+All three tasks have been completed successfully:
+
+### Task 1: File Renaming ✅
+- All 65 PDFs were renamed from hash filenames to title-based filenames
+- Spaces replaced with `_`, slashes replaced with `_`
+- All files placed flat in `/tmp_workspace/results/papers/`
+- Full rename mapping table in `paper_digest.md`
+
+### Task 2: Classification ✅
+All 65 papers classified across 6 categories:
+- **Multimodal / Vision-Language Models**: 11 papers
+- **Medical Image Analysis**: 9 papers  
+- **Image / Video Generation & Editing**: 14 papers
+- **Autonomous Driving / Robotics / Embodied AI**: 1 paper
+- **3D Vision / Reconstruction / Gaussian Splatting**: 8 papers
+- **Others**: 22 papers
+
+### Task 3: Caption-Related Papers & Table 2 Extraction ✅
+Found **3 caption-related papers** and extracted their second tables:
+
+1. **CAPRL** — Table 2: Ablation on image sources (pretraining datasets comparison across 13 benchmarks)
+2. **MovieTeller** — Table 2: LLM-as-a-Judge evaluation results (1-5 scale across 3 base models)
+3. **Asymmetric Idiosyncrasies in Multimodal Models** — Table 2: Top distinctive TF-IDF phrases per captioning model

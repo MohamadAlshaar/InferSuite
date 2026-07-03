@@ -1,0 +1,13 @@
+LLM request rejected: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+I'll solve this systematically. Let me start by fetching the arxiv papers and then processing them.
+The API works with `wget`. There are 283 papers total. Let me fetch all of them.
+Now let me classify all 283 papers using their titles and abstracts:
+The classification has many false positives. Let me do a more careful manual review with better criteria:
+Now I have a comprehensive list. Let me do careful manual classification:
+The automated classification has some misassignments. Let me do careful manual reclassification based on title reading:
+Good. Now I need to carefully review and trim the multimodal list - 68 is too many. Let me do a focused review of the multimodal papers and remove misclassifications:
+Now I have a good understanding. Let me do final trimming of the multimodal list to keep only clearly multimodal/VLM papers and spawn a subagent to fetch paper PDFs/HTMLs for the metadata audit:
+Good. Now I need to fetch arxiv HTML for each multimodal paper to count figures and tables. Let me spawn a subagent to handle the metadata audit for a subset while I work on other papers:
+The HTML counting has a bug - many papers show 0 main figures. The issue is that `ltx_figure` elements with ids are all being attributed as appendix because the "appendix heading" detection is incorrectly triggered by the title. Let me fix this and re-fetch the papers that had issues:
+The improved version works correctly. Now let me run the full count with the fixed script:
+Excellent! Now I have the counts. But there are 4 papers that had no HTML. Let me fetch those via PDF or alternative means, and also verify a few tricky cases:

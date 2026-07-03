@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       23351831662      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+       70801164998      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope #    3.03  insn per cycle            
+       22322668109      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+         365609175      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+           6743039      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+            328578      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve2.scope                                      
+         375351870      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-27932.scope                                      
+         682250018      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-27932.scope #    1.82  insn per cycle            
+         178497683      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-27932.scope                                      
+           2322037      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-27932.scope                                      
+            197385      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-27932.scope                                      
+            208276      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-27932.scope                                      
+        1085485782      cycles                           system.slice/docker-13c600c3f29d36a4b35c3acd4a25cc3357f163890b66a723a7e8ed2d904a0f47.scope                                      
+        1572238264      instructions                     system.slice/docker-13c600c3f29d36a4b35c3acd4a25cc3357f163890b66a723a7e8ed2d904a0f47.scope #    1.45  insn per cycle            
+         420125243      mem_load_retired.l1_hit          system.slice/docker-13c600c3f29d36a4b35c3acd4a25cc3357f163890b66a723a7e8ed2d904a0f47.scope                                      
+          11887345      mem_load_retired.l2_hit          system.slice/docker-13c600c3f29d36a4b35c3acd4a25cc3357f163890b66a723a7e8ed2d904a0f47.scope                                      
+           1027690      mem_load_retired.l3_hit          system.slice/docker-13c600c3f29d36a4b35c3acd4a25cc3357f163890b66a723a7e8ed2d904a0f47.scope                                      
+            164489      mem_load_retired.l3_miss         system.slice/docker-13c600c3f29d36a4b35c3acd4a25cc3357f163890b66a723a7e8ed2d904a0f47.scope                                      
+
+      10.005944666 seconds time elapsed
+

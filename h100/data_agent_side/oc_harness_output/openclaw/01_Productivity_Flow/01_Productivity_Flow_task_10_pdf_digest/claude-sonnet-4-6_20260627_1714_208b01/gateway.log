@@ -1,0 +1,64 @@
+2026-06-27T15:14:19.039+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-27T15:14:19.091+00:00 [heartbeat] started
+2026-06-27T15:14:19.098+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-27T15:14:19.102+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-27T15:14:19.103+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 101)
+2026-06-27T15:14:19.106+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-27.log
+2026-06-27T15:14:19.127+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-27T15:14:19.214+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-27T15:14:21.253+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-27T15:22:36.547+00:00 I'll solve this systematically. Let me start by extracting the archive and examining the PDFs.
+2026-06-27T15:22:36.572+00:00 Now let me install PDF processing tools and extract titles:
+2026-06-27T15:22:36.576+00:00 Good approach. Let me write a comprehensive script to extract all titles:
+2026-06-27T15:22:36.577+00:00 Many PDFs have arXiv headers. I need a better extraction strategy to get the actual paper titles:
+2026-06-27T15:22:36.579+00:00 Now I understand the structure. The title appears at the top (before the arXiv stamp). Let me write a robust extraction function:
+2026-06-27T15:22:36.581+00:00 Most titles look good. Some have issues - abbreviated/corrupted text. Let me fix those problematic ones:
+2026-06-27T15:22:36.583+00:00 Good progress. I need to handle remaining cases better. Let me look at the specific patterns:
+2026-06-27T15:22:36.585+00:00 Plain text extraction works much better for these! Let me now build a comprehensive title extractor using plain text:
+2026-06-27T15:22:36.586+00:00 Good progress! Now let me handle the remaining issues and clean up titles:
+2026-06-27T15:22:36.590+00:00 Now I have all the info I need. Let me build the final clean title dictionary:
+2026-06-27T15:22:36.591+00:00 Many titles still have author names appended. I need to truncate at the right place. Let me create the final cleaned titles:
+2026-06-27T15:22:36.593+00:00 I still have author names attached. The best approach is to use the font size method to identify only the large-font title text. Let me do a combined approach:
+2026-06-27T15:22:36.594+00:00 Good progress! Now I have a clear picture. The font-size approach works well for most, but the ICLR-style papers (731b, 78af, 9129, 93ea, 9eac, 990b, e27a) with small-caps are getting garbled. And some others have minor issues. Let me do targeted fixes for each:
+2026-06-27T15:22:36.595+00:00 The titles look good but are truncated at 100 chars. Let me check the full versions and fix the remaining truncated ones:
+2026-06-27T15:22:36.597+00:00 The JSON has full titles. Now let me copy PDFs to results/papers with the correct names and generate the markdown:
+2026-06-27T15:22:36.598+00:00 Good. Now let me do Task 3 - find caption-related papers and extract their second tables. First let me identify caption papers:
+2026-06-27T15:22:36.600+00:00 The clear caption-related papers are:
+1. **9eac27775c25.pdf** - CAPRL (directly about dense image captioning)
+2. **77da4293cd70.pdf** - Asymmetric Idiosyncrasies in Multimodal Models (26 mentions of caption)
+
+Let me check `77da4293cd70.pdf` to confirm it's caption-related:
+2026-06-27T15:22:36.601+00:00 Yes, it's directly about caption models. Now let me extract the second tables from both papers:
+2026-06-27T15:22:36.605+00:00 Now let me extract Table 2 from the CAPRL paper:
+2026-06-27T15:22:36.606+00:00 Now I have enough data. Let me now write the complete markdown file. First, let me do the classification task:
+2026-06-27T15:22:36.607+00:00 Now I have all the data I need. Let me also check a few more items to verify some classifications, then write the final output:
+2026-06-27T15:22:36.609+00:00 Now I have enough information. Let me compile the complete markdown file:
+2026-06-27T15:22:36.610+00:00 Now let me write the final comprehensive markdown file:
+2026-06-27T15:22:36.611+00:00 The file looks complete and correct. Let me do a final verification:
+2026-06-27T15:22:36.613+00:00 All tasks completed successfully. Here's a summary of what was accomplished:
+
+---
+
+## ✅ 任务完成
+
+### 1. 重命名映射（Rename Mapping）
+- 从 65 篇 PDF 中提取了论文标题（使用 PyMuPDF 基于字体大小分析）
+- 处理了多种特殊格式：arXiv 预印本、ICLR 小型大写字母、期刊头部信息等
+- 将所有文件复制到 `/tmp_workspace/results/papers/`（扁平结构）
+- 空格和斜杠均替换为 `_`
+
+### 2. 分类（Classification）
+65 篇论文分入 6 个类别：
+- **Multimodal / Vision-Language Models**：14 篇
+- **Medical Image Analysis**：9 篇  
+- **Image / Video Generation & Editing**：12 篇
+- **Autonomous Driving / Robotics / Embodied AI**：3 篇
+- **3D Vision / Reconstruction / Gaussian Splatting**：8 篇
+- **Others**：19 篇
+
+### 3. Caption 相关论文与表格提取
+找到 **2 篇** caption 相关论文：
+
+1. **Asymmetric Idiosyncrasies in Multimodal Models** — 研究 caption 模型的风格特征及其对文生图系统的影响。Table 2 列出了每个 captioning 模型（Claude、Gemini、GPT-4o、Qwen3-VL）的 Top-10 TF-IDF 特征短语。
+
+2. **CAPRL: STIMULATING DENSE IMAGE CAPTION CAPABILITIES VIA REINFORCEMENT LEARNING** — 通过强化学习提升 LVLM 的密集图像描述能力。Table 2 展示了不同预训练数据集（ShareGPT4V-1M、DenseFusion-1M 及其 CapRL 标注版本）在 12 个基准测试上的消融实验结果。

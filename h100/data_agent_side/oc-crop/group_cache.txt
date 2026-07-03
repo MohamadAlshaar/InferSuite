@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       23708851651      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+       69956283512      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope #    2.95  insn per cycle            
+       22262354366      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+         429669833      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           6433102      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+            148408      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           5039875      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+           4107646      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope #    0.82  insn per cycle            
+            954954      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+             81553      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+              4777      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+               315      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-crop-47039.scope                                      
+        4149811450      cycles                           system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+        6335858965      instructions                     system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope #    1.53  insn per cycle            
+        1446352011      mem_load_retired.l1_hit          system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+          36396383      mem_load_retired.l2_hit          system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+           1218602      mem_load_retired.l3_hit          system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+            305598      mem_load_retired.l3_miss         system.slice/docker-74a4102b9226fb78235f83861cfab53f087423f9278cee31422da5eda890660b.scope                                      
+
+      10.003890106 seconds time elapsed
+

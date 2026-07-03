@@ -1,0 +1,32 @@
+[
+  {
+    "id": "req_001",
+    "title": "CapRL Launch Readiness",
+    "reason_code": "time_conflict",
+    "reason_text": "In window 1 (CST 10:30-12:00 Mon Apr 13): alice@example.com conflicts with 'Product Planning Sync' (10:30-11:30 CST). In window 2 (CST 15:30-17:30 Mon Apr 13): all 60-min slots beginning 15:30 conflict with alice's 'Customer Escalation Review' (15:00-16:00 CST), and alice already has 3 meetings that day so adding a 4th after req_002 is also blocked by the daily meeting limit (4/day). No valid slot found in any preferred window."
+  },
+  {
+    "id": "req_011",
+    "title": "Friday Research Sync",
+    "reason_code": "time_conflict",
+    "reason_text": "Only window is CST 10:30-12:00 Fri Apr 17. alice@example.com conflicts with 'Hiring Debrief' (10:30-11:30 CST). The 60-min window also begins exactly at 10:30, leaving no valid sub-slot; all candidate slots overlap with the existing event. No alternative window was provided."
+  },
+  {
+    "id": "req_008",
+    "title": "Customer Renewal Strategy",
+    "reason_code": "attendee_unavailable",
+    "reason_text": "Window 1 (Wed Apr 15 17:00-18:30 CST): alice@example.com is fully unavailable on Wednesdays (hard constraint). Window 2 (Thu Apr 16 09:00-10:30 CST): every 60-min slot within this window overlaps with alice's existing 'Engineering Standup' (09:30-10:00 CST), leaving no valid slot. No preferred window satisfies all required attendees."
+  },
+  {
+    "id": "req_014",
+    "title": "Wednesday Cross-team Planning",
+    "reason_code": "attendee_unavailable",
+    "reason_text": "Both preferred windows fall on Wednesday Apr 15. alice@example.com is unavailable the entire Wednesday (00:00-23:59 hard constraint). Since alice is a required attendee, no window on this day can be used."
+  },
+  {
+    "id": "req_013",
+    "title": "Late Friday Launch Retro",
+    "reason_code": "time_conflict",
+    "reason_text": "Only window is CST 17:00-18:00 Fri Apr 17. alice@example.com has an existing 'Weekly Wrap-up' meeting from 16:30-17:30 CST, which overlaps all 60-min slots starting at 17:00. No alternative window was provided."
+  }
+]

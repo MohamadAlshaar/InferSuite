@@ -1,0 +1,32 @@
+[
+  {
+    "id": "req_001",
+    "title": "CapRL Launch Readiness",
+    "reason_code": "time_conflict",
+    "reason_text": "No 60-min slot fits for all required attendees (Alice, Bob, Carol) in either preferred window. Window 1 (Mon 2026-04-13 10:30–12:00 CST): Alice's existing Product Planning Sync (10:30–11:30) occupies the first slot; the next gap (11:30–12:00, 30 min) is too short and extending it hits the lunch break. Window 2 (15:30–17:30 CST): Bob's Infrastructure Operations Check (16:30–17:30) blocks the last available 60-min slot."
+  },
+  {
+    "id": "req_011",
+    "title": "Friday Research Sync",
+    "reason_code": "time_conflict",
+    "reason_text": "The only preferred window (Fri 2026-04-17 10:30–12:00 CST) cannot accommodate 60 min for all required attendees (Alice, Bob, Carol). Alice's existing Hiring Debrief (10:30–11:30) blocks the first slot; the remaining 11:30–12:00 gap is only 30 min, and extending to 11:30–12:30 violates the hard lunch-break constraint."
+  },
+  {
+    "id": "req_008",
+    "title": "Customer Renewal Strategy",
+    "reason_code": "attendee_unavailable",
+    "reason_text": "Alice (required) is all-day unavailable on Wednesdays, blocking the first preferred window (Wed 2026-04-15 17:00–18:30 CST). The second window (Thu 2026-04-16 09:00–10:30 CST) is too narrow: Alice's Engineering Standup runs 09:30–10:00, leaving only 30 min before the 10:30 window boundary — insufficient for the required 60-min duration."
+  },
+  {
+    "id": "req_014",
+    "title": "Wednesday Cross-team Planning",
+    "reason_code": "attendee_unavailable",
+    "reason_text": "Alice (required) is all-day unavailable on Wednesdays (hard constraint in constraints.yaml). Both preferred windows fall on Wednesday 2026-04-15, making it impossible to schedule this meeting without violating the attendee unavailability rule."
+  },
+  {
+    "id": "req_013",
+    "title": "Late Friday Launch Retro",
+    "reason_code": "attendee_unavailable",
+    "reason_text": "Frank (required) is unavailable on Fridays from 17:00 CST onward (hard constraint), and the only preferred window is Fri 2026-04-17 17:00–18:00 CST. Additionally, Alice (required) has an existing Weekly Wrap-up meeting at 16:30–17:30 CST that conflicts with the 17:00 start. Both constraints independently block scheduling."
+  }
+]

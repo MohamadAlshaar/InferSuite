@@ -1,0 +1,62 @@
+2026-06-26T13:10:58.943+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-26T13:10:58.977+00:00 [heartbeat] started
+2026-06-26T13:10:58.981+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-26T13:10:58.984+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-26T13:10:58.985+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 128)
+2026-06-26T13:10:58.986+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-26.log
+2026-06-26T13:10:58.999+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-26T13:10:59.088+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-26T13:11:01.092+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-26T13:15:58.420+00:00 I'll solve this systematically. Let me start by reading all the input files.
+2026-06-26T13:15:58.445+00:00 Now I have all the data. Let me write a comprehensive Python scheduler to process everything:
+2026-06-26T13:15:58.448+00:00 Good results. Let me dig deeper into the failures to verify they're accurate and investigate if we can fix any of them:
+2026-06-26T13:15:58.449+00:00 All failures are correct and verified. Now let me improve the failure messages to be more precise and informative:
+2026-06-26T13:15:58.450+00:00 Now let me enhance the failure messages with more precise text and re-run the full scheduler:
+2026-06-26T13:15:58.452+00:00 Results are consistent. Now let me verify the output files are well-formed:
+2026-06-26T13:15:58.453+00:00 The decision log is clear but I can improve the unscheduled messages to be more precise about the root cause. Let me polish them:
+2026-06-26T13:15:58.455+00:00 Also update the unscheduled.json to use the detailed reason texts:
+2026-06-26T13:15:58.457+00:00 Everything looks excellent. Let me do a final validation check:
+2026-06-26T13:15:58.458+00:00 There are two conflicts detected in the new events — I need to investigate. The `ATTENDEE` parsing in the validator is picking up `ROLE=OPT-PARTICIPANT` optional attendees too, conflating them with required ones. Let me investigate precisely:
+2026-06-26T13:15:58.460+00:00 Both "conflicts" are false positives — they involve **optional** attendees only, which is explicitly allowed. The scheduler is correct. Let me do one final spot-check on the iCalendar ATTENDEE role tags in the output:
+2026-06-26T13:15:58.461+00:00 The iCal file correctly marks `REQ-PARTICIPANT` vs `OPT-PARTICIPANT`. Let me verify the UTC times decode correctly for req_006:
+2026-06-26T13:15:58.463+00:00 UTC times are correct. Let me confirm the final file list:
+2026-06-26T13:15:58.464+00:00 All three required files are present. Here's a complete summary of what was done:
+
+---
+
+## Results Summary
+
+### Files written to `/tmp_workspace/results/`
+
+| File | Description |
+|---|---|
+| `scheduled.ics` | Valid iCalendar with all 30 original events + 10 newly scheduled VEVENTs |
+| `unscheduled.json` | 5 unschedulable requests with `reason_code` + detailed `reason_text` |
+| `decision_log.md` | Full scheduling decision log per spec |
+
+---
+
+### Scheduling Results (10/15 scheduled, Priority weight: 26/42)
+
+| ID | Title | Priority | Slot (Asia/Shanghai) |
+|---|---|---|---|
+| req_003 | Q2 Budget Alignment | P2 | Mon Apr 13 09:00–09:45 |
+| req_002 | Dataset Labeling Escalation | P1 | Mon Apr 13 13:00–13:30 |
+| req_004 | Vision Demo Rehearsal | **P0** | Tue Apr 14 11:00–12:00 |
+| req_005 | Red Team Security Review | P1 | Tue Apr 14 13:30–14:30 |
+| req_015 | Ops Overflow Triage | P2 | Tue Apr 14 17:30–18:00 |
+| req_006 | Offline Eval Deep Dive | **P0** | Wed Apr 15 10:00–11:30 |
+| req_007 | Hiring Panel Calibration | P2 | Wed Apr 15 14:30–15:15 |
+| req_009 | Infra Cost Reduction Workshop | P1 | Thu Apr 16 13:00–14:30 |
+| req_010 | Design Partner Feedback Review | P2 | Thu Apr 16 15:00–16:00 |
+| req_012 | Compliance Follow-up | P1 | Fri Apr 17 13:30–14:00 |
+
+### Unscheduled (5 requests — all due to alice@example.com constraints)
+
+| ID | Reason |
+|---|---|
+| **req_001** (P0) | Both Monday windows blocked: Window 1 has only 30 min after Alice's overlap; Window 2 fragments are too short with Alice + Bob's back-to-back meetings |
+| **req_008** (P1) | Wednesday window: Alice all-day unavailable; Thursday window: only 30-min gap available for a 60-min meeting |
+| **req_011** (P0) | Only Friday window (10:30–12:00): Alice's Hiring Debrief (10:30–11:30) leaves just 30 min |
+| **req_013** (P2) | Only Friday 17:00–18:00 window: Alice's Weekly Wrap-up (16:30–17:30) overlaps the full window |
+| **req_014** (P1) | Both windows are on Wednesday when Alice is fully unavailable all day |

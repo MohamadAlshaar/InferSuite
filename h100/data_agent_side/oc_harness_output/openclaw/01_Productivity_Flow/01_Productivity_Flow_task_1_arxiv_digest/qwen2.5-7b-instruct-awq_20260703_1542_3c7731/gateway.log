@@ -1,0 +1,14 @@
+2026-07-03T13:42:47.807+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-07-03T13:42:47.841+00:00 [heartbeat] started
+2026-07-03T13:42:47.846+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-07-03T13:42:47.848+00:00 [gateway] agent model: my-openai-proxy/qwen2.5-7b-instruct-awq
+2026-07-03T13:42:47.849+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 156)
+2026-07-03T13:42:47.851+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-07-03.log
+2026-07-03T13:42:47.865+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-07-03T13:42:47.941+00:00 [gateway] update available (latest): v2026.6.11 (current v2026.3.11). Run: openclaw update
+2026-07-03T13:42:49.975+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-07-03T13:42:59.225+00:00 [tools] exec failed: sh: 1: arxiv.py: not found
+
+Command not found
+2026-07-03T13:43:02.784+00:00 [tools] web_search failed: Brave Search API error (422): {"error":{"code":"SUBSCRIPTION_TOKEN_INVALID","detail":"The provided subscription token is invalid.","meta":{"component":"authentication"},"status":422},"type":"ErrorResponse"}
+2026-07-03T13:44:09.725+00:00 [agent/embedded] embedded run agent end: runId=3308df66-f1e3-4c8c-b848-3e0b18738307 isError=true model=qwen2.5-7b-instruct-awq provider=my-openai-proxy error=terminated

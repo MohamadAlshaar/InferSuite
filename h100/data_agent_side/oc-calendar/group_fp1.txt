@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       29711251033      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+       92233881178      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope #    3.10  insn per cycle            
+         158911986      fp_arith_inst_retired.scalar_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+            113943      fp_arith_inst_retired.scalar_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           5454139      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+           4090650      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope #    0.75  insn per cycle            
+                 0      fp_arith_inst_retired.scalar_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+               796      fp_arith_inst_retired.scalar_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+         986276505      cycles                           system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+        1593053559      instructions                     system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope #    1.62  insn per cycle            
+                96      fp_arith_inst_retired.scalar_single system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+             42434      fp_arith_inst_retired.scalar_double system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+
+      10.004083412 seconds time elapsed
+

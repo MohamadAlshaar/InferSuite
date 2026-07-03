@@ -1,0 +1,32 @@
+[
+  {
+    "id": "req_001",
+    "title": "CapRL Launch Readiness",
+    "reason_code": "time_conflict",
+    "reason_text": "Window 1 (Mon 10:30-12:00): alice@example.com has Product Planning Sync at 10:30-11:30, leaving insufficient time for the 60-min meeting. Window 2 (Mon 15:30-17:30): alice@example.com is busy 15:00-16:00 (Customer Escalation Review) and bob@example.com is busy 16:30-17:30 (Infrastructure Operations Check); no 60-min gap exists in which all of alice, bob, and carol are simultaneously free."
+  },
+  {
+    "id": "req_011",
+    "title": "Friday Research Sync",
+    "reason_code": "time_conflict",
+    "reason_text": "Window (Fri 10:30-12:00): alice@example.com has Hiring Debrief at 10:30-11:30, blocking the only available 60-min slot. No valid 60-min gap exists in the preferred window for all required attendees (alice, bob, carol)."
+  },
+  {
+    "id": "req_014",
+    "title": "Wednesday Cross-team Planning",
+    "reason_code": "attendee_unavailable",
+    "reason_text": "alice@example.com is fully unavailable on Wednesdays (all-day constraint). Both preferred windows fall on Wednesday April 15, making scheduling impossible since alice is a required attendee."
+  },
+  {
+    "id": "req_008",
+    "title": "Customer Renewal Strategy",
+    "reason_code": "time_conflict",
+    "reason_text": "Window 1 (Wed Apr 15 17:00-18:30): alice@example.com is unavailable all day Wednesday. Window 2 (Thu Apr 16 09:00-10:30): alice@example.com has Engineering Standup at 09:30-10:00, leaving only a 30-min free gap (09:00-09:30) which is insufficient for the 60-min meeting. No valid slot found across all preferred windows."
+  },
+  {
+    "id": "req_013",
+    "title": "Late Friday Launch Retro",
+    "reason_code": "time_conflict",
+    "reason_text": "Window (Fri Apr 17 17:00-18:00): alice@example.com and erin@example.com have Weekly Wrap-up at 16:30-17:30 which overlaps the only candidate slot (17:00-18:00). Additionally, frank@example.com is unavailable on Fridays from 17:00 onward. The meeting cannot be placed in its sole preferred window."
+  }
+]

@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       30093738839      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+       92180316573      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope #    3.06  insn per cycle            
+         159221472      fp_arith_inst_retired.scalar_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+             46785      fp_arith_inst_retired.scalar_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           5255381      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+           4041629      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope #    0.77  insn per cycle            
+                 0      fp_arith_inst_retired.scalar_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+               796      fp_arith_inst_retired.scalar_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-pdf-45202.scope                                      
+           5972468      cycles                           system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+           1570906      instructions                     system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope #    0.26  insn per cycle            
+                 0      fp_arith_inst_retired.scalar_single system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+               182      fp_arith_inst_retired.scalar_double system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double system.slice/docker-57704680bacfa984009ceb1d14d8a60c321b4545b92e036d41921f6a8a5c35c4.scope                                      
+
+      10.005028723 seconds time elapsed
+

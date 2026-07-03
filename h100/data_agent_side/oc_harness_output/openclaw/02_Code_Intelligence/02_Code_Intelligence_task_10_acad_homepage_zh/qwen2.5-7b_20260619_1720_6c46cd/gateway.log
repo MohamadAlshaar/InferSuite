@@ -1,0 +1,17 @@
+2026-06-19T15:20:51.579+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-19T15:20:51.615+00:00 [heartbeat] started
+2026-06-19T15:20:51.620+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-19T15:20:51.623+00:00 [gateway] agent model: my-openai-proxy/qwen2.5-7b
+2026-06-19T15:20:51.624+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 147)
+2026-06-19T15:20:51.626+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-19.log
+2026-06-19T15:20:51.646+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-19T15:20:51.721+00:00 [gateway] update available (latest): v2026.6.8 (current v2026.3.11). Run: openclaw update
+2026-06-19T15:20:53.964+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-19T15:24:25.936+00:00 [agent/embedded] embedded run agent end: runId=d84814fe-b47d-466d-9986-69180fd288ce isError=true model=qwen2.5-7b provider=my-openai-proxy error=400 You passed 24577 input tokens and requested 8192 output tokens. However, the model's context length is only 32768 tokens, resulting in a maximum input length of 24576 tokens. Please reduce the length of the input prompt. (parameter=input_tokens, value=24577)
+2026-06-19T15:24:25.943+00:00 [agent/embedded] [context-overflow-diag] sessionKey=chat provider=my-openai-proxy/qwen2.5-7b source=assistantError messages=4 sessionFile=/root/.openclaw/agents/main/sessions/chat.jsonl diagId=ovf-mql2xkgl-OyYpsg compactionAttempts=0 error=400 You passed 24577 input tokens and requested 8192 output tokens. However, the model's context length is only 32768 tokens, resulting in a maximum input length of 24576 tokens. Please reduce the len
+2026-06-19T15:24:25.944+00:00 [agent/embedded] context overflow detected (attempt 1/3); attempting auto-compaction for my-openai-proxy/qwen2.5-7b
+2026-06-19T15:24:25.969+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-19T15:24:25.993+00:00 [compaction-safeguard] Compaction safeguard: cancelling compaction with no real conversation messages to summarize.
+2026-06-19T15:24:25.995+00:00 [agent/embedded] [compaction-diag] end runId=d84814fe-b47d-466d-9986-69180fd288ce sessionKey=chat diagId=ovf-mql2xkgl-OyYpsg trigger=overflow provider=my-openai-proxy/qwen2.5-7b attempt=1 maxAttempts=3 outcome=failed reason=unknown durationMs=42
+2026-06-19T15:24:25.996+00:00 [agent/embedded] auto-compaction failed for my-openai-proxy/qwen2.5-7b: Compaction cancelled
+2026-06-19T15:24:25.999+00:00 Context overflow: prompt too large for the model. Try /reset (or /new) to start a fresh session, or use a larger-context model.

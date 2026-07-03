@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       23727344971      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+       69589752164      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope #    2.93  insn per cycle            
+       22117639746      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+         424819244      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           7178805      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+            271085      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve4.scope                                      
+           5597464      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+           4115982      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope #    0.74  insn per cycle            
+            959201      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+             82116      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+              2760      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+              1657      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-oc-calendar-39450.scope                                      
+        6519950493      cycles                           system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+       11752191048      instructions                     system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope #    1.80  insn per cycle            
+        3069051471      mem_load_retired.l1_hit          system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+          48853462      mem_load_retired.l2_hit          system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+           6140789      mem_load_retired.l3_hit          system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+           2024223      mem_load_retired.l3_miss         system.slice/docker-7795a20947fd3323b82c26e00e8953fcaf8ae6d870c52c275624bbe994073d1d.scope                                      
+
+      10.004135331 seconds time elapsed
+

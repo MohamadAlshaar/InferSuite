@@ -1,0 +1,57 @@
+2026-06-27T12:25:28.064+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-06-27T12:25:28.099+00:00 [heartbeat] started
+2026-06-27T12:25:28.103+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-27T12:25:28.106+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-06-27T12:25:28.107+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 128)
+2026-06-27T12:25:28.108+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-06-27.log
+2026-06-27T12:25:28.122+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-27T12:25:28.185+00:00 [gateway] update available (latest): v2026.6.10 (current v2026.3.11). Run: openclaw update
+2026-06-27T12:25:30.220+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-06-27T12:25:33.092+00:00 [tools] read failed: Missing required parameter: path (path or file_path). Supply correct parameters before retrying.
+2026-06-27T12:25:33.096+00:00 [agent/embedded] read tool called without path: toolCallId=toolu_01G9icFBcULrjam9EWEiyz4S|toolu_01G9icFBcULrjam9EWEiyz4S argsType=object
+2026-06-27T12:31:35.367+00:00 I'll analyze the workspace files and solve the scheduling optimization problem systematically.
+2026-06-27T12:31:35.369+00:00 Now I have all the data. Let me write a comprehensive Python script to solve this:
+2026-06-27T12:31:35.371+00:00 Good results. Let me verify each unscheduled decision carefully and check the outputs:
+2026-06-27T12:31:35.372+00:00 All unscheduled decisions are verified correct. Now let me fix the decision log to be more accurate and detailed, and verify the reason codes for req_008 and req_014:
+2026-06-27T12:31:35.374+00:00 All decisions are verified. Now let me enhance the script to produce a richer decision log and fix the unscheduled reason texts to be more precise:
+2026-06-27T12:31:35.377+00:00 All files look correct. Let me do a final integrity check:
+2026-06-27T12:31:35.378+00:00 All 9 validation checks pass. Every constraint is satisfied — no lunch violations, no attendee unavailability violations, no time conflicts, and the daily 4-meeting cap is respected (max observed: frank=4, heidi=4 on Apr 14 — right at the limit). Here's the complete summary:
+
+---
+
+## Results Summary
+
+**Files written to `/tmp_workspace/results/`:**
+
+| File | Contents |
+|---|---|
+| `scheduled.ics` | 30 original + 10 new events (40 total VEVENTs) |
+| `unscheduled.json` | 5 items with reason codes and explanations |
+| `decision_log.md` | Full decision log with trade-off analysis |
+
+---
+
+### Scheduled (10 meetings, priority weight = 26)
+
+| ID | Priority | Title | Time (CST) |
+|---|---|---|---|
+| req_004 | **P0** | Vision Demo Rehearsal | Mon Apr 14 11:00–12:00 |
+| req_006 | **P0** | Offline Eval Deep Dive | Wed Apr 15 10:00–11:30 |
+| req_002 | P1 | Dataset Labeling Escalation | Mon Apr 13 13:00–13:30 |
+| req_005 | P1 | Red Team Security Review | Tue Apr 14 13:30–14:30 |
+| req_009 | P1 | Infra Cost Reduction Workshop | Thu Apr 16 13:00–14:30 |
+| req_012 | P1 | Compliance Follow-up | Fri Apr 17 13:30–14:00 |
+| req_003 | P2 | Q2 Budget Alignment | Mon Apr 13 09:00–09:45 |
+| req_007 | P2 | Hiring Panel Calibration | Wed Apr 15 14:30–15:15 |
+| req_010 | P2 | Design Partner Feedback Review | Thu Apr 16 15:00–16:00 |
+| req_015 | P2 | Ops Overflow Triage | Tue Apr 14 17:30–18:00 |
+
+### Unscheduled (5) with reasons
+
+| ID | Priority | Reason | Explanation |
+|---|---|---|---|
+| req_001 | **P0** | `time_conflict` | alice blocked by orig-002 in W1; W2 blocked by orig-005 (alice) and orig-006 (bob) leaving no 60-min gap |
+| req_011 | **P0** | `time_conflict` | alice blocked by orig-026 (Hiring Debrief 10:30–11:30); next start 11:30+60min crosses lunch |
+| req_008 | P1 | `attendee_unavailable` | alice unavailable all Wednesday (W1); Thu W2 window too narrow after morning standup |
+| req_014 | P1 | `attendee_unavailable` | Both windows are Wednesday — alice unavailable all day |
+| req_013 | P2 | `attendee_unavailable` | frank unavailable Fri 17:00+ — the only preferred window |

@@ -1,0 +1,36 @@
+I'll analyze the poster and create smart crops for the three social media platforms. Let me start by examining the image and setting up the workspace.
+Now let me use OpenRouter's vision API to analyze the poster, then do smart cropping:
+The OpenRouter API is not available (dummy key, connection refused). I'll use computer vision techniques with OpenCV and PIL to perform intelligent content-aware cropping:
+All three crops have been generated successfully. Let me clean up the debug file and provide a summary:
+Here's what was done:
+
+---
+
+## ✅ 智能裁切完成
+
+### 技术方案
+
+由于 OpenRouter API 不可用（连接被拒绝 / dummy key），我使用了**纯计算机视觉方法**进行智能裁切：
+
+**显著性分析（Saliency Detection）：**
+1. **边缘密度图** — Canny 边缘检测 + 高斯模糊
+2. **纹理方差图** — 局部标准差，衡量视觉丰富度
+3. **人脸检测** — Haar 级联分类器，权重最高 (×0.4)
+
+**发现的内容：**
+- ✅ 检测到 1 张人脸，位于 `(380, 157)` 区域，大小 `336×336px`（图像左侧约 1/4 处，上方 1/4 区域）
+- 主要内容集中在图像左半部分（约 0~78% 宽度范围）
+
+**滑动窗口最优裁切：** 对每种目标比例，用积分图（Integral Image）高效搜索覆盖显著性总分最高的裁切窗口位置。
+
+---
+
+### 输出结果
+
+| 文件 | 尺寸 | 比例 | 裁切区域（原图坐标） |
+|------|------|------|---------------------|
+| `crop_ins_square.png` | 1080×1080 | 1:1 | x: 100~1471, y: 全高 |
+| `crop_tiktok.png` | 1080×1920 | 9:16 | x: 140~911, y: 全高 |
+| `crop_ins_portrait.png` | 1080×1350 | 4:5 | x: 40~1136, y: 全高 |
+
+所有裁切均以检测到的**人脸为锚点**，确保人物主体不被切除。

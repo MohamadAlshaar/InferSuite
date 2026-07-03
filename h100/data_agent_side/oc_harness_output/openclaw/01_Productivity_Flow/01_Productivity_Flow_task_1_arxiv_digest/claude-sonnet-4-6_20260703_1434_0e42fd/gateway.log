@@ -1,0 +1,14 @@
+2026-07-03T12:34:19.882+00:00 [canvas] host mounted at http://127.0.0.1:18789/__openclaw__/canvas/ (root /root/.openclaw/canvas)
+2026-07-03T12:34:19.932+00:00 [heartbeat] started
+2026-07-03T12:34:19.939+00:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-07-03T12:34:19.942+00:00 [gateway] agent model: my-openai-proxy/claude-sonnet-4-6
+2026-07-03T12:34:19.944+00:00 [gateway] listening on ws://127.0.0.1:18789, ws://[::1]:18789 (PID 156)
+2026-07-03T12:34:19.946+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-07-03.log
+2026-07-03T12:34:19.967+00:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-07-03T12:34:20.061+00:00 [gateway] update available (latest): v2026.6.11 (current v2026.3.11). Run: openclaw update
+2026-07-03T12:34:21.881+00:00 [tools] tools.profile (coding) allowlist contains unknown entries (apply_patch). These entries won't match any tool unless the plugin is enabled.
+2026-07-03T12:34:22.284+00:00 [agent/embedded] embedded run agent end: runId=4b5d7a80-5686-49ed-ad24-fb38ef77027c isError=true model=claude-sonnet-4-6 provider=my-openai-proxy error=401 litellm.AuthenticationError: AnthropicException - b'{"type":"error","error":{"type":"authentication_error","message":"invalid x-api-key"},"request_id":"req_011Ccf8cB3tAKRPCybadpLam"}'. Received Model Group=claude-sonnet-4-6
+Available Model Group Fallbacks=None
+2026-07-03T12:34:22.294+00:00 [agent/embedded] embedded run failover decision: runId=4b5d7a80-5686-49ed-ad24-fb38ef77027c stage=assistant decision=surface_error reason=auth provider=my-openai-proxy/claude-sonnet-4-6 profile=-
+2026-07-03T12:34:22.298+00:00 401 litellm.AuthenticationError: AnthropicException - b'{"type":"error","error":{"type":"authentication_error","message":"invalid x-api-key"},"request_id":"req_011Ccf8cB3tAKRPCybadpLam"}'. Received Model Group=claude-sonnet-4-6
+Available Model Group Fallbacks=None
