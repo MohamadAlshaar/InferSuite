@@ -25,6 +25,10 @@ TMA2 = [("light_ops","Light operations","#66c2a5"),("heavy_ops","Heavy operation
         ("fetch_lat","Fetch latency","#8da0cb"),("fetch_bw","Fetch bandwidth","#c6dbef"),
         ("br_mispred","Branch mispredict","#fc8d62"),("machine_clears","Machine clears","#fdd0a2"),
         ("mem_bound","Memory bound","#e78ac3"),("core_bound","Core bound","#f4cae4")]
+def txtcol(hexcol):
+    r, g, b = (int(hexcol[i:i+2], 16) for i in (1, 3, 5))
+    return "white" if 0.299*r + 0.587*g + 0.114*b < 150 else "#333333"
+
 EV = ("slots","topdown-retiring","topdown-bad-spec","topdown-fe-bound","topdown-be-bound",
       "topdown-heavy-ops","topdown-br-mispredict","topdown-fetch-lat","topdown-mem-bound")
 
@@ -65,15 +69,15 @@ def tma_of(t1, t2=None):
 ENG = "kubepods"
 # (dir, label, engine-file-prefix, engine cgroup, tool cgroup substring(s) or None, l2_in_window)
 WORKLOADS = [
-    ("astropy",         "astropy\n(SWE replay)",      "group_engine_", ENG, None,            True),
-    ("scikit-learn",    "scikit-learn\n(SWE replay)", "group_engine_", ENG, None,            True),
-    ("sympy",           "sympy\n(SWE replay)",        "group_engine_", ENG, None,            True),
-    ("swe_live",        "SWE astropy\n(live)",        "group_",        ENG, ["swe-live", "docker-"], True),
-    ("bcb_live",        "BigCodeBench\n(live loop)",  "group_",        ENG, "bcb-live",      True),
-    ("oc_live_calendar",   "OC calendar\n(live)",     "group_",        ENG, "docker-",       True),
-    ("oc_live_pdf-digest", "OC pdf-digest\n(live)",   "group_",        ENG, "docker-",       True),
-    ("oc_live_web-digest", "OC web-digest\n(live)",   "group_",        ENG, "docker-",       True),
-    ("oc_live_image-crop", "OC image-crop\n(live)",   "group_",        ENG, "docker-",       True),
+    ("astropy",         "astropy",       "group_engine_", ENG, None,            True),
+    ("scikit-learn",    "scikit-learn",  "group_engine_", ENG, None,            True),
+    ("sympy",           "sympy",         "group_engine_", ENG, None,            True),
+    ("swe_live",        "SWE-agent",     "group_",        ENG, ["swe-live", "docker-"], True),
+    ("bcb_live",        "BigCodeBench",  "group_",        ENG, "bcb-live",      True),
+    ("oc_live_calendar",   "OC calendar",   "group_",        ENG, "docker-",       True),
+    ("oc_live_pdf-digest", "OC pdf-digest", "group_",        ENG, "docker-",       True),
+    ("oc_live_web-digest", "OC web-digest", "group_",        ENG, "docker-",       True),
+    ("oc_live_image-crop", "OC image-crop", "group_",        ENG, "docker-",       True),
 ]
 
 rows = []
@@ -97,7 +101,7 @@ for key, lab, col in L1:
     v = np.array([r[2][key] for r in rows])
     ax.bar(X, v, bottom=bot, label=lab, color=col, width=0.62, edgecolor="white", linewidth=0.6)
     for x, (b, vv) in enumerate(zip(bot, v)):
-        if vv >= 8: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center", color="white", fontsize=8.5, fontweight="bold")
+        if vv >= 8: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center", color=txtcol(col), fontsize=8.5, fontweight="bold")
     bot += v
 ax.set_xticks(X); ax.set_xticklabels([r[1] for r in rows], fontsize=9)
 ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
@@ -114,7 +118,7 @@ if rows2:
         v = np.array([r[3][key] for r in rows2])
         ax.bar(X, v, bottom=bot, label=lab, color=col, width=0.7, edgecolor="white", linewidth=0.4)
         for x, (b, vv) in enumerate(zip(bot, v)):
-            if vv >= 9: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center", color="white", fontsize=8, fontweight="bold")
+            if vv >= 9: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center", color=txtcol(col), fontsize=8, fontweight="bold")
         bot += v
     ax.set_xticks(X); ax.set_xticklabels([r[1] for r in rows2], fontsize=9)
     ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
@@ -122,25 +126,25 @@ if rows2:
     fig.savefig(os.path.join(OUT, "local_agents_engine_tma_l2.png")); plt.close(fig)
 
 # ---- Fig 3: two-view CPU share donuts (live loops only), same style as the timing donuts ----
-SHORT = {"swe_live": "SWE astropy", "bcb_live": "BCB", "oc_live_calendar": "OC calendar",
+SHORT = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
          "oc_live_pdf-digest": "OC pdf-digest", "oc_live_web-digest": "OC web-digest",
          "oc_live_image-crop": "OC image-crop"}
 live = [r for r in rows if r[5] is not None]
 if live:
-    fig, axes = plt.subplots(1, len(live), figsize=(3.0*len(live), 3.6))
+    fig, axes = plt.subplots(1, len(live), figsize=(2.7*len(live), 2.9))
     for ax, r in zip(np.atleast_1d(axes), live):
         eng, tool = r[4], r[5]
         shares = [eng/(eng+tool)*100, tool/(eng+tool)*100]
         ax.pie([max(s, 1.0) for s in shares], colors=[INSIDE, OUTSIDECOL], startangle=90,
                counterclock=False, wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.5))
-        ax.text(0, 0.16, SHORT.get(r[0], r[0]), ha="center", fontweight="bold", fontsize=11)
-        ax.text(0, -0.14, f"{eng:.2f} CPUs", ha="center", fontsize=9.5, color=INSIDE)
-        ax.text(0, -0.38, f"{tool:.2f} CPUs" if tool >= 0.005 else f"{tool:.3f} CPUs",
-                ha="center", fontsize=9.5, color=OUTSIDECOL)
+        ax.text(0, 0.13, f"{eng:.2f} CPUs", ha="center", fontsize=10, color=INSIDE)
+        ax.text(0, -0.21, f"{tool:.2f} CPUs" if tool >= 0.005 else f"{tool:.3f} CPUs",
+                ha="center", fontsize=10, color=OUTSIDECOL)
+        ax.text(0, -1.3, SHORT.get(r[0], r[0]), ha="center", fontweight="bold", fontsize=10.5)
         ax.axis("off")
     fig.legend(handles=[Patch(color=INSIDE, label="During inference (vLLM engine)"),
                         Patch(color=OUTSIDECOL, label="Outside inference (agent + tools)")],
-               loc="lower center", ncol=2, fontsize=10.5, frameon=False, bbox_to_anchor=(0.5, -0.04))
+               loc="lower center", ncol=2, fontsize=10.5, frameon=False, bbox_to_anchor=(0.5, -0.02))
     fig.savefig(os.path.join(OUT, "local_agents_two_view_cpu.png")); plt.close(fig)
 
 # ---- Fig 5: GPU vs CPU wall time per live loop (nvidia-smi timeline, guard -> exit) ----
@@ -162,17 +166,17 @@ for d in SHORT:
     g = gpu_split(os.path.join(DATA, d, "gpu_timeline.csv"))
     if g is not None: gpu_rows.append((SHORT[d], g))
 if gpu_rows:
-    fig, axes = plt.subplots(1, len(gpu_rows), figsize=(3.0*len(gpu_rows), 3.6))
+    fig, axes = plt.subplots(1, len(gpu_rows), figsize=(2.7*len(gpu_rows), 2.9))
     for ax, (lab, g) in zip(np.atleast_1d(axes), gpu_rows):
         ax.pie([g, 100-g], colors=[GPU_COL, CPU_COL], startangle=90, counterclock=False,
                wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.5))
-        ax.text(0, 0.16, lab, ha="center", fontweight="bold", fontsize=11)
-        ax.text(0, -0.14, f"GPU {g:.0f}%", ha="center", fontsize=9.5, color=GPU_COL)
-        ax.text(0, -0.38, f"CPU {100-g:.0f}%", ha="center", fontsize=9.5, color=CPU_COL)
+        ax.text(0, 0.13, f"GPU {g:.0f}%", ha="center", fontsize=10, color=GPU_COL)
+        ax.text(0, -0.21, f"CPU {100-g:.0f}%", ha="center", fontsize=10, color=CPU_COL)
+        ax.text(0, -1.3, lab, ha="center", fontweight="bold", fontsize=10.5)
         ax.axis("off")
     fig.legend(handles=[Patch(color=GPU_COL, label="GPU generating"),
                         Patch(color=CPU_COL, label="CPU only (tools, agent, orchestration)")],
-               loc="lower center", ncol=2, fontsize=10.5, frameon=False, bbox_to_anchor=(0.5, -0.04))
+               loc="lower center", ncol=2, fontsize=10.5, frameon=False, bbox_to_anchor=(0.5, -0.02))
     fig.savefig(os.path.join(OUT, "local_agents_gpu_time.png")); plt.close(fig)
 
 # ---- Fig 4: software view, engine vs tool per live agent (DSO roles) ----
@@ -213,7 +217,7 @@ for d, lab in SHORT.items():
     if e and t: panels.append((lab, e, t))
 if panels:
     colmap = {n: c for n, c, _ in ROLES}; colmap["other"] = NEUTRAL
-    fig, axes = plt.subplots(2, len(panels), figsize=(3.5*len(panels), 7.4))
+    fig, axes = plt.subplots(2, len(panels), figsize=(3.0*len(panels), 6.2))
     axes = np.atleast_2d(axes)
     used = set()
     for j, (lab, e, t) in enumerate(panels):
@@ -229,12 +233,12 @@ if panels:
                     a = math.radians((wd.theta1+wd.theta2)/2)
                     ax.text(0.79*math.cos(a), 0.79*math.sin(a), f"{v:.0f}%", ha="center", va="center",
                             color="white", fontweight="bold", fontsize=9)
-            ax.text(0, 0, ("During\n" if side == "engine" else "Outside\n") + lab,
-                    ha="center", va="center", fontsize=8.2, fontweight="bold",
-                    color=INSIDE if side == "engine" else OUTSIDECOL, wrap=False)
+            ax.text(0, 0, "During" if side == "engine" else "Outside", ha="center", va="center",
+                    fontsize=10, fontweight="bold", color=INSIDE if side == "engine" else OUTSIDECOL)
+            if i == 0: ax.set_title(lab, fontsize=10.5, fontweight="bold", pad=8)
     handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
     if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
-    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.03))
+    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=9, frameon=False, bbox_to_anchor=(0.5, 0.0))
     fig.savefig(os.path.join(OUT, "local_agents_two_view_software.png")); plt.close(fig)
 
 print("wrote figures to", OUT)
