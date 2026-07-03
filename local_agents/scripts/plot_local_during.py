@@ -106,6 +106,7 @@ for key, lab, col in L1:
 ax.set_xticks(X); ax.set_xticklabels([r[1] for r in rows], fontsize=9)
 ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
 ax.legend(ncol=4, fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, 1.13), frameon=False)
+ax.set_title("Model side: engine TMA Level 1 during inference, per driving agent", fontsize=13, pad=38)
 fig.savefig(os.path.join(OUT, "local_agents_engine_tma_l1.png")); plt.close(fig)
 
 # ---- Fig 2: engine TMA L2 (workloads with in-window td2) ----
@@ -123,6 +124,7 @@ if rows2:
     ax.set_xticks(X); ax.set_xticklabels([r[1] for r in rows2], fontsize=9)
     ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
     ax.legend(ncol=4, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, 1.16), frameon=False)
+    ax.set_title("Model side: engine TMA Level 2 during inference, per driving agent", fontsize=13, pad=44)
     fig.savefig(os.path.join(OUT, "local_agents_engine_tma_l2.png")); plt.close(fig)
 
 # ---- Fig 3: two-view CPU share donuts (live loops only), same style as the timing donuts ----
@@ -263,5 +265,88 @@ if panels:
     fig.legend(handles=handles, loc="lower center", ncol=len(handles), fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.05))
     fig.suptitle("Agent machinery: CPU of the harness and its tools during the live loops", fontsize=13, y=1.0)
     fig.savefig(os.path.join(OUT, "local_agents_two_view_software.png")); plt.close(fig)
+
+# ---- Fig 6: engine microarch signature during inference (full-suite workloads only:
+# the SWE replays ran under continuous load and BCB's loop outlived all 7 groups; the OC
+# episodes died before the cache/fp/mlp windows, so their derived metrics would be idle noise) ----
+import collections
+def elapsed_of(path):
+    if not os.path.exists(path): return 0.0
+    for ln in open(path, errors="ignore"):
+        m = re.search(r"([0-9.]+)\s+seconds time elapsed", ln)
+        if m: return float(m.group(1))
+    return 0.0
+
+FPEV = ["fp_arith_inst_retired.scalar_single","fp_arith_inst_retired.scalar_double",
+        "fp_arith_inst_retired.128b_packed_single","fp_arith_inst_retired.128b_packed_double",
+        "fp_arith_inst_retired.256b_packed_single","fp_arith_inst_retired.256b_packed_double",
+        "fp_arith_inst_retired.512b_packed_single","fp_arith_inst_retired.512b_packed_double"]
+def parse_all(path, cg):
+    d = {}
+    if not os.path.exists(path): return d
+    for ln in open(path, errors="ignore"):
+        if cg not in ln: continue
+        parts = ln.split()
+        if len(parts) < 2: continue
+        try: v = float(parts[0].replace(",", ""))
+        except ValueError: continue
+        for name in ("cycles","instructions","branches","branch-misses",
+                     "mem_load_retired.l1_hit","mem_load_retired.l2_hit","mem_load_retired.l3_hit",
+                     "mem_load_retired.l3_miss","l1d_pend_miss.pending","l1d_pend_miss.pending_cycles",
+                     "uops_executed.thread", *FPEV):
+            if name in ln and name not in d: d[name] = v; break
+    return d
+
+ELEM = {"scalar":1, "128b":2, "256b":4, "512b":8}
+def sig_of(base, pref, cg):
+    g = {grp: parse_all(os.path.join(base, f"{pref}{grp}.txt"), cg) for grp in ("core","fp1","fp2","cache","mlp")}
+    if not g["core"].get("cycles"): return None
+    ins = g["cache"].get("instructions", 1)
+    l1 = g["cache"].get("mem_load_retired.l1_hit", 0); l2 = g["cache"].get("mem_load_retired.l2_hit", 0)
+    l3 = g["cache"].get("mem_load_retired.l3_hit", 0); mm = g["cache"].get("mem_load_retired.l3_miss", 0)
+    tot = (l1+l2+l3+mm) or 1
+    fp = collections.Counter()
+    for src in (g["fp1"], g["fp2"]):
+        for k, v in src.items():
+            if k.startswith("fp_arith_inst_retired."): fp[k] += v
+    flops = scalar = packed = 0.0
+    for k, v in fp.items():
+        w = next((e for t, e in ELEM.items() if t in k), 1)
+        w *= 2  # FMA
+        flops += v*w
+        if "scalar" in k: scalar += v
+        else: packed += v
+    secs = elapsed_of(os.path.join(base, f"{pref}fp1.txt")) + elapsed_of(os.path.join(base, f"{pref}fp2.txt"))
+    return {"IPC": g["core"]["instructions"]/g["core"]["cycles"],
+            "L1": l1/tot*100, "L2": l2/tot*100, "L3": l3/tot*100, "MPKI": mm/(ins/1000),
+            "AMAT": (l1*5 + l2*15 + l3*50 + mm*250)/tot,
+            "MLP": g["mlp"].get("l1d_pend_miss.pending",0)/(g["mlp"].get("l1d_pend_miss.pending_cycles",0) or 1),
+            "ILP": g["mlp"].get("uops_executed.thread",0)/(g["mlp"].get("cycles",0) or 1),
+            "vec": packed/((scalar+packed) or 1)*100, "GFLOPs": flops/(secs or 1)/1e9}
+
+SIGROWS = [("astropy","astropy","group_engine_"), ("scikit-learn","scikit-learn","group_engine_"),
+           ("sympy","sympy","group_engine_"), ("bcb_live","BigCodeBench","group_")]
+COLS = [("IPC","IPC"),("L1","L1 hit %"),("L2","L2 hit %"),("L3","L3 hit %"),("MPKI","LLC-MPKI"),
+        ("AMAT","AMAT (cyc)"),("MLP","MLP"),("ILP","ILP"),("vec","vec %FP"),("GFLOPs","GFLOP/s")]
+sig = [(lab, sig_of(os.path.join(DATA, d), pref, ENG)) for d, lab, pref in SIGROWS]
+sig = [(lab, r) for lab, r in sig if r]
+if sig:
+    Mx = np.array([[r[c[0]] for c in COLS] for _, r in sig], float)
+    norm = np.zeros_like(Mx)
+    for j in range(Mx.shape[1]):
+        col = Mx[:, j]; lo, hi = col.min(), col.max()
+        norm[:, j] = 0.5 if hi <= lo else (col-lo)/(hi-lo)
+    fig, ax = plt.subplots(figsize=(11.5, 3.4))
+    im = ax.imshow(norm, aspect="auto", cmap="YlGnBu", vmin=0, vmax=1)
+    for i, (_, r) in enumerate(sig):
+        for j, c in enumerate(COLS):
+            v = r[c[0]]; txt = f"{v:.2f}" if v < 10 else f"{v:.0f}"
+            ax.text(j, i, txt, ha="center", va="center", fontsize=8.5,
+                    color="black" if norm[i, j] < 0.6 else "white")
+    ax.set_xticks(range(len(COLS))); ax.set_xticklabels([c[1] for c in COLS], rotation=25, ha="right")
+    ax.set_yticks(range(len(sig))); ax.set_yticklabels([lab for lab, _ in sig], color=INSIDE)
+    ax.set_title("Model side: engine microarchitectural signature during inference, per driving agent")
+    ax.grid(False); fig.colorbar(im, ax=ax, fraction=0.025, pad=0.02, label="per-column min\u2013max (relative)")
+    fig.savefig(os.path.join(OUT, "local_agents_engine_signature.png")); plt.close(fig)
 
 print("wrote figures to", OUT)
