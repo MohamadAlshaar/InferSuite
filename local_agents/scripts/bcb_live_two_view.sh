@@ -44,7 +44,7 @@ log "engine pod=$pod pid=$ENG_PID"
 # ---- driver in its own scope cgroup ----
 rm -f /tmp/bcb_agentic_markers.txt
 systemd-run --user --scope --unit=bcb-live --collect -- bash -c \
-  "cd '$REPO/agentic/bigcodebench' && VLLM='$ENDPOINT' MODEL=qwen2.5-coder-7b-instruct-awq .venv/bin/python agentic_bcb.py $N_TASKS $MAX_TURNS" \
+  "cd '$REPO/agentic/bigcodebench' && HEAVY_LIBS=${HEAVY_LIBS:-} VLLM='$ENDPOINT' MODEL=qwen2.5-coder-7b-instruct-awq .venv/bin/python agentic_bcb.py $N_TASKS $MAX_TURNS" \
   > "$OUT/agent.log" 2>&1 &
 sleep 3
 DRV_PID=$(pgrep -f "agentic_bcb.py $N_TASKS" | head -1)
@@ -64,6 +64,10 @@ for i in $(seq 1 60); do
 done
 [ "$ok" = 1 ] || { log "ERROR: no real agent work within 5min (markers=$(grep -c toolexec /tmp/bcb_agentic_markers.txt 2>/dev/null))"; tail -8 "$OUT/agent.log"; exit 1; }
 
+( while kill -0 "$DRV_PID" 2>/dev/null; do
+    printf "%s,%s\n" "$(date +%s.%N)" "$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | head -1 | tr -d ' ')"
+    sleep 0.5
+  done >> "$OUT/gpu_timeline.csv" ) & GPUSAMP=$!
 log "warmup ${WARMUP_S}s"; sleep "$WARMUP_S"
 MK0=$(grep -c toolexec /tmp/bcb_agentic_markers.txt 2>/dev/null || echo 0)
 

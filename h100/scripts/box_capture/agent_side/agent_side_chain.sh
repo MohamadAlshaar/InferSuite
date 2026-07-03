@@ -52,7 +52,7 @@ UNIT="agent-$WORK-$$"
 case "$WORK" in
   bcb)
     systemd-run --user --scope --unit="$UNIT" --collect -- bash -c \
-      "cd ~/bcb && VLLM=http://localhost:8000/v1 MODEL=coder-32b ./.venv/bin/python3 agentic_bcb.py 12 3" \
+      "cd ~/bcb && HEAVY_LIBS=1 VLLM=http://localhost:8000/v1 MODEL=coder-32b ./.venv/bin/python3 agentic_bcb.py 12 3" \
       > "$OUT/agent.log" 2>&1 & ;;
   swe|swe-scikit|swe-sympy)
     case "$WORK" in

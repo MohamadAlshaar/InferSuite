@@ -14,7 +14,7 @@ nvidia-smi 2 Hz GPU timeline from work-guard (vllm:num_requests_running >= 1) to
 
 Agent-work evidence (all VALIDATE-OK, 5/5 groups in-window):
 - swe: fc sweagent + guided tool_choice on astropy-14096, 24 steps, autosubmitted patch
-- bcb: 9/12 solved, 20 tool-exec runs (vs 0/12 at 7B locally)
+- bcb: HEAVY_LIBS=1 numeric tasks (driver = agentic/bigcodebench/agentic_bcb.py), final data 8/12 solved, 24 tool-exec runs, 60 s records
 - oc-calendar/web/pdf/crop: real episodes, 100-452 GPU samples; harness outputs (chat.jsonl,
   gateway.log, scores) under oc_harness_output/
 Known blemish: oc-crop group_fp2 engine rows <not counted> (engine idle after episode end);
@@ -26,3 +26,17 @@ a leftover of the 16K serve config; episodes doubled-to-8x in length: astropy 18
 longer episodes: live Coder-32B performs ZERO test executions on SWE (scikit: 54 steps, 0 python/
 pytest invocations) — tool-side packed FP is genuinely zero; the BLAS-heavy verification phase exists
 only in the canonical (Claude-driven) trajectories. GPU sampler cadence ~1.8 Hz (shares unbiased).
+
+Audit addenda (two independent auditors, 2026-07-03): all figure numbers reproduce from raw
+counters; scope attribution collision-free; engine invariance holds (IPC 2.98-3.18, L1>98%).
+Caveats: (a) oc-web and oc-pdf episodes made ZERO tool calls (single-turn monologues) - their
+container CPU is the OpenClaw runtime, labeled agent+tools/(no tool calls), excluded from the
+delegated-work donut; all four OC scores are 0.00; (b) OC "harness" scope = near-idle run_batch
+orchestrator (1M loads/window) - excluded from the signature heatmap as statistically thin;
+(c) GPU timelines are clipped of the post-episode teardown tail (the sampler follows the driver
+pid; oc-crop uncorrected read 40/60, in-episode truth ~94/6); (d) usage.json token counters are
+all zero via the vLLM proxy (only elapsed_time valid); (e) engine busy-wait self-share 67-69%
+(84-87% incl. vdso clock polling) vs July's 72.5%/96% - different serve config (hermes parser,
+log-stats on); (f) BCB packed-FP is <3% in-window, quantitatively consistent with a standalone
+re-execution of the same 12 tests (0.82% packed) - "uses numpy/pandas" does not imply packed FP
+at these test sizes (calibrated: the same method sees 6.8e11 packed ops/8s from one numpy matmul).

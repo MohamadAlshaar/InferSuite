@@ -10,9 +10,14 @@ set -o pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 export KUBECONFIG="$HOME/.kube/k3s-local.yaml"
 PERF=$(ls -d /usr/lib/linux-tools-6.8*/perf 2>/dev/null | tail -1)
-OUT="$REPO/local_agents/data/swe_live"; mkdir -p "$OUT"; rm -f "$OUT"/*
-INSTANCE="astropy__astropy-14096"
-SANDBOX_IMG_SUB="astropy_1776_astropy-14096"
+WORK="${1:-swe}"
+case "$WORK" in
+  swe)        INSTANCE="astropy__astropy-14096";              SANDBOX_IMG_SUB="astropy_1776_astropy-14096" ;;
+  swe-scikit) INSTANCE="scikit-learn__scikit-learn-25232";    SANDBOX_IMG_SUB="scikit-learn_1776_scikit-learn-25232" ;;
+  swe-sympy)  INSTANCE="sympy__sympy-14248";                  SANDBOX_IMG_SUB="sympy_1776_sympy-14248" ;;
+  *) echo "unknown workload $WORK"; exit 1 ;;
+esac
+OUT="$REPO/local_agents/data/${WORK/swe/swe_live}"; OUT="${OUT/swe_live-/swe_live_}"; mkdir -p "$OUT"; rm -f "$OUT"/*
 REC_SEC="${REC_SEC:-30}"
 log(){ printf '[swe-live] %s\n' "$*"; }
 

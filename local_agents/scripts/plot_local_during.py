@@ -72,7 +72,9 @@ WORKLOADS = [
     ("astropy",         "astropy",       "group_engine_", ENG, None,            True),
     ("scikit-learn",    "scikit-learn",  "group_engine_", ENG, None,            True),
     ("sympy",           "sympy",         "group_engine_", ENG, None,            True),
-    ("swe_live",        "SWE-agent",     "group_",        ENG, ["swe-live", "docker-"], True),
+    ("swe_live",        "SWE astropy",   "group_",        ENG, ["swe-live", "docker-"], True),
+    ("swe_live_scikit", "SWE scikit-learn", "group_",     ENG, ["swe-live", "docker-"], True),
+    ("swe_live_sympy",  "SWE sympy",     "group_",        ENG, ["swe-live", "docker-"], True),
     ("bcb_live",        "BigCodeBench",  "group_",        ENG, "bcb-live",      True),
     ("oc_live_calendar",   "OC calendar",   "group_",        ENG, "docker-",       True),
     ("oc_live_pdf-digest", "OC pdf-digest", "group_",        ENG, "docker-",       True),
@@ -104,10 +106,12 @@ def sum_cgs(path, cgs):
             tot[k] = tot.get(k, 0) + v
     return tot
 
-SHORT_TMA = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
+SHORT_TMA = {"swe_live": "SWE astropy", "swe_live_scikit": "SWE scikit-learn", "swe_live_sympy": "SWE sympy",
+             "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
              "oc_live_pdf-digest": "OC pdf-digest", "oc_live_web-digest": "OC web-digest",
              "oc_live_image-crop": "OC image-crop"}
-LIVE_T = {"swe_live": ["swe-live", "docker-"], "bcb_live": ["bcb-live"],
+LIVE_T = {"swe_live": ["swe-live", "docker-"], "swe_live_scikit": ["swe-live", "docker-"],
+          "swe_live_sympy": ["swe-live", "docker-"], "bcb_live": ["bcb-live"],
           "oc_live_calendar": ["docker-"], "oc_live_pdf-digest": ["docker-"],
           "oc_live_web-digest": ["docker-"], "oc_live_image-crop": ["docker-"]}
 # agent-side L2: tma1+td2 must sample the same phase. BCB's stationary loop is consistent by
@@ -191,7 +195,8 @@ tma_chart(l2_entries, TMA2, "local_agents_tma_l2.png",
           "TMA Level 2: engine (during inference), agent harness, tool executions", 1.15)
 
 # ---- Fig 3: two-view CPU share donuts (live loops only), same style as the timing donuts ----
-SHORT = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
+SHORT = {"swe_live": "SWE astropy", "swe_live_scikit": "SWE scikit-learn", "swe_live_sympy": "SWE sympy",
+         "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
          "oc_live_pdf-digest": "OC pdf-digest", "oc_live_web-digest": "OC web-digest",
          "oc_live_image-crop": "OC image-crop"}
 live = [r for r in rows if r[5] is not None]
@@ -252,12 +257,12 @@ if gpu_rows:
 
 # ---- Fig 4: software view, engine vs tool per live agent (DSO roles) ----
 ROLES = [
-    ("GPU busy-wait",          "#6a51a3", re.compile(r"libcuda|libcudart", re.I)),
+    ("GPU busy-wait",          "#6a51a3", re.compile(r"libcuda|libcudart|\[vdso\]", re.I)),
     ("Node.js / V8 (agent)",   "#56b4e9", re.compile(r"\bnode\b|libnode|/node$|\bv8\b|\[JIT\]", re.I)),
     ("Python interpreter",     "#d94801", re.compile(r"python3|libpython|\.cpython-", re.I)),
     ("BLAS / OpenMP",          "#238b45", re.compile(r"openblas|libgomp|libtorch|libmkl", re.I)),
     ("C library / loader",     "#2171b5", re.compile(r"libc\.so|ld-linux|libm\.so|libstdc|libz\.|libcrypto|libssl", re.I)),
-    ("OS kernel",              "#cb181d", re.compile(r"kallsyms|\[kernel|\[vdso\]", re.I)),
+    ("OS kernel",              "#cb181d", re.compile(r"kallsyms|\[kernel", re.I)),
 ]
 NEUTRAL = "#b3b3b3"
 def parse_dso(path):

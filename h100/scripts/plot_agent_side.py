@@ -55,9 +55,17 @@ def elapsed_of(path):
     return 0.0
 
 ELEM = {"scalar": 1, "128b": 2, "256b": 4, "512b": 8}
+def fp_valid(path, cg):
+    if not os.path.exists(path): return False
+    txt = open(path, errors="ignore").read()
+    if "fp_arith" not in txt or "no access to cgroup" in txt: return False
+    rows = [l for l in txt.splitlines() if cg in l]
+    return bool(rows) and not any("<not counted>" in l for l in rows)
+
 def sig_of(base, cg):
     g = {grp: parse_cg(os.path.join(base, f"group_{grp}.txt"), cg) for grp in ("core","cache","mlp","fp1","fp2")}
     if not g["cache"].get("cycles"): return None
+    fp_ok = fp_valid(os.path.join(base, "group_fp1.txt"), cg) and fp_valid(os.path.join(base, "group_fp2.txt"), cg)
     ins = g["cache"].get("instructions", 1)
     l1 = g["cache"].get("mem_load_retired.l1_hit", 0); l2 = g["cache"].get("mem_load_retired.l2_hit", 0)
     l3 = g["cache"].get("mem_load_retired.l3_hit", 0); mm = g["cache"].get("mem_load_retired.l3_miss", 0)
@@ -76,7 +84,8 @@ def sig_of(base, cg):
             "AMAT": (l1*5 + l2*15 + l3*50 + mm*250)/tot,
             "MLP": g["mlp"].get("l1d_pend_miss.pending",0)/(g["mlp"].get("l1d_pend_miss.pending_cycles",0) or 1),
             "ILP": g["mlp"].get("uops_executed.thread",0)/(g["mlp"].get("cycles",0) or 1),
-            "vec": packed/((scalar+packed) or 1)*100, "GFLOPs": flops/(secs or 1)/1e9}
+            "vec": (packed/((scalar+packed) or 1)*100) if fp_ok else float("nan"),
+            "GFLOPs": (flops/(secs or 1)/1e9) if fp_ok else float("nan")}
 
 # ---- Fig 1: two-view CPU donuts (engine vs harness+tool cores, same window) ----
 rows = []
@@ -113,6 +122,12 @@ for d, lab in WL:
     if not os.path.exists(p): continue
     utils = [float(r[1]) for r in csv.reader(open(p)) if r and r[0] != "guard"]
     if len(utils) < 20: continue
+    # trim the teardown tail: the sampler follows the DRIVER pid, which can outlive the episode
+    # (harness scoring/cleanup) -> a trailing all-idle streak is post-episode, not agent CPU time
+    end = len(utils)
+    while end > 20 and utils[end-1] < 10: end -= 1
+    if len(utils) - end < 6: end = len(utils)   # short tail = legitimate in-episode idle
+    utils = utils[:end]
     gpu_rows.append((lab, sum(1 for u in utils if u >= 10)/len(utils)*100))
 if gpu_rows:
     nc = (len(gpu_rows)+1)//2
@@ -138,25 +153,36 @@ sig_rows = []
 eng_sigs = [sig_of(os.path.join(DATA, d), ENG) for d, _ in WL]
 eng_sigs = [r for r in eng_sigs if r]
 if eng_sigs:
-    sig_rows.append(("vLLM engine (during inf.)", {k: float(np.mean([r[k] for r in eng_sigs])) for k in eng_sigs[0]}, "eng"))
+    sig_rows.append(("vLLM engine (during inf.)", {k: float(np.nanmean([r[k] for r in eng_sigs])) for k in eng_sigs[0]}, "eng"))
+NO_TOOLCALLS = {"oc-web", "oc-pdf"}   # transcripts: zero tool calls, container = gateway runtime only
 for d, lab in WL:
+    if d.startswith("oc-"): continue  # OC harness scope = idle run_batch orchestrator (noise)
     r = sig_of(os.path.join(DATA, d), HARN)
     if r: sig_rows.append((f"harness: {lab}", r, "harn"))
 for d, lab in WL:
-    if d == "bcb": continue  # bcb tools run inside the harness scope
+    if d == "bcb" or d.startswith("oc-"): continue
     r = sig_of(os.path.join(DATA, d), TOOL)
     if r: sig_rows.append((f"tools: {lab}", r, "tool"))
+for d, lab in WL:
+    if not d.startswith("oc-"): continue
+    r = sig_of(os.path.join(DATA, d), TOOL)
+    suffix = " (no tool calls)" if d in NO_TOOLCALLS else ""
+    if r: sig_rows.append((f"agent+tools: {lab}{suffix}", r, "tool"))
 if len(sig_rows) > 2:
     Mx = np.array([[r[c[0]] for c in COLS] for _, r, _ in sig_rows], float)
     norm = np.zeros_like(Mx)
     for j in range(Mx.shape[1]):
-        col = Mx[:, j]; lo, hi = col.min(), col.max()
+        col = Mx[:, j]; ok = ~np.isnan(col)
+        if not ok.any(): continue
+        lo, hi = col[ok].min(), col[ok].max()
         norm[:, j] = 0.5 if hi <= lo else (col-lo)/(hi-lo)
+    norm = np.nan_to_num(norm, nan=0.0)
     fig, ax = plt.subplots(figsize=(11.5, 0.42*len(sig_rows)+2.2))
     im = ax.imshow(norm, aspect="auto", cmap="YlGnBu", vmin=0, vmax=1)
     for i, (_, r, _) in enumerate(sig_rows):
         for j, c in enumerate(COLS):
-            v = r[c[0]]; txt = f"{v:.2f}" if v < 10 else f"{v:.0f}"
+            v = r[c[0]]
+            txt = "\u2013" if (isinstance(v, float) and v != v) else (f"{v:.2f}" if v < 10 else f"{v:.0f}")
             ax.text(j, i, txt, ha="center", va="center", fontsize=8,
                     color="black" if norm[i, j] < 0.6 else "white")
     ax.set_xticks(range(len(COLS))); ax.set_xticklabels([c[1] for c in COLS], rotation=25, ha="right")
@@ -173,12 +199,12 @@ if len(sig_rows) > 2:
 
 # ---- Fig 4+5: software views (engine donut; outside donuts harness+tool merged by cpus) ----
 ROLES = [
-    ("GPU busy-wait",        "#6a51a3", re.compile(r"libcuda|libcudart", re.I)),
+    ("GPU busy-wait",        "#6a51a3", re.compile(r"libcuda|libcudart|\[vdso\]", re.I)),
     ("Node.js / V8 (agent)", "#56b4e9", re.compile(r"\bnode\b|libnode|/node$|\bv8\b|\[JIT\]", re.I)),
     ("Python interpreter",   "#d94801", re.compile(r"python3|libpython|\.cpython-", re.I)),
     ("BLAS / OpenMP",        "#238b45", re.compile(r"openblas|libgomp|libtorch|libmkl", re.I)),
     ("C library / loader",   "#2171b5", re.compile(r"libc\.so|ld-linux|libm\.so|libstdc|libz\.|libcrypto|libssl", re.I)),
-    ("OS kernel",            "#cb181d", re.compile(r"kallsyms|\[kernel|\[vdso\]", re.I)),
+    ("OS kernel",            "#cb181d", re.compile(r"kallsyms|\[kernel", re.I)),
 ]
 NEUTRAL = "#b3b3b3"
 def parse_dso(path):
@@ -253,6 +279,7 @@ if panels:
 # covered by the July replay-based tool records) ----
 tpanels = []
 for d, lab in WL:
+    if d in ("oc-web", "oc-pdf"): continue  # zero tool calls: container CPU is runtime, not delegation
     r = parse_dso(os.path.join(DATA, d, "tool_dso.txt"))
     if r: tpanels.append((lab, r))
 if tpanels:
