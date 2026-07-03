@@ -93,39 +93,65 @@ for d, lab, pref, ecg, tcg, l2ok in WORKLOADS:
     if not r: print(f"skip {d} (no in-window tma1)"); continue
     rows.append((d, lab, r[0], r[1], core_e.get("cpus"), tool_cpus))
 
-# ---- Fig 1: engine TMA L1 during inference, per agent workload ----
-X = np.arange(len(rows))
-fig, ax = plt.subplots(figsize=(0.62+1.35*len(rows), 4.4))
-bot = np.zeros(len(rows))
-for key, lab, col in L1:
-    v = np.array([r[2][key] for r in rows])
-    ax.bar(X, v, bottom=bot, label=lab, color=col, width=0.62, edgecolor="white", linewidth=0.6)
-    for x, (b, vv) in enumerate(zip(bot, v)):
-        if vv >= 8: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center", color=txtcol(col), fontsize=8.5, fontweight="bold")
-    bot += v
-ax.set_xticks(X); ax.set_xticklabels([r[1] for r in rows], fontsize=9)
-ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
-ax.legend(ncol=4, fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, 1.13), frameon=False)
-ax.set_title("Model side: engine TMA Level 1 during inference, per driving agent", fontsize=13, pad=38)
-fig.savefig(os.path.join(OUT, "local_agents_engine_tma_l1.png")); plt.close(fig)
+# ---- Figs 1+2: TMA during vs outside inference in one chart ----
+# Engine is agent-invariant -> ONE purple bar (mean over all workloads). The outside bars carry
+# the per-workload identity: agent-side cgroups (harness + tools) from the same windows.
+def sum_cgs(path, cgs):
+    tot = {}
+    for c in cgs:
+        for k, v in parse_cg(path, c).items():
+            if k in ("task_clock_ms", "cpus"): continue
+            tot[k] = tot.get(k, 0) + v
+    return tot
 
-# ---- Fig 2: engine TMA L2 (workloads with in-window td2) ----
-rows2 = [r for r in rows if r[3]]
-if rows2:
-    X = np.arange(len(rows2))
-    fig, ax = plt.subplots(figsize=(0.62+1.5*len(rows2), 4.8))
-    bot = np.zeros(len(rows2))
-    for key, lab, col in TMA2:
-        v = np.array([r[3][key] for r in rows2])
-        ax.bar(X, v, bottom=bot, label=lab, color=col, width=0.7, edgecolor="white", linewidth=0.4)
+SHORT_TMA = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
+             "oc_live_pdf-digest": "OC pdf-digest", "oc_live_web-digest": "OC web-digest",
+             "oc_live_image-crop": "OC image-crop"}
+LIVE_T = {"swe_live": ["swe-live", "docker-"], "bcb_live": ["bcb-live"],
+          "oc_live_calendar": ["docker-"], "oc_live_pdf-digest": ["docker-"],
+          "oc_live_web-digest": ["docker-"], "oc_live_image-crop": ["docker-"]}
+# agent-side L2 requires the tma1 and td2 windows to sample the SAME phase: true only for BCB's
+# stationary 20-min loop. OC episodes died before td2; SWE's td2 hit a different phase (L2
+# components exceeded their L1 parents). L2 therefore only for bcb_live on the agent side.
+OC_DIRS = {d for d in LIVE_T if d != "bcb_live"}
+outside = []
+for d, cgs in LIVE_T.items():
+    base = os.path.join(DATA, d)
+    t1 = sum_cgs(os.path.join(base, "group_tma1.txt"), cgs)
+    t2 = None if d in OC_DIRS else sum_cgs(os.path.join(base, "group_tma2.txt"), cgs)
+    r = tma_of(t1, t2)
+    if r: outside.append((SHORT_TMA[d], r[0], r[1]))
+
+eng_l1 = {k: float(np.mean([r[2][k] for r in rows])) for k in ("retiring", "bad", "fe", "be")}
+eng_l2 = {k: float(np.mean([r[3][k] for r in rows if r[3]]))
+          for k in ("heavy_ops", "light_ops", "br_mispred", "machine_clears",
+                    "fetch_lat", "fetch_bw", "mem_bound", "core_bound")}
+
+def tma_chart(entries, comps, fname, title, wide):
+    X = np.arange(len(entries))
+    fig, ax = plt.subplots(figsize=(0.62+wide*len(entries), 4.6))
+    bot = np.zeros(len(entries))
+    for key, lab, col in comps:
+        v = np.array([e[1][key] for e in entries])
+        ax.bar(X, v, bottom=bot, label=lab, color=col, width=0.62, edgecolor="white", linewidth=0.6)
         for x, (b, vv) in enumerate(zip(bot, v)):
-            if vv >= 9: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center", color=txtcol(col), fontsize=8, fontweight="bold")
+            if vv >= 8: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center",
+                                color=txtcol(col), fontsize=8.5, fontweight="bold")
         bot += v
-    ax.set_xticks(X); ax.set_xticklabels([r[1] for r in rows2], fontsize=9)
+    ax.set_xticks(X); ax.set_xticklabels([e[0] for e in entries], fontsize=9)
+    for t, e in zip(ax.get_xticklabels(), entries): t.set_color(INSIDE if e[2] == "in" else OUTSIDECOL)
     ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
-    ax.legend(ncol=4, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, 1.16), frameon=False)
-    ax.set_title("Model side: engine TMA Level 2 during inference, per driving agent", fontsize=13, pad=44)
-    fig.savefig(os.path.join(OUT, "local_agents_engine_tma_l2.png")); plt.close(fig)
+    ax.legend(ncol=4, fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, 1.13), frameon=False)
+    ax.set_title(title, fontsize=13, pad=40)
+    fig.savefig(os.path.join(OUT, fname)); plt.close(fig)
+
+l1_entries = [("vLLM engine\n(during inf.)", eng_l1, "in")] + [(n, l1, "out") for n, l1, _ in outside]
+tma_chart(l1_entries, L1, "local_agents_tma_l1.png",
+          "TMA Level 1: engine during inference vs agent side outside", 1.35)
+l2_entries = [("vLLM engine\n(during inf.)", eng_l2, "in")] + \
+             [(n, l2c, "out") for n, _l1, l2c in outside if l2c]
+tma_chart(l2_entries, TMA2, "local_agents_tma_l2.png",
+          "TMA Level 2: engine during inference vs agent side outside", 1.8)
 
 # ---- Fig 3: two-view CPU share donuts (live loops only), same style as the timing donuts ----
 SHORT = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
