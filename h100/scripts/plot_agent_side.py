@@ -19,7 +19,8 @@ plt.rcParams.update({
 })
 INSIDE, OUTSIDECOL = "#6a51a3", "#1b9e77"
 ENG, HARN, TOOL = "vllm-serve", "agent-", "docker-"
-WL = [("swe", "SWE-agent"), ("bcb", "BigCodeBench"), ("oc-calendar", "OC calendar"),
+WL = [("swe", "SWE astropy"), ("swe-scikit", "SWE scikit-learn"), ("swe-sympy", "SWE sympy"),
+      ("bcb", "BigCodeBench"), ("oc-calendar", "OC calendar"),
       ("oc-web", "OC web-digest"), ("oc-pdf", "OC pdf-digest"), ("oc-crop", "OC image-crop")]
 
 EVS = ("cycles","instructions","branches","branch-misses",

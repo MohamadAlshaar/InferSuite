@@ -54,14 +54,19 @@ case "$WORK" in
     systemd-run --user --scope --unit="$UNIT" --collect -- bash -c \
       "cd ~/bcb && VLLM=http://localhost:8000/v1 MODEL=coder-32b ./.venv/bin/python3 agentic_bcb.py 12 3" \
       > "$OUT/agent.log" 2>&1 & ;;
-  swe)
+  swe|swe-scikit|swe-sympy)
+    case "$WORK" in
+      swe)        INSTANCE="astropy__astropy-14096" ;;
+      swe-scikit) INSTANCE="scikit-learn__scikit-learn-25232" ;;
+      swe-sympy)  INSTANCE="sympy__sympy-14248" ;;
+    esac
     rm -rf ~/swe/runs/live_32b
     systemd-run --user --scope --unit="$UNIT" --collect -- bash -c \
       "cd ~/swe && source .venv/bin/activate && \
        export HOSTED_VLLM_API_BASE=http://localhost:8000/v1 HOSTED_VLLM_API_KEY=dummy OPENAI_API_KEY=dummy && \
        sweagent run-batch --config config/fc_local.yaml \
          --instances.type swe_bench --instances.subset verified --instances.split test \
-         --instances.filter astropy__astropy-14096 \
+         --instances.filter $INSTANCE \
          --agent.model.name hosted_vllm/coder-32b \
          --agent.model.api_base http://localhost:8000/v1 --agent.model.api_key dummy \
          --agent.model.per_instance_cost_limit 0 --agent.model.total_cost_limit 0 \
@@ -91,7 +96,7 @@ log "agent pid=$AG scope=$DRV_CG"
 # tool container (swe sandbox / oc task container); bcb has no separate tool container
 SB_CG=""; SB_PID=""
 case "$WORK" in
-  swe)  PAT="sweb.eval" ;;
+  swe*) PAT="sweb.eval" ;;
   oc-*) PAT="wildclawbench" ;;
   *)    PAT="" ;;
 esac

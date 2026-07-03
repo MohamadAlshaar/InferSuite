@@ -1,0 +1,21 @@
+
+ Performance counter stats for 'system wide':
+
+           8924.76 msec task-clock                       user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    0.892 CPUs utilized             
+       24786994329      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    2.777 GHz                       
+       74500912407      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    3.01  insn per cycle            
+       13722269694      branches                         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    1.538 G/sec                     
+          22775655      branch-misses                    user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    0.17% of all branches           
+            144.20 msec task-clock                       user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #    0.014 CPUs utilized             
+         389807240      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #    2.703 GHz                       
+         666397534      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #    1.71  insn per cycle            
+         130449449      branches                         user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #  904.638 M/sec                     
+           2992547      branch-misses                    user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #    2.29% of all branches           
+            406.06 msec task-clock                       system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #    0.041 CPUs utilized             
+        1116289330      cycles                           system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #    2.749 GHz                       
+        1593581593      instructions                     system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #    1.43  insn per cycle            
+         333691030      branches                         system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #  821.773 M/sec                     
+          11272338      branch-misses                    system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #    3.38% of all branches           
+
+      10.005095385 seconds time elapsed
+

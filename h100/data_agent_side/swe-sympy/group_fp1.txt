@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       26629643712      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+       81985247573      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    3.08  insn per cycle            
+         139040483      fp_arith_inst_retired.scalar_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+            416424      fp_arith_inst_retired.scalar_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+         432073721      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+         992490804      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope #    2.30  insn per cycle            
+                 0      fp_arith_inst_retired.scalar_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+              2719      fp_arith_inst_retired.scalar_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+         846092067      cycles                           system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+        1234247214      instructions                     system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope #    1.46  insn per cycle            
+                 0      fp_arith_inst_retired.scalar_single system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+             19491      fp_arith_inst_retired.scalar_double system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_single system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+                 0      fp_arith_inst_retired.128b_packed_double system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+
+      10.004497396 seconds time elapsed
+

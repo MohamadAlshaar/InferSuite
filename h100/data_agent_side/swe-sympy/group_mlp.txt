@@ -1,0 +1,21 @@
+
+ Performance counter stats for 'system wide':
+
+       24830976052      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+       75940682880      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    3.06  insn per cycle            
+        2112160429      l1d_pend_miss.pending            user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+        1437479073      l1d_pend_miss.pending_cycles     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+       75082281670      uops_executed.thread             user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+         405454232      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+         854278626      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope #    2.11  insn per cycle            
+         182377248      l1d_pend_miss.pending            user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+         110057770      l1d_pend_miss.pending_cycles     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+         974453700      uops_executed.thread             user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-sympy-61546.scope                                      
+         863518725      cycles                           system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+        1232245688      instructions                     system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope #    1.43  insn per cycle            
+         338275150      l1d_pend_miss.pending            system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+         197922883      l1d_pend_miss.pending_cycles     system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+        1604515714      uops_executed.thread             system.slice/docker-88cfbabcbc07ff2ad18cd7f6bfcd9d29f7d79b5eae91b6bc98272861b4d34804.scope                                      
+
+      10.010227953 seconds time elapsed
+

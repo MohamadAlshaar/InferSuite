@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+        8476342966      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+       25801693603      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    3.04  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+                 0      fp_arith_inst_retired.256b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+        1572541430      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+        1641343336      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #    1.04  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+                 0      fp_arith_inst_retired.256b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_double user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+         499775605      cycles                           system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+         738916941      instructions                     system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #    1.48  insn per cycle            
+                 0      fp_arith_inst_retired.256b_packed_single system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+                 0      fp_arith_inst_retired.256b_packed_double system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_single system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+                 0      fp_arith_inst_retired.512b_packed_double system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+
+      10.004200549 seconds time elapsed
+

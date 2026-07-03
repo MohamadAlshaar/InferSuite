@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       23152768001      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+       68855554061      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope #    2.97  insn per cycle            
+       23289481378      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+          48062176      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+           7026882      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+            423905      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/vllm-serve5.scope                                      
+         441061915      cycles                           user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+         836907160      instructions                     user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope #    1.90  insn per cycle            
+         210900371      mem_load_retired.l1_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+           2805809      mem_load_retired.l2_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+            241012      mem_load_retired.l3_hit          user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+            234166      mem_load_retired.l3_miss         user.slice/user-1000.slice/user@1000.service/app.slice/agent-swe-scikit-56649.scope                                      
+        1115641967      cycles                           system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+        1589670529      instructions                     system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope #    1.42  insn per cycle            
+         426790605      mem_load_retired.l1_hit          system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+          12227828      mem_load_retired.l2_hit          system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+           1071050      mem_load_retired.l3_hit          system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+            187632      mem_load_retired.l3_miss         system.slice/docker-73ba45f5cdec0a4a3b4483e11f07e2e1bb3b3888649d3abea977a634341510f5.scope                                      
+
+      10.005598158 seconds time elapsed
+
