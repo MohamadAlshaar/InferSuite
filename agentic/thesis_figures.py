@@ -132,7 +132,7 @@ for r,i in enumerate(order): ax.text(r,W[i]["avx"]+1.5,f"{W[i]['avx']:.0f}%",ha=
 ax.set_xticks(range(len(W))); ax.set_xticklabels([labels[i] for i in order],rotation=20,ha="right")
 for tk,i in zip(ax.get_xticklabels(),order): tk.set_color(W[i]["col"])
 ax.set_ylabel("Vectorized floating-point operations (%)"); ax.set_ylim(0,100)
-ax.set_title("Vectorization intensity spans the full spectrum")
+ax.set_title("Vectorized floating-point share by workload")
 bench_legend(ax, loc="upper left")
 fig.savefig(f"{OUT}/05_vectorization.png"); plt.close(fig)
 
@@ -155,8 +155,6 @@ fig.legend(handles=[Patch(color=GPU_COL,label="Inference  (GPU — LLM generatio
                     Patch(color=CPU_COL,label="Tool execution  (CPU — agent)")],
            loc="lower center", ncol=2, bbox_to_anchor=(0.5,0.0), fontsize=11)
 fig.suptitle("Agent-loop time allocation: inference (GPU) vs tool execution (CPU)", fontsize=14, y=0.98)
-fig.text(0.5,0.925,"Agentic workloads are inference-dominated; compute-heavy tool work (numerical tests, image processing) raises the CPU share.",
-         ha="center",fontsize=9.5,style="italic",color="#555")
 fig.tight_layout(rect=[0,0.05,1,0.91])
 fig.savefig(f"{OUT}/06_time_allocation.png"); plt.close(fig)
 

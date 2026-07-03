@@ -22,15 +22,15 @@ NEUTRAL = "#bdbdbd"
 
 PODS = [
     ("vllm",         "vLLM engine",           "INSIDE"),
-    ("llmd_gateway", "llm-d gateway (envoy)", "ROUTING"),
-    ("fastapi",      "FastAPI + BGE embed",   "OUTSIDE"),
-    ("milvus",       "Milvus (vector search)", "OUTSIDE"),
-    ("mongodb",      "MongoDB (cache/history)", "OUTSIDE"),
+    ("llmd_gateway", "llm-d gateway", "ROUTING"),
+    ("fastapi",      "FastAPI + BGE", "OUTSIDE"),
+    ("milvus",       "Milvus", "OUTSIDE"),
+    ("mongodb",      "MongoDB", "OUTSIDE"),
 ]
 CLS_COL = {"INSIDE": "#6a51a3", "ROUTING": "#0072B2", "OUTSIDE": "#1b9e77"}
 
 # role -> (color, regex over "dso :: symbol")
-# Palette matches the LOCAL during-inference donut (inf_thesis_plots/make_figures.py DESC) so the same
+# Palette matches the LOCAL during-inference donut (agentic/inference/plots/make_figures.py DESC) so the same
 # semantic category has the same colour across the thesis: busy-wait purple #6a51a3, clock-poll #9e9ac8,
 # Python #d94801, kernel #cb181d, C library #2171b5.
 ROLES = [
@@ -80,8 +80,15 @@ if not items:
 
 colmap = {n: c for n, c, _ in ROLES}; colmap["unknown"] = NEUTRAL; colmap["other"] = "#e0e0e0"
 n = len(items); ncol = min(3, n); nrow = math.ceil(n / ncol)
-fig, axes = plt.subplots(nrow, ncol, figsize=(4.6*ncol, 4.9*nrow))
-axes = axes.flatten() if hasattr(axes, "flatten") else [axes]
+fig = plt.figure(figsize=(4.6*ncol, 4.9*nrow))
+gs = fig.add_gridspec(nrow, 2*ncol)
+axes = []
+for i in range(n):
+    r = i // ncol
+    n_in_row = min(ncol, n - r*ncol)
+    start = (2*ncol - 2*n_in_row) // 2   # center a short last row
+    c = i - r*ncol
+    axes.append(fig.add_subplot(gs[r, start + 2*c : start + 2*c + 2]))
 used = []
 for ax, (key, title, cls, r) in zip(axes, items):
     parts = sorted([(k, v) for k, v in r.items() if v > 0.8], key=lambda x: -x[1])
@@ -97,23 +104,13 @@ for ax, (key, title, cls, r) in zip(axes, items):
             ax.text(0.78*math.cos(a), 0.78*math.sin(a), f"{v:.0f}%", ha="center", va="center",
                     color="white", fontweight="bold", fontsize=10)
         cum += v
-    ax.text(0, 0.10, title, ha="center", va="center", fontsize=10.5, fontweight="bold", color=CLS_COL[cls])
-    ax.text(0, -0.07, cls, ha="center", va="center", fontsize=8.4, color=CLS_COL[cls])
-    dom = max(((k, v) for k, v in r.items() if k not in ("unknown", "other")), key=lambda x: x[1], default=("", 0))
-    ax.text(0, -0.24, f"{dom[0]}: {dom[1]:.0f}%", ha="center", va="center", fontsize=7.8, color="#666")
-for ax in axes[len(items):]:
-    ax.axis("off")
-
+    ax.text(0, 0.08, title, ha="center", va="center", fontsize=9.5, fontweight="bold", color=CLS_COL[cls])
+    ax.text(0, -0.14, cls, ha="center", va="center", fontsize=7.5, color=CLS_COL[cls])
 order = [r[0] for r in ROLES if r[0] in used]
 handles = [Patch(color=colmap[k], label=k) for k in order] + [Patch(color=NEUTRAL, label="[unknown] (unresolved leaf)")]
 fig.legend(handles=handles, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.05), fontsize=9.0, frameon=False)
-fig.suptitle("Where each service pod spends CPU under RAG (tok320) — DURING inference vs OUTSIDE",
+fig.suptitle("Service CPU time by software component (RAG tok320)",
              fontsize=13.5, y=1.0)
-fig.text(0.5, 0.955, "DURING inference the vLLM host is ~96% a CUDA GPU-sync busy-wait (libcuda spin + vdso "
-         "clock-poll) — no real work; the real CPU work is OUTSIDE: BGE embedding GEMM, vector search, routing.",
-         ha="center", fontsize=8.8, style="italic", color="#555")
-fig.text(0.5, -0.075, "SeaweedFS volume/filer drew ≈0 CPU during the RAG path (chunks served from the Milvus payload, "
-         "not re-fetched from object store).", ha="center", fontsize=8.0, color="#888")
 fig.tight_layout(rect=[0, 0.05, 1, 0.93])
 fig.savefig(os.path.join(OUT, "service_attribution.png")); plt.close(fig)
 print("fig ->", os.path.join(OUT, "service_attribution.png"))

@@ -48,10 +48,8 @@ for ax,i in zip(axes.flat,order):
 fig.legend(handles=[Patch(color=GPU_COL,label="Inference  (GPU — LLM generation)"),
                     Patch(color=CPU_COL,label="Tool execution  (CPU — agent)")],
            loc="lower center", ncol=2, bbox_to_anchor=(0.5,-0.01), fontsize=11, frameon=False)
-fig.suptitle("Agentic time allocation on the co-located H100: inference (GPU) vs tool execution (CPU)",
+fig.suptitle("Agent time allocation: inference (GPU) versus tool execution (CPU)",
              fontsize=14, y=0.99)
-fig.text(0.5,0.945,"Self-hosted Coder/Instruct-32B. Mostly inference-dominated; only scikit-learn's "
-         "AVX-512 test suite flips the loop to CPU-bound.", ha="center",fontsize=9.5,style="italic",color="#555")
 fig.tight_layout(rect=[0,0.04,1,0.92])
 OUT="h100/plots"; os.makedirs(OUT,exist_ok=True)
 fig.savefig(f"{OUT}/grand_timesplit.png"); plt.close(fig)

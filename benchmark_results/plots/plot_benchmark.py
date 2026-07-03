@@ -18,7 +18,7 @@ Cross-tier / cross-pod → figures/full_benchmark/cross_tier/:
   tpot_compare    TPOT per cell across tiers (tok64 inflated → tok320 true)
   ttft_compare    TTFT per cell across tiers
 
-Usage:  python3 thesis_plots/plot_benchmark.py [RUN_DIR] [--path rag]
+Usage:  python3 benchmark_results/plots/plot_benchmark.py [RUN_DIR] [--path rag]
 """
 from __future__ import annotations
 

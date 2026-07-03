@@ -72,9 +72,7 @@ for key, lab, col in REG:
 ax.set_xlim(0, 100); ax.set_ylim(0, 100)
 ax.set_xlabel("Memory throughput  (% of peak)")
 ax.set_ylabel("Compute / SM throughput  (% of peak)")
-ax.set_title("GPU Speed-of-Light (H100 · bf16 32B): prefill compute-bound, decode memory-bound")
-fig.text(0.5, 0.005, "Prefill saturates the SM math pipes (92 %); decode is weight-bandwidth-bound (76 %). "
-         "A real agent turn is prefill-dominated.", ha="center", fontsize=8.6, style="italic", color="#666")
+ax.set_title("GPU Speed-of-Light by regime (32B, bf16)")
 fig.savefig(f"{OUT}/gpu_01_speed_of_light.png"); plt.close(fig)
 
 # ===================== Fig 2: warp-scheduler top-down =====================
@@ -103,7 +101,7 @@ for ri, (key, lab, _) in enumerate(REG):
     ax.text(ri, 101.5, f"{R[key]['issue_eff_per_cycle']:.2f} issue/cyc", ha="center", fontsize=9.5, style="italic", color="#444")
 ax.set_xticks(list(xs)); ax.set_xticklabels([l for _, l, _ in REG], fontsize=10.5)
 ax.set_ylabel("Share of warp-scheduler issue cycles (%)"); ax.set_ylim(0, 108)
-ax.set_title("GPU warp-scheduler top-down: where the issue slots go")
+ax.set_title("GPU warp-scheduler top-down (32B, bf16)")
 ax.legend(loc="center left", bbox_to_anchor=(1.01, 0.5), fontsize=10); ax.grid(axis="x", visible=False)
 fig.savefig(f"{OUT}/gpu_02_warpstate_topdown.png"); plt.close(fig)
 
@@ -124,7 +122,7 @@ for ri, (key, lab, _) in enumerate(REG):
         left += v
 axA.set_yticks(range(len(REG))); axA.set_yticklabels([l for _, l, _ in REG]); axA.invert_yaxis()
 axA.set_xlim(0, 100); axA.set_xlabel("Share of GPU time (%)")
-axA.set_title("Where GPU time goes (H100 · bf16 32B): the GEMM dominates every regime")
+axA.set_title("GPU kernel-time composition by regime (32B, bf16)")
 handles = [Patch(color=CCOL[c], label=c) for c in CLS if any(R[k]["by_kernel_class"].get(c, {}).get("time_pct", 0) >= 1 for k, _, _ in REG)]
 axA.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.18), ncol=3, fontsize=9.5)
 axA.grid(axis="y", visible=False)
@@ -146,7 +144,7 @@ for i, (cc, mm) in enumerate(zip(comp, memo)):
 axB.axhline(100, ls=":", color="#999", lw=1); axB.text(1.45, 97, "peak", fontsize=9, color="#999", va="top")
 axB.set_xticks(xpos); axB.set_xticklabels([g[0] for g in groups], fontsize=11)
 axB.set_ylim(0, 100); axB.set_ylabel("% of peak (Speed-of-Light)")
-axB.set_title("Same kernel, opposite bottleneck: bf16 GEMM across regimes")
+axB.set_title("Dominant-kernel bottleneck by regime (32B, bf16)")
 axB.legend(loc="upper center", fontsize=10.5); axB.grid(axis="x", visible=False)
 fig.savefig(f"{OUT}/gpu_03b_kernel_bottleneck.png"); plt.close(fig)
 
@@ -194,9 +192,6 @@ ax.axhline(N_PF - 0.5, color="white", lw=3)            # prefill / decode blocks
 ax.set_ylim(len(ROWS) - 0.5, -1.45)
 for sp in ax.spines.values(): sp.set_visible(False)
 ax.set_title("Micro-architectural signature of the dominant GPU kernels", pad=52)
-fig.text(0.5, -0.02, "Hardware measures (not the warp-state top-down). Colour = per-column min–max (light = low, "
-         "dark = high vs the other kernels); numbers are true values. IPC max = 4/SM; Lanes = active threads/warp.",
-         ha="center", fontsize=8.2, style="italic", color="#666")
 fig.savefig(f"{OUT}/gpu_04_signature_heatmap.png"); plt.close(fig)
 
 # ===================== Fig 5: 2-level GPU top-down (Intel-style, corrected) =====================
@@ -230,12 +225,8 @@ for ri, (key, lab, _) in enumerate(REG):                 # back-end bracket + he
     ax.text(ri, 105, f"heavy-op (tensor) {tp:.0f}%", ha="center", fontsize=8.2, style="italic", color="#555")
 ax.set_xticks(list(xs)); ax.set_xticklabels([l for _, l, _ in REG], fontsize=11)
 ax.set_ylabel("Share of warp-scheduler issue slots (%)"); ax.set_ylim(0, 110); ax.set_xlim(-0.6, 3.05)
-ax.set_title("GPU top-down in Intel-style buckets — Retiring / Front-end / Back-end{Core, Memory} / Covered")
+ax.set_title("GPU top-down in Intel-style TMA buckets (32B, bf16)")
 ax.legend(loc="center left", bbox_to_anchor=(1.01, 0.5), fontsize=8.6); ax.grid(axis="x", visible=False)
-fig.text(0.5, -0.04, "Bad-speculation = N/A on GPU (no speculative execution): its analogs are SIMT divergence (spatial) "
-         "and instruction replays (temporal) — both ≈ 0 here (lanes 100%).  Covered (latency-hidden) "
-         "is small because occupancy is low (16–21%), so stalls are uncovered → genuinely back-end-bound.",
-         ha="center", fontsize=8.1, style="italic", color="#666", wrap=True)
 fig.savefig(f"{OUT}/gpu_05_gpu_tma_intel.png"); plt.close(fig)
 
 # ===================== Fig 6: GPU throughput is 2-D (issue slots x SIMT lanes) =====================
@@ -254,10 +245,7 @@ for key, lab, col in REG:
 ax.set_xlim(0, 100); ax.set_ylim(0, 110)
 ax.set_xlabel("Issue efficiency  (temporal — % of active scheduler cycles issuing)")
 ax.set_ylabel("Lane efficiency  (spatial — % of 32 SIMT lanes active)")
-ax.set_title("GPU throughput is 2-D: issue slots × SIMT lanes", pad=12)
-fig.text(0.5, 0.002, "Useful work = issue-eff × lane-eff (lane-weighted Retiring). All regimes sit on the lane ceiling "
-         "(divergence-free kernels) → no spatial waste; all loss is temporal (low issue efficiency — too few warps to hide latency).",
-         ha="center", fontsize=8.2, style="italic", color="#666", wrap=True)
+ax.set_title("GPU throughput: issue slots and SIMT lanes (32B, bf16)", pad=12)
 fig.savefig(f"{OUT}/gpu_06_throughput_2d.png"); plt.close(fig)
 
 print(f"Prompts blend weights: prefill {W_PF:.2f} / decode {W_DEC:.2f}")

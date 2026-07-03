@@ -2,7 +2,7 @@
 
 Separate results tree for the **fully co-located H100** experiments (vLLM + agents + tools on one
 box). Keeps this data cleanly apart from the bare-metal `agentic/CANONICAL/` (7B, A2000, with TMA)
-and the local `inf_thesis_plots/` trees.
+and the local `agentic/inference/plots/` trees.
 
 ## Goal
 Characterize **what the CPU orchestrates DURING inference** for the agentic workloads (BCB, SWE-agent,

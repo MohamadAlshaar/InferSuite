@@ -26,8 +26,7 @@ scripts/                Deploy, ingest, benchmark, and report scripts
 
 plots/                  curated figure gallery: domain -> setup -> tier/bench (see plots/README.md)
 results/                curated data gallery, same structure, symlinks into the real data dirs
-benchmark_results/      service benchmark data (tok64/tok192/tok320)
-thesis_plots/           service-level figures        inf_thesis_plots/ (+gpu/)  local CPU-TMA + GPU top-downs
+benchmark_results/      service benchmark data (tok64/tok192/tok320) + its figure scripts (plots/)
 h100/  (+service/)      self-hosted 32B runs: agents + single-node service + 32B GPU top-down
 local_service/          local k3s service run: per-tier TMA L1+L2, attribution, 12-cell timing grid
 
@@ -35,7 +34,7 @@ agentic/
   CANONICAL/            single source of truth for the 3 agent benchmarks (microarch.py, data)
   common/               shared perf harness      thesis_figures/  cross-workload figures
   swe_agent/  bigcodebench/  openclaw/            the three workloads
-  inference/            phantom-CPU experiment (cudasync/) + GPU-TMA build
+  inference/            phantom-CPU experiment (cudasync/) + GPU-TMA build + during-inference figures (plots/)
 ```
 
 Large re-creatable artifacts (venvs, model weights, upstream clones, scratch outputs) are gitignored.

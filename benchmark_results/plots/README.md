@@ -1,4 +1,4 @@
-# thesis_plots
+# benchmark_results/plots
 
 Publication-quality figures for the thesis, generated from the benchmark result
 data. Each figure is saved as **`.pdf`** (vector, for LaTeX `\includegraphics`)
@@ -7,7 +7,7 @@ and **`.png`** (quick preview). Style is shared and colourblind-safe (Okabe–It
 ## Layout
 
 ```
-thesis_plots/
+benchmark_results/plots/
 ├── style.py            shared matplotlib style (fonts, palette, save helper)
 ├── plot_gpu_sweep.py   figures for a GPU prefill/decode sweep
 ├── plot_benchmark.py   figures for the full CPU/stack benchmark (mirrors the HTML report)
@@ -22,10 +22,10 @@ thesis_plots/
 pip install matplotlib            # one-time
 
 # GPU sweep (defaults to the latest GPU_benchmark/results/run_*)
-python3 thesis_plots/plot_gpu_sweep.py [RUN_DIR]
+python3 benchmark_results/plots/plot_gpu_sweep.py [RUN_DIR]
 
 # Full benchmark (defaults to benchmark_results/run_20260609_140052)
-python3 thesis_plots/plot_benchmark.py [RUN_DIR] --tier tok320 --path rag
+python3 benchmark_results/plots/plot_benchmark.py [RUN_DIR] --tier tok320 --path rag
 ```
 
 ## Figures
@@ -59,7 +59,7 @@ Cross-tier (`cross_tier/`):
 | `tpot_compare` | TPOT per cell across tiers (tok64 ≈58 ms inflated → tok320 ≈32 ms true) |
 | `ttft_compare` | TTFT per cell across tiers |
 
-Run: `python3 thesis_plots/plot_benchmark.py [RUN_DIR] --path rag`
+Run: `python3 benchmark_results/plots/plot_benchmark.py [RUN_DIR] --path rag`
 
 ## Notes
 - The figures regenerate deterministically from the result dirs, so they're

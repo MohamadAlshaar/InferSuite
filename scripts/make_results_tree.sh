@@ -22,7 +22,7 @@ L h100/data_swe                           agents/h100/swe
 L h100/data_oc                            agents/h100/oc
 
 # ---------- during-inference engine studies ----------
-L inf_thesis_plots/data.json              engine/local/data.json
+L agentic/inference/plots/data.json              engine/local/data.json
 L agentic/inference/runs/sync             engine/local/phantom
 
 # ---------- gpu ----------

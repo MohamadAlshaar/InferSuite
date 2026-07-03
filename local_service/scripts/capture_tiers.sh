@@ -7,7 +7,7 @@
 set -o pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 export KUBECONFIG="$HOME/.kube/k3s-local.yaml"
-PERF=/usr/lib/linux-tools-6.8.0-124/perf     # the working perf on this box (6.17 symlink is broken)
+PERF=$(ls -d /usr/lib/linux-tools-6.8*/perf 2>/dev/null | tail -1)  # newest 6.8-series tools (6.17 wrapper broken)
 OUT_ROOT="${OUT_ROOT:-$REPO/local_service/data}"
 REC_SEC="${REC_SEC:-25}"
 STAT_SEC="${STAT_SEC:-20}"

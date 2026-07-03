@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Consolidate the VERIFIED Phase-1 (CPU-during-inference) results + the tool-exec comparison
-into inf_thesis_plots/data.json. All non-multiplexed; FP from the 2 clean split passes."""
+into agentic/inference/plots/data.json. All non-multiplexed; FP from the 2 clean split passes."""
 import sys, json, os, collections
 sys.path.insert(0, "../common"); import microarch as M
 HERE = "/home/mohamad/llm-service-kernel-latest"
@@ -53,7 +53,7 @@ agg_ipc = sum(w["ipc"] for w in tool)/len(tool)
 out = {"inference": infer, "tool_exec_workloads": tool,
        "tool_exec_aggregate": {"ipc": agg_ipc, "tma_l1": agg},
        "_provenance": "Phase-1 CPU-during-inference: local vLLM Qwen2.5-7B-AWQ on RTX A2000, sustained agent-prompt load, perf scoped to whole engine (API server + VLLM::EngineCore, 232 threads). Non-multiplexed (FP from 2 split passes). Tool-exec = CANONICAL 8-workload TMA."}
-json.dump(out, open(f"{HERE}/inf_thesis_plots/data.json", "w"), indent=2)
+json.dump(out, open(f"{HERE}/agentic/inference/plots/data.json", "w"), indent=2)
 
 print("INFERENCE CPU:")
 print(f"  IPC {infer['ipc']:.2f}  cross-pass {min(infer['cross_pass_ipc'].values()):.2f}-{max(infer['cross_pass_ipc'].values()):.2f}")
@@ -61,4 +61,4 @@ print(f"  TMA L1: ret {infer['tma_l1']['Retiring']:.0f} fe {infer['tma_l1']['Fro
 print(f"  L1-hit {infer['l1_hit']:.1f}%  MLP {infer['mlp']:.2f} ILP {infer['ilp']:.2f}  AVX {infer['avx']:.0f}% MFLOP {infer['mflop']:.0f} (CLEAN, split passes)")
 print(f"  sync-path {infer['sync_path_pct']:.0f}% (libcuda+vdso)  top symbol {infer['top_symbol']}")
 print(f"TOOL-EXEC aggregate: IPC {agg_ipc:.2f}  TMA ret {agg['Retiring']:.0f} fe {agg['Frontend']:.0f} bad {agg['BadSpec']:.0f} be {agg['Backend']:.0f}")
-print("-> wrote inf_thesis_plots/data.json")
+print("-> wrote agentic/inference/plots/data.json")

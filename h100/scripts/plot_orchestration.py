@@ -10,7 +10,7 @@ Formats:
 """
 import os, sys, re, json, glob
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as _plt
-# ---- inf_thesis_plots house theme (serif, light grid, Okabe-Ito colorblind-safe + purple accent) ----
+# ---- agentic/inference/plots house theme (serif, light grid, Okabe-Ito colorblind-safe + purple accent) ----
 _plt.rcParams.update({
     "font.family":"serif","font.serif":["DejaVu Serif"],"mathtext.fontset":"dejavuserif",
     "font.size":12,"axes.titlesize":13.5,"axes.labelsize":12,"xtick.labelsize":11,"ytick.labelsize":11,

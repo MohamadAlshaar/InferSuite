@@ -82,8 +82,6 @@ ax.legend(wedges, [f"{DESC[k][0]}   ({v:.2f}%)" for k, v in zip(labels, vals)],
           loc="center left", bbox_to_anchor=(0.98, 0.5), fontsize=10, title="Software component",
           title_fontproperties={"weight": "bold"})
 ax.set_title("Distribution of host-CPU time during inference, by software component")
-fig.text(0.5, 0.01, "Wedge area is √-scaled for legibility; printed values and the legend give the true percentages.",
-         ha="center", fontsize=8.5, style="italic", color="#666")
 fig.savefig(f"{HERE}/02_cpu_function_donut.png"); plt.close(fig)
 
 # ================= 03. Micro-architectural signature (single subject) =================

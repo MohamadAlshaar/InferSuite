@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """vLLM engine microarch signature on the H100 service node (SYSTEM python3) — drawn in the SAME
-format as inf_thesis_plots/make_figures.py fig 03 (03_inference_microarch_signature.png) so the
+format as agentic/inference/plots/make_figures.py fig 03 (03_inference_microarch_signature.png) so the
 local (TMA-capable) and H100 (portable-suite) engine signatures are visually comparable in the
 thesis. No 'Retiring slots' row: this KVM guest exposes no TMA slots event.
 
@@ -60,7 +60,7 @@ for i, m in enumerate(METR):
     ax.text(m[1]/m[2]*100 + 1.5, i, m[3], va="center", fontsize=11, fontweight="bold", color="#222")
 ax.set_yticks(list(y)); ax.set_yticklabels([m[0] for m in METR]); ax.invert_yaxis()
 ax.set_xlim(0, 118); ax.set_xlabel("fraction of each metric's scale (%)")
-ax.set_title("Micro-architectural signature of the engine host CPU during inference\n(H100 service node, portable counter suite — no TMA on this guest)")
+ax.set_title("Micro-architectural signature of the engine host CPU during inference")
 ax.grid(axis="y", visible=False)
 fig.savefig(os.path.join(OUT, "vllm_signature.png")); plt.close(fig)
 print("wrote", os.path.join(OUT, "vllm_signature.png"))

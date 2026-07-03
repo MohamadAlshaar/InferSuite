@@ -70,7 +70,7 @@ ax.set_title("Micro-architectural signature of the service CPU — work OUTSIDE 
 fig.text(0.5, -0.02, "Colour = per-metric min–max across pods (light = low, dark = high vs the other pods); "
          "numbers are true values.", ha="center", fontsize=8.2, style="italic", color="#666")
 plt.tight_layout()
-OUTDIR = "/home/mohamad/llm-service-kernel-latest/thesis_plots/figures/full_benchmark/cross_tier"
+OUTDIR = "/home/mohamad/llm-service-kernel-latest/benchmark_results/plots/figures/full_benchmark/cross_tier"
 for ext in ("png", "pdf"):
     p = f"{OUTDIR}/cpu_signature.{ext}"; fig.savefig(p, dpi=140, bbox_inches="tight"); print("saved", p)
 # also print the raw table

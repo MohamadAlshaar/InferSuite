@@ -26,7 +26,7 @@ M = [
     ("Engine CPU busy",        1.00, 0.24, "1.00 core", "0.24 core", "cost"),
     ("Engine IPC",             3.46, 0.59, "3.46",      "0.59",      "cost"),
     ("GPU work (inference)",   395.0, 387.0, "395 s",   "387 s",     "out"),
-    ("Throughput †",           48.8, 48.6, "48.8 tok/s", "48.6 tok/s", "out"),
+    ("Throughput",           48.8, 48.6, "48.8 tok/s", "48.6 tok/s", "out"),
     ("Agent progress",         17.0, 16.0, "17 steps", "16 steps",  "out"),
 ]
 M = M[::-1]                                # plot bottom-up so 'cost' group ends on top
@@ -45,18 +45,9 @@ ax.set_xlim(0, 1.32); ax.set_xlabel("relative to spin-mode (spin = 1.0)")
 ax.axvline(1.0, color="#bbbbbb", lw=0.8, ls=":")
 ax.grid(axis="y", visible=False)
 # group brackets / labels on the right
-ax.text(1.30, yt[-1] + 0.0, "CPU the\nserver burns", ha="right", va="center", fontsize=9, color=SPIN_C, style="italic")
-ax.text(1.30, (yt[0] + yt[2]) / 2 if len(yt) > 2 else yt[0], "Everything\nthat matters", ha="right", va="center",
-        fontsize=9, color="#555", style="italic")
-ax.set_title("The phantom CPU: a core that spins “busy” during inference — recovered for free")
+ax.set_title("Spin versus blocking GPU synchronization")
 ax.legend(handles=[Patch(color=SPIN_C, label="spin-sync (default) — polls the GPU"),
                    Patch(color=BLOCK_C, label="block-sync (one-flag fix) — sleeps")],
           loc="upper center", bbox_to_anchor=(0.5, -0.11), ncol=2)
-fig.text(0.5, -0.13,
-         "Single-stream agentic inference (SWE-agent, Qwen-7B on one GPU). The default sync spins a full host core "
-         "at IPC 3.46 — looking maximally busy/efficient while doing zero work. Forcing CUDA events to block recovers "
-         "~76 % of that core; GPU work, throughput, and agent progress are unchanged.\n"
-         "† throughput from the isolated single-stream A/B (cleanly measurable there); all other bars from the live 420 s agent run.",
-         ha="center", fontsize=8.4, style="italic", color="#666", wrap=True)
 fig.savefig(os.path.join(OUT, "phantom_cpu.png")); plt.close(fig)
 print("wrote", os.path.join(OUT, "phantom_cpu.png"))

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Thesis figures for a GPU prefill/decode sweep (GPU_benchmark run).
 
-Figures (→ thesis_plots/figures/gpu_sweep/):
+Figures (→ benchmark_results/plots/figures/gpu_sweep/):
   prefill_ttft   TTFT vs input length         — the compute-bound regime
   decode_tpot    TPOT vs output length        — the memory-bound regime (+ KV drift)
   regime         compute vs memory engine use — prefill vs decode, the headline contrast
 
 Usage:
-  python3 thesis_plots/plot_gpu_sweep.py [RUN_DIR]
+  python3 benchmark_results/plots/plot_gpu_sweep.py [RUN_DIR]
   (defaults to the latest GPU_benchmark/results/run_*)
 """
 from __future__ import annotations

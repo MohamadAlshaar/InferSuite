@@ -2,7 +2,7 @@
 
 All figures in one tree, organized **domain → setup → tier/bench**. This directory is a *view*:
 figures are generated at their source locations (`local_service/`, `local_agents/`, `h100/`,
-`inf_thesis_plots/`, `agentic/thesis_figures/`, `thesis_plots/`) and copied here by
+`agentic/inference/plots/`, `agentic/thesis_figures/`, `benchmark_results/plots/`) and copied here by
 `scripts/sync_plots.sh`. Never edit here — regenerate at the source and re-sync.
 
 ## Setups (what ran where)

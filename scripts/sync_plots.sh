@@ -18,10 +18,10 @@ R "local_service/plots/tok320/"       service/local/tok320
 R "local_service/plots/idle_control/" service/local/idle_control
 mkdir -p plots/service/local && cp -a local_service/plots/timing_donuts.png local_service/plots/timing_cpu_stages.png plots/service/local/
 R "h100/service/plots/"               service/h100
-R "thesis_plots/figures/full_benchmark/cross_tier/" service/eks/cross_tier
-R "thesis_plots/figures/full_benchmark/tok64/"      service/eks/tok64
-R "thesis_plots/figures/full_benchmark/tok192/"     service/eks/tok192
-R "thesis_plots/figures/full_benchmark/tok320/"     service/eks/tok320
+R "benchmark_results/plots/figures/full_benchmark/cross_tier/" service/eks/cross_tier
+R "benchmark_results/plots/figures/full_benchmark/tok64/"      service/eks/tok64
+R "benchmark_results/plots/figures/full_benchmark/tok192/"     service/eks/tok192
+R "benchmark_results/plots/figures/full_benchmark/tok320/"     service/eks/tok320
 
 # ---------- agents ----------
 mkdir -p plots/agents/local_api
@@ -36,11 +36,11 @@ mkdir -p plots/agents/local
 
 # ---------- during-inference engine studies ----------
 mkdir -p plots/engine/local
-cp -a inf_thesis_plots/0*.png plots/engine/local/
+cp -a agentic/inference/plots/0*.png plots/engine/local/
 cp -a agentic/thesis_figures/phantom_cpu.png plots/engine/local/
 
 # ---------- gpu ----------
-R "inf_thesis_plots/gpu/"  gpu/local_a2000
+R "agentic/inference/plots/gpu/"  gpu/local_a2000
 R "h100/plots/gpu/"        gpu/h100
 R "agentic/aws_agents/gpu/" gpu/l40s
 

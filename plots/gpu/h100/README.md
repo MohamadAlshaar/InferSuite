@@ -1,6 +1,6 @@
 # GPU top-down (ncu) — H100 · Qwen2.5-32B-Instruct (bf16) · FlashAttention-3
 
-Same methodology and **same workload** (`agentic/inference/prompts.json`) as the local A2000 `inf_thesis_plots/gpu`
+Same methodology and **same workload** (`agentic/inference/prompts.json`) as the local A2000 `agentic/inference/plots/gpu`
 reference, re-captured on the co-located **H100 PCIe** with the **32B bf16** model.
 
 ## Setup

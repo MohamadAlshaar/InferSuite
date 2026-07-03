@@ -67,13 +67,9 @@ if ITEMS:
         ax.text(0,0.05,name,ha="center",va="center",fontsize=11.5,fontweight="bold",color=BENCH_COL[bench])
         # headline: the dominant role
         dom=max(roles.items(),key=lambda x:x[1])
-        ax.text(0,-0.14,f"{dom[0].split(' — ')[-1]} {dom[1]:.0f}%",ha="center",va="center",fontsize=8.6,color="#555")
     handles=[Patch(color=colmap.get(k,P.NEUTRAL),label=k) for k in used]
     fig.legend(handles=handles,loc="lower center",ncol=min(4,len(used)),bbox_to_anchor=(0.5,-0.02),fontsize=9.5,frameon=False)
-    fig.suptitle("What the CPU orchestrates DURING inference (recorded engine, perf task-clock)",fontsize=14,y=1.0)
-    fig.text(0.5,0.95,"App-invariant: ~70-90% is the host thread BUSY-WAITING on the GPU (default cudaEventSynchronize "
-             "spin — libcuda + vdso clock-poll), doing no real work. Same across code-gen, code-repair, and computer-use.",
-             ha="center",fontsize=9.0,style="italic",color="#555")
+    fig.suptitle("Engine CPU during inference, by software component",fontsize=14,y=1.0)
     fig.tight_layout(rect=[0,0.08,1,0.92])
     os.makedirs("h100/plots",exist_ok=True)
     fig.savefig("h100/plots/grand_during_attribution.png"); plt.close(fig)

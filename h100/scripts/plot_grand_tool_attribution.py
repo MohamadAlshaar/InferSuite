@@ -92,11 +92,7 @@ if rows:
     for ax in axes[len(labels):]: ax.axis("off")
     handles=[Patch(color=colmap[k],label=k) for k in [r[0] for r in TOOL_ROLES]+["other"] if k in used]
     fig.legend(handles=handles, loc="lower center", ncol=4, bbox_to_anchor=(0.5,-0.01), fontsize=9.3, frameon=False)
-    fig.suptitle("What executes OUTSIDE inference — recorded CPU by software component", fontsize=14, y=0.99)
-    fig.text(0.5,0.925,"BCB/SWE agents run off-process (replay/API) → bars are pure tool payload (BLAS / compiler / interpreter). "
-             "OpenClaw's agent runs in-container → its CPU is the Node.js/V8 agent runtime\n(tools are light: calendar/pdf/web ≈ "
-             "kernel+libc syscalls only, social = Python). What runs out-of-inference sets the CPU character.",
-             ha="center",fontsize=8.8,style="italic",color="#555")
+    fig.suptitle("Tool-execution CPU by software component", fontsize=14, y=0.99)
     fig.tight_layout(rect=[0,0.05,1,0.885])
     os.makedirs("h100/plots",exist_ok=True)
     fig.savefig("h100/plots/grand_tool_attribution.png"); plt.close(fig)

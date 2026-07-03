@@ -19,7 +19,7 @@ service/  local -> local_service/data       (counters+TMA per tier, idle control
 agents/   local     -> local_agents/data    (during-inference 7B replays; tool software views)
           local_api -> agentic/CANONICAL/{swe_bench,bigcodebench,openclaw}/data  (canonical tool TMA)
           h100/{bcb,swe,oc} -> h100/data*   (32B campaign captures)
-engine/   local/data.json -> inf_thesis_plots/data.json   local/phantom -> agentic/inference/runs/sync
+engine/   local/data.json -> agentic/inference/plots/data.json   local/phantom -> agentic/inference/runs/sync
 gpu/      local_a2000 -> agentic/inference/runs/ncu   h100 -> h100/data_gpu   l40s -> agentic/aws_agents/gpu
 ```
 
