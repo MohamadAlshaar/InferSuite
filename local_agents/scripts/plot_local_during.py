@@ -131,8 +131,11 @@ SHORT = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar"
          "oc_live_image-crop": "OC image-crop"}
 live = [r for r in rows if r[5] is not None]
 if live:
-    fig, axes = plt.subplots(1, len(live), figsize=(2.7*len(live), 2.9))
-    for ax, r in zip(np.atleast_1d(axes), live):
+    nc = (len(live) + 1) // 2
+    fig, axes = plt.subplots(2, nc, figsize=(2.7*nc, 6.0))
+    axes = list(np.atleast_1d(axes).flat)
+    for ax in axes[len(live):]: ax.axis("off")
+    for ax, r in zip(axes, live):
         eng, tool = r[4], r[5]
         shares = [eng/(eng+tool)*100, tool/(eng+tool)*100]
         ax.pie([max(s, 1.0) for s in shares], colors=[INSIDE, OUTSIDECOL], startangle=90,
@@ -166,8 +169,11 @@ for d in SHORT:
     g = gpu_split(os.path.join(DATA, d, "gpu_timeline.csv"))
     if g is not None: gpu_rows.append((SHORT[d], g))
 if gpu_rows:
-    fig, axes = plt.subplots(1, len(gpu_rows), figsize=(2.7*len(gpu_rows), 2.9))
-    for ax, (lab, g) in zip(np.atleast_1d(axes), gpu_rows):
+    nc = (len(gpu_rows) + 1) // 2
+    fig, axes = plt.subplots(2, nc, figsize=(2.7*nc, 6.0))
+    axes = list(np.atleast_1d(axes).flat)
+    for ax in axes[len(gpu_rows):]: ax.axis("off")
+    for ax, (lab, g) in zip(axes, gpu_rows):
         ax.pie([g, 100-g], colors=[GPU_COL, CPU_COL], startangle=90, counterclock=False,
                wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.5))
         ax.text(0, 0.13, f"GPU {g:.0f}%", ha="center", fontsize=10, color=GPU_COL)
@@ -243,9 +249,12 @@ if panels:
     fig.savefig(os.path.join(OUT, "local_agents_engine_software.png")); plt.close(fig)
 
     # outside: one donut per live agent
-    fig, axes = plt.subplots(1, len(panels), figsize=(2.7*len(panels), 3.1))
+    nc = (len(panels) + 1) // 2
+    fig, axes = plt.subplots(2, nc, figsize=(2.7*nc, 6.4))
+    axes = list(np.atleast_1d(axes).flat)
+    for ax in axes[len(panels):]: ax.axis("off")
     used = set()
-    for ax, (lab, _e, t) in zip(np.atleast_1d(axes), panels):
+    for ax, (lab, _e, t) in zip(axes, panels):
         used |= draw_donut(ax, t, "", OUTSIDECOL)
         ax.text(0, -1.3, lab, ha="center", fontweight="bold", fontsize=10.5)
     handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
