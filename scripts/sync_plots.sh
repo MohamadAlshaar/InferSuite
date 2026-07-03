@@ -31,8 +31,8 @@ R "h100/plots/bcb/" agents/h100/bcb
 R "h100/plots/swe/" agents/h100/swe
 R "h100/plots/oc/"  agents/h100/oc
 mkdir -p plots/agents/h100 && cp -a h100/plots/grand_*.png plots/agents/h100/
-# local self-served during-inference per-agent figures land here once plotted:
-mkdir -p plots/agents/local
+# local self-served campaign (7B): during/outside two-views + engine TMA per agent
+mkdir -p plots/agents/local && cp -a local_agents/plots/local_agents_*.png plots/agents/local/
 
 # ---------- during-inference engine studies ----------
 mkdir -p plots/engine/local
