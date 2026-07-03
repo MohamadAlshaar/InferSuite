@@ -40,3 +40,8 @@ all zero via the vLLM proxy (only elapsed_time valid); (e) engine busy-wait self
 log-stats on); (f) BCB packed-FP is <3% in-window, quantitatively consistent with a standalone
 re-execution of the same 12 tests (0.82% packed) - "uses numpy/pandas" does not imply packed FP
 at these test sizes (calibrated: the same method sees 6.8e11 packed ops/8s from one numpy matmul).
+
+Second calibration (on-box, 2026-07-03): numpy matmul inside a docker scope ON THE H100 GUEST,
+same testbed conda python, same method: 39.6e9 128b + 37.7e9 256b + 431e9 512b packed double ops
+in 8 s (vec ~99.9%) vs 0 packed during live episodes on the same cgroup type. Packed-FP counting
+is proven end-to-end on this exact box/cgroup path; the episode zeros are workload behavior.
