@@ -31,6 +31,7 @@ R "h100/plots/bcb/" agents/h100/bcb
 R "h100/plots/swe/" agents/h100/swe
 R "h100/plots/oc/"  agents/h100/oc
 mkdir -p plots/agents/h100 && cp -a h100/plots/grand_*.png plots/agents/h100/
+R "h100/plots/agent_side/" agents/h100/agent_side
 # local self-served campaign (7B): during/outside two-views + engine TMA per agent
 mkdir -p plots/agents/local && cp -a local_agents/plots/local_agents_*.png plots/agents/local/
 
