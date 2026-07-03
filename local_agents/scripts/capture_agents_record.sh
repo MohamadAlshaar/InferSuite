@@ -44,6 +44,18 @@ for task in astropy scikit-learn sympy; do
   log "warmup ${WARMUP_S}s"; sleep "$WARMUP_S"
   log "perf record task-clock ${REC_SEC}s"
   sudo "$PERF" record -e task-clock -a --cgroup="$cg" -g -F 199 -o "$OUT/rec_engine.data" -- sleep "$REC_SEC" > "$OUT/perf_record.err" 2>&1
+  log "perf stat: 7 groups x 20s (5 portable + TMA L1 + td2)"
+  declare -A GRP
+  GRP[core]="task-clock,cycles,instructions,branches,branch-misses"
+  GRP[fp1]="cycles,instructions,fp_arith_inst_retired.scalar_single,fp_arith_inst_retired.scalar_double,fp_arith_inst_retired.128b_packed_single,fp_arith_inst_retired.128b_packed_double"
+  GRP[fp2]="cycles,instructions,fp_arith_inst_retired.256b_packed_single,fp_arith_inst_retired.256b_packed_double,fp_arith_inst_retired.512b_packed_single,fp_arith_inst_retired.512b_packed_double"
+  GRP[cache]="cycles,instructions,mem_load_retired.l1_hit,mem_load_retired.l2_hit,mem_load_retired.l3_hit,mem_load_retired.l3_miss"
+  GRP[mlp]="cycles,instructions,l1d_pend_miss.pending,l1d_pend_miss.pending_cycles,uops_executed.thread"
+  GRP[tma1]="slots,topdown-retiring,topdown-bad-spec,topdown-fe-bound,topdown-be-bound"
+  GRP[tma2]="slots,topdown-heavy-ops,topdown-br-mispredict,topdown-fetch-lat,topdown-mem-bound"
+  for g in core fp1 fp2 cache mlp tma1 tma2; do
+    sudo "$PERF" stat -a -e "${GRP[$g]}" --for-each-cgroup="$cg" -- sleep 20 2> "$OUT/group_engine_${g}.txt"
+  done
   sudo "$PERF" report -i "$OUT/rec_engine.data" --stdio -g none --symfs="/proc/$pid/root" 2>/dev/null \
     | grep -E "^\s+[0-9]" > "$OUT/engine_flat.txt" || true
   sudo "$PERF" report -i "$OUT/rec_engine.data" --stdio --sort=dso 2>/dev/null \
