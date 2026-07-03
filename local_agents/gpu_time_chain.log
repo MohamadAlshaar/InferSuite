@@ -1,0 +1,34 @@
+deployment.apps/ms-local-llm-d-modelservice-decode scaled
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ms-local-llm-d-modelservice-decode" successfully rolled out
+[gpu-time] engine serving qwen2.5-coder
+[gpu-time] ================ swe_live (gpu timeline) ================
+[gpu-time] WORK VERIFIED swe_live
+[gpu-time] swe_live done (118 samples)
+[gpu-time] ================ bcb_live (gpu timeline) ================
+[gpu-time] WORK VERIFIED bcb_live
+[gpu-time] bcb_live done (68 samples)
+deployment.apps/ms-local-llm-d-modelservice-decode scaled
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ms-local-llm-d-modelservice-decode" successfully rolled out
+[gpu-time] engine serving qwen2.5-7b-instruct-awq
+[gpu-time] engine cgroup ok
+[gpu-time] ================ oc calendar ================
+[gpu-time] WORK VERIFIED calendar
+[gpu-time] calendar td2 done (agent_alive_after_td2=1)
+[gpu-time] VALIDATE calendar: td2_in_window=1 samples=417
+[gpu-time] ================ oc web-digest ================
+[gpu-time] WORK VERIFIED web-digest
+[gpu-time] web-digest td2 done (agent_alive_after_td2=1)
+[gpu-time] VALIDATE web-digest: td2_in_window=1 samples=152
+[gpu-time] ================ oc pdf-digest ================
+[gpu-time] WORK VERIFIED pdf-digest
+[gpu-time] pdf-digest td2 done (agent_alive_after_td2=1)
+[gpu-time] VALIDATE pdf-digest: td2_in_window=1 samples=478
+[gpu-time] ================ oc image-crop ================
+[gpu-time] WORK VERIFIED image-crop
+[gpu-time] image-crop td2 done (agent_alive_after_td2=1)
+[gpu-time] VALIDATE image-crop: td2_in_window=1 samples=79
+[gpu-time] GPU-TIME-CHAIN-DONE

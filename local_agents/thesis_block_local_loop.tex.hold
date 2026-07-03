@@ -1,0 +1,18 @@
+\subsection{The Loop Closed Locally}
+
+The measurements above take the agent and the engine separately. To close the loop on one machine, the same three harnesses also run live against a self-served 7B model on the local GPU, Coder for the code agents and Instruct for the browser agent, and both sides are measured in the same windows, the engine pod in one cgroup and the agent with all its tools in another. A 7B model is a weak agent. Episodes are short, the SWE agent fills its context after about twenty steps and autosubmits, and the browser agent often answers without browsing. The loops are still real, the code agents generate programs, execute their tests, and read the failure feedback. \autoref{fig:local-two-view} shows where the CPU goes while this happens. The engine holds one to two cores busy during generation while the agent and its tools rarely exceed a tenth of a core. The engine keeps the same microarchitectural signature under every live loop, 55 to 59 percent retiring (\autoref{fig:local-agents-tma}), and its software view is 77 to 82 percent busy-wait. What executes outside keeps its identity from the replay-based attribution, Python for the code agents and Node.js/V8 for the browser agent.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figure/local_agents/local_agents_two_view_cpu.png}
+    \caption{CPU cores during and outside inference for the live local agent loops, both cgroups measured in the same windows. Wedges show the share of measured CPU time, centers give the absolute load.}
+    \label{fig:local-two-view}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figure/local_agents/local_agents_engine_tma_l1.png}
+    \caption{Engine TMA Level 1 under agent load, trajectory replays and live loops.}
+    \label{fig:local-agents-tma}
+\end{figure}
+

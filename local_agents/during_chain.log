@@ -1,0 +1,29 @@
+deployment.apps/ms-local-llm-d-modelservice-decode scaled
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ms-local-llm-d-modelservice-decode" successfully rolled out
+[agents-rec] engine pod=ms-local-llm-d-modelservice-decode-7c5656d746-r4l76 pid=2898658
+[agents-rec] ================ astropy ================
+[agents-rec] engine busy (Running: 1)
+[agents-rec] warmup 30s
+[agents-rec] perf record task-clock 25s
+[agents-rec] perf stat: 7 groups x 20s (5 portable + TMA L1 + td2)
+[agents-rec] VALIDATE-OK astropy (rec=2529944B, 815 symbols, load verified) top: 99.09%     0.00%  [unknown]                                 
+[agents-rec] draining 20s
+[agents-rec] ================ scikit-learn ================
+[agents-rec] engine busy (Running: 1)
+[agents-rec] warmup 30s
+[agents-rec] perf record task-clock 25s
+[agents-rec] perf stat: 7 groups x 20s (5 portable + TMA L1 + td2)
+[agents-rec] VALIDATE-OK scikit-learn (rec=2495424B, 813 symbols, load verified) top: 99.03%     0.00%  [unknown]                                 
+[agents-rec] draining 20s
+[agents-rec] ================ sympy ================
+[agents-rec] engine busy (Running: 1)
+[agents-rec] warmup 30s
+[agents-rec] perf record task-clock 25s
+[agents-rec] perf stat: 7 groups x 20s (5 portable + TMA L1 + td2)
+[agents-rec] VALIDATE-FAIL sympy (rec=2602004B, symbols=773)
+[agents-rec] draining 20s
+[agents-rec] DONE -> /home/mohamad/llm-service-kernel-latest/local_agents/data
+deployment.apps/ms-local-llm-d-modelservice-decode scaled
+CHAIN-DONE (engine back to 0)

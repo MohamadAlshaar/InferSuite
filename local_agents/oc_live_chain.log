@@ -1,0 +1,45 @@
+deployment.apps/ms-local-llm-d-modelservice-decode scaled
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ms-local-llm-d-modelservice-decode" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ms-local-llm-d-modelservice-decode" successfully rolled out
+[oc-live] engine serving qwen2.5-7b-instruct-awq on :8000 (hermes tools, 32K)
+[oc-live] engine pod=ms-local-llm-d-modelservice-decode-f7cdbd668-zdpjk pid=2929605
+[oc-live] ================ calendar ================
+[oc-live] WORK VERIFIED calendar (Running:1)
+[oc-live] record x2 30s + stats 7 groups x 12s (parallel)
+[oc-live] WARN calendar: agent finished before group tma2
+[oc-live] WARN calendar: agent finished before group cache
+[oc-live] WARN calendar: agent finished before group fp1
+[oc-live] WARN calendar: agent finished before group fp2
+[oc-live] WARN calendar: agent finished before group mlp
+[oc-live] VALIDATE-OK calendar (eng=2739468B/1122sym, tool=1803468B/1270sym, tma+core in-window, score=?, alive-post=0)
+[oc-live] ================ web-digest ================
+[oc-live] WORK VERIFIED web-digest (Running:1)
+[oc-live] record x2 30s + stats 7 groups x 12s (parallel)
+[oc-live] WARN web-digest: agent finished before group core
+[oc-live] WARN web-digest: agent finished before group tma2
+[oc-live] WARN web-digest: agent finished before group cache
+[oc-live] WARN web-digest: agent finished before group fp1
+[oc-live] WARN web-digest: agent finished before group fp2
+[oc-live] WARN web-digest: agent finished before group mlp
+[oc-live] VALIDATE-FAIL web-digest (eng=1640920B/135sym, tool=1621804B/25sym, in-window-groups=1/2, score=?)
+[oc-live] ================ pdf-digest ================
+[oc-live] WORK VERIFIED pdf-digest (Running:1)
+[oc-live] record x2 30s + stats 7 groups x 12s (parallel)
+[oc-live] WARN pdf-digest: agent finished before group tma2
+[oc-live] WARN pdf-digest: agent finished before group cache
+[oc-live] WARN pdf-digest: agent finished before group fp1
+[oc-live] WARN pdf-digest: agent finished before group fp2
+[oc-live] WARN pdf-digest: agent finished before group mlp
+[oc-live] VALIDATE-OK pdf-digest (eng=3013948B/1409sym, tool=1758400B/1674sym, tma+core in-window, score=?, alive-post=0)
+[oc-live] ================ image-crop ================
+[oc-live] WORK VERIFIED image-crop (Running:1)
+[oc-live] record x2 30s + stats 7 groups x 12s (parallel)
+[oc-live] WARN image-crop: agent finished before group core
+[oc-live] WARN image-crop: agent finished before group tma2
+[oc-live] WARN image-crop: agent finished before group cache
+[oc-live] WARN image-crop: agent finished before group fp1
+[oc-live] WARN image-crop: agent finished before group fp2
+[oc-live] WARN image-crop: agent finished before group mlp
+[oc-live] VALIDATE-FAIL image-crop (eng=1889504B/688sym, tool=1690328B/1160sym, in-window-groups=1/2, score=?)
+[oc-live] OC-CHAIN-DONE

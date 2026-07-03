@@ -110,48 +110,85 @@ SHORT_TMA = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calen
 LIVE_T = {"swe_live": ["swe-live", "docker-"], "bcb_live": ["bcb-live"],
           "oc_live_calendar": ["docker-"], "oc_live_pdf-digest": ["docker-"],
           "oc_live_web-digest": ["docker-"], "oc_live_image-crop": ["docker-"]}
-# agent-side L2 requires the tma1 and td2 windows to sample the SAME phase: true only for BCB's
-# stationary 20-min loop. OC episodes died before td2; SWE's td2 hit a different phase (L2
-# components exceeded their L1 parents). L2 therefore only for bcb_live on the agent side.
-OC_DIRS = {d for d in LIVE_T if d != "bcb_live"}
+# agent-side L2: tma1+td2 must sample the same phase. BCB's stationary loop is consistent by
+# construction; SWE/OC use the PAIRED back-to-back windows (group_p_*). Entries whose L2
+# components still exceed their L1 parents (sum > 105) are dropped.
 outside = []
 for d, cgs in LIVE_T.items():
     base = os.path.join(DATA, d)
-    t1 = sum_cgs(os.path.join(base, "group_tma1.txt"), cgs)
-    t2 = None if d in OC_DIRS else sum_cgs(os.path.join(base, "group_tma2.txt"), cgs)
+    if d == "bcb_live":
+        t1 = sum_cgs(os.path.join(base, "group_tma1.txt"), cgs)
+        t2 = sum_cgs(os.path.join(base, "group_tma2.txt"), cgs)
+    else:
+        cgs_p = ["swe-tp", "docker-"] if d == "swe_live" else cgs
+        t1 = sum_cgs(os.path.join(base, "group_p_tma1.txt"), cgs_p)
+        t2 = sum_cgs(os.path.join(base, "group_p_tma2.txt"), cgs_p)
+        if not t1.get("slots"):  # pair capture missing -> L1 from the original window, no L2
+            t1, t2 = sum_cgs(os.path.join(base, "group_tma1.txt"), cgs), None
     r = tma_of(t1, t2)
-    if r: outside.append((SHORT_TMA[d], r[0], r[1]))
+    if not r: continue
+    l1c, l2c = r
+    if l2c and sum(l2c.values()) > 105: l2c = None
+    outside.append((SHORT_TMA[d], l1c, l2c))
 
-eng_l1 = {k: float(np.mean([r[2][k] for r in rows])) for k in ("retiring", "bad", "fe", "be")}
-eng_l2 = {k: float(np.mean([r[3][k] for r in rows if r[3]]))
-          for k in ("heavy_ops", "light_ops", "br_mispred", "machine_clears",
-                    "fetch_lat", "fetch_bw", "mem_bound", "core_bound")}
+# tool-execution bars from the CANONICAL captures
+CANON_TMA = [(os.path.join("bigcodebench", "data"), False, "BCB tests"),
+             (os.path.join("swe_bench", "data", "astropy-14096"), False, "astropy"),
+             (os.path.join("swe_bench", "data", "scikit-learn-25232"), False, "scikit-learn"),
+             (os.path.join("swe_bench", "data", "sympy-14248"), False, "sympy"),
+             (os.path.join("openclaw", "data", "calendar"), True, "OC calendar"),
+             (os.path.join("openclaw", "data", "arxiv"), True, "OC web-digest"),
+             (os.path.join("openclaw", "data", "pdf_digest"), True, "OC pdf-digest"),
+             (os.path.join("openclaw", "data", "social_poster_crop"), True, "OC image-crop")]
+CANON_ROOT = os.path.join(HERE, "..", "..", "agentic", "CANONICAL")
+tools_tma = []
+for sub, up, lab in CANON_TMA:
+    d = os.path.join(CANON_ROOT, sub)
+    n = (lambda g: os.path.join(d, f"group_{g.upper()}_r1.txt")) if up else (lambda g: os.path.join(d, f"group_{g}.txt"))
+    t1 = parse_cg(n("tma"), ""); t2 = parse_cg(n("td2"), "")
+    r = tma_of(t1, t2)
+    if not r: continue
+    l1c, l2c = r
+    if l2c and sum(l2c.values()) > 105: l2c = None
+    tools_tma.append((lab, l1c, l2c))
 
 def tma_chart(entries, comps, fname, title, wide):
     X = np.arange(len(entries))
-    fig, ax = plt.subplots(figsize=(0.62+wide*len(entries), 4.6))
+    fig, ax = plt.subplots(figsize=(0.62+wide*len(entries), 4.8))
     bot = np.zeros(len(entries))
     for key, lab, col in comps:
         v = np.array([e[1][key] for e in entries])
         ax.bar(X, v, bottom=bot, label=lab, color=col, width=0.62, edgecolor="white", linewidth=0.6)
         for x, (b, vv) in enumerate(zip(bot, v)):
             if vv >= 8: ax.text(x, b+vv/2, f"{vv:.0f}", ha="center", va="center",
-                                color=txtcol(col), fontsize=8.5, fontweight="bold")
+                                color=txtcol(col), fontsize=8, fontweight="bold")
         bot += v
-    ax.set_xticks(X); ax.set_xticklabels([e[0] for e in entries], fontsize=9)
-    for t, e in zip(ax.get_xticklabels(), entries): t.set_color(INSIDE if e[2] == "in" else OUTSIDECOL)
+    ax.set_xticks(X); ax.set_xticklabels([e[0] for e in entries], fontsize=8.6, rotation=26, ha="right")
+    TICKCOL = {"in": INSIDE, "out": OUTSIDECOL, "tool": "#00441b"}
+    for t, e in zip(ax.get_xticklabels(), entries): t.set_color(TICKCOL[e[2]])
+    prev = None
+    for i, e in enumerate(entries):
+        if prev and e[2] != prev: ax.axvline(i-0.5, color="#666666", linewidth=1.0, linestyle=(0, (4, 3)))
+        prev = e[2]
     ax.set_ylabel("Pipeline slots (%)"); ax.set_ylim(0, 100)
     ax.legend(ncol=4, fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, 1.13), frameon=False)
     ax.set_title(title, fontsize=13, pad=40)
     fig.savefig(os.path.join(OUT, fname)); plt.close(fig)
 
-l1_entries = [("vLLM engine\n(during inf.)", eng_l1, "in")] + [(n, l1, "out") for n, l1, _ in outside]
+eng_l1 = {k: float(np.mean([r[2][k] for r in rows])) for k in ("retiring", "bad", "fe", "be")}
+eng_l2 = {k: float(np.mean([r[3][k] for r in rows if r[3]]))
+          for k in ("heavy_ops", "light_ops", "br_mispred", "machine_clears",
+                    "fetch_lat", "fetch_bw", "mem_bound", "core_bound")}
+l1_entries = [("vLLM engine\n(during inf.)", eng_l1, "in")] + \
+             [(n, l1c, "out") for n, l1c, _ in outside] + \
+             [(n, l1c, "tool") for n, l1c, _ in tools_tma]
 tma_chart(l1_entries, L1, "local_agents_tma_l1.png",
-          "TMA Level 1: engine during inference vs agent side outside", 1.35)
+          "TMA Level 1: engine (during inference), agent harness, tool executions", 1.0)
 l2_entries = [("vLLM engine\n(during inf.)", eng_l2, "in")] + \
-             [(n, l2c, "out") for n, _l1, l2c in outside if l2c]
+             [(n, l2c, "out") for n, _l1, l2c in outside if l2c] + \
+             [(n, l2c, "tool") for n, _l1, l2c in tools_tma if l2c]
 tma_chart(l2_entries, TMA2, "local_agents_tma_l2.png",
-          "TMA Level 2: engine during inference vs agent side outside", 1.8)
+          "TMA Level 2: engine (during inference), agent harness, tool executions", 1.15)
 
 # ---- Fig 3: two-view CPU share donuts (live loops only), same style as the timing donuts ----
 SHORT = {"swe_live": "SWE-agent", "bcb_live": "BigCodeBench", "oc_live_calendar": "OC calendar",
@@ -350,29 +387,103 @@ def sig_of(base, pref, cg):
             "ILP": g["mlp"].get("uops_executed.thread",0)/(g["mlp"].get("cycles",0) or 1),
             "vec": packed/((scalar+packed) or 1)*100, "GFLOPs": flops/(secs or 1)/1e9}
 
-SIGROWS = [("astropy","astropy","group_engine_"), ("scikit-learn","scikit-learn","group_engine_"),
-           ("sympy","sympy","group_engine_"), ("bcb_live","BigCodeBench","group_")]
+# three scopes: model side (engine, invariant -> one row), agent harness (live cgroups),
+# and the tool executions themselves (CANONICAL local captures, Sonnet-quality workloads).
+CANON = os.path.join(HERE, "..", "..", "agentic", "CANONICAL")
+def sig_generic(files, cg=None, fp_files=None):
+    """files: dict grp->path for cache/mlp (+fp1/fp2 or single fp). cg: cgroup filter or None."""
+    def rd(path):
+        return parse_all(path, cg) if cg else parse_all(path, "")
+    cache = rd(files["cache"]); mlp_g = rd(files["mlp"])
+    if not cache.get("cycles"): return None
+    fps = [rd(f) for f in fp_files]
+    ins = cache.get("instructions", 1)
+    l1 = cache.get("mem_load_retired.l1_hit", 0); l2 = cache.get("mem_load_retired.l2_hit", 0)
+    l3 = cache.get("mem_load_retired.l3_hit", 0); mm = cache.get("mem_load_retired.l3_miss", 0)
+    tot = (l1+l2+l3+mm) or 1
+    flops = scalar = packed = 0.0
+    for fp in fps:
+        for k, v in fp.items():
+            if not k.startswith("fp_arith_inst_retired."): continue
+            w = next((e for t, e in ELEM.items() if t in k), 1) * 2
+            flops += v*w
+            if "scalar" in k: scalar += v
+            else: packed += v
+    secs = sum(elapsed_of(f) for f in fp_files)
+    return {"IPC": cache["instructions"]/cache["cycles"],
+            "L1": l1/tot*100, "L2": l2/tot*100, "L3": l3/tot*100, "MPKI": mm/(ins/1000),
+            "AMAT": (l1*5 + l2*15 + l3*50 + mm*250)/tot,
+            "MLP": mlp_g.get("l1d_pend_miss.pending",0)/(mlp_g.get("l1d_pend_miss.pending_cycles",0) or 1),
+            "ILP": mlp_g.get("uops_executed.thread",0)/(mlp_g.get("cycles",0) or 1),
+            "vec": packed/((scalar+packed) or 1)*100, "GFLOPs": flops/(secs or 1)/1e9}
+
+def sig_local(base, pref, cg):
+    return sig_generic({"cache": os.path.join(base, f"{pref}cache.txt"), "mlp": os.path.join(base, f"{pref}mlp.txt")},
+                       cg, [os.path.join(base, f"{pref}fp1.txt"), os.path.join(base, f"{pref}fp2.txt")])
+
+def sig_canon(d, upper=False):
+    n = (lambda g: os.path.join(d, f"group_{g.upper()}_r1.txt")) if upper else (lambda g: os.path.join(d, f"group_{g}.txt"))
+    return sig_generic({"cache": n("cache"), "mlp": n("mlp")}, None, [n("fp")])
+
 COLS = [("IPC","IPC"),("L1","L1 hit %"),("L2","L2 hit %"),("L3","L3 hit %"),("MPKI","LLC-MPKI"),
         ("AMAT","AMAT (cyc)"),("MLP","MLP"),("ILP","ILP"),("vec","vec %FP"),("GFLOPs","GFLOP/s")]
-sig = [(lab, sig_of(os.path.join(DATA, d), pref, ENG)) for d, lab, pref in SIGROWS]
-sig = [(lab, r) for lab, r in sig if r]
-if sig:
-    Mx = np.array([[r[c[0]] for c in COLS] for _, r in sig], float)
+# engine: one invariant row (mean over the 4 full-suite workloads)
+eng_sigs = [sig_local(os.path.join(DATA, d), pref, ENG) for d, pref in
+            [("astropy","group_engine_"),("scikit-learn","group_engine_"),("sympy","group_engine_"),("bcb_live","group_")]]
+eng_sigs = [r for r in eng_sigs if r]
+sig_rows = []
+if eng_sigs:
+    sig_rows.append(("vLLM engine (during inf.)", {k: float(np.mean([r[k] for r in eng_sigs])) for k in eng_sigs[0]}, "eng"))
+# harness rows: BCB from the live loop; SWE/OC from the stats-first gap-fill (group_h_*)
+HARNESS = [("bcb_live", "group_", ["bcb-live"], "BigCodeBench"),
+           ("swe_live", "group_h_", ["swe-hm", "docker-"], "SWE-agent"),
+           ("oc_live_calendar", "group_h_", ["docker-"], "OC calendar"),
+           ("oc_live_pdf-digest", "group_h_", ["docker-"], "OC pdf-digest"),
+           ("oc_live_web-digest", "group_h_", ["docker-"], "OC web-digest"),
+           ("oc_live_image-crop", "group_h_", ["docker-"], "OC image-crop")]
+for d, pref, cgs, lab in HARNESS:
+    base = os.path.join(DATA, d)
+    parts = [sig_local(base, pref, c) for c in cgs]
+    parts = [r for r in parts if r]
+    if not parts: continue
+    sig_rows.append((f"harness: {lab}", parts[0] if len(parts) == 1 else
+                     {k: float(np.mean([r[k] for r in parts])) for k in parts[0]}, "harn"))
+# tool rows: CANONICAL captures
+TOOLS = [(os.path.join(CANON, "bigcodebench", "data"), False, "BCB tests"),
+         (os.path.join(CANON, "swe_bench", "data", "astropy-14096"), False, "astropy"),
+         (os.path.join(CANON, "swe_bench", "data", "scikit-learn-25232"), False, "scikit-learn"),
+         (os.path.join(CANON, "swe_bench", "data", "sympy-14248"), False, "sympy"),
+         (os.path.join(CANON, "openclaw", "data", "calendar"), True, "OC calendar"),
+         (os.path.join(CANON, "openclaw", "data", "arxiv"), True, "OC web-digest"),
+         (os.path.join(CANON, "openclaw", "data", "pdf_digest"), True, "OC pdf-digest"),
+         (os.path.join(CANON, "openclaw", "data", "social_poster_crop"), True, "OC image-crop")]
+for d, up, lab in TOOLS:
+    r = sig_canon(d, up)
+    if r: sig_rows.append((f"tools: {lab}", r, "tool"))
+
+if len(sig_rows) > 2:
+    Mx = np.array([[r[c[0]] for c in COLS] for _, r, _ in sig_rows], float)
     norm = np.zeros_like(Mx)
     for j in range(Mx.shape[1]):
         col = Mx[:, j]; lo, hi = col.min(), col.max()
         norm[:, j] = 0.5 if hi <= lo else (col-lo)/(hi-lo)
-    fig, ax = plt.subplots(figsize=(11.5, 3.4))
+    fig, ax = plt.subplots(figsize=(11.5, 0.42*len(sig_rows)+2.2))
     im = ax.imshow(norm, aspect="auto", cmap="YlGnBu", vmin=0, vmax=1)
-    for i, (_, r) in enumerate(sig):
+    for i, (_, r, _) in enumerate(sig_rows):
         for j, c in enumerate(COLS):
             v = r[c[0]]; txt = f"{v:.2f}" if v < 10 else f"{v:.0f}"
-            ax.text(j, i, txt, ha="center", va="center", fontsize=8.5,
+            ax.text(j, i, txt, ha="center", va="center", fontsize=8,
                     color="black" if norm[i, j] < 0.6 else "white")
     ax.set_xticks(range(len(COLS))); ax.set_xticklabels([c[1] for c in COLS], rotation=25, ha="right")
-    ax.set_yticks(range(len(sig))); ax.set_yticklabels([lab for lab, _ in sig], color=INSIDE)
-    ax.set_title("Model side: engine microarchitectural signature during inference, per driving agent")
+    ax.set_yticks(range(len(sig_rows))); ax.set_yticklabels([lab for lab, _, _ in sig_rows], fontsize=9)
+    CLS_COL = {"eng": INSIDE, "harn": OUTSIDECOL, "tool": "#00441b"}
+    for i, (_, _, cls) in enumerate(sig_rows): ax.get_yticklabels()[i].set_color(CLS_COL[cls])
+    prev = None
+    for i, (_, _, cls) in enumerate(sig_rows):
+        if prev and cls != prev: ax.axhline(i-0.5, color="white", linewidth=3)
+        prev = cls
+    ax.set_title("Microarchitectural signature: engine (during inference), agent harness, and tool executions")
     ax.grid(False); fig.colorbar(im, ax=ax, fraction=0.025, pad=0.02, label="per-column min\u2013max (relative)")
-    fig.savefig(os.path.join(OUT, "local_agents_engine_signature.png")); plt.close(fig)
+    fig.savefig(os.path.join(OUT, "local_agents_signature.png")); plt.close(fig)
 
 print("wrote figures to", OUT)
