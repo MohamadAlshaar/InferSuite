@@ -217,28 +217,40 @@ for d, lab in SHORT.items():
     if e and t: panels.append((lab, e, t))
 if panels:
     colmap = {n: c for n, c, _ in ROLES}; colmap["other"] = NEUTRAL
-    fig, axes = plt.subplots(2, len(panels), figsize=(3.0*len(panels), 6.2))
-    axes = np.atleast_2d(axes)
-    used = set()
-    for j, (lab, e, t) in enumerate(panels):
-        for i, (r, side) in enumerate([(e, "engine"), (t, "tools")]):
-            ax = axes[i][j]; ax.axis("off")
-            parts = [(k, v) for k, v in sorted(r.items(), key=lambda x: -x[1]) if v > 1]
-            for k, _ in parts: used.add(k)
-            w, _ = ax.pie([max(v, 1.2) for _, v in parts], colors=[colmap[k] for k, _ in parts],
-                          startangle=90, counterclock=False,
-                          wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.2))
-            for wd, (k, v) in zip(w, parts):
-                if v >= 12:
-                    a = math.radians((wd.theta1+wd.theta2)/2)
-                    ax.text(0.79*math.cos(a), 0.79*math.sin(a), f"{v:.0f}%", ha="center", va="center",
-                            color="white", fontweight="bold", fontsize=9)
-            ax.text(0, 0, "During" if side == "engine" else "Outside", ha="center", va="center",
-                    fontsize=10, fontweight="bold", color=INSIDE if side == "engine" else OUTSIDECOL)
-            if i == 0: ax.set_title(lab, fontsize=10.5, fontweight="bold", pad=8)
+    def draw_donut(ax, r, center, ccol, minlab=12):
+        parts = [(k, v) for k, v in sorted(r.items(), key=lambda x: -x[1]) if v > 1]
+        w, _ = ax.pie([max(v, 1.2) for _, v in parts], colors=[colmap[k] for k, _ in parts],
+                      startangle=90, counterclock=False,
+                      wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.2))
+        for wd, (k, v) in zip(w, parts):
+            if v >= minlab:
+                a = math.radians((wd.theta1+wd.theta2)/2)
+                ax.text(0.79*math.cos(a), 0.79*math.sin(a), f"{v:.0f}%", ha="center", va="center",
+                        color="white", fontweight="bold", fontsize=9)
+        ax.text(0, 0, center, ha="center", va="center", fontsize=10, fontweight="bold", color=ccol)
+        ax.axis("off")
+        return {k for k, _ in parts}
+
+    # engine software view is agent-invariant: ONE donut, mean profile over the live loops
+    eng_mean = {}
+    for _, e, _t in panels:
+        for k, v in e.items(): eng_mean[k] = eng_mean.get(k, 0) + v/len(panels)
+    fig, ax = plt.subplots(figsize=(3.6, 3.5))
+    used = draw_donut(ax, eng_mean, "vLLM engine", INSIDE)
     handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
     if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
-    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=9, frameon=False, bbox_to_anchor=(0.5, 0.0))
+    fig.legend(handles=handles, loc="lower center", ncol=2, fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.04))
+    fig.savefig(os.path.join(OUT, "local_agents_engine_software.png")); plt.close(fig)
+
+    # outside: one donut per live agent
+    fig, axes = plt.subplots(1, len(panels), figsize=(2.7*len(panels), 3.1))
+    used = set()
+    for ax, (lab, _e, t) in zip(np.atleast_1d(axes), panels):
+        used |= draw_donut(ax, t, "", OUTSIDECOL)
+        ax.text(0, -1.3, lab, ha="center", fontweight="bold", fontsize=10.5)
+    handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
+    if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
+    fig.legend(handles=handles, loc="lower center", ncol=len(handles), fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.05))
     fig.savefig(os.path.join(OUT, "local_agents_two_view_software.png")); plt.close(fig)
 
 print("wrote figures to", OUT)
