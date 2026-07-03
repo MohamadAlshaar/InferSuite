@@ -25,6 +25,7 @@ deploy/                 Kubernetes manifests, Helm charts, Kustomize overlays
 scripts/                Deploy, ingest, benchmark, and report scripts
 
 plots/                  curated figure gallery: domain -> setup -> tier/bench (see plots/README.md)
+results/                curated data gallery, same structure, symlinks into the real data dirs
 benchmark_results/      service benchmark data (tok64/tok192/tok320)
 thesis_plots/           service-level figures        inf_thesis_plots/ (+gpu/)  local CPU-TMA + GPU top-downs
 h100/  (+service/)      self-hosted 32B runs: agents + single-node service + 32B GPU top-down
