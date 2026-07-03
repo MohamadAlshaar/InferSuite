@@ -20,6 +20,7 @@ L agentic/CANONICAL/openclaw/data         agents/local_api/oc
 L h100/data                               agents/h100/bcb
 L h100/data_swe                           agents/h100/swe
 L h100/data_oc                            agents/h100/oc
+L h100/data_agent_side                    agents/h100/agent_side
 
 # ---------- during-inference engine studies ----------
 L agentic/inference/plots/data.json              engine/local/data.json
