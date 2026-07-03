@@ -52,7 +52,7 @@ UNIT="agent-$WORK-$$"
 case "$WORK" in
   bcb)
     systemd-run --user --scope --unit="$UNIT" --collect -- bash -c \
-      "cd ~/bcb && VLLM=http://localhost:8000/v1 MODEL=coder-32b python3 agentic_bcb.py 12 3" \
+      "cd ~/bcb && VLLM=http://localhost:8000/v1 MODEL=coder-32b ./.venv/bin/python3 agentic_bcb.py 12 3" \
       > "$OUT/agent.log" 2>&1 & ;;
   swe)
     rm -rf ~/swe/runs/live_32b
@@ -67,6 +67,8 @@ case "$WORK" in
          --agent.model.per_instance_cost_limit 0 --agent.model.total_cost_limit 0 \
          --agent.model.max_input_tokens 14000 --agent.model.max_output_tokens 2048 \
          --agent.model.temperature 0.4 \
+         --agent.model.completion_kwargs '{\"tool_choice\":\"required\",\"frequency_penalty\":0.5,\"presence_penalty\":0.3}' \
+         --agent.tools.execution_timeout 120 --agent.tools.max_consecutive_execution_timeouts 6 \
          --num_workers 1 --output_dir runs/live_32b" > "$OUT/agent.log" 2>&1 & ;;
   oc-*)
     declare -A OCTASK

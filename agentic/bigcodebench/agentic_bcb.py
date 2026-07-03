@@ -58,7 +58,11 @@ def main():
     d = get_bigcodebench(subset="hard")
     # SKIP network/IO-blocking tasks: their tests dial real servers (e.g. ftp.dlptest.com)
     # and hang on the sandbox's blocked network -> timeouts that are NOT compute.
-    tids = [t for t in d if not (NET_LIBS & _libs(d[t]))][:N]
+    tids = [t for t in d if not (NET_LIBS & _libs(d[t]))]
+    if os.environ.get("HEAVY_LIBS"):   # compute-heavy subset: tasks whose tests exercise numeric libs
+        want = {"sklearn", "pandas", "scipy", "numpy", "matplotlib"}
+        tids = [t for t in tids if want & _libs(d[t])]
+    tids = tids[:N]
     SYS = ("You are a Python coding agent. Implement the requested function exactly "
            "(keep the name `task_func`). Reply with ONE ```python``` code block only.")
     solved = 0; turns_used = 0

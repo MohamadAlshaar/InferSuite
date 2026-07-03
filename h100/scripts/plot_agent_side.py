@@ -248,4 +248,25 @@ if panels:
     fig.suptitle("Agent machinery at 32B: CPU of the harness and its tools", fontsize=13, y=1.0)
     fig.savefig(os.path.join(OUT, "h100_agents_two_view_software.png")); plt.close(fig)
 
+# ---- Fig 6: delegated work — tool-container records (swe + oc; bcb tools run in-harness,
+# covered by the July replay-based tool records) ----
+tpanels = []
+for d, lab in WL:
+    r = parse_dso(os.path.join(DATA, d, "tool_dso.txt"))
+    if r: tpanels.append((lab, r))
+if tpanels:
+    nc = (len(tpanels)+1)//2
+    fig, axes = plt.subplots(2, nc, figsize=(2.7*nc, 6.4))
+    axes = list(np.atleast_1d(axes).flat)
+    for ax in axes[len(tpanels):]: ax.axis("off")
+    used = set()
+    for ax, (lab, r) in zip(axes, tpanels):
+        used |= draw_donut(ax, r, "", "#00441b")
+        ax.text(0, -1.3, lab, ha="center", fontweight="bold", fontsize=10.5)
+    handles = [Patch(color=colmap[k], label=k) for k, _c, _ in ROLES if k in used]
+    if "other" in used: handles.append(Patch(color=NEUTRAL, label="other"))
+    fig.legend(handles=handles, loc="lower center", ncol=min(len(handles), 5), fontsize=9, frameon=False, bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle("Delegated work at 32B: tool-container CPU by software component", fontsize=13, y=1.0)
+    fig.savefig(os.path.join(OUT, "h100_agents_tool_software.png")); plt.close(fig)
+
 print("wrote", OUT)
