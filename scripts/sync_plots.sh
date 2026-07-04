@@ -27,6 +27,7 @@ R "benchmark_results/plots/figures/full_benchmark/tok320/"     service/eks/tok32
 mkdir -p plots/agents/local_api
 cp -a agentic/thesis_figures/0*.png plots/agents/local_api/            # cross-workload (Sonnet driver)
 cp -a local_agents/plots/tool_attribution.png plots/agents/local_api/  # tool software view (replays + live Sonnet OC)
+cp -a local_agents/plots/api_harness_*.png plots/agents/local_api/     # frontier agent-side suite (live Sonnet)
 R "h100/plots/bcb/" agents/h100/bcb
 R "h100/plots/swe/" agents/h100/swe
 R "h100/plots/oc/"  agents/h100/oc

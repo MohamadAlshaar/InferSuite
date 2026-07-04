@@ -66,6 +66,9 @@ def _libs(e):
 def main():
     d = get_bigcodebench(subset="hard")
     tids = [t for t in d if not (NET_LIBS & _libs(d[t]))]          # skip network tasks (hang on blocked net)
+    if os.environ.get("HEAVY_LIBS"):   # compute-heavy subset, same selection as agentic_bcb.py
+        want = {"sklearn", "pandas", "scipy", "numpy", "matplotlib"}
+        tids = [t for t in tids if want & _libs(d[t])]
     if N_ARG != "all": tids = tids[:int(N_ARG)]
     results = []; solved = 0; turns_total = 0
     mark("RUN_START")
