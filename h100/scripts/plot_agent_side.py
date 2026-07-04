@@ -283,10 +283,17 @@ for d, lab in WL:
     r = parse_dso(os.path.join(DATA, d, "tool_dso.txt"))
     if r: tpanels.append((lab, r))
 if tpanels:
-    nc = (len(tpanels)+1)//2
-    fig, axes = plt.subplots(2, nc, figsize=(2.7*nc, 6.4))
-    axes = list(np.atleast_1d(axes).flat)
-    for ax in axes[len(tpanels):]: ax.axis("off")
+    if len(tpanels) == 5:   # 3 on top, 2 centered underneath
+        from matplotlib import gridspec
+        fig = plt.figure(figsize=(2.7*3, 6.4))
+        G = gridspec.GridSpec(2, 6, figure=fig)
+        axes = [fig.add_subplot(sl) for sl in
+                (G[0, 0:2], G[0, 2:4], G[0, 4:6], G[1, 1:3], G[1, 3:5])]
+    else:
+        nc = (len(tpanels)+1)//2
+        fig, axes = plt.subplots(2, nc, figsize=(2.7*nc, 6.4))
+        axes = list(np.atleast_1d(axes).flat)
+        for ax in axes[len(tpanels):]: ax.axis("off")
     used = set()
     for ax, (lab, r) in zip(axes, tpanels):
         used |= draw_donut(ax, r, "", "#00441b")
