@@ -190,7 +190,7 @@ def parse_dso(path):
     out = {r[0]: 0.0 for r in ROLES}; out["other"] = 0.0
     if not os.path.exists(path): return None
     for ln in open(path, errors="ignore"):
-        m = re.match(r"\s*([0-9.]+)%\s+(\S+)", ln)
+        m = re.match(r"\s*[0-9.]+%\s+([0-9.]+)%\s+(\S+)", ln) or re.match(r"\s*([0-9.]+)%\s+(\S+)", ln)
         if not m: continue
         pct, dso = float(m.group(1)), m.group(2)
         if pct <= 0: continue
