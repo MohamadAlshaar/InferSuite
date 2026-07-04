@@ -204,9 +204,9 @@ ROLES = [
     ("Python interpreter",   "#d94801", re.compile(r"python3|libpython|\.cpython-", re.I)),
     ("BLAS / OpenMP",        "#238b45", re.compile(r"openblas|libgomp|libtorch|libmkl", re.I)),
     ("C library / loader",   "#2171b5", re.compile(r"libc\.so|ld-linux|libm\.so|libstdc|libz\.|libcrypto|libssl", re.I)),
-    ("OS kernel",            "#cb181d", re.compile(r"kallsyms|\[kernel", re.I)),
+    ("OS kernel",            "#525252", re.compile(r"kallsyms|\[kernel", re.I)),
 ]
-NEUTRAL = "#b3b3b3"
+NEUTRAL = "#d9d9d9"
 def parse_dso(path):
     out = {r[0]: 0.0 for r in ROLES}; out["other"] = 0.0
     if not os.path.exists(path): return None

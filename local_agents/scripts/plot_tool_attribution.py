@@ -23,9 +23,9 @@ ROLES = [
     ("Python interpreter",     "#d94801", re.compile(r"python3|libpython|/python[0-9]|\.cpython-", re.I)),
     ("Node.js / V8 (agent)",   "#56b4e9", re.compile(r"\bnode\b|libnode|/node$|\bv8\b|\[JIT\]", re.I)),
     ("C library / loader",     "#2171b5", re.compile(r"libc\.so|ld-linux|libm\.so|libstdc|libpthread|libdl|libz\.|libcrypto|libssl", re.I)),
-    ("OS kernel",              "#cb181d", re.compile(r"kallsyms|\[kernel|\[vdso\]", re.I)),
+    ("OS kernel",              "#525252", re.compile(r"kallsyms|\[kernel|\[vdso\]", re.I)),
 ]
-NEUTRAL = "#b3b3b3"
+NEUTRAL = "#d9d9d9"
 TASKS = [
     ("bcb_tool",              "code-gen (BCB)",     BC),
     ("swe_tool_astropy",      "astropy (SB)",       SB),
