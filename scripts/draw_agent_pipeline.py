@@ -60,9 +60,6 @@ def rounded_poly(pts, r):
 def cuboid(x, y, w, h, title, sub, fs=10.5, dx=0.18, dy=0.11, icon=None, ic="#4d4d4d"):
     sil = rounded_poly([(x, y), (x + w, y), (x + w + dx, y + dy), (x + w + dx, y + h + dy),
                         (x + dx, y + h + dy), (x, y + h)], 0.07)
-    ax.add_patch(FancyBboxPatch((x + 0.05, y - 0.05), w + dx, h + dy,
-                                boxstyle="round,pad=0.02,rounding_size=0.06",
-                                fc="#0000001c", ec="none", zorder=2.5))
     base = PathPatch(sil, fc="#f6f8fa", ec="none", zorder=3)
     ax.add_patch(base)
     top = MPolygon([(x, y + h), (x + dx, y + h + dy), (x + w + dx, y + h + dy), (x + w, y + h)],
