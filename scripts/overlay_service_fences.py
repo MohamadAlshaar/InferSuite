@@ -46,9 +46,9 @@ ax.add_patch(plt.Rectangle((546 + OFF, 838), 60, 38, fc="#f2f4f7", ec="none", zo
 ax.text(573 + OFF, 858, "CPU", fontsize=15, fontweight="bold", color="#333333",
         ha="center", va="center", zorder=11)
 cpu_cx = 573 + OFF
-ax.add_patch(FancyArrowPatch((cpu_cx, 748), (cpu_cx, 812), arrowstyle="-|>", mutation_scale=13,
+ax.add_patch(FancyArrowPatch((cpu_cx, 749), (cpu_cx, 808), arrowstyle="-|>", mutation_scale=13,
                              lw=1.6, color="#555555", ls=(0, (4, 3)), zorder=10))
-ax.text(cpu_cx, 775, "all fenced pods", fontsize=10.5, ha="center", va="center", zorder=11,
+ax.text(1232, 770, "all fenced pods", fontsize=10.5, ha="right", va="center", zorder=11,
         bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="#999999", lw=0.8))
 
 # legend sub-caption: hardware layer now holds CPU too
