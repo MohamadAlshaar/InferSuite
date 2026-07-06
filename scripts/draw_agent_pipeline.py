@@ -11,10 +11,11 @@ plt.rcParams.update({"font.family": "DejaVu Sans", "figure.dpi": 150, "savefig.d
 fig, ax = plt.subplots(figsize=(13.6, 9.6))
 ax.set_xlim(0, 13.6); ax.set_ylim(0, 9.6); ax.axis("off")
 
-P = {"agent": dict(fc="#eaf3ea", ec="#2e7d32", tc="#1b5e20"),
-     "tool":  dict(fc="#fdf4de", ec="#c77f00", tc="#8a5a00"),
-     "infer": dict(fc="#f1ebf8", ec="#6a51a3", tc="#4a3577"),
-     "hw":    dict(fc="#e9eff7", ec="#4a6fa5", tc="#2d4a75")}
+# fills/borders sampled from docs/service_pipeline.png; ic = strong accent for icons/arrows
+P = {"agent": dict(fc="#eff5ed", ec="#90a78d", tc="#1b5e20", ic="#2e7d32", cb="#577759"),
+     "tool":  dict(fc="#fef7ea", ec="#e4c690", tc="#8a5a00", ic="#c77f00", cb="#9c7a3a"),
+     "infer": dict(fc="#f5f1f8", ec="#a998c7", tc="#4a3577", ic="#6a51a3", cb="#4a3577"),
+     "hw":    dict(fc="#eaf1f9", ec="#7d98b8", tc="#2d4a75", ic="#4a6fa5", cb="#5d646a")}
 
 def plane(y, h, key, label, sub):
     st = P[key]
@@ -26,31 +27,59 @@ def plane(y, h, key, label, sub):
             va="center", zorder=5)
     ax.text(3.02, y + h/2 - 0.22, sub, fontsize=8, color=st["tc"], va="center", zorder=5)
 
-def box(x, y, w, h, title, sub, fs=10.5, icon=None, ic="#4d4d4d"):
-    ax.add_patch(FancyBboxPatch((x + 0.055, y - 0.055), w, h, boxstyle="round,pad=0.05,rounding_size=0.10",
-                                fc="#00000026", ec="none", zorder=2.5))
+def box(x, y, w, h, title, sub, fs=10.5, icon=None, ic="#4d4d4d", bec="#4d4d4d"):
+    ax.add_patch(FancyBboxPatch((x + 0.05, y - 0.05), w, h, boxstyle="round,pad=0.05,rounding_size=0.10",
+                                fc="#0000001c", ec="none", zorder=2.5))
     ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.05,rounding_size=0.10",
-                                fc="#fdfdfb", ec="#4d4d4d", lw=1.4, zorder=3))
+                                fc="#fdfdfb", ec=bec, lw=1.4, zorder=3))
     if icon:
         title_with_icon(x, w, y + h - 0.34, title, fs, icon, ic)
     else:
         ax.text(x + w/2, y + h - 0.34, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
     ax.text(x + w/2, y + 0.30, sub, ha="center", fontsize=7.8, color="#444444", zorder=5)
 
-def cuboid(x, y, w, h, title, sub, fs=10.5, dx=0.22, dy=0.14, icon=None, ic="#4d4d4d"):
-    import matplotlib.patches as mp
-    ax.add_patch(FancyBboxPatch((x + 0.055, y - 0.055), w, h, boxstyle="round,pad=0.02,rounding_size=0.04",
-                                fc="#00000026", ec="none", zorder=2.5))
-    ax.add_patch(mp.Polygon([(x, y+h), (x+dx, y+h+dy), (x+w+dx, y+h+dy), (x+w, y+h)],
-                            closed=True, fc="#e4e4de", ec="#4d4d4d", lw=1.2, zorder=3))
-    ax.add_patch(mp.Polygon([(x+w, y), (x+w+dx, y+dy), (x+w+dx, y+h+dy), (x+w, y+h)],
-                            closed=True, fc="#d2d2ca", ec="#4d4d4d", lw=1.2, zorder=3))
-    ax.add_patch(mp.Rectangle((x, y), w, h, fc="#fdfdfb", ec="#4d4d4d", lw=1.4, zorder=3.2))
+import numpy as np
+from matplotlib.path import Path as MPath
+from matplotlib.patches import PathPatch, Polygon as MPolygon
+
+def rounded_poly(pts, r):
+    """Closed path through pts with rounded corners (quadratic bezier at each vertex)."""
+    verts, codes = [], []
+    n = len(pts)
+    for i in range(n):
+        p0, p1, p2 = np.array(pts[i - 1]), np.array(pts[i]), np.array(pts[(i + 1) % n])
+        v1, v2 = p1 - p0, p2 - p1
+        a = p1 - v1 / np.hypot(*v1) * min(r, np.hypot(*v1) / 2)
+        b = p1 + v2 / np.hypot(*v2) * min(r, np.hypot(*v2) / 2)
+        verts.append(a); codes.append(MPath.MOVETO if i == 0 else MPath.LINETO)
+        verts.append(p1); codes.append(MPath.CURVE3)
+        verts.append(b); codes.append(MPath.CURVE3)
+    verts.append(verts[0]); codes.append(MPath.CLOSEPOLY)
+    return MPath(verts, codes)
+
+def cuboid(x, y, w, h, title, sub, fs=10.5, dx=0.18, dy=0.11, icon=None, ic="#4d4d4d"):
+    sil = rounded_poly([(x, y), (x + w, y), (x + w + dx, y + dy), (x + w + dx, y + h + dy),
+                        (x + dx, y + h + dy), (x, y + h)], 0.07)
+    ax.add_patch(FancyBboxPatch((x + 0.05, y - 0.05), w + dx, h + dy,
+                                boxstyle="round,pad=0.02,rounding_size=0.06",
+                                fc="#0000001c", ec="none", zorder=2.5))
+    base = PathPatch(sil, fc="#f6f8fa", ec="none", zorder=3)
+    ax.add_patch(base)
+    top = MPolygon([(x, y + h), (x + dx, y + h + dy), (x + w + dx, y + h + dy), (x + w, y + h)],
+                   closed=True, fc="#e9eef4", ec="none", zorder=3.05)
+    side = MPolygon([(x + w, y), (x + w + dx, y + dy), (x + w + dx, y + h + dy), (x + w, y + h)],
+                    closed=True, fc="#dae2ec", ec="none", zorder=3.05)
+    for f in (top, side):
+        ax.add_patch(f); f.set_clip_path(base)
+    for seg in ([(x, x + w), (y + h, y + h)], [(x + w, x + w), (y, y + h)],
+                [(x + w, x + w + dx), (y + h, y + h + dy)]):
+        ax.plot(seg[0], seg[1], color="#5d646a", lw=1.1, solid_capstyle="round", zorder=3.2)
+    ax.add_patch(PathPatch(sil, fc="none", ec="#5d646a", lw=1.4, joinstyle="round", zorder=3.3))
     if icon:
-        title_with_icon(x, w, y + h - 0.28, title, fs, icon, ic)
+        title_with_icon(x, w, y + h - 0.24, title, fs, icon, ic)
     else:
-        ax.text(x + w/2, y + h - 0.28, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
-    ax.text(x + w/2, y + 0.15, sub, ha="center", fontsize=7.8, color="#444444", zorder=5)
+        ax.text(x + w/2, y + h - 0.24, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
+    ax.text(x + w/2, y + 0.09, sub, ha="center", fontsize=7.2, color="#444444", zorder=5)
 
 def vline(x, y0, y1, label=None, color="#333333", dashed=False, lx=None, ly=None):
     ax.add_patch(FancyArrowPatch((x, y0), (x, y1), arrowstyle="-|>", mutation_scale=15,
@@ -140,15 +169,21 @@ def title_with_icon(x, w, ty, title, fs, icon, ic_color):
     ax.text(x + w/2 + tdx, ty, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
     icon(x + w/2 + tdx - half - 0.42, ty + 0.02, ic_color)
 
-# ---------------- outer frame: extruded slab ----------------
+# ---------------- outer frame: extruded slab, smooth silhouette ----------------
 import matplotlib.patches as mpat
 DX, DY = 0.30, 0.20
-ax.add_patch(mpat.Polygon([(2.55, 9.15), (2.55+DX, 9.15+DY), (13.15+DX, 9.15+DY), (13.15, 9.15)],
-                          closed=True, fc="#dde7f2", ec="#8aa0bb", lw=1.4, zorder=0))
-ax.add_patch(mpat.Polygon([(13.15, 0.6), (13.15+DX, 0.6+DY), (13.15+DX, 9.15+DY), (13.15, 9.15)],
-                          closed=True, fc="#ccd9e8", ec="#8aa0bb", lw=1.4, zorder=0))
-ax.add_patch(FancyBboxPatch((2.55, 0.6), 10.6, 8.55, boxstyle="round,pad=0.02,rounding_size=0.10",
-                            fc="#f5f8fb", ec="#8aa0bb", lw=1.8, zorder=0.2))
+FX0, FY0, FX1, FY1 = 2.55, 0.6, 13.15, 9.15
+fsil = rounded_poly([(FX0, FY0), (FX1, FY0), (FX1 + DX, FY0 + DY), (FX1 + DX, FY1 + DY),
+                     (FX0 + DX, FY1 + DY), (FX0, FY1)], 0.14)
+fbase = PathPatch(fsil, fc="#ccd9e8", ec="none", zorder=0)
+ax.add_patch(fbase)
+ftop = MPolygon([(FX0, FY1), (FX0 + DX, FY1 + DY), (FX1 + DX, FY1 + DY), (FX1, FY1)],
+                closed=True, fc="#dde7f2", ec="none", zorder=0.05)
+ax.add_patch(ftop); ftop.set_clip_path(fbase)
+ax.plot([FX1, FX1 + DX], [FY1, FY1 + DY], color="#7c99bf", lw=1.2, solid_capstyle="round", zorder=0.1)
+ax.add_patch(PathPatch(fsil, fc="none", ec="#7c99bf", lw=1.8, joinstyle="round", zorder=0.1))
+ax.add_patch(FancyBboxPatch((FX0, FY0), FX1 - FX0, FY1 - FY0, boxstyle="round,pad=0.02,rounding_size=0.10",
+                            fc="#f5f8fb", ec="#7c99bf", lw=1.8, zorder=0.2))
 ic_monitor(3.02, 8.86, "#2d4a75")
 ax.text(3.32, 8.82, "Workstation (single node)", fontsize=13.5, fontweight="bold", color="#2d4a75")
 ax.text(7.7, 8.42, "one turn:  generate → dispatch → execute → observe        repeated until submit or context limit",
@@ -164,17 +199,17 @@ plane(0.85, 1.1, "hw",    "Hardware", "")
 AX, AW = 5.0, 3.1     # left column (harness / sandbox / engine share x)
 BX, BW = 8.6, 2.6     # right column (history / workspace / api)
 box(AX, 6.75, AW, 1.2, "Agent harness", "SWE-agent / BCB driver / OpenClaw\nparses replies, dispatches tools",
-    icon=ic_tree, ic=P["agent"]["ec"])
+    icon=ic_tree, ic=P["agent"]["ic"], bec=P["agent"]["cb"])
 box(BX, 6.75, BW, 1.2, "History / context", "grows every turn until\nthe window fills",
-    icon=ic_doc, ic=P["agent"]["ec"])
+    icon=ic_doc, ic=P["agent"]["ic"], bec=P["agent"]["cb"])
 box(AX, 4.65, AW, 1.2, "Tool sandbox", "container: shell, edit, pytest,\nbrowser, file I/O",
-    icon=ic_term, ic=P["tool"]["ec"])
+    icon=ic_term, ic=P["tool"]["ic"], bec=P["tool"]["cb"])
 box(BX, 4.65, BW, 1.2, "Workspace", "repo checkout,\nartifacts, results",
-    icon=ic_folder, ic=P["tool"]["ec"])
+    icon=ic_folder, ic=P["tool"]["ic"], bec=P["tool"]["cb"])
 box(AX, 2.55, AW, 1.2, "vLLM engine", "self-served 7B / 32B\n(or remote frontier API)",
-    icon=ic_cube, ic=P["infer"]["ec"])
-cuboid(5.55, 0.98, 2.0, 0.8, "CPU cores", "harness + tools", fs=9.5, icon=ic_chip, ic=P["hw"]["ec"])
-cuboid(9.05, 0.98, 1.7, 0.8, "GPU", "generation", fs=9.5, icon=ic_chip, ic=P["hw"]["ec"])
+    icon=ic_cube, ic=P["infer"]["ic"], bec=P["infer"]["cb"])
+cuboid(5.55, 1.12, 2.0, 0.55, "CPU cores", "harness + tools", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
+cuboid(9.05, 1.12, 1.7, 0.55, "GPU", "generation", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
 
 # ---------------- measurement fences ----------------
 fence(AX-0.12, 6.63, AW+0.24, 1.44)
@@ -224,7 +259,7 @@ ax.plot([4.55, 4.55], [4.95, 1.4], color="#c77f00", lw=1.7, ls=(0, (5, 3)), zord
 ax.add_patch(FancyArrowPatch((4.55, 1.4), (5.55, 1.4), arrowstyle="-|>", mutation_scale=15,
                              lw=1.7, color="#c77f00", ls=(0, (5, 3)), zorder=4))
 ax.plot([8.1, 9.9], [2.75, 2.75], color="#6a51a3", lw=1.7, ls=(0, (5, 3)), zorder=4)
-ax.add_patch(FancyArrowPatch((9.9, 2.75), (9.9, 1.95), arrowstyle="-|>", mutation_scale=15,
+ax.add_patch(FancyArrowPatch((9.9, 2.75), (9.9, 1.82), arrowstyle="-|>", mutation_scale=15,
                              lw=1.7, color="#6a51a3", ls=(0, (5, 3)), zorder=4))
 
 # ---------------- legend ----------------
