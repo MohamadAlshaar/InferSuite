@@ -208,7 +208,7 @@ box(BX, 4.65, BW, 1.2, "Workspace", "repo checkout,\nartifacts, results",
     icon=ic_folder, ic=P["tool"]["ic"], bec=P["tool"]["cb"])
 box(AX, 2.55, AW, 1.2, "vLLM engine", "self-served 7B / 32B\n(or remote frontier API)",
     icon=ic_cube, ic=P["infer"]["ic"], bec=P["infer"]["cb"])
-cuboid(5.55, 1.12, 2.0, 0.55, "CPU cores", "harness + tools", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
+cuboid(5.55, 1.12, 2.0, 0.55, "CPU cores", "harness / tools / engine", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
 cuboid(9.05, 1.12, 1.7, 0.55, "GPU", "generation", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
 
 # ---------------- measurement fences ----------------
@@ -253,11 +253,15 @@ vline(5.9, 6.75, 5.85, "3. execute command", lx=5.35, ly=6.28)
 vline(7.0, 5.85, 6.75, "4. observation", lx=8.6, ly=6.42)
 # sandbox -> workspace
 hline(8.1, 8.6, 5.25, None, color="#888888")
-# hardware drops, routed around the engine column
-ax.plot([5.0, 4.55], [4.95, 4.95], color="#c77f00", lw=1.7, ls=(0, (5, 3)), zorder=4)
-ax.plot([4.55, 4.55], [4.95, 1.4], color="#c77f00", lw=1.7, ls=(0, (5, 3)), zorder=4)
-ax.add_patch(FancyArrowPatch((4.55, 1.4), (5.55, 1.4), arrowstyle="-|>", mutation_scale=15,
-                             lw=1.7, color="#c77f00", ls=(0, (5, 3)), zorder=4))
+# hardware drops: every plane's scope runs on the CPU cores — one dashed drop per plane,
+# left corridor, plane accent colors (harness / tools / engine host)
+for x_c, y_exit, y_in, col in [(4.45, 7.35, 1.52, P["agent"]["ic"]),
+                               (4.65, 4.95, 1.40, P["tool"]["ic"]),
+                               (4.78, 3.00, 1.28, P["infer"]["ic"])]:
+    ax.plot([5.0, x_c], [y_exit, y_exit], color=col, lw=1.7, ls=(0, (5, 3)), zorder=4)
+    ax.plot([x_c, x_c], [y_exit, y_in], color=col, lw=1.7, ls=(0, (5, 3)), zorder=4)
+    ax.add_patch(FancyArrowPatch((x_c, y_in), (5.55, y_in), arrowstyle="-|>", mutation_scale=15,
+                                 lw=1.7, color=col, ls=(0, (5, 3)), zorder=4))
 ax.plot([8.1, 9.9], [2.75, 2.75], color="#6a51a3", lw=1.7, ls=(0, (5, 3)), zorder=4)
 ax.add_patch(FancyArrowPatch((9.9, 2.75), (9.9, 1.82), arrowstyle="-|>", mutation_scale=15,
                              lw=1.7, color="#6a51a3", ls=(0, (5, 3)), zorder=4))
