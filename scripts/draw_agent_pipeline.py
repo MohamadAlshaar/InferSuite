@@ -216,17 +216,17 @@ ax.text(11.55, 2.18, "red dashes: perf cgroup fences (harness / tools / engine),
         fontsize=7.4, color="#c0392b", ha="right", style="italic", zorder=6,
         path_effects=[pe.withStroke(linewidth=2.4, foreground="white")])
 
-# ---------------- client (outside, like the service figure) ----------------
-ax.add_patch(FancyBboxPatch((0.405, 6.545), 1.75, 1.5, boxstyle="round,pad=0.05,rounding_size=0.10",
-                            fc="#00000026", ec="none", zorder=2.5))
-ax.add_patch(FancyBboxPatch((0.35, 6.6), 1.75, 1.5, boxstyle="round,pad=0.05,rounding_size=0.10",
-                            fc="#fdfdfb", ec="#4d4d4d", lw=1.0, zorder=3))
-ic_person(1.225, 7.72, "#333333")
-ax.text(1.225, 7.22, "Client /\nBenchmark", ha="center", va="center", fontsize=9.5, fontweight="bold", zorder=5)
-ax.text(1.225, 6.78, "SWE-bench / BCB /\nWildClawBench", ha="center", va="center", fontsize=7.2,
-        color="#444444", zorder=5)
-hline(2.1, AX, 7.75, "task prompt", ly=8.0)
-hline(AX, 2.1, 7.0, "patch / answer", dashed=True, ly=6.62)
+# ---------------- client (outside; geometry/type match the service figure) ----------------
+ax.add_patch(FancyBboxPatch((0.60, 6.67), 1.39, 1.33, boxstyle="round,pad=0.04,rounding_size=0.08",
+                            fc="#0000001c", ec="none", zorder=2.5))
+ax.add_patch(FancyBboxPatch((0.55, 6.72), 1.39, 1.33, boxstyle="round,pad=0.04,rounding_size=0.08",
+                            fc="#fdfdfb", ec="#3f3f3f", lw=1.0, zorder=3))
+ax.add_patch(mpat.Circle((1.245, 7.80), 0.115, fc="none", ec="#333333", lw=1.15, zorder=6))
+ax.add_patch(mpat.Arc((1.245, 7.42), 0.46, 0.42, theta1=0, theta2=180, ec="#333333", lw=1.15, zorder=6))
+ax.text(1.245, 7.13, "Client /\nBenchmark", ha="center", va="center", fontsize=10,
+        color="#1a1a1a", linespacing=1.45, zorder=5)
+hline(1.98, AX, 7.75, "task prompt", ly=8.0)
+hline(AX, 1.98, 7.0, "patch / answer", dashed=True, ly=6.62)
 
 # ---------------- loop arrows, orthogonal, routed around boxes ----------------
 # 1. context assembled in history feeds the engine, via the right corridor
