@@ -206,6 +206,9 @@ def exact_fig(tier, path, summary_rows):
         summary_rows.append([f"SWE {inst.split('__')[0]}", "step_exec", len(xs),
                              round(float(np.median(xs)), 3), round(float(np.percentile(xs, 90)), 3),
                              round(float(np.sum(xs)), 1)])
+    if not execs and not gaps:
+        a1.text(0.5, 0.5, "no markers.txt captured on this tier —\nBCB timing available only via the GPU timeline\n(see window_cdf / gpu_duty_timelines)",
+                ha="center", va="center", fontsize=9, color="#777", transform=a1.transAxes)
     a1.set_title("BCB loop events (markers.txt, exact)", fontsize=10)
     a2.set_title("SWE per-step tool execution (trajectory, exact)", fontsize=10)
     for ax in (a1, a2):
