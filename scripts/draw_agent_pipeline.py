@@ -182,7 +182,7 @@ ax.add_patch(PathPatch(fsil, fc="none", ec="#7c99bf", lw=1.3, joinstyle="round",
 ax.add_patch(FancyBboxPatch((FX0, FY0), FX1 - FX0, FY1 - FY0, boxstyle="round,pad=0.02,rounding_size=0.10",
                             fc="#f5f8fb", ec="#7c99bf", lw=1.3, zorder=0.2))
 ic_monitor(3.02, 8.86, "#2d4a75")
-ax.text(3.32, 8.82, "Workstation (single node)", fontsize=13.5, fontweight="bold", color="#2d4a75")
+ax.text(3.32, 8.82, "Workstation", fontsize=13.5, fontweight="bold", color="#2d4a75")
 ax.text(7.7, 8.42, "one turn:  generate → dispatch → execute → observe        repeated until submit or context limit",
         fontsize=9, ha="center", color="#555555")
 
