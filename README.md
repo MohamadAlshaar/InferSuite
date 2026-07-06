@@ -9,7 +9,7 @@ in wall-clock time and CPU core-seconds, with the GPU profiled in lockstep (Nsig
 **InferSuite is developed by us**: the service, the deployment, the benchmark suite, the agent
 harnesses, and the measurement/plotting tooling are all built in-house for this work.
 
-![InferSuite service pipeline](docs/service_pipeline.png)
+![InferSuite service pipeline](docs/service_pipeline_fenced.png)
 
 It contains three things:
 
