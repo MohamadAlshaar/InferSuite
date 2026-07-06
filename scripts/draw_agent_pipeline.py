@@ -18,17 +18,39 @@ P = {"agent": dict(fc="#eaf3ea", ec="#2e7d32", tc="#1b5e20"),
 
 def plane(y, h, key, label, sub):
     st = P[key]
+    ax.add_patch(FancyBboxPatch((2.86, y - 0.06), 8.9, h, boxstyle="round,pad=0.05,rounding_size=0.12",
+                                fc="#00000018", ec="none", zorder=0.8))
     ax.add_patch(FancyBboxPatch((2.8, y), 8.9, h, boxstyle="round,pad=0.05,rounding_size=0.12",
                                 fc=st["fc"], ec=st["ec"], lw=1.6, zorder=1))
     ax.text(3.02, y + h/2 + 0.16, label, fontsize=11.5, fontweight="bold", color=st["tc"],
             va="center", zorder=5)
     ax.text(3.02, y + h/2 - 0.22, sub, fontsize=8, color=st["tc"], va="center", zorder=5)
 
-def box(x, y, w, h, title, sub, fs=10.5):
+def box(x, y, w, h, title, sub, fs=10.5, icon=None, ic="#4d4d4d"):
+    ax.add_patch(FancyBboxPatch((x + 0.055, y - 0.055), w, h, boxstyle="round,pad=0.05,rounding_size=0.10",
+                                fc="#00000026", ec="none", zorder=2.5))
     ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.05,rounding_size=0.10",
                                 fc="#fdfdfb", ec="#4d4d4d", lw=1.4, zorder=3))
-    ax.text(x + w/2, y + h - 0.34, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
+    if icon:
+        title_with_icon(x, w, y + h - 0.34, title, fs, icon, ic)
+    else:
+        ax.text(x + w/2, y + h - 0.34, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
     ax.text(x + w/2, y + 0.30, sub, ha="center", fontsize=7.8, color="#444444", zorder=5)
+
+def cuboid(x, y, w, h, title, sub, fs=10.5, dx=0.22, dy=0.14, icon=None, ic="#4d4d4d"):
+    import matplotlib.patches as mp
+    ax.add_patch(FancyBboxPatch((x + 0.055, y - 0.055), w, h, boxstyle="round,pad=0.02,rounding_size=0.04",
+                                fc="#00000026", ec="none", zorder=2.5))
+    ax.add_patch(mp.Polygon([(x, y+h), (x+dx, y+h+dy), (x+w+dx, y+h+dy), (x+w, y+h)],
+                            closed=True, fc="#e4e4de", ec="#4d4d4d", lw=1.2, zorder=3))
+    ax.add_patch(mp.Polygon([(x+w, y), (x+w+dx, y+dy), (x+w+dx, y+h+dy), (x+w, y+h)],
+                            closed=True, fc="#d2d2ca", ec="#4d4d4d", lw=1.2, zorder=3))
+    ax.add_patch(mp.Rectangle((x, y), w, h, fc="#fdfdfb", ec="#4d4d4d", lw=1.4, zorder=3.2))
+    if icon:
+        title_with_icon(x, w, y + h - 0.34, title, fs, icon, ic)
+    else:
+        ax.text(x + w/2, y + h - 0.34, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
+    ax.text(x + w/2, y + 0.24, sub, ha="center", fontsize=7.8, color="#444444", zorder=5)
 
 def vline(x, y0, y1, label=None, color="#333333", dashed=False, lx=None, ly=None):
     ax.add_patch(FancyArrowPatch((x, y0), (x, y1), arrowstyle="-|>", mutation_scale=15,
@@ -52,10 +74,83 @@ def hline(x0, x1, y, label=None, color="#333333", dashed=False, lx=None, ly=None
 def fence(x, y, w, h):
     ax.add_patch(Rectangle((x, y), w, h, fc="none", ec="#c0392b", lw=1.2, ls=(0, (2, 2)), zorder=2))
 
-# ---------------- outer frame ----------------
-ax.add_patch(FancyBboxPatch((2.55, 0.6), 10.6, 8.55, boxstyle="round,pad=0.08,rounding_size=0.18",
-                            fc="#f5f8fb", ec="#8aa0bb", lw=1.8, zorder=0))
-ax.text(2.9, 8.82, "Workstation (single node)", fontsize=13.5, fontweight="bold", color="#2d4a75")
+# ---------------- icon glyphs (service-figure style: thin line art in plane color) ----------------
+import matplotlib.patches as mpat
+
+def ic_person(cx, cy, c):
+    ax.add_patch(mpat.Circle((cx, cy + 0.075), 0.075, fc="none", ec=c, lw=1.6, zorder=6))
+    ax.add_patch(mpat.Arc((cx, cy - 0.17), 0.32, 0.3, theta1=0, theta2=180, ec=c, lw=1.6, zorder=6))
+
+def ic_tree(cx, cy, c):  # orchestrator: one node fanning to two
+    s = 0.055
+    ax.add_patch(mpat.Rectangle((cx - s, cy + 0.02), 2*s, 2*s, fc="none", ec=c, lw=1.4, zorder=6))
+    for dx in (-0.12, 0.12):
+        ax.add_patch(mpat.Rectangle((cx + dx - s, cy - 0.17), 2*s, 2*s, fc="none", ec=c, lw=1.4, zorder=6))
+    ax.plot([cx, cx], [cy + 0.02, cy - 0.03], color=c, lw=1.2, zorder=6)
+    ax.plot([cx - 0.12, cx + 0.12], [cy - 0.03, cy - 0.03], color=c, lw=1.2, zorder=6)
+    for dx in (-0.12, 0.12):
+        ax.plot([cx + dx, cx + dx], [cy - 0.03, cy - 0.06], color=c, lw=1.2, zorder=6)
+
+def ic_doc(cx, cy, c):  # document with text lines
+    ax.add_patch(mpat.Rectangle((cx - 0.09, cy - 0.15), 0.18, 0.3, fc="none", ec=c, lw=1.4, zorder=6))
+    for dy in (0.06, 0.0, -0.06):
+        ax.plot([cx - 0.05, cx + 0.05], [cy + dy, cy + dy], color=c, lw=1.1, zorder=6)
+
+def ic_term(cx, cy, c):  # terminal >_
+    ax.add_patch(FancyBboxPatch((cx - 0.14, cy - 0.12), 0.28, 0.24,
+                                boxstyle="round,pad=0.015,rounding_size=0.03",
+                                fc="none", ec=c, lw=1.4, zorder=6))
+    ax.plot([cx - 0.09, cx - 0.04, cx - 0.09], [cy + 0.05, cy, cy - 0.05], color=c, lw=1.3, zorder=6)
+    ax.plot([cx + 0.01, cx + 0.09], [cy - 0.05, cy - 0.05], color=c, lw=1.3, zorder=6)
+
+def ic_folder(cx, cy, c):
+    ax.add_patch(mpat.Rectangle((cx - 0.13, cy - 0.11), 0.26, 0.18, fc="none", ec=c, lw=1.4, zorder=6))
+    ax.plot([cx - 0.13, cx - 0.13, cx - 0.04, cx - 0.01],
+            [cy + 0.07, cy + 0.105, cy + 0.105, cy + 0.07], color=c, lw=1.4, zorder=6)
+
+def ic_cube(cx, cy, c):  # 3D box (model workers glyph in the service figure)
+    r = 0.115
+    w = r * 0.87
+    pts = [(cx, cy + r), (cx + w, cy + r/2), (cx + w, cy - r/2), (cx, cy - r), (cx - w, cy - r/2), (cx - w, cy + r/2)]
+    ax.add_patch(mpat.Polygon(pts, closed=True, fc="none", ec=c, lw=1.4, zorder=6))
+    ax.plot([cx - w, cx, cx + w], [cy + r/2, cy, cy + r/2], color=c, lw=1.2, zorder=6)
+    ax.plot([cx, cx], [cy, cy - r], color=c, lw=1.2, zorder=6)
+
+def ic_chip(cx, cy, c):  # processor with pins
+    s = 0.085
+    ax.add_patch(mpat.Rectangle((cx - s, cy - s), 2*s, 2*s, fc="none", ec=c, lw=1.4, zorder=6))
+    ax.add_patch(mpat.Rectangle((cx - 0.035, cy - 0.035), 0.07, 0.07, fc="none", ec=c, lw=1.1, zorder=6))
+    for d in (-0.05, 0.0, 0.05):
+        ax.plot([cx + d, cx + d], [cy + s, cy + s + 0.045], color=c, lw=1.1, zorder=6)
+        ax.plot([cx + d, cx + d], [cy - s, cy - s - 0.045], color=c, lw=1.1, zorder=6)
+        ax.plot([cx + s, cx + s + 0.045], [cy + d, cy + d], color=c, lw=1.1, zorder=6)
+        ax.plot([cx - s, cx - s - 0.045], [cy + d, cy + d], color=c, lw=1.1, zorder=6)
+
+def ic_monitor(cx, cy, c):  # workstation glyph for the frame title
+    ax.add_patch(mpat.Rectangle((cx - 0.15, cy - 0.06), 0.30, 0.22, fc="none", ec=c, lw=1.6, zorder=6))
+    ax.plot([cx, cx], [cy - 0.06, cy - 0.13], color=c, lw=1.6, zorder=6)
+    ax.plot([cx - 0.08, cx + 0.08], [cy - 0.13, cy - 0.13], color=c, lw=1.6, zorder=6)
+
+CHAR_W = 0.0086  # approx half-char width per fontsize unit (DejaVu bold), axis units
+
+def title_with_icon(x, w, ty, title, fs, icon, ic_color):
+    """Centered title with an icon glyph to its left, group-centered like the service cards."""
+    half = len(title) * CHAR_W * fs / 2
+    tdx = 0.21
+    ax.text(x + w/2 + tdx, ty, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
+    icon(x + w/2 + tdx - half - 0.42, ty + 0.02, ic_color)
+
+# ---------------- outer frame: extruded slab ----------------
+import matplotlib.patches as mpat
+DX, DY = 0.30, 0.20
+ax.add_patch(mpat.Polygon([(2.55, 9.15), (2.55+DX, 9.15+DY), (13.15+DX, 9.15+DY), (13.15, 9.15)],
+                          closed=True, fc="#dde7f2", ec="#8aa0bb", lw=1.4, zorder=0))
+ax.add_patch(mpat.Polygon([(13.15, 0.6), (13.15+DX, 0.6+DY), (13.15+DX, 9.15+DY), (13.15, 9.15)],
+                          closed=True, fc="#ccd9e8", ec="#8aa0bb", lw=1.4, zorder=0))
+ax.add_patch(FancyBboxPatch((2.55, 0.6), 10.6, 8.55, boxstyle="round,pad=0.02,rounding_size=0.10",
+                            fc="#f5f8fb", ec="#8aa0bb", lw=1.8, zorder=0.2))
+ic_monitor(3.02, 8.86, "#2d4a75")
+ax.text(3.32, 8.82, "Workstation (single node)", fontsize=13.5, fontweight="bold", color="#2d4a75")
 ax.text(7.7, 8.42, "one turn:  generate → dispatch → execute → observe        repeated until submit or context limit",
         fontsize=9, ha="center", color="#555555")
 
@@ -68,13 +163,18 @@ plane(0.85, 1.1, "hw",    "Hardware", "")
 # ---------------- boxes on a strict grid ----------------
 AX, AW = 5.0, 3.1     # left column (harness / sandbox / engine share x)
 BX, BW = 8.6, 2.6     # right column (history / workspace / api)
-box(AX, 6.75, AW, 1.2, "Agent harness", "SWE-agent / BCB driver / OpenClaw\nparses replies, dispatches tools")
-box(BX, 6.75, BW, 1.2, "History / context", "grows every turn until\nthe window fills")
-box(AX, 4.65, AW, 1.2, "Tool sandbox", "container: shell, edit, pytest,\nbrowser, file I/O")
-box(BX, 4.65, BW, 1.2, "Workspace", "repo checkout,\nartifacts, results")
-box(AX, 2.55, AW, 1.2, "vLLM engine", "self-served 7B / 32B\n(or remote frontier API)")
-box(AX, 0.95, AW, 0.9, "CPU cores", "harness + tools", fs=10)
-box(BX, 0.95, BW, 0.9, "GPU", "generation", fs=10)
+box(AX, 6.75, AW, 1.2, "Agent harness", "SWE-agent / BCB driver / OpenClaw\nparses replies, dispatches tools",
+    icon=ic_tree, ic=P["agent"]["ec"])
+box(BX, 6.75, BW, 1.2, "History / context", "grows every turn until\nthe window fills",
+    icon=ic_doc, ic=P["agent"]["ec"])
+box(AX, 4.65, AW, 1.2, "Tool sandbox", "container: shell, edit, pytest,\nbrowser, file I/O",
+    icon=ic_term, ic=P["tool"]["ec"])
+box(BX, 4.65, BW, 1.2, "Workspace", "repo checkout,\nartifacts, results",
+    icon=ic_folder, ic=P["tool"]["ec"])
+box(AX, 2.55, AW, 1.2, "vLLM engine", "self-served 7B / 32B\n(or remote frontier API)",
+    icon=ic_cube, ic=P["infer"]["ec"])
+cuboid(AX, 0.95, AW, 0.9, "CPU cores", "harness + tools", fs=10, icon=ic_chip, ic=P["hw"]["ec"])
+cuboid(BX, 0.95, BW, 0.9, "GPU", "generation", fs=10, icon=ic_chip, ic=P["hw"]["ec"])
 
 # ---------------- measurement fences ----------------
 fence(AX-0.12, 6.63, AW+0.24, 1.44)
@@ -84,8 +184,15 @@ ax.text(11.55, 2.18, "red dashes: perf cgroup fences (harness / tools / engine),
         fontsize=7.4, color="#c0392b", ha="right", style="italic", zorder=6,
         path_effects=[pe.withStroke(linewidth=2.4, foreground="white")])
 
-# ---------------- task client (outside, like the service figure) ----------------
-box(0.35, 6.75, 1.75, 1.2, "Benchmark\ntask", "SWE-bench / BCB /\nWildClawBench", fs=9.5)
+# ---------------- client (outside, like the service figure) ----------------
+ax.add_patch(FancyBboxPatch((0.405, 6.545), 1.75, 1.5, boxstyle="round,pad=0.05,rounding_size=0.10",
+                            fc="#00000026", ec="none", zorder=2.5))
+ax.add_patch(FancyBboxPatch((0.35, 6.6), 1.75, 1.5, boxstyle="round,pad=0.05,rounding_size=0.10",
+                            fc="#fdfdfb", ec="#4d4d4d", lw=1.4, zorder=3))
+ic_person(1.225, 7.72, "#333333")
+ax.text(1.225, 7.22, "Client /\nBenchmark", ha="center", va="center", fontsize=9.5, fontweight="bold", zorder=5)
+ax.text(1.225, 6.78, "SWE-bench / BCB /\nWildClawBench", ha="center", va="center", fontsize=7.2,
+        color="#444444", zorder=5)
 hline(2.1, AX, 7.75, "task prompt", ly=8.0)
 hline(AX, 2.1, 7.0, "patch / answer", dashed=True, ly=6.62)
 
