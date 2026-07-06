@@ -47,10 +47,10 @@ def cuboid(x, y, w, h, title, sub, fs=10.5, dx=0.22, dy=0.14, icon=None, ic="#4d
                             closed=True, fc="#d2d2ca", ec="#4d4d4d", lw=1.2, zorder=3))
     ax.add_patch(mp.Rectangle((x, y), w, h, fc="#fdfdfb", ec="#4d4d4d", lw=1.4, zorder=3.2))
     if icon:
-        title_with_icon(x, w, y + h - 0.34, title, fs, icon, ic)
+        title_with_icon(x, w, y + h - 0.28, title, fs, icon, ic)
     else:
-        ax.text(x + w/2, y + h - 0.34, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
-    ax.text(x + w/2, y + 0.24, sub, ha="center", fontsize=7.8, color="#444444", zorder=5)
+        ax.text(x + w/2, y + h - 0.28, title, ha="center", fontsize=fs, fontweight="bold", zorder=5)
+    ax.text(x + w/2, y + 0.15, sub, ha="center", fontsize=7.8, color="#444444", zorder=5)
 
 def vline(x, y0, y1, label=None, color="#333333", dashed=False, lx=None, ly=None):
     ax.add_patch(FancyArrowPatch((x, y0), (x, y1), arrowstyle="-|>", mutation_scale=15,
@@ -173,8 +173,8 @@ box(BX, 4.65, BW, 1.2, "Workspace", "repo checkout,\nartifacts, results",
     icon=ic_folder, ic=P["tool"]["ec"])
 box(AX, 2.55, AW, 1.2, "vLLM engine", "self-served 7B / 32B\n(or remote frontier API)",
     icon=ic_cube, ic=P["infer"]["ec"])
-cuboid(AX, 0.95, AW, 0.9, "CPU cores", "harness + tools", fs=10, icon=ic_chip, ic=P["hw"]["ec"])
-cuboid(BX, 0.95, BW, 0.9, "GPU", "generation", fs=10, icon=ic_chip, ic=P["hw"]["ec"])
+cuboid(5.55, 0.98, 2.0, 0.8, "CPU cores", "harness + tools", fs=9.5, icon=ic_chip, ic=P["hw"]["ec"])
+cuboid(9.05, 0.98, 1.7, 0.8, "GPU", "generation", fs=9.5, icon=ic_chip, ic=P["hw"]["ec"])
 
 # ---------------- measurement fences ----------------
 fence(AX-0.12, 6.63, AW+0.24, 1.44)
@@ -221,10 +221,10 @@ hline(8.1, 8.6, 5.25, None, color="#888888")
 # hardware drops, routed around the engine column
 ax.plot([5.0, 4.55], [4.95, 4.95], color="#c77f00", lw=1.7, ls=(0, (5, 3)), zorder=4)
 ax.plot([4.55, 4.55], [4.95, 1.4], color="#c77f00", lw=1.7, ls=(0, (5, 3)), zorder=4)
-ax.add_patch(FancyArrowPatch((4.55, 1.4), (5.0, 1.4), arrowstyle="-|>", mutation_scale=15,
+ax.add_patch(FancyArrowPatch((4.55, 1.4), (5.55, 1.4), arrowstyle="-|>", mutation_scale=15,
                              lw=1.7, color="#c77f00", ls=(0, (5, 3)), zorder=4))
 ax.plot([8.1, 9.9], [2.75, 2.75], color="#6a51a3", lw=1.7, ls=(0, (5, 3)), zorder=4)
-ax.add_patch(FancyArrowPatch((9.9, 2.75), (9.9, 1.85), arrowstyle="-|>", mutation_scale=15,
+ax.add_patch(FancyArrowPatch((9.9, 2.75), (9.9, 1.95), arrowstyle="-|>", mutation_scale=15,
                              lw=1.7, color="#6a51a3", ls=(0, (5, 3)), zorder=4))
 
 # ---------------- legend ----------------
