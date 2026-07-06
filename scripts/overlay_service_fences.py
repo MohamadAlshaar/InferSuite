@@ -46,8 +46,8 @@ ax.add_patch(plt.Rectangle((546 + OFF, 838), 60, 38, fc="#f2f4f7", ec="none", zo
 ax.text(573 + OFF, 858, "CPU", fontsize=15, fontweight="bold", color="#333333",
         ha="center", va="center", zorder=11)
 cpu_cx = 573 + OFF
-ax.add_patch(FancyArrowPatch((cpu_cx, 749), (cpu_cx, 814), arrowstyle="-|>", mutation_scale=13,
-                             lw=1.6, color="#555555", ls=(0, (4, 3)), zorder=10))
+ax.add_patch(FancyArrowPatch((cpu_cx, 749), (cpu_cx, 820), arrowstyle="-|>", mutation_scale=17,
+                             lw=1.6, color="#555555", ls=(0, (4, 3)), shrinkA=0, shrinkB=0, zorder=10))
 ax.text(1232, 770, "all fenced pods", fontsize=10.5, ha="right", va="center", zorder=11,
         bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="#999999", lw=0.8))
 
