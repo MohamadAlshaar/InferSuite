@@ -178,7 +178,8 @@ def window_fig(workloads, path, tier_name, summary_rows):
             if xs:
                 summary_rows.append([lab, name, len(xs), round(float(np.median(xs)), 2),
                                      round(float(np.percentile(xs, 90)), 2), round(float(np.sum(xs)), 1)])
-    for ax, ttl in ((a1, "generation windows (GPU busy)"), (a2, "tool + harness windows (GPU idle)")):
+    for ax, ttl in ((a1, "generation windows — GPU working, CPU busy-waiting"),
+                    (a2, "tool + harness windows — CPU working, GPU idle")):
         ax.set_xscale("log"); ax.set_xlabel("window length [s]"); ax.set_ylabel("CDF")
         ax.set_title(ttl, fontsize=10); ax.grid(alpha=0.25, lw=0.5)
     a2.legend(fontsize=7, loc="lower right", frameon=False)
