@@ -280,7 +280,7 @@ for j, (name, cfg, runs) in enumerate(RESOLVED):
     rows = [("model wait", f"{max(d['wall']-d['tool_s']-d['harn_s'],0)/60:.1f}", "~0"),
             ("tools",      f"{d['tool_s']/60:.1f}", f"{cs[1]:.0f}"),
             ("harness",    f"{d['harn_s']/60:.1f}", f"{cs[0]:.0f}"),
-            ("proxy",      "(in waits)", f"{cs[2]:.0f}")]
+            ("litellm",    "(in waits)", f"{cs[2]:.0f}")]
     tbl = axT2.table(cellText=[[r[0], r[1], r[2]] for r in rows],
                      colLabels=["activity", "wall (min)", "work (core-s)"],
                      cellLoc="center", loc="upper center")
@@ -291,7 +291,7 @@ for j, (name, cfg, runs) in enumerate(RESOLVED):
         if r == 0: cell.set_text_props(color="#555555"); cell.set_facecolor("#f5f5f5")
 fig.legend(handles=[Patch(fc=C_TOOL, label="Tool execution"),
                     Patch(fc=C_HARN, label="Agent harness"),
-                    Patch(fc=C_PROXY, label="API proxy")],
+                    Patch(fc=C_PROXY, label="litellm (API proxy to GLM-5.2)")],
            ncol=3, loc="lower center", frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, 0.075))
 fig.suptitle("CPU work — who did the episode's computation (share of core-seconds consumed)",
              fontsize=13, y=1.02)

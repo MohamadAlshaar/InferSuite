@@ -56,7 +56,7 @@ ax.add_patch(plt.Rectangle((1170, 1003), 185, 24, fc="white", ec="none", zorder=
 ax.text(1171, 1015, "Single-node GPU + CPU", fontsize=11.5, color="#3a3a3a",
         ha="left", va="center", zorder=11)
 
-ax.text(1345, 950, "red dashes: perf cgroup fences (one per pod), all measured in the same windows",
+ax.text(1345, 950, "red dashes: cgroup measurement fences (one per pod), all measured in the same windows",
         fontsize=13, color=RED, ha="right", va="center", style="italic", zorder=11)
 
 fig.savefig("docs/service_pipeline_fenced.png")

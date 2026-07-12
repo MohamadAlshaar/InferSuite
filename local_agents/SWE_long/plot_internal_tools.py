@@ -133,8 +133,5 @@ for k, (ax, (label, (agg, total_cs, cov, method))) in enumerate(
             transform=ax.transAxes, ha="center", fontsize=8, color="#555555")
 fig.suptitle("Inside the tool fence: SWE-agent internal tools vs task payload (CPU core-seconds)",
              fontsize=13)
-fig.text(0.5, -0.03, "attribution: trajectory execution_time joined onto 10 Hz fence activity "
-         "spans (long calls anchored 1:1; short spans duration-weighted)",
-         ha="center", fontsize=7.5, color="#777777")
 fig.savefig(f"{OUT}/glm_internal_tools.png"); plt.close(fig)
 print(f"\nwrote {OUT}/glm_internal_tools.png")

@@ -80,16 +80,14 @@ for col, (label, rd) in enumerate(TASKS):
         mx = float(spikes.max()) if len(spikes) else 0.0
         if row == 0:
             ax.set_title(label, fontsize=11, pad=26)
-            ax.text(0.5, 1.045, f"{len(spikes)} bursts · {heavy} heavy (>0.3 cores)",
+            pk = f"{mx:.0f}" if mx >= 3 else f"{mx:.1f}"
+            ax.text(0.5, 1.045, f"{len(spikes)} bursts · {heavy} heavy · peak {pk} cores",
                     transform=ax.transAxes, ha="center", fontsize=8.5, color="#555555")
             ax.set_yscale("symlog", linthresh=1.0)
             ax.set_ylim(0, 23)
             ax.set_yticks([0, 0.5, 1, 2, 5, 10, 20])
             ax.set_yticklabels(["0", "0.5", "1", "2", "5", "10", "20"])
             ax.axhline(20, color="#aaaaaa", lw=0.8, linestyle=":", zorder=1)
-            if mx > 2:
-                ax.annotate(f"max {mx:.0f}", (x[spikes.argmax()], mx),
-                            textcoords="offset points", xytext=(7, -2), fontsize=8, color="#555555")
         else:
             ax.text(0.5, 1.045, f"{len(spikes)} bursts · max {mx:.2f} cores",
                     transform=ax.transAxes, ha="center", fontsize=8.5, color="#555555")
