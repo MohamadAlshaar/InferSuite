@@ -15,7 +15,7 @@ It contains three things:
 
 1. **The Service** — a deployable RAG + semantic-cache + vLLM chatbot on Kubernetes.
 2. **The Benchmark Suite** — a load generator + CPU/GPU profiler that measures that service.
-3. **The Agentic Workloads** — three agent benchmarks, profiled the same way: SWE-agent on SWE-bench, our own driver on BigCodeBench, and OpenClaw on WildClawBench.
+3. **The Agentic Workloads** — two agent benchmarks, profiled the same way: SWE-agent on SWE-bench and OpenClaw on WildClawBench.
 
 ## Running the measurements — one command
 
@@ -61,10 +61,8 @@ local_agents/           local agent campaigns (GLM-5.2 frontier tier)
   OC_long/              long-horizon OpenClaw:  data/ plots/ plot_spec.json (lineage-fenced)
 
 agentic/
-  CANONICAL/            single source of truth for the 3 agent benchmarks (microarch.py, data)
-  common/               shared perf harness      thesis_figures/  cross-workload figures
-  swe_agent/  bigcodebench/  openclaw/            the three workloads
-  inference/            phantom-CPU experiment (cudasync/) + GPU-TMA build + during-inference figures (plots/)
+  swe_agent/  openclaw/            the two agent harnesses the GLM-5.2 campaigns drive
+  inference/            local GPU profiling (ncu roofline/GPU-TMA) + phantom-CPU experiment (cudasync/)
 
 archive/                regenerable run artifacts moved out of the tree (old logs, dup eval reports)
 ```
@@ -135,11 +133,10 @@ Three agents chosen to span different kinds of tool-execution work:
 | workload | what it is | tool-execution work |
 |---|---|---|
 | SWE-agent (`swe_agent/`) | SWE-bench repo bug-fixing, external SWE-agent harness | repo navigation, edits, builds, test suites |
-| BigCodeBench (`bigcodebench/`) | own driver: generate → run tests → fix loop | executing numeric/library Python every turn |
 | OpenClaw (`openclaw/`) | WildClawBench live browser / computer-use tasks | browser control, documents, images |
 
-Shared measurement harness in `agentic/common/`; corrected canonical data and derivations in
-`agentic/CANONICAL/` (`microarch.py` is the single source of truth for derived metrics).
+The isolated GLM-5.2 campaigns run through the kits in `local_agents/scripts/glm/`
+(fenced capture, lineage watcher, validators, plotters).
 
 ## Part IV — Measurement methodology
 
@@ -154,7 +151,7 @@ Shared measurement harness in `agentic/common/`; corrected canonical data and de
 
 ## Reproducing
 
-Service: deploy (Part I) → `scripts/run_benchmark.sh` → `scripts/generate_report.py`.
-Local k3s service run: `local_service/scripts/` (setup → deploy → capture → plots).
-Agentic: `run_*.sh` under `agentic/{swe_agent,bigcodebench,openclaw}/`; shared harness in `agentic/common/`.
+One command for every campaign: `./measure.sh <agents-swe|agents-oc|service|plots|validate> <stage>`
+(see `./measure.sh help`). It dispatches to the proven kits — `local_agents/scripts/glm/` for the
+isolated GLM-5.2 agents and `local_service/scripts/iso/` for the isolated service.
 Collection and plotting are separate; figures regenerate from collected data with system `python3`.

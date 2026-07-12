@@ -22,7 +22,6 @@ service/  local/{tok64,tok192,tok320,idle_control}  + timing_*   (12-cell grid, 
           h100/                                                   (single-node k3s @32B, attribution + signature)
           eks/{cross_tier,tok64,tok192,tok320}                    (deployed-cluster benchmark)
 agents/   local_api/                                              (cross-workload figures + tool software view)
-          h100/{bcb,swe,oc} + grand_*                             (self-hosted 32B campaign)
           local/                                                  (self-served 7B during-inference, per agent)
 engine/   local/                                                  (during-inference TMA/donut/signature + phantom)
 gpu/      local_a2000/  h100/  l40s/                              (ncu top-downs per GPU)
