@@ -1,0 +1,802 @@
+[svc 10:13:54] ISOLATION: snapshotting baseline
+[svc 10:13:54] ISOLATION: applying (k3s-aware: pods -> measured, control plane -> house)
+[svc 10:13:55]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:13:56]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:13:56]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:13:56]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:13:56]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:13:56]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:13:56]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:13:56]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:13:58] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:13:58]   workload pod vllm -> measured
+[svc 10:13:58]   workload pod fastapi -> measured
+[svc 10:13:58]   workload pod milvus -> measured
+[svc 10:13:58]   workload pod mongodb -> measured
+[svc 10:13:58]   workload pod seaweed_filer -> measured
+[svc 10:13:58]   workload pod seaweed_volume -> measured
+[svc 10:13:58] ISOLATION: applied
+[svc 10:13:58] ================ cell bucket=short tier=tok64 repeat=1 ================
+[svc 10:14:00]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:14:00]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:14:00]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:14:00]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:14:00]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:14:00]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:14:00]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:14:00]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:14:01]   exception pod llm-service/loadgen-778cb9dbf5-rtdzj -> house
+[svc 10:14:11] WORK VERIFIED short/tok64 r1 (Running: 1); warmup 45s
+[svc 10:14:57] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:14:57]   workload pod vllm -> measured
+[svc 10:14:57]   workload pod fastapi -> measured
+[svc 10:14:57]   workload pod milvus -> measured
+[svc 10:14:57]   workload pod mongodb -> measured
+[svc 10:14:57]   workload pod seaweed_filer -> measured
+[svc 10:14:57]   workload pod seaweed_volume -> measured
+[svc 10:19:52] CELL-FAIL short/tok64 r1 (windows=27 busy-windows=9)
+[svc 10:19:52] ================ cell bucket=short tier=tok64 repeat=2 ================
+[svc 10:19:53]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:19:53]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:19:53]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:19:53]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:19:53]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:19:53]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:19:53]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:19:54]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:19:54]   exception pod llm-service/loadgen-778cb9dbf5-rtdzj -> house
+[svc 10:19:54]   exception pod llm-service/loadgen-778cb9dbf5-tgjl7 -> house
+[svc 10:19:54] WORK VERIFIED short/tok64 r2 (Running: 1); warmup 45s
+[svc 10:20:41] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:20:41]   workload pod vllm -> measured
+[svc 10:20:41]   workload pod fastapi -> measured
+[svc 10:20:41]   workload pod milvus -> measured
+[svc 10:20:41]   workload pod mongodb -> measured
+[svc 10:20:41]   workload pod seaweed_filer -> measured
+[svc 10:20:41]   workload pod seaweed_volume -> measured
+deployment.apps/loadgen scaled
+[svc 10:22:13] ISOLATION: restoring
+[svc 10:22:14] ISOLATION: restored
+[svc 10:22:14] cleanup done (exit 130)
+[svc 10:23:01] ISOLATION: snapshotting baseline
+[svc 10:23:01] ISOLATION: applying (k3s-aware: pods -> measured, control plane -> house)
+[svc 10:23:02]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:23:02]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:23:02]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:23:03]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:23:03]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:23:03]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:23:03]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:23:03]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:23:04] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:23:04]   workload pod vllm -> measured
+[svc 10:23:04]   workload pod fastapi -> measured
+[svc 10:23:04]   workload pod milvus -> measured
+[svc 10:23:04]   workload pod mongodb -> measured
+[svc 10:23:04]   workload pod seaweed_filer -> measured
+[svc 10:23:04]   workload pod seaweed_volume -> measured
+[svc 10:23:04] ISOLATION: applied
+[svc 10:23:04] ================ cell bucket=short tier=tok64 repeat=1 ================
+[svc 10:23:06]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:23:06]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:23:06]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:23:06]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:23:06]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:23:06]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:23:06]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:23:06]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:23:07]   exception pod llm-service/loadgen-778cb9dbf5-zgk8v -> house
+[svc 10:23:07] WORK VERIFIED short/tok64 r1 (Running: 1); warmup 45s
+[svc 10:23:54] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:23:54]   workload pod vllm -> measured
+[svc 10:23:54]   workload pod fastapi -> measured
+[svc 10:23:54]   workload pod milvus -> measured
+[svc 10:23:54]   workload pod mongodb -> measured
+[svc 10:23:54]   workload pod seaweed_filer -> measured
+[svc 10:23:54]   workload pod seaweed_volume -> measured
+[svc 10:28:51] CELL-OK short/tok64 r1 (windows=27 busy=26)
+[svc 10:28:51] ================ cell bucket=short tier=tok64 repeat=2 ================
+[svc 10:28:52]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:28:52]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:28:52]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:28:52]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:28:53]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:28:53]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:28:53]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:28:53]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:28:53]   exception pod llm-service/loadgen-778cb9dbf5-xnntr -> house
+[svc 10:28:53]   exception pod llm-service/loadgen-778cb9dbf5-zgk8v -> house
+[svc 10:28:53] WORK VERIFIED short/tok64 r2 (Running: 2); warmup 45s
+[svc 10:29:40] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:29:40]   workload pod vllm -> measured
+[svc 10:29:40]   workload pod fastapi -> measured
+[svc 10:29:40]   workload pod milvus -> measured
+[svc 10:29:40]   workload pod mongodb -> measured
+[svc 10:29:40]   workload pod seaweed_filer -> measured
+[svc 10:29:40]   workload pod seaweed_volume -> measured
+[svc 10:34:38] CELL-OK short/tok64 r2 (windows=27 busy=27)
+[svc 10:34:38] ================ cell bucket=short tier=tok64 repeat=3 ================
+[svc 10:34:40]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:34:40]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:34:40]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:34:40]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:34:40]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:34:40]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:34:40]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:34:40]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:34:41]   exception pod llm-service/loadgen-778cb9dbf5-7z998 -> house
+[svc 10:34:41]   exception pod llm-service/loadgen-778cb9dbf5-xnntr -> house
+[svc 10:34:41] WORK VERIFIED short/tok64 r3 (Running: 1); warmup 45s
+[svc 10:35:27] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:35:27]   workload pod vllm -> measured
+[svc 10:35:27]   workload pod fastapi -> measured
+[svc 10:35:27]   workload pod milvus -> measured
+[svc 10:35:27]   workload pod mongodb -> measured
+[svc 10:35:27]   workload pod seaweed_filer -> measured
+[svc 10:35:27]   workload pod seaweed_volume -> measured
+[svc 10:40:23] CELL-OK short/tok64 r3 (windows=27 busy=27)
+[svc 10:40:23] ================ cell bucket=short tier=tok192 repeat=1 ================
+[svc 10:40:24]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:40:24]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:40:24]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:40:24]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:40:24]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:40:24]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:40:24]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:40:24]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:40:25]   exception pod llm-service/loadgen-778cb9dbf5-7z998 -> house
+[svc 10:40:25]   exception pod llm-service/loadgen-77ddd6f9c7-5fwts -> house
+[svc 10:40:25] WORK VERIFIED short/tok192 r1 (Running: 2); warmup 45s
+[svc 10:41:11] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:41:11]   workload pod vllm -> measured
+[svc 10:41:11]   workload pod fastapi -> measured
+[svc 10:41:11]   workload pod milvus -> measured
+[svc 10:41:11]   workload pod mongodb -> measured
+[svc 10:41:11]   workload pod seaweed_filer -> measured
+[svc 10:41:11]   workload pod seaweed_volume -> measured
+[svc 10:46:07] CELL-OK short/tok192 r1 (windows=27 busy=26)
+[svc 10:46:07] ================ cell bucket=short tier=tok192 repeat=2 ================
+[svc 10:46:09]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:46:09]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:46:09]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:46:09]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:46:09]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:46:09]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:46:09]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:46:09]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:46:10]   exception pod llm-service/loadgen-77ddd6f9c7-28w9v -> house
+[svc 10:46:10]   exception pod llm-service/loadgen-77ddd6f9c7-5fwts -> house
+[svc 10:46:10] WORK VERIFIED short/tok192 r2 (Running: 2); warmup 45s
+[svc 10:46:56] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:46:56]   workload pod vllm -> measured
+[svc 10:46:56]   workload pod fastapi -> measured
+[svc 10:46:56]   workload pod milvus -> measured
+[svc 10:46:56]   workload pod mongodb -> measured
+[svc 10:46:56]   workload pod seaweed_filer -> measured
+[svc 10:46:56]   workload pod seaweed_volume -> measured
+[svc 10:51:53] CELL-OK short/tok192 r2 (windows=27 busy=26)
+[svc 10:51:53] ================ cell bucket=short tier=tok192 repeat=3 ================
+[svc 10:51:54]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:51:54]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:51:54]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:51:55]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:51:55]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:51:55]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:51:55]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:51:55]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:51:55]   exception pod llm-service/loadgen-77ddd6f9c7-27bl5 -> house
+[svc 10:51:55]   exception pod llm-service/loadgen-77ddd6f9c7-28w9v -> house
+[svc 10:51:55] WORK VERIFIED short/tok192 r3 (Running: 2); warmup 45s
+[svc 10:52:42] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:52:42]   workload pod vllm -> measured
+[svc 10:52:42]   workload pod fastapi -> measured
+[svc 10:52:43]   workload pod milvus -> measured
+[svc 10:52:43]   workload pod mongodb -> measured
+[svc 10:52:43]   workload pod seaweed_filer -> measured
+[svc 10:52:43]   workload pod seaweed_volume -> measured
+[svc 10:57:40] CELL-OK short/tok192 r3 (windows=27 busy=27)
+[svc 10:57:40] ================ cell bucket=short tier=tok320 repeat=1 ================
+[svc 10:57:41]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 10:57:41]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 10:57:41]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 10:57:41]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 10:57:41]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 10:57:41]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 10:57:42]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 10:57:42]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 10:57:42]   exception pod llm-service/loadgen-675f6848fd-4j27l -> house
+[svc 10:57:42]   exception pod llm-service/loadgen-77ddd6f9c7-27bl5 -> house
+[svc 10:57:42] WORK VERIFIED short/tok320 r1 (Running: 2); warmup 45s
+[svc 10:58:30] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 10:58:30]   workload pod vllm -> measured
+[svc 10:58:30]   workload pod fastapi -> measured
+[svc 10:58:30]   workload pod milvus -> measured
+[svc 10:58:30]   workload pod mongodb -> measured
+[svc 10:58:30]   workload pod seaweed_filer -> measured
+[svc 10:58:30]   workload pod seaweed_volume -> measured
+[svc 11:03:29] CELL-OK short/tok320 r1 (windows=27 busy=27)
+[svc 11:03:29] ================ cell bucket=short tier=tok320 repeat=2 ================
+[svc 11:03:30]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:03:30]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:03:30]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:03:30]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:03:30]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:03:30]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:03:30]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:03:30]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:03:31]   exception pod llm-service/loadgen-675f6848fd-4j27l -> house
+[svc 11:03:31]   exception pod llm-service/loadgen-675f6848fd-czd65 -> house
+[svc 11:03:31] WORK VERIFIED short/tok320 r2 (Running: 2); warmup 45s
+[svc 11:04:17] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:04:17]   workload pod vllm -> measured
+[svc 11:04:17]   workload pod fastapi -> measured
+[svc 11:04:17]   workload pod milvus -> measured
+[svc 11:04:17]   workload pod mongodb -> measured
+[svc 11:04:17]   workload pod seaweed_filer -> measured
+[svc 11:04:17]   workload pod seaweed_volume -> measured
+[svc 11:09:14] CELL-OK short/tok320 r2 (windows=27 busy=27)
+[svc 11:09:14] ================ cell bucket=short tier=tok320 repeat=3 ================
+[svc 11:09:16]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:09:16]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:09:16]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:09:16]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:09:16]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:09:16]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:09:16]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:09:16]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:09:17]   exception pod llm-service/loadgen-675f6848fd-czd65 -> house
+[svc 11:09:17]   exception pod llm-service/loadgen-675f6848fd-nxx7c -> house
+[svc 11:09:17] WORK VERIFIED short/tok320 r3 (Running: 2); warmup 45s
+[svc 11:10:04] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:10:04]   workload pod vllm -> measured
+[svc 11:10:04]   workload pod fastapi -> measured
+[svc 11:10:04]   workload pod milvus -> measured
+[svc 11:10:04]   workload pod mongodb -> measured
+[svc 11:10:04]   workload pod seaweed_filer -> measured
+[svc 11:10:04]   workload pod seaweed_volume -> measured
+[svc 11:15:01] CELL-OK short/tok320 r3 (windows=27 busy=27)
+[svc 11:15:01] ================ cell bucket=medium tier=tok64 repeat=1 ================
+[svc 11:15:03]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:15:03]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:15:03]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:15:03]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:15:03]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:15:03]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:15:03]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:15:03]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:15:04]   exception pod llm-service/loadgen-675f6848fd-nxx7c -> house
+[svc 11:15:04]   exception pod llm-service/loadgen-7f54bc797-xscqq -> house
+[svc 11:15:04] WORK VERIFIED medium/tok64 r1 (Running: 2); warmup 45s
+[svc 11:15:51] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:15:51]   workload pod vllm -> measured
+[svc 11:15:51]   workload pod fastapi -> measured
+[svc 11:15:51]   workload pod milvus -> measured
+[svc 11:15:51]   workload pod mongodb -> measured
+[svc 11:15:51]   workload pod seaweed_filer -> measured
+[svc 11:15:51]   workload pod seaweed_volume -> measured
+[svc 11:20:48] CELL-OK medium/tok64 r1 (windows=27 busy=27)
+[svc 11:20:48] ================ cell bucket=medium tier=tok64 repeat=2 ================
+[svc 11:20:49]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:20:49]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:20:49]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:20:49]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:20:49]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:20:49]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:20:49]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:20:49]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:20:50]   exception pod llm-service/loadgen-7f54bc797-6lsmk -> house
+[svc 11:20:50]   exception pod llm-service/loadgen-7f54bc797-xscqq -> house
+[svc 11:20:50] WORK VERIFIED medium/tok64 r2 (Running: 2); warmup 45s
+[svc 11:21:36] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:21:36]   workload pod vllm -> measured
+[svc 11:21:36]   workload pod fastapi -> measured
+[svc 11:21:36]   workload pod milvus -> measured
+[svc 11:21:36]   workload pod mongodb -> measured
+[svc 11:21:36]   workload pod seaweed_filer -> measured
+[svc 11:21:36]   workload pod seaweed_volume -> measured
+[svc 11:26:34] CELL-OK medium/tok64 r2 (windows=27 busy=27)
+[svc 11:26:34] ================ cell bucket=medium tier=tok64 repeat=3 ================
+[svc 11:26:36]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:26:36]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:26:36]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:26:36]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:26:36]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:26:36]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:26:36]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:26:36]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:26:37]   exception pod llm-service/loadgen-7f54bc797-4r4hs -> house
+[svc 11:26:37]   exception pod llm-service/loadgen-7f54bc797-6lsmk -> house
+[svc 11:26:37] WORK VERIFIED medium/tok64 r3 (Running: 2); warmup 45s
+[svc 11:27:23] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:27:23]   workload pod vllm -> measured
+[svc 11:27:23]   workload pod fastapi -> measured
+[svc 11:27:23]   workload pod milvus -> measured
+[svc 11:27:23]   workload pod mongodb -> measured
+[svc 11:27:23]   workload pod seaweed_filer -> measured
+[svc 11:27:23]   workload pod seaweed_volume -> measured
+[svc 11:32:21] CELL-OK medium/tok64 r3 (windows=27 busy=27)
+[svc 11:32:21] ================ cell bucket=medium tier=tok192 repeat=1 ================
+[svc 11:32:23]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:32:23]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:32:23]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:32:23]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:32:23]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:32:23]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:32:23]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:32:24]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:32:24]   exception pod llm-service/loadgen-7f54bc797-4r4hs -> house
+[svc 11:32:24]   exception pod llm-service/loadgen-cd97d44c-fnjw9 -> house
+[svc 11:32:24] WORK VERIFIED medium/tok192 r1 (Running: 2); warmup 45s
+[svc 11:33:10] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:33:10]   workload pod vllm -> measured
+[svc 11:33:11]   workload pod fastapi -> measured
+[svc 11:33:11]   workload pod milvus -> measured
+[svc 11:33:11]   workload pod mongodb -> measured
+[svc 11:33:11]   workload pod seaweed_filer -> measured
+[svc 11:33:11]   workload pod seaweed_volume -> measured
+[svc 11:38:06] CELL-OK medium/tok192 r1 (windows=27 busy=27)
+[svc 11:38:06] ================ cell bucket=medium tier=tok192 repeat=2 ================
+[svc 11:38:08]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:38:08]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:38:08]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:38:08]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:38:08]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:38:08]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:38:08]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:38:08]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:38:09]   exception pod llm-service/loadgen-cd97d44c-fnjw9 -> house
+[svc 11:38:09]   exception pod llm-service/loadgen-cd97d44c-wk5bz -> house
+[svc 11:38:09] WORK VERIFIED medium/tok192 r2 (Running: 2); warmup 45s
+[svc 11:38:55] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:38:55]   workload pod vllm -> measured
+[svc 11:38:55]   workload pod fastapi -> measured
+[svc 11:38:55]   workload pod milvus -> measured
+[svc 11:38:55]   workload pod mongodb -> measured
+[svc 11:38:55]   workload pod seaweed_filer -> measured
+[svc 11:38:55]   workload pod seaweed_volume -> measured
+[svc 11:43:50] CELL-OK medium/tok192 r2 (windows=27 busy=27)
+[svc 11:43:50] ================ cell bucket=medium tier=tok192 repeat=3 ================
+[svc 11:43:52]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:43:52]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:43:52]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:43:52]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:43:52]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:43:52]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:43:52]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:43:52]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:43:53]   exception pod llm-service/loadgen-cd97d44c-tlsj4 -> house
+[svc 11:43:53]   exception pod llm-service/loadgen-cd97d44c-wk5bz -> house
+[svc 11:43:53] WORK VERIFIED medium/tok192 r3 (Running: 2); warmup 45s
+[svc 11:44:39] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:44:39]   workload pod vllm -> measured
+[svc 11:44:39]   workload pod fastapi -> measured
+[svc 11:44:39]   workload pod milvus -> measured
+[svc 11:44:39]   workload pod mongodb -> measured
+[svc 11:44:39]   workload pod seaweed_filer -> measured
+[svc 11:44:39]   workload pod seaweed_volume -> measured
+[svc 11:49:35] CELL-OK medium/tok192 r3 (windows=27 busy=27)
+[svc 11:49:35] ================ cell bucket=medium tier=tok320 repeat=1 ================
+[svc 11:49:37]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:49:37]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:49:37]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:49:37]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:49:37]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:49:37]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:49:37]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:49:37]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:49:38]   exception pod llm-service/loadgen-568959684-zwbvb -> house
+[svc 11:49:38]   exception pod llm-service/loadgen-cd97d44c-tlsj4 -> house
+[svc 11:49:38] WORK VERIFIED medium/tok320 r1 (Running: 2); warmup 45s
+[svc 11:50:24] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:50:24]   workload pod vllm -> measured
+[svc 11:50:24]   workload pod fastapi -> measured
+[svc 11:50:24]   workload pod milvus -> measured
+[svc 11:50:24]   workload pod mongodb -> measured
+[svc 11:50:24]   workload pod seaweed_filer -> measured
+[svc 11:50:24]   workload pod seaweed_volume -> measured
+[svc 11:55:20] CELL-OK medium/tok320 r1 (windows=27 busy=27)
+[svc 11:55:20] ================ cell bucket=medium tier=tok320 repeat=2 ================
+[svc 11:55:21]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 11:55:21]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 11:55:21]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 11:55:21]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 11:55:21]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 11:55:21]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 11:55:21]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 11:55:21]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 11:55:22]   exception pod llm-service/loadgen-568959684-x4p9n -> house
+[svc 11:55:22]   exception pod llm-service/loadgen-568959684-zwbvb -> house
+[svc 11:55:22] WORK VERIFIED medium/tok320 r2 (Running: 2); warmup 45s
+[svc 11:56:08] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 11:56:08]   workload pod vllm -> measured
+[svc 11:56:08]   workload pod fastapi -> measured
+[svc 11:56:08]   workload pod milvus -> measured
+[svc 11:56:08]   workload pod mongodb -> measured
+[svc 11:56:08]   workload pod seaweed_filer -> measured
+[svc 11:56:08]   workload pod seaweed_volume -> measured
+[svc 12:01:06] CELL-OK medium/tok320 r2 (windows=27 busy=27)
+[svc 12:01:06] ================ cell bucket=medium tier=tok320 repeat=3 ================
+[svc 12:01:07]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:01:07]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:01:07]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:01:07]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:01:07]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:01:07]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:01:07]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:01:07]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:01:08]   exception pod llm-service/loadgen-568959684-mggkp -> house
+[svc 12:01:08]   exception pod llm-service/loadgen-568959684-x4p9n -> house
+[svc 12:01:08] WORK VERIFIED medium/tok320 r3 (Running: 2); warmup 45s
+[svc 12:01:55] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:01:55]   workload pod vllm -> measured
+[svc 12:01:55]   workload pod fastapi -> measured
+[svc 12:01:55]   workload pod milvus -> measured
+[svc 12:01:55]   workload pod mongodb -> measured
+[svc 12:01:55]   workload pod seaweed_filer -> measured
+[svc 12:01:55]   workload pod seaweed_volume -> measured
+[svc 12:06:49] CELL-OK medium/tok320 r3 (windows=27 busy=27)
+[svc 12:06:49] ================ cell bucket=long tier=tok64 repeat=1 ================
+[svc 12:06:50]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:06:50]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:06:50]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:06:50]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:06:50]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:06:50]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:06:50]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:06:50]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:06:51]   exception pod llm-service/loadgen-548d876d47-5rwtd -> house
+[svc 12:06:51]   exception pod llm-service/loadgen-568959684-mggkp -> house
+[svc 12:06:51] WORK VERIFIED long/tok64 r1 (Running: 2); warmup 45s
+[svc 12:07:37] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:07:37]   workload pod vllm -> measured
+[svc 12:07:37]   workload pod fastapi -> measured
+[svc 12:07:37]   workload pod milvus -> measured
+[svc 12:07:37]   workload pod mongodb -> measured
+[svc 12:07:37]   workload pod seaweed_filer -> measured
+[svc 12:07:37]   workload pod seaweed_volume -> measured
+[svc 12:12:32] CELL-OK long/tok64 r1 (windows=27 busy=27)
+[svc 12:12:32] ================ cell bucket=long tier=tok64 repeat=2 ================
+[svc 12:12:33]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:12:34]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:12:34]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:12:34]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:12:34]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:12:34]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:12:34]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:12:34]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:12:34]   exception pod llm-service/loadgen-548d876d47-584rc -> house
+[svc 12:12:34]   exception pod llm-service/loadgen-548d876d47-5rwtd -> house
+[svc 12:12:35] WORK VERIFIED long/tok64 r2 (Running: 2); warmup 45s
+[svc 12:13:21] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:13:21]   workload pod vllm -> measured
+[svc 12:13:21]   workload pod fastapi -> measured
+[svc 12:13:21]   workload pod milvus -> measured
+[svc 12:13:21]   workload pod mongodb -> measured
+[svc 12:13:21]   workload pod seaweed_filer -> measured
+[svc 12:13:21]   workload pod seaweed_volume -> measured
+[svc 12:18:21] CELL-OK long/tok64 r2 (windows=27 busy=27)
+[svc 12:18:21] ================ cell bucket=long tier=tok64 repeat=3 ================
+[svc 12:18:22]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:18:22]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:18:22]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:18:22]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:18:22]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:18:22]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:18:23]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:18:23]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:18:23]   exception pod llm-service/loadgen-548d876d47-584rc -> house
+[svc 12:18:23]   exception pod llm-service/loadgen-548d876d47-b4kst -> house
+[svc 12:18:23] WORK VERIFIED long/tok64 r3 (Running: 1); warmup 45s
+[svc 12:19:09] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:19:09]   workload pod vllm -> measured
+[svc 12:19:09]   workload pod fastapi -> measured
+[svc 12:19:09]   workload pod milvus -> measured
+[svc 12:19:09]   workload pod mongodb -> measured
+[svc 12:19:09]   workload pod seaweed_filer -> measured
+[svc 12:19:09]   workload pod seaweed_volume -> measured
+[svc 12:24:04] CELL-OK long/tok64 r3 (windows=27 busy=26)
+[svc 12:24:04] ================ cell bucket=long tier=tok192 repeat=1 ================
+[svc 12:24:05]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:24:05]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:24:05]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:24:05]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:24:05]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:24:05]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:24:05]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:24:06]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:24:06]   exception pod llm-service/loadgen-548d876d47-b4kst -> house
+[svc 12:24:06]   exception pod llm-service/loadgen-7c5b97cd6f-rs54n -> house
+[svc 12:24:11] WORK VERIFIED long/tok192 r1 (Running: 2); warmup 45s
+[svc 12:24:57] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:24:57]   workload pod vllm -> measured
+[svc 12:24:57]   workload pod fastapi -> measured
+[svc 12:24:57]   workload pod milvus -> measured
+[svc 12:24:57]   workload pod mongodb -> measured
+[svc 12:24:57]   workload pod seaweed_filer -> measured
+[svc 12:24:57]   workload pod seaweed_volume -> measured
+[svc 12:29:53] CELL-OK long/tok192 r1 (windows=27 busy=27)
+[svc 12:29:53] ================ cell bucket=long tier=tok192 repeat=2 ================
+[svc 12:29:55]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:29:55]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:29:55]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:29:55]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:29:55]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:29:55]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:29:55]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:29:56]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:29:56]   exception pod llm-service/loadgen-7c5b97cd6f-5h7xp -> house
+[svc 12:29:56]   exception pod llm-service/loadgen-7c5b97cd6f-rs54n -> house
+[svc 12:29:56] WORK VERIFIED long/tok192 r2 (Running: 2); warmup 45s
+[svc 12:30:42] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:30:42]   workload pod vllm -> measured
+[svc 12:30:42]   workload pod fastapi -> measured
+[svc 12:30:42]   workload pod milvus -> measured
+[svc 12:30:42]   workload pod mongodb -> measured
+[svc 12:30:42]   workload pod seaweed_filer -> measured
+[svc 12:30:42]   workload pod seaweed_volume -> measured
+[svc 12:35:40] CELL-OK long/tok192 r2 (windows=27 busy=27)
+[svc 12:35:40] ================ cell bucket=long tier=tok192 repeat=3 ================
+[svc 12:35:41]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:35:41]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:35:41]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:35:41]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:35:41]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:35:41]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:35:41]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:35:41]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:35:42]   exception pod llm-service/loadgen-7c5b97cd6f-26jmh -> house
+[svc 12:35:42]   exception pod llm-service/loadgen-7c5b97cd6f-5h7xp -> house
+[svc 12:35:42] WORK VERIFIED long/tok192 r3 (Running: 2); warmup 45s
+[svc 12:36:29] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:36:29]   workload pod vllm -> measured
+[svc 12:36:29]   workload pod fastapi -> measured
+[svc 12:36:29]   workload pod milvus -> measured
+[svc 12:36:29]   workload pod mongodb -> measured
+[svc 12:36:29]   workload pod seaweed_filer -> measured
+[svc 12:36:29]   workload pod seaweed_volume -> measured
+[svc 12:41:24] CELL-OK long/tok192 r3 (windows=27 busy=27)
+[svc 12:41:24] ================ cell bucket=long tier=tok320 repeat=1 ================
+[svc 12:41:26]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:41:26]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:41:26]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:41:26]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:41:26]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:41:26]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:41:26]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:41:26]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:41:27]   exception pod llm-service/loadgen-7598b64d5d-9fwq7 -> house
+[svc 12:41:27]   exception pod llm-service/loadgen-7c5b97cd6f-26jmh -> house
+[svc 12:41:32] WORK VERIFIED long/tok320 r1 (Running: 2); warmup 45s
+[svc 12:42:19] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:42:19]   workload pod vllm -> measured
+[svc 12:42:19]   workload pod fastapi -> measured
+[svc 12:42:19]   workload pod milvus -> measured
+[svc 12:42:19]   workload pod mongodb -> measured
+[svc 12:42:19]   workload pod seaweed_filer -> measured
+[svc 12:42:19]   workload pod seaweed_volume -> measured
+[svc 12:47:16] CELL-OK long/tok320 r1 (windows=27 busy=26)
+[svc 12:47:16] ================ cell bucket=long tier=tok320 repeat=2 ================
+[svc 12:47:18]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:47:18]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:47:18]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:47:18]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:47:18]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:47:18]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:47:18]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:47:18]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:47:19]   exception pod llm-service/loadgen-7598b64d5d-88fcx -> house
+[svc 12:47:19]   exception pod llm-service/loadgen-7598b64d5d-9fwq7 -> house
+[svc 12:47:19] WORK VERIFIED long/tok320 r2 (Running: 2); warmup 45s
+[svc 12:48:05] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:48:05]   workload pod vllm -> measured
+[svc 12:48:05]   workload pod fastapi -> measured
+[svc 12:48:05]   workload pod milvus -> measured
+[svc 12:48:05]   workload pod mongodb -> measured
+[svc 12:48:05]   workload pod seaweed_filer -> measured
+[svc 12:48:05]   workload pod seaweed_volume -> measured
+[svc 12:53:00] CELL-OK long/tok320 r2 (windows=27 busy=27)
+[svc 12:53:00] ================ cell bucket=long tier=tok320 repeat=3 ================
+[svc 12:53:02]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:53:02]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:53:02]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:53:02]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:53:02]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:53:02]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:53:02]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:53:02]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:53:03]   exception pod llm-service/loadgen-7598b64d5d-88fcx -> house
+[svc 12:53:03]   exception pod llm-service/loadgen-7598b64d5d-ft9qx -> house
+[svc 12:53:03] WORK VERIFIED long/tok320 r3 (Running: 2); warmup 45s
+[svc 12:53:49] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:53:49]   workload pod vllm -> measured
+[svc 12:53:49]   workload pod fastapi -> measured
+[svc 12:53:49]   workload pod milvus -> measured
+[svc 12:53:49]   workload pod mongodb -> measured
+[svc 12:53:49]   workload pod seaweed_filer -> measured
+[svc 12:53:49]   workload pod seaweed_volume -> measured
+[svc 12:58:46] CELL-OK long/tok320 r3 (windows=27 busy=27)
+[svc 12:58:46] ================ cell bucket=very_long tier=tok64 repeat=1 ================
+[svc 12:58:47]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 12:58:47]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 12:58:47]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 12:58:47]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 12:58:47]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 12:58:47]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 12:58:47]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 12:58:48]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 12:58:48]   exception pod llm-service/loadgen-7598b64d5d-ft9qx -> house
+[svc 12:58:48]   exception pod llm-service/loadgen-785fb4c759-wzvhv -> house
+[svc 12:58:48] WORK VERIFIED very_long/tok64 r1 (Running: 2); warmup 45s
+[svc 12:59:34] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 12:59:34]   workload pod vllm -> measured
+[svc 12:59:34]   workload pod fastapi -> measured
+[svc 12:59:34]   workload pod milvus -> measured
+[svc 12:59:34]   workload pod mongodb -> measured
+[svc 12:59:34]   workload pod seaweed_filer -> measured
+[svc 12:59:34]   workload pod seaweed_volume -> measured
+[svc 13:04:30] CELL-OK very_long/tok64 r1 (windows=27 busy=27)
+[svc 13:04:30] ================ cell bucket=very_long tier=tok64 repeat=2 ================
+[svc 13:04:32]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:04:32]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:04:32]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:04:32]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:04:32]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:04:32]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:04:32]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:04:32]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:04:33]   exception pod llm-service/loadgen-785fb4c759-qc8tc -> house
+[svc 13:04:33]   exception pod llm-service/loadgen-785fb4c759-wzvhv -> house
+[svc 13:04:33] WORK VERIFIED very_long/tok64 r2 (Running: 2); warmup 45s
+[svc 13:05:19] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:05:19]   workload pod vllm -> measured
+[svc 13:05:19]   workload pod fastapi -> measured
+[svc 13:05:19]   workload pod milvus -> measured
+[svc 13:05:19]   workload pod mongodb -> measured
+[svc 13:05:19]   workload pod seaweed_filer -> measured
+[svc 13:05:19]   workload pod seaweed_volume -> measured
+[svc 13:10:17] CELL-OK very_long/tok64 r2 (windows=27 busy=27)
+[svc 13:10:17] ================ cell bucket=very_long tier=tok64 repeat=3 ================
+[svc 13:10:18]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:10:18]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:10:18]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:10:18]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:10:18]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:10:18]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:10:18]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:10:18]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:10:19]   exception pod llm-service/loadgen-785fb4c759-pz9fk -> house
+[svc 13:10:19]   exception pod llm-service/loadgen-785fb4c759-qc8tc -> house
+[svc 13:10:19] WORK VERIFIED very_long/tok64 r3 (Running: 2); warmup 45s
+[svc 13:11:05] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:11:05]   workload pod vllm -> measured
+[svc 13:11:05]   workload pod fastapi -> measured
+[svc 13:11:05]   workload pod milvus -> measured
+[svc 13:11:05]   workload pod mongodb -> measured
+[svc 13:11:05]   workload pod seaweed_filer -> measured
+[svc 13:11:05]   workload pod seaweed_volume -> measured
+[svc 13:16:04] CELL-OK very_long/tok64 r3 (windows=27 busy=26)
+[svc 13:16:04] ================ cell bucket=very_long tier=tok192 repeat=1 ================
+[svc 13:16:06]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:16:06]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:16:06]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:16:06]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:16:06]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:16:06]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:16:06]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:16:06]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:16:07]   exception pod llm-service/loadgen-785fb4c759-pz9fk -> house
+[svc 13:16:07]   exception pod llm-service/loadgen-859874c8cc-9b2zx -> house
+[svc 13:16:07] WORK VERIFIED very_long/tok192 r1 (Running: 2); warmup 45s
+[svc 13:16:54] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:16:54]   workload pod vllm -> measured
+[svc 13:16:54]   workload pod fastapi -> measured
+[svc 13:16:54]   workload pod milvus -> measured
+[svc 13:16:54]   workload pod mongodb -> measured
+[svc 13:16:54]   workload pod seaweed_filer -> measured
+[svc 13:16:54]   workload pod seaweed_volume -> measured
+[svc 13:21:50] CELL-OK very_long/tok192 r1 (windows=27 busy=27)
+[svc 13:21:50] ================ cell bucket=very_long tier=tok192 repeat=2 ================
+[svc 13:21:51]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:21:51]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:21:51]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:21:51]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:21:51]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:21:51]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:21:51]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:21:52]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:21:52]   exception pod llm-service/loadgen-859874c8cc-9b2zx -> house
+[svc 13:21:52]   exception pod llm-service/loadgen-859874c8cc-nx58z -> house
+[svc 13:21:57] WORK VERIFIED very_long/tok192 r2 (Running: 2); warmup 45s
+[svc 13:22:44] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:22:44]   workload pod vllm -> measured
+[svc 13:22:44]   workload pod fastapi -> measured
+[svc 13:22:44]   workload pod milvus -> measured
+[svc 13:22:44]   workload pod mongodb -> measured
+[svc 13:22:44]   workload pod seaweed_filer -> measured
+[svc 13:22:44]   workload pod seaweed_volume -> measured
+[svc 13:27:42] CELL-OK very_long/tok192 r2 (windows=27 busy=26)
+[svc 13:27:42] ================ cell bucket=very_long tier=tok192 repeat=3 ================
+[svc 13:27:43]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:27:43]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:27:43]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:27:43]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:27:43]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:27:43]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:27:44]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:27:44]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:27:44]   exception pod llm-service/loadgen-859874c8cc-kdkgm -> house
+[svc 13:27:44]   exception pod llm-service/loadgen-859874c8cc-nx58z -> house
+[svc 13:27:45] WORK VERIFIED very_long/tok192 r3 (Running: 2); warmup 45s
+[svc 13:28:32] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:28:32]   workload pod vllm -> measured
+[svc 13:28:32]   workload pod fastapi -> measured
+[svc 13:28:32]   workload pod milvus -> measured
+[svc 13:28:32]   workload pod mongodb -> measured
+[svc 13:28:32]   workload pod seaweed_filer -> measured
+[svc 13:28:32]   workload pod seaweed_volume -> measured
+[svc 13:33:27] CELL-OK very_long/tok192 r3 (windows=27 busy=27)
+[svc 13:33:27] ================ cell bucket=very_long tier=tok320 repeat=1 ================
+[svc 13:33:29]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:33:29]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:33:29]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:33:29]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:33:29]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:33:29]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:33:29]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:33:30]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:33:30]   exception pod llm-service/loadgen-59fd66965d-rh756 -> house
+[svc 13:33:30]   exception pod llm-service/loadgen-859874c8cc-kdkgm -> house
+[svc 13:33:30] WORK VERIFIED very_long/tok320 r1 (Running: 2); warmup 45s
+[svc 13:34:17] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:34:17]   workload pod vllm -> measured
+[svc 13:34:17]   workload pod fastapi -> measured
+[svc 13:34:17]   workload pod milvus -> measured
+[svc 13:34:17]   workload pod mongodb -> measured
+[svc 13:34:17]   workload pod seaweed_filer -> measured
+[svc 13:34:17]   workload pod seaweed_volume -> measured
+[svc 13:39:13] CELL-OK very_long/tok320 r1 (windows=27 busy=27)
+[svc 13:39:13] ================ cell bucket=very_long tier=tok320 repeat=2 ================
+[svc 13:39:14]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:39:15]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:39:15]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:39:15]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:39:15]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:39:15]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:39:15]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:39:15]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:39:15]   exception pod llm-service/loadgen-59fd66965d-jwqsm -> house
+[svc 13:39:15]   exception pod llm-service/loadgen-59fd66965d-rh756 -> house
+[svc 13:39:16] WORK VERIFIED very_long/tok320 r2 (Running: 2); warmup 45s
+[svc 13:40:02] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:40:02]   workload pod vllm -> measured
+[svc 13:40:02]   workload pod fastapi -> measured
+[svc 13:40:02]   workload pod milvus -> measured
+[svc 13:40:02]   workload pod mongodb -> measured
+[svc 13:40:02]   workload pod seaweed_filer -> measured
+[svc 13:40:02]   workload pod seaweed_volume -> measured
+[svc 13:44:58] CELL-OK very_long/tok320 r2 (windows=27 busy=27)
+[svc 13:44:58] ================ cell bucket=very_long tier=tok320 repeat=3 ================
+[svc 13:44:59]   exception pod kube-system/coredns-5f5694d56b-kg2wz -> house
+[svc 13:44:59]   exception pod kube-system/helm-install-traefik-crd-8ng4m -> house
+[svc 13:44:59]   exception pod kube-system/helm-install-traefik-kcppt -> house
+[svc 13:44:59]   exception pod kube-system/local-path-provisioner-58d557dc48-dg47x -> house
+[svc 13:44:59]   exception pod kube-system/metrics-server-7c86f97b8d-9nqhf -> house
+[svc 13:44:59]   exception pod kube-system/nvidia-device-plugin-daemonset-84wvq -> house
+[svc 13:44:59]   exception pod kube-system/svclb-traefik-32e6dc3e-9dgbm -> house
+[svc 13:45:00]   exception pod kube-system/traefik-6cd8c7cd89-bsgxv -> house
+[svc 13:45:00]   exception pod llm-service/loadgen-59fd66965d-46tls -> house
+[svc 13:45:00]   exception pod llm-service/loadgen-59fd66965d-jwqsm -> house
+[svc 13:45:00] WORK VERIFIED very_long/tok320 r3 (Running: 1); warmup 45s
+[svc 13:45:47] pods resolved: fastapi seaweed_volume mongodb seaweed_filer vllm milvus
+[svc 13:45:47]   workload pod vllm -> measured
+[svc 13:45:47]   workload pod fastapi -> measured
+[svc 13:45:47]   workload pod milvus -> measured
+[svc 13:45:47]   workload pod mongodb -> measured
+[svc 13:45:47]   workload pod seaweed_filer -> measured
+[svc 13:45:47]   workload pod seaweed_volume -> measured
+[svc 13:50:42] CELL-OK very_long/tok320 r3 (windows=27 busy=27)
+[svc 13:50:42] ISOLATION: restoring
+[svc 13:50:43] ISOLATION: restored
+[svc 13:50:43] CAMPAIGN COMPLETE — grid 4x3x3
+deployment.apps/loadgen scaled
+[svc 13:50:43] cleanup done (exit 0)

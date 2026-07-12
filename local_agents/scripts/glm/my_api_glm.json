@@ -1,0 +1,15 @@
+{
+  "providers": {
+    "my-openai-proxy": {
+      "baseUrl": "http://host.docker.internal:8100/v1",
+      "apiKey": "dummy",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "glm-5.2",
+          "name": "GLM-5.2 (via litellm z.ai proxy)"
+        }
+      ]
+    }
+  }
+}

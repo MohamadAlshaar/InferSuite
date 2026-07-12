@@ -1,0 +1,92 @@
+[glm 14:08:44] ISOLATION: snapshotting baseline -> /home/mohamad/llm-service-kernel-latest/local_agents/scripts/glm/.state
+[glm 14:08:44] ISOLATION: applying
+[glm 14:08:53] ISOLATION: k3s stopped + pods killed (auto-respawn on restore)
+[glm 14:08:53] ISOLATION: applied (measured=2-11,14-23 house=0-1,12-13)
+[glm 14:08:57] proxy up (:8100 cgroup=user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-166124.scope)
+[glm 14:08:57] ================ swe astropy run1 (glm-5.2) ================
+[glm 14:10:53] WORK VERIFIED astropy run1 (harness=measured.slice/glm-swe-astropy-r1.scope tool=measured.slice/docker-171652405fd82260abbc103d25d2d49e0f15253303e67ce000704dfefc15d66d.scope)
+[glm 14:26:17] EPISODE-OK astropy-run1 (windows=92 rec=53467384B)
+[glm 14:26:17] SWE PHASE COMPLETE — review validator + sanity output, then: ./run_glm_campaign.sh campaign oc
+[glm 14:26:17] ISOLATION: restoring
+[glm 14:26:28] ISOLATION: k3s restarted
+[glm 14:26:28] ISOLATION: restored
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (92 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 63 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 33 window-scopes -> OK
+       E5 work: 82 STEP markers, trajectory present -> OK
+       harness  IPC 0.585  CPUs 0.001  kernel 6.5%  cs/s 800.0
+       tool     IPC 0.253  CPUs 0.001  kernel 24.2%  cs/s 1670.0
+       proxy    IPC 0.207  CPUs 0.001  kernel 3.7%  cs/s 3106.0
+
+== cross-run dispersion per role (layer 3) ==
+[glm 14:26:29] cleanup done (exit 0)
+[glm 14:26:29] ISOLATION: snapshotting baseline -> /home/mohamad/llm-service-kernel-latest/local_agents/scripts/glm/.state
+[glm 14:26:29] ISOLATION: applying
+[glm 14:26:37] ISOLATION: k3s stopped + pods killed (auto-respawn on restore)
+[glm 14:26:37] ISOLATION: applied (measured=2-11,14-23 house=0-1,12-13)
+[glm 14:26:42] proxy up (:8100 cgroup=user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-261008.scope)
+[glm 14:26:42] ================ swe django run1 (glm-5.2) ================
+[glm 14:31:26] WORK VERIFIED django run1 (harness=measured.slice/glm-swe-django-r1.scope tool=measured.slice/docker-9d34e83d7ca7d37c2d6ec8184b2e00450be81d102f5b875af73bd3aa754abdec.scope)
+[glm 15:13:37] EPISODE-OK django-run1 (windows=243 rec=151992148B)
+[glm 15:13:37] SWE PHASE COMPLETE — review validator + sanity output, then: ./run_glm_campaign.sh campaign oc
+[glm 15:15:07] ISOLATION: restoring
+./run_glm_campaign.sh: line 129: 266521 Killed                  systemd-run --user --scope --unit="$PROXY_UNIT" --collect -- taskset -c "$CPUS_HOUSE" "$REPO/agentic/openclaw/.venv_litellm/bin/litellm" --config "$KIT/litellm_glm.yaml" --port "$PROXY_PORT" > "$KIT/proxy.log" 2>&1
+[glm 15:15:14] ISOLATION: k3s restarted
+[glm 15:15:14] ISOLATION: restored
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (92 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 63 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 33 window-scopes -> OK
+       E5 work: 82 STEP markers, trajectory present -> OK
+       harness  IPC 0.585  CPUs 0.001  kernel 6.5%  cs/s 800.0
+       tool     IPC 0.253  CPUs 0.001  kernel 24.2%  cs/s 1670.0
+       proxy    IPC 0.207  CPUs 0.001  kernel 3.7%  cs/s 3106.0
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_django/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 304 STEP markers, trajectory present -> OK
+       harness  IPC 2.841  CPUs 0.061  kernel 7.1%  cs/s 153.0
+       tool     IPC 1.345  CPUs 0.021  kernel 50.4%  cs/s 653.0
+       proxy    IPC 2.488  CPUs 0.012  kernel 2.0%  cs/s 1261.0
+
+== cross-run dispersion per role (layer 3) ==
+[glm 15:15:14] cleanup done (exit 0)
+[glm 15:15:14] ISOLATION: snapshotting baseline -> /home/mohamad/llm-service-kernel-latest/local_agents/scripts/glm/.state
+[glm 15:15:14] ISOLATION: applying
+[glm 15:15:22] ISOLATION: k3s stopped + pods killed (auto-respawn on restore)
+[glm 15:15:22] ISOLATION: applied (measured=2-11,14-23 house=0-1,12-13)
+[glm 15:15:27] proxy up (:8100 cgroup=user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-166122.scope)
+[glm 15:15:27] ================ oc calendar run1 (glm-5.2) ================
+[glm 15:15:44] WORK VERIFIED oc-calendar run1 (container=measured.slice/docker-5ebe1a806e1e025c2a99b0f8295a010fc85c3d075b02c1b73a0fdd881e9ddc59.scope)
+[glm 15:22:16] EPISODE-OK oc-calendar-run1 (windows=39 rec=39463908B)
+[glm 15:22:16] OC PHASE COMPLETE
+[glm 15:22:16] ISOLATION: restoring
+[glm 15:22:23] ISOLATION: k3s restarted
+[glm 15:22:23] ISOLATION: restored
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_oc_calendar/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (39 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 18 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 10 window-scopes -> OK
+       tool     IPC 1.527  CPUs 0.004  kernel 23.2%  cs/s 5396.0
+       proxy    IPC 2.225  CPUs 0.022  kernel 2.7%  cs/s 1745.0
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (92 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 63 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 33 window-scopes -> OK
+       E5 work: 82 STEP markers, trajectory present -> OK
+       harness  IPC 0.585  CPUs 0.001  kernel 6.5%  cs/s 800.0
+       tool     IPC 0.253  CPUs 0.001  kernel 24.2%  cs/s 1670.0
+       proxy    IPC 0.207  CPUs 0.001  kernel 3.7%  cs/s 3106.0
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_django/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 304 STEP markers, trajectory present -> OK
+       harness  IPC 2.841  CPUs 0.061  kernel 7.1%  cs/s 153.0
+       tool     IPC 1.345  CPUs 0.021  kernel 50.4%  cs/s 653.0
+       proxy    IPC 2.488  CPUs 0.012  kernel 2.0%  cs/s 1261.0
+
+== cross-run dispersion per role (layer 3) ==
+[glm 15:22:23] cleanup done (exit 0)

@@ -1,46 +1,0 @@
-=== nsys profile DECODE (no capture-range, full output) ===
-(EngineCore pid=11397) INFO 06-23 16:10:16 [core.py:1191] [shutdown] EngineCore: exiting busy loop
-WARNING 06-23 16:10:18 [core_client.py:699] [shutdown] MPClient: engine core exited unexpectedly; starting cleanup
-INFO 06-23 16:10:18 [core_client.py:652] [shutdown] MPClient: start timeout=default
-INFO 06-23 16:10:18 [core_client.py:654] [shutdown] MPClient: stopping engine manager
-INFO 06-23 16:10:18 [core_client.py:656] [shutdown] MPClient: engine manager stopped
-INFO 06-23 16:10:18 [core_client.py:657] [shutdown] MPClient: cleaning up background resources
-INFO 06-23 16:10:18 [core_client.py:659] [shutdown] MPClient: complete
-Collecting data...
-Generating '/tmp/nsys-report-9601.qdstrm'
-[1/1] [0%                          ] nsys_decode.nsys-rep[1/1] [0%                          ] nsys_decode.nsys-rep[1/1] [0%                          ] nsys_decode.nsys-rep[1/1] [13%                         ] nsys_decode.nsys-rep[1/1] [11%                         ] nsys_decode.nsys-rep[1/1] [9%                          ] nsys_decode.nsys-rep[1/1] [7%                          ] nsys_decode.nsys-rep[1/1] [=15%                        ] nsys_decode.nsys-rep[1/1] [13%                         ] nsys_decode.nsys-rep[1/1] [11%                         ] nsys_decode.nsys-rep[1/1] [10%                         ] nsys_decode.nsys-rep[1/1] [9%                          ] nsys_decode.nsys-rep[1/1] [8%                          ] nsys_decode.nsys-rep[1/1] [7%                          ] nsys_decode.nsys-rep[1/1] [6%                          ] nsys_decode.nsys-rep[1/1] [8%                          ] nsys_decode.nsys-rep[1/1] [11%                         ] nsys_decode.nsys-rep[1/1] [14%                         ] nsys_decode.nsys-rep[1/1] [=17%                        ] nsys_decode.nsys-rep[1/1] [==20%                       ] nsys_decode.nsys-rep[1/1] [===22%                      ] nsys_decode.nsys-rep[1/1] [====25%                     ] nsys_decode.nsys-rep[1/1] [====28%                     ] nsys_decode.nsys-rep[1/1] [=====31%                    ] nsys_decode.nsys-rep[1/1] [======34%                   ] nsys_decode.nsys-rep[1/1] [=======37%                  ] nsys_decode.nsys-rep[1/1] [=======39%                  ] nsys_decode.nsys-rep[1/1] [========42%                 ] nsys_decode.nsys-rep[1/1] [=========45%                ] nsys_decode.nsys-rep[1/1] [==========48%               ] nsys_decode.nsys-rep[1/1] [===========50%              ] nsys_decode.nsys-rep[1/1] [========================100%] nsys_decode.nsys-rep[1/1] [========================100%] nsys_decode.nsys-rep
-Generated:
-	/opt/agentic/nsys_decode.nsys-rep
-=== rep file ===
--rw-rw-r-- 1 ubuntu ubuntu 6322010 Jun 23 16:10 /opt/agentic/nsys_decode.nsys-rep
-=== TOP KERNELS (decode) ===
-Generating SQLite file /opt/agentic/nsys_decode.sqlite from /opt/agentic/nsys_decode.nsys-rep
-Processing [/opt/agentic/nsys_decode.sqlite] with [/opt/nvidia/nsight-systems/2026.1.3/target-linux-x64/reports/cuda_gpu_kern_sum.py]... 
-
- ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
-
- Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                                                  Name                                                
- --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ----------------------------------------------------------------------------------------------------
-     35.2       2667574894       2304  1157801.6   438531.0     66593   3560244    1051060.6  void marlin::Marlin<(long)1125899906910725, (long)1125899906843648, (long)1125899906910725, (long)1…
-     34.2       2589347721      29229    88588.3    30368.0     21601    204833      71807.8  void marlin::Marlin<(long)1125899906910725, (long)1125899906843648, (long)1125899906910725, (long)1…
-      5.1        386321017        512   754533.2   164336.5      1504   3526387    1170708.2  void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<int, int, int, at:…
-      5.1        383820609       1140   336684.7     5344.0      2400   3452883     854311.6  void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void …
-      5.0        380801408        512   743752.8   162529.0      2048   3479315    1157321.3  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
-      3.3        248331951        115  2159408.3  2159053.0   2151054   2168301       4747.0  std::enable_if<!T7, void>::type internal::gemvx::kernel<int, int, __half, __half, __half, float, (b…
-      2.8        210061784        256   820553.8   623651.5    175841   1858442     671041.8  void at::native::reduce_kernel<(int)128, (int)4, at::native::ReduceOp<int, at::native::func_wrapper…
-      2.7        207365026        512   405009.8    70176.5      2560   1923082     644798.7  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
-      2.1        159975264       7499    21332.9     4544.0      4192   1948779     178181.2  void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu…
-      1.2         90163987      14998     6011.7     2176.0      2080    489123      41242.1  std::enable_if<T2>(int)0&&vllm::_typeConvert<T1>::exists, void>::type vllm::fused_add_rms_norm_kern…
-      0.5         41540542       7307     5685.0     5664.0      5120      6272        137.7  void flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<(int)128, (int)64, (int)128, (int)4, (…
-      0.5         38484998       7500     5131.3     2816.0      2592    276162      24943.2  void vllm::rotary_embedding_kernel<c10::Half, c10::Half, (bool)1>(const long *, T1 *, T1 *, const T…
-      0.5         38200237        256   149219.7    93632.5     23105    386882     145991.3  void marlin::gptq_marlin_repack_kernel<(int)256, (int)4, (bool)0, (bool)0>(const unsigned int *, co…
-      0.4         31733244         64   495831.9   497523.0    439714    499683       7725.0  void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<signed char>, std::a…
-      0.4         27822134        640    43472.1     3984.0      1472    201825      76297.8  void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::n…
-      0.3         23236229        256    90766.5    69905.0     23776    208033      72802.5  void marlin::Marlin<(long)1125899906910725, (long)1125899906843648, (long)1125899906910725, (long)1…
-      0.2         14442034       7435     1942.4     1952.0      1152      2368         63.1  void vllm::reshape_and_cache_flash_kernel<unsigned short, unsigned short, (vllm::Fp8KVCacheDataType…
-      0.1          8121648          2  4060824.0  4060824.0   3424820   4696828     899445.5  _topk_topp_kernel                                                                                   
-      0.1          6617258        258    25648.3     1520.0       864    100833      42248.9  void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<c10::Half>, std::arr…
-      0.1          5581216          2  2790608.0  2790608.0   2786000   2795216       6516.7  void cutlass::Kernel2<cutlass_80_tensorop_f16_s16816gemm_relu_f16_256x128_32x3_tn_align8>(T1::Param…
-      0.0          2898196        435     6662.5     4128.0      3232     17280       4762.4  void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void …
-      0.0          2783856          4   695964.0   696260.0    665636    725700      26616.7  void at::native::<unnamed>::cunn_SoftMaxForward<(int)4, float, float, float, at::native::<unnamed>:…
-      0.0          2156844        121    17825.2     6176.0      6048    260002      51305.0  void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::ArgMaxOps<…

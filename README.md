@@ -17,24 +17,56 @@ It contains three things:
 2. **The Benchmark Suite** — a load generator + CPU/GPU profiler that measures that service.
 3. **The Agentic Workloads** — three agent benchmarks, profiled the same way: SWE-agent on SWE-bench, our own driver on BigCodeBench, and OpenClaw on WildClawBench.
 
+## Running the measurements — one command
+
+Every measurement campaign runs through a single entry point, `./measure.sh`, which dispatches
+to the proven per-campaign kits (it sets the right data root / env; nothing is reimplemented):
+
+```bash
+./measure.sh agents-swe preflight            # env checks, no spend
+./measure.sh agents-swe campaign             # SWE-agent x GLM-5.2 (SWE_long)
+./measure.sh agents-oc  campaign             # OpenClaw x GLM-5.2 (OC_long)
+./measure.sh service    campaign             # local k3s service, per-tier CPU/TMA
+./measure.sh plots                           # regenerate every figure set (no spend)
+./measure.sh validate                        # run every validator over banked data
+```
+
+Per-campaign knobs are env vars with certified defaults (e.g. `SWE_INSTANCES=…`,
+`OC_TASKS=…`, `SWE_DRAIN_S=…`); `./measure.sh help` lists them. Stages are shared across
+campaigns: `preflight → dryrun → smoke → campaign → validate`.
+
 ## Repository map
 
 ```
+measure.sh              ONE-COMMAND entry to every measurement campaign (dispatches to the kits)
 src/service/            FastAPI orchestrator: semantic cache, RAG, embeddings, observability
 deploy/                 Kubernetes manifests, Helm charts, Kustomize overlays
 scripts/                Deploy, ingest, benchmark, and report scripts
 
 plots/                  curated figure gallery: domain -> setup -> tier/bench (see plots/README.md)
 results/                curated data gallery, same structure, symlinks into the real data dirs
-benchmark_results/      service benchmark data (tok64/tok192/tok320) + its figure scripts (plots/)
-h100/  (+service/)      self-hosted 32B runs: agents + single-node service + 32B GPU top-down
+
+# THESIS SCOPE (2026-07-12): the thesis shows two isolated campaigns only —
+#   the local isolated service (local_service/data_iso) and the GLM-5.2 isolated
+#   agent runs (local_agents/{SWE_long,OC_long}). The H100 campaign and the EKS
+#   service benchmark were moved to archive/ (see archive/README.md).
+
 local_service/          local k3s service run: per-tier TMA L1+L2, attribution, 12-cell timing grid
+  scripts/iso/          isolated-campaign kit: run_service_campaign.sh, validate, plot
+  data_iso/  plots_iso/ banked 36-cell data + figures
+
+local_agents/           local agent campaigns (GLM-5.2 frontier tier)
+  scripts/glm/          campaign kit: run_glm_campaign.sh (SWE + OC), lineage watcher, validate, plotters
+  SWE_long/             long-horizon SWE-agent: data/ plots/ plot_spec.json LAUNCH.md
+  OC_long/              long-horizon OpenClaw:  data/ plots/ plot_spec.json (lineage-fenced)
 
 agentic/
   CANONICAL/            single source of truth for the 3 agent benchmarks (microarch.py, data)
   common/               shared perf harness      thesis_figures/  cross-workload figures
   swe_agent/  bigcodebench/  openclaw/            the three workloads
   inference/            phantom-CPU experiment (cudasync/) + GPU-TMA build + during-inference figures (plots/)
+
+archive/                regenerable run artifacts moved out of the tree (old logs, dup eval reports)
 ```
 
 Large re-creatable artifacts (venvs, model weights, upstream clones, scratch outputs) are gitignored.

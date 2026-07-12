@@ -35,3 +35,16 @@ benchmark_results/
 local_service/data/
 local_agents/data/
 h100/data_agent_side/oc_harness_output/**/task_output/
+
+# loose run/chain logs (superseded by per-run launch logs; old ones in archive/)
+*.log
+*_chain.log
+archive/
+
+# isolated-campaign raw data (heavy; plots + specs + kits are tracked, data is not)
+local_agents/SWE_long/data/
+local_agents/OC_long/data/
+local_service/data_iso/
+local_agents/SWE_long/*.log
+local_agents/OC_long/*.log
+agentic/inference/runs/

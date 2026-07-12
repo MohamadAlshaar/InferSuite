@@ -1,0 +1,23 @@
+[glm 13:30:06] ISOLATION: snapshotting baseline -> /home/mohamad/llm-service-kernel-latest/local_agents/scripts/glm/.state
+[glm 13:30:06] ISOLATION: applying
+[glm 13:30:13] ISOLATION: k3s stopped
+[glm 13:30:13] ISOLATION: applied (measured=2-11,14-23 house=0-1,12-13)
+[glm 13:30:17] proxy up (:8100 cgroup=user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-4172775.scope)
+[glm 13:30:17] ================ swe astropy run1 (glm-5.2) ================
+[glm 13:34:33] WORK VERIFIED astropy run1 (harness=measured.slice/glm-swe-astropy-r1.scope tool=measured.slice/docker-94e572d081def7a4d2889e716e0c21e3e6458ea0958b77891db41f2436b4aa64.scope)
+[glm 14:04:33] EPISODE-OK astropy-run1 (windows=178 rec=102614696B)
+[glm 14:04:33] SWE PHASE COMPLETE — review validator + sanity output, then: ./run_glm_campaign.sh campaign oc
+[glm 14:04:33] ISOLATION: restoring
+[glm 14:04:44] ISOLATION: k3s restarted
+[glm 14:04:44] ISOLATION: restored
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (178 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 69 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 69 window-scopes -> OK
+       E5 work: 110 STEP markers, trajectory present -> OK
+       harness  IPC 0.246  CPUs 0.0
+       tool     IPC 0.251  CPUs 0.001
+       proxy    IPC 0.214  CPUs 0.001
+
+== cross-run dispersion per role (layer 3) ==
+[glm 14:04:44] cleanup done (exit 0)

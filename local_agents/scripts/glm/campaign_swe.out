@@ -1,0 +1,283 @@
+[glm 16:04:20] ISOLATION: snapshotting baseline -> /home/mohamad/llm-service-kernel-latest/local_agents/scripts/glm/.state
+[glm 16:04:21] ISOLATION: applying
+[glm 16:04:30] ISOLATION: k3s stopped + pods killed (auto-respawn on restore)
+[glm 16:04:30] ISOLATION: applied (measured=2-11,14-23 house=0-1,12-13)
+[glm 16:04:34] proxy up (:8100 cgroup=user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1264465.scope)
+[glm 16:04:34] skip astropy run1 (DONE)
+[glm 16:04:34] ================ swe astropy run2 (glm-5.2) ================
+[glm 16:06:39] WORK VERIFIED astropy run2 (harness=measured.slice/glm-swe-astropy-r2.scope tool=measured.slice/docker-d6a2a0b3f7a41bad24fb4fb05a9fe50cc86572909c1e0e971ec5f28813ef8564.scope)
+[glm 16:47:32] EPISODE-OK astropy-run2 (windows=243 rec=166136716B)
+[glm 16:47:32] ================ swe astropy run3 (glm-5.2) ================
+[glm 16:51:36] WORK VERIFIED astropy run3 (harness=measured.slice/glm-swe-astropy-r3.scope tool=measured.slice/docker-50beff594ff4d4eef8c2ed271d3a9fd27312db0581c2df1e9fd5f501d92b1eb6.scope)
+[glm 17:16:24] EPISODE-OK astropy-run3 (windows=147 rec=99824724B)
+[glm 17:16:24] ================ swe scikit-learn run1 (glm-5.2) ================
+[glm 17:18:13] WORK VERIFIED scikit-learn run1 (harness=measured.slice/glm-swe-scikit-learn-r1.scope tool=measured.slice/docker-549a14fb95d414e520daa2cd0d6be2dca81f83233511f8ef5c77a65a3e75fbed.scope)
+[glm 17:25:11] EPISODE-OK scikit-learn-run1 (windows=41 rec=36486472B)
+[glm 17:25:11] ================ swe scikit-learn run2 (glm-5.2) ================
+[glm 17:26:33] WORK VERIFIED scikit-learn run2 (harness=measured.slice/glm-swe-scikit-learn-r2.scope tool=measured.slice/docker-81e6259162c2343bf6dc65b3fbfbde2c3f4c0399ce9c48803d9d85c1babd08cc.scope)
+[glm 18:07:28] EPISODE-OK scikit-learn-run2 (windows=243 rec=186998588B)
+[glm 18:07:28] ================ swe scikit-learn run3 (glm-5.2) ================
+[glm 18:08:53] WORK VERIFIED scikit-learn run3 (harness=measured.slice/glm-swe-scikit-learn-r3.scope tool=measured.slice/docker-00f49f7b01b6c89313a6ef25903f5a5a8b893775cbd762d132128f1339b0970f.scope)
+[glm 18:28:53] EPISODE-OK scikit-learn-run3 (windows=119 rec=73335680B)
+[glm 18:28:53] ================ swe sympy run1 (glm-5.2) ================
+[glm 18:30:10] WORK VERIFIED sympy run1 (harness=measured.slice/glm-swe-sympy-r1.scope tool=measured.slice/docker-8205b44334b6b10713ec41b05654029502299a39f152623b55e9d94671bfe657.scope)
+[glm 19:24:30] ISOLATION: snapshotting baseline -> /home/mohamad/llm-service-kernel-latest/local_agents/scripts/glm/.state
+[glm 19:24:30] ISOLATION: applying
+[glm 19:24:39] ISOLATION: k3s stopped + pods killed (auto-respawn on restore)
+[glm 19:24:39] ISOLATION: applied (measured=2-11,14-23 house=0-1,12-13)
+[glm 19:24:43] proxy up (:8100 cgroup=user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2523383.scope)
+[glm 19:24:43] skip astropy run1 (DONE)
+[glm 19:24:43] skip astropy run2 (DONE)
+[glm 19:24:43] skip astropy run3 (DONE)
+[glm 19:24:43] skip scikit-learn run1 (DONE)
+[glm 19:24:43] skip scikit-learn run2 (DONE)
+[glm 19:24:43] skip scikit-learn run3 (DONE)
+[glm 19:24:43] ================ swe sympy run1 (glm-5.2) ================
+[glm 19:24:59] WORK VERIFIED sympy run1 (harness=measured.slice/glm-swe-sympy-r1.scope tool=measured.slice/docker-5a2c12245c553c1e635415486d491bb3b4cec714c40f8f5c49e01b3d6a4e3d09.scope)
+[glm 19:56:12] EPISODE-OK sympy-run1 (windows=186 rec=108939880B)
+[glm 19:56:12] ================ swe sympy run2 (glm-5.2) ================
+[glm 19:56:27] WORK VERIFIED sympy run2 (harness=measured.slice/glm-swe-sympy-r2.scope tool=measured.slice/docker-4a0ae2c25001bb5fce7893ec274e9147178d107cafae95a4264caee403aa840d.scope)
+[glm 20:37:16] EPISODE-OK sympy-run2 (windows=243 rec=147544860B)
+[glm 20:37:16] ================ swe sympy run3 (glm-5.2) ================
+[glm 20:38:30] WORK VERIFIED sympy run3 (harness=measured.slice/glm-swe-sympy-r3.scope tool=measured.slice/docker-b58dff95a6c8a7817485a69cc59079a1948bc99a6bfb1c5f4ef99d8aea33f210.scope)
+[glm 21:19:17] EPISODE-OK sympy-run3 (windows=243 rec=155183228B)
+[glm 21:19:17] skip django run1 (DONE)
+[glm 21:19:17] ================ swe django run2 (glm-5.2) ================
+[glm 21:21:32] WORK VERIFIED django run2 (harness=measured.slice/glm-swe-django-r2.scope tool=measured.slice/docker-1f902bb43002bca740ad67b2579bd1bd075149ee82a215f5b9306fa36ba3106f.scope)
+[glm 22:02:22] EPISODE-OK django-run2 (windows=243 rec=151314868B)
+[glm 22:02:22] ================ swe django run3 (glm-5.2) ================
+[glm 22:04:56] WORK VERIFIED django run3 (harness=measured.slice/glm-swe-django-r3.scope tool=measured.slice/docker-f0b90e6572d78de847ca29a4a6efc02ec8d8f7f0bcba03ad6ec86d4766ad6bf1.scope)
+[glm 22:45:46] EPISODE-OK django-run3 (windows=243 rec=153186796B)
+[glm 22:45:46] SWE PHASE COMPLETE — review validator + sanity output, then: ./run_glm_campaign.sh campaign oc
+[glm 22:45:46] ISOLATION: restoring
+[glm 22:45:57] ISOLATION: k3s restarted
+[glm 22:45:57] ISOLATION: restored
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_oc_calendar/run_1
+       warn: 22/78 windows fully idle (model-wait) — timeline signal, not loss
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (56 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0001 CPUs over 39 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 21 window-scopes -> OK
+       E4 watcher /agent: agent-family = 62.1% (contamination bound 37.9% — attach to any OC agent-side claim)
+       E4 watcher /toolexec: agent-family comms = 0.0% of samples -> OK
+       harness  wIPC 1.564  medIPC 1.403  CPUs 0.003  kernel 23.1%  cs/s 5801.0
+       tool     wIPC 1.858  medIPC 0.296  CPUs 0.0  kernel 68.0%  cs/s 42328.0
+       proxy    wIPC 2.044  medIPC 2.038  CPUs 0.029  kernel 2.3%  cs/s 625.0
+       behavior: scored, 0 steps, 0 calls, 9 min, tool 0.0 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_astropy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (12 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 6 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 4 window-scopes -> OK
+       harness  wIPC 2.77  medIPC 3.059  CPUs 0.045  kernel 5.6%  cs/s 101.0
+       tool     wIPC 1.704  medIPC 1.709  CPUs 1.035  kernel 57.0%  cs/s 96.0
+       behavior: capped/died, 82 steps, 0 calls, 2 min, tool 139.0 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_astropy/run_2
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (64 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 28 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.002 over 14 window-scopes -> OK
+       harness  wIPC 2.917  medIPC 2.903  CPUs 0.897  kernel 6.6%  cs/s 17.0
+       tool     wIPC 1.28  medIPC 1.226  CPUs 0.017  kernel 28.0%  cs/s 1670.0
+       behavior: capped/died, 408 steps, 0 calls, 11 min, tool 20.5 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_astropy/run_3
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (15 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 5 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.002 over 4 window-scopes -> OK
+       harness  wIPC 2.923  medIPC 2.868  CPUs 0.155
+       tool     wIPC 1.72  medIPC 1.706  CPUs 1.119  kernel 2.1%  cs/s 1151.0
+       behavior: capped/died, 121 steps, 0 calls, 3 min, tool 171.2 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_astropy/run_4
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (12 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 6 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.001 over 4 window-scopes -> OK
+       harness  wIPC 2.767  medIPC 3.04  CPUs 0.043  kernel 5.5%  cs/s 101.0
+       tool     wIPC 1.689  medIPC 1.689  CPUs 1.142  kernel 58.2%  cs/s 84.0
+       behavior: capped/died, 82 steps, 0 calls, 2 min, tool 138.8 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_astropy/run_5
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (12 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 6 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.001 over 4 window-scopes -> OK
+       harness  wIPC 2.778  medIPC 3.067  CPUs 0.044  kernel 5.7%  cs/s 99.0
+       tool     wIPC 1.672  medIPC 1.672  CPUs 1.14  kernel 58.5%  cs/s 83.0
+       behavior: capped/died, 82 steps, 0 calls, 2 min, tool 138.8 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_scikit-learn/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (14 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 5 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.004 over 4 window-scopes -> OK
+       harness  wIPC 2.883  medIPC 2.776  CPUs 0.051
+       tool     wIPC 0.749  medIPC 1.011  CPUs 7.149  kernel 8.3%  cs/s 14855.0
+       behavior: capped/died, 72 steps, 0 calls, 2 min, tool 1523.3 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_scikit-learn/run_2
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (68 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 30 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.002 over 16 window-scopes -> OK
+       harness  wIPC 2.876  medIPC 2.864  CPUs 0.635  kernel 7.8%  cs/s 22.0
+       tool     wIPC 1.129  medIPC 1.123  CPUs 1.552  kernel 39.6%  cs/s 56.0
+       behavior: capped/died, 358 steps, 0 calls, 11 min, tool 1264.9 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_scikit-learn/run_3
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (26 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 9 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.002 over 6 window-scopes -> OK
+       harness  wIPC 2.849  medIPC 2.884  CPUs 0.16  kernel 9.5%  cs/s 93.0
+       tool     wIPC 1.023  medIPC 1.126  CPUs 3.139  kernel 10.1%  cs/s 15163.0
+       behavior: capped/died, 140 steps, 0 calls, 4 min, tool 2608.8 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_scikit-learn/run_4
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (13 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 5 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.002 over 4 window-scopes -> OK
+       harness  wIPC 3.012  medIPC 2.851  CPUs 0.063
+       tool     wIPC 0.751  medIPC 0.913  CPUs 7.566  kernel 9.8%  cs/s 22714.0
+       behavior: capped/died, 72 steps, 0 calls, 2 min, tool 1400.0 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_replay_swe_scikit-learn/run_5
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (13 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0001 CPUs over 5 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.003 over 4 window-scopes -> OK
+       harness  wIPC 2.938  medIPC 2.807  CPUs 0.052
+       tool     wIPC 0.759  medIPC 0.964  CPUs 7.38  kernel 8.6%  cs/s 18398.0
+       behavior: capped/died, 72 steps, 0 calls, 2 min, tool 1444.9 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (92 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 63 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 33 window-scopes -> OK
+       E5 work: 82 STEP markers, trajectory present -> OK
+       harness  wIPC 1.993  medIPC 0.585  CPUs 0.001  kernel 6.5%  cs/s 800.0
+       tool     wIPC 1.643  medIPC 0.253  CPUs 0.001  kernel 24.2%  cs/s 1670.0
+       proxy    wIPC 2.009  medIPC 0.207  CPUs 0.001  kernel 3.7%  cs/s 3106.0
+       behavior: submitted, 82 steps, 83 calls, 15 min, tool 135.0 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_2
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 407 STEP markers, trajectory present -> OK
+       harness  wIPC 2.847  medIPC 2.841  CPUs 0.228  kernel 6.1%  cs/s 93.0
+       tool     wIPC 1.114  medIPC 1.093  CPUs 0.006  kernel 27.0%  cs/s 2599.0
+       proxy    wIPC 2.747  medIPC 2.816  CPUs 0.015  kernel 1.4%  cs/s 771.0
+       behavior: capped/died, 407 steps, 408 calls, 41 min, tool 18.5 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_astropy/run_3
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (147 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 99 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 51 window-scopes -> OK
+       E5 work: 121 STEP markers, trajectory present -> OK
+       harness  wIPC 2.507  medIPC 1.928  CPUs 0.003  kernel 8.2%  cs/s 737.0
+       tool     wIPC 1.515  medIPC 1.042  CPUs 0.005  kernel 12.0%  cs/s 3829.0
+       proxy    wIPC 1.167  medIPC 0.37  CPUs 0.001  kernel 3.8%  cs/s 2604.0
+       behavior: submitted, 121 steps, 123 calls, 25 min, tool 169.1 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_django/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 304 STEP markers, trajectory present -> OK
+       harness  wIPC 2.965  medIPC 2.841  CPUs 0.061  kernel 7.1%  cs/s 153.0
+       tool     wIPC 1.34  medIPC 1.345  CPUs 0.021  kernel 50.4%  cs/s 653.0
+       proxy    wIPC 2.585  medIPC 2.488  CPUs 0.012  kernel 2.0%  cs/s 1261.0
+       behavior: capped/died, 304 steps, 305 calls, 41 min, tool 50.6 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_django/run_2
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 414 STEP markers, trajectory present -> OK
+       harness  wIPC 2.928  medIPC 2.909  CPUs 0.236  kernel 6.0%  cs/s 95.0
+       tool     wIPC 2.005  medIPC 2.001  CPUs 0.038  kernel 5.8%  cs/s 285.0
+       proxy    wIPC 2.876  medIPC 2.951  CPUs 0.017  kernel 1.2%  cs/s 680.0
+       behavior: capped/died, 414 steps, 415 calls, 41 min, tool 145.6 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_django/run_3
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 443 STEP markers, trajectory present -> OK
+       harness  wIPC 2.924  medIPC 2.876  CPUs 0.322  kernel 6.3%  cs/s 85.0
+       tool     wIPC 1.192  medIPC 1.194  CPUs 0.008  kernel 25.6%  cs/s 2140.0
+       proxy    wIPC 2.756  medIPC 2.971  CPUs 0.019  kernel 1.2%  cs/s 574.0
+       behavior: capped/died, 443 steps, 443 calls, 41 min, tool 18.4 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_scikit-learn/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (41 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 27 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 15 window-scopes -> OK
+       E5 work: 72 STEP markers, trajectory present -> OK
+       harness  wIPC 2.969  medIPC 2.744  CPUs 0.014  kernel 9.2%  cs/s 5496.0
+       tool     wIPC 1.178  medIPC 1.243  CPUs 0.39  kernel 18.7%  cs/s 5491.0
+       proxy    wIPC 1.436  medIPC 1.211  CPUs 0.008  kernel 7.2%  cs/s 5071.0
+       behavior: submitted, 72 steps, 75 calls, 7 min, tool 1760.7 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_scikit-learn/run_2
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 357 STEP markers, trajectory present -> OK
+       harness  wIPC 2.825  medIPC 2.814  CPUs 0.17  kernel 6.5%  cs/s 113.0
+       tool     wIPC 1.112  medIPC 1.118  CPUs 0.388  kernel 39.4%  cs/s 71.0
+       proxy    wIPC 1.985  medIPC 1.936  CPUs 0.015  kernel 1.8%  cs/s 766.0
+       behavior: capped/died, 357 steps, 359 calls, 41 min, tool 1267.5 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_scikit-learn/run_3
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (119 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 81 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 42 window-scopes -> OK
+       E5 work: 140 STEP markers, trajectory present -> OK
+       harness  wIPC 2.701  medIPC 2.934  CPUs 0.017  kernel 8.0%  cs/s 372.0
+       tool     wIPC 0.704  medIPC 1.121  CPUs 0.387  kernel 28.7%  cs/s 94.0
+       proxy    wIPC 2.429  medIPC 2.225  CPUs 0.005  kernel 2.8%  cs/s 2144.0
+       behavior: submitted, 140 steps, 142 calls, 20 min, tool 2523.0 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_sympy/run_1
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (186 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 123 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 63 window-scopes -> OK
+       E5 work: 188 STEP markers, trajectory present -> OK
+       harness  wIPC 2.833  medIPC 2.787  CPUs 0.032  kernel 8.7%  cs/s 339.0
+       tool     wIPC 1.816  medIPC 1.317  CPUs 0.008  kernel 13.7%  cs/s 2467.0
+       proxy    wIPC 2.6  medIPC 2.468  CPUs 0.006  kernel 2.7%  cs/s 2160.0
+       behavior: submitted, 188 steps, 188 calls, 31 min, tool 47.3 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_sympy/run_2
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0002 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 312 STEP markers, trajectory present -> OK
+       harness  wIPC 2.852  medIPC 2.878  CPUs 0.101  kernel 7.4%  cs/s 116.0
+       tool     wIPC 1.609  medIPC 1.325  CPUs 0.011  kernel 15.6%  cs/s 522.0
+       proxy    wIPC 2.776  medIPC 2.839  CPUs 0.01  kernel 1.7%  cs/s 1074.0
+       behavior: capped/died, 312 steps, 311 calls, 41 min, tool 75.5 CPU-s
+[OK  ] /home/mohamad/llm-service-kernel-latest/local_agents/data/glm_swe_sympy/run_3
+       E1 window length: perf elapsed median 10.00s vs WINSEC 10s (243 windows) -> OK
+       E2 CPUs formula vs perf's own comment: median |diff| 0.0003 CPUs over 162 rows -> OK
+       E3 cpu.stat vs PMU task-clock (independent subsystems): median |dCPUs| 0.000 over 81 window-scopes -> OK
+       E5 work: 436 STEP markers, trajectory present -> OK
+       harness  wIPC 2.827  medIPC 2.903  CPUs 0.328  kernel 6.1%  cs/s 87.0
+       tool     wIPC 1.141  medIPC 1.138  CPUs 0.007  kernel 26.2%  cs/s 2256.0
+       proxy    wIPC 2.774  medIPC 2.969  CPUs 0.018  kernel 1.2%  cs/s 620.0
+       behavior: capped/died, 436 steps, 436 calls, 41 min, tool 17.0 CPU-s
+
+== cross-run dispersion per role (layer 3) ==
+  glm_replay_swe_astropy       harness  wIPC [2.77, 2.92, 2.92, 2.77, 2.78] disp 6%
+  glm_replay_swe_astropy       tool     wIPC [1.7, 1.28, 1.72, 1.69, 1.67] disp 26%  <-- HIGH (consider +2 repeats)
+  glm_replay_swe_scikit-learn  harness  wIPC [2.88, 2.88, 2.85, 3.01, 2.94] disp 6%
+  glm_replay_swe_scikit-learn  tool     wIPC [0.75, 1.13, 1.02, 0.75, 0.76] disp 50%  <-- HIGH (consider +2 repeats)
+  glm_swe_astropy              harness  wIPC [1.99, 2.85, 2.51] disp 34%  <-- HIGH (consider +2 repeats)
+  glm_swe_astropy              tool     wIPC [1.64, 1.11, 1.51] disp 35%  <-- HIGH (consider +2 repeats)
+  glm_swe_astropy              proxy    wIPC [2.01, 2.75, 1.17] disp 79%  <-- HIGH (consider +2 repeats)
+  glm_swe_django               harness  wIPC [2.96, 2.93, 2.92] disp 1%
+  glm_swe_django               tool     wIPC [1.34, 2.0, 1.19] disp 61%  <-- HIGH (consider +2 repeats)
+  glm_swe_django               proxy    wIPC [2.58, 2.88, 2.76] disp 11%
+  glm_swe_scikit-learn         harness  wIPC [2.97, 2.83, 2.7] disp 9%
+  glm_swe_scikit-learn         tool     wIPC [1.18, 1.11, 0.7] disp 43%  <-- HIGH (consider +2 repeats)
+  glm_swe_scikit-learn         proxy    wIPC [1.44, 1.99, 2.43] disp 50%  <-- HIGH (consider +2 repeats)
+  glm_swe_sympy                harness  wIPC [2.83, 2.85, 2.83] disp 1%
+  glm_swe_sympy                tool     wIPC [1.82, 1.61, 1.14] disp 42%  <-- HIGH (consider +2 repeats)
+  glm_swe_sympy                proxy    wIPC [2.6, 2.78, 2.77] disp 6%
+
+== live<->replay anchor (tool side) ==
+  astropy        run_1: dso-match 99%  cpu-s 135vs139 (3%)  br_ki 196.11vs193.65 (1%)  fp_ki 0.028vs14.568 (51929%)  wipc 1.643vs1.704 (4%)
+  astropy        run_2: dso-match 94%  cpu-s 18vs20 (11%)  br_ki 203.62vs203.87 (0%)  fp_ki 0.009vs0.008 (11%)  wipc 1.114vs1.28 (15%)
+  astropy        run_3: dso-match 99%  cpu-s 169vs171 (1%)  br_ki 195.55vs193.74 (1%)  fp_ki 0.265vs0.459 (73%)  wipc 1.515vs1.72 (14%)
+  astropy        same-traj wIPC [1.689, 1.672, 1.704] disp 2%  (signature precision)
+  astropy        same-traj cpu-s [139, 139, 139] cs/s [84.0, 83.0, 96.0]  (cost spread = runtime scheduling)
+  scikit-learn   run_1: dso-match 99%  cpu-s 1761vs1523 (13% timeout-asym)  br_ki 183.52vs157.88 (14%)  fp_ki 0.415vs0.748 (80%)  wipc 1.178vs0.749 (36%)
+  scikit-learn   run_2: dso-match 100%  cpu-s 1267vs1265 (0%)  br_ki 179.69vs180.08 (0%)  fp_ki 0.002vs0.002 (0%)  wipc 1.112vs1.129 (2%)
+  scikit-learn   run_3: dso-match 100%  cpu-s 2523vs2609 (3%)  br_ki 152.95vs174.69 (14%)  fp_ki 0.6vs0.54 (10%)  wipc 0.704vs1.023 (45%)
+  scikit-learn   same-traj wIPC [0.751, 0.759, 0.749] disp 1%  (signature precision)
+  scikit-learn   same-traj cpu-s [1400, 1445, 1523] cs/s [22714.0, 18398.0, 14855.0]  (cost spread = runtime scheduling)
+  anchor verdict: PASS — measures stable under pinned behavior
+
+== workload-behavior consistency per config ==
+  glm_replay_swe_astropy       run_1: capped/died/82st/2m/139cpu-s; run_2: capped/died/408st/11m/20cpu-s; run_3: capped/died/121st/3m/171cpu-s; run_4: capped/died/82st/2m/139cpu-s; run_5: capped/died/82st/2m/139cpu-s  <-- CHECK: dur_s spread 5.3x, steps spread 5.0x, tool_cpu_s spread 8.4x
+  glm_replay_swe_scikit-learn  run_1: capped/died/72st/2m/1523cpu-s; run_2: capped/died/358st/11m/1265cpu-s; run_3: capped/died/140st/4m/2609cpu-s; run_4: capped/died/72st/2m/1400cpu-s; run_5: capped/died/72st/2m/1445cpu-s  <-- CHECK: dur_s spread 5.2x, steps spread 5.0x
+  glm_swe_astropy              run_1: submitted/82st/15m/135cpu-s; run_2: capped/died/407st/41m/18cpu-s; run_3: submitted/121st/25m/169cpu-s  <-- CHECK: MIXED OUTCOMES ['capped/died', 'submitted'], steps spread 5.0x, tool_cpu_s spread 9.1x
+  glm_swe_django               run_1: capped/died/304st/41m/51cpu-s; run_2: capped/died/414st/41m/146cpu-s; run_3: capped/died/443st/41m/18cpu-s  <-- CHECK: tool_cpu_s spread 7.9x
+  glm_swe_scikit-learn         run_1: submitted/72st/7m/1761cpu-s; run_2: capped/died/357st/41m/1267cpu-s; run_3: submitted/140st/20m/2523cpu-s  <-- CHECK: MIXED OUTCOMES ['capped/died', 'submitted'], dur_s spread 5.9x, steps spread 5.0x
+  glm_swe_sympy                run_1: submitted/188st/31m/47cpu-s; run_2: capped/died/312st/41m/75cpu-s; run_3: capped/died/436st/41m/17cpu-s  <-- CHECK: MIXED OUTCOMES ['capped/died', 'submitted']
+[glm 22:45:58] cleanup done (exit 0)

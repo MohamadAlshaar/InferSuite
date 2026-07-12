@@ -13,15 +13,20 @@ Setup names are the same as in `plots/README.md`:
 | `l40s` | L40S ncu study |
 
 ```
-service/  local -> local_service/data       (counters+TMA per tier, idle control, 12-cell timing grid)
+service/  local -> local_service/data_iso  (ISOLATED 36-cell: counters+TMA per tier, idle control)
           h100  -> h100/service/data        (attribution + microarch + idle control + PROVENANCE.md)
           eks   -> benchmark_results/run_20260609_140052
-agents/   local     -> local_agents/data    (during-inference 7B replays; tool software views)
+agents/   swe_long  -> local_agents/SWE_long/data   (ISOLATED long-horizon SWE-agent x GLM-5.2)
+          oc_long   -> local_agents/OC_long/data    (ISOLATED long-horizon OpenClaw x GLM-5.2, lineage-fenced)
+          certified_40min -> archive/certified_glm_40min  (superseded 40-min GLM campaign, archived)
           local_api -> agentic/CANONICAL/{swe_bench,bigcodebench,openclaw}/data  (canonical tool TMA)
           h100/{bcb,swe,oc} -> h100/data*   (32B campaign captures)
 engine/   local/data.json -> agentic/inference/plots/data.json   local/phantom -> agentic/inference/runs/sync
 gpu/      local_a2000 -> agentic/inference/runs/ncu   h100 -> h100/data_gpu   l40s -> agentic/aws_agents/gpu
 ```
 
-Note: some targets are **local-only** (gitignored raw captures: `local_service/data`,
-`local_agents/data`) — those links resolve on the measurement machine but not in a fresh clone.
+Updated 2026-07-12: the live isolated campaigns (`swe_long`, `oc_long`, service `data_iso`) are the
+current sets; the earlier 40-min GLM campaign and exploratory runs were moved to `archive/`.
+
+Note: some targets are **local-only** (gitignored raw captures) — those links resolve on the
+measurement machine but not in a fresh clone.
