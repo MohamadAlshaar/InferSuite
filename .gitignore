@@ -23,9 +23,12 @@ loadgen/benchmark/results/
 
 # Backups
 *.bak
-# Claude Code project files — never publish
+# Claude Code project files / session artifacts — never publish
 .claude/
 CLAUDE.md
+HANDOFF.md
+HANDOFF*.md
+*_handoff.md
 # Live cluster config (account id etc.) — keep local
 deploy/config.env
 # Heavy raw measurement data — kept local, not published (plots are tracked separately)
