@@ -68,7 +68,8 @@ case "$CAMP" in
     which="${STAGE:-all}"
     swe(){ echo "[plots] SWE_long"; env PLOT_SPEC="$REPO/local_agents/SWE_long/plot_spec.json" $PY "$GLM/plot_glm_results.py"
            env PLOT_SPEC="$REPO/local_agents/SWE_long/plot_spec.json" $PY "$GLM/plot_call_structure.py"
-           $PY "$REPO/local_agents/SWE_long/plot_internal_tools.py"; }
+           $PY "$REPO/local_agents/SWE_long/plot_internal_tools.py"
+           $PY "$REPO/local_agents/SWE_long/plot_calls_vs_bursts.py"; }
     oc(){  echo "[plots] OC_long";  env PLOT_SPEC="$REPO/local_agents/OC_long/plot_spec.json"  $PY "$GLM/plot_glm_results.py"
            env PLOT_SPEC="$REPO/local_agents/OC_long/plot_spec.json"  $PY "$GLM/plot_call_structure.py"; }
     svc(){ echo "[plots] service"; $PY "$SVC/plot_service_iso.py"; }
