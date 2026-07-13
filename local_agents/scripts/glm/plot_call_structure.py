@@ -67,7 +67,7 @@ axes = np.atleast_2d(axes)
 fig.subplots_adjust(hspace=0.42, wspace=0.10, top=0.86)
 for col, (label, rd) in enumerate(TASKS):
     for row, (spikes, color, rolename) in enumerate(
-            [(T[label], C_TOOL, "Tool calls"), (H[label], C_HARN, "Harness bursts")]):
+            [(T[label], C_TOOL, "Tool bursts"), (H[label], C_HARN, "Harness bursts")]):
         ax = axes[row][col]
         heavy = int((spikes > 0.3).sum())
         x = np.random.default_rng(7).uniform(-0.30, 0.30, len(spikes))

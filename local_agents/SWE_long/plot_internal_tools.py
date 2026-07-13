@@ -126,7 +126,7 @@ for k, (ax, (label, (agg, total_cs, cov, method))) in enumerate(
         ax.tick_params(labelleft=False)
     ax.set_ylim(-0.55, len(ROWS) - 0.45)
     ax.set_xlim(0, max(cpu) * 1.55)
-    ax.set_xlabel("CPU amount (core-s)", fontsize=9)
+    ax.set_xlabel("CPU time (core-seconds)", fontsize=9)
     for s in ("top", "right"): ax.spines[s].set_visible(False)
     ax.set_title(label, fontsize=10.5, pad=24)
     ax.text(0.5, 1.07, f"coverage {cov:.0f}% · {method.split(' (')[0]}",
