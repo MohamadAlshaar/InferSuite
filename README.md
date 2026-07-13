@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/infersuite_logo.png" alt="InferSuite" width="420">
+</p>
+
 # Where Does the Time Go?
 ### An end-to-end GenAI system and the benchmark suite that measures it
 
