@@ -39,6 +39,20 @@ Per-campaign knobs are env vars with certified defaults (e.g. `SWE_INSTANCES=…
 `OC_TASKS=…`, `SWE_DRAIN_S=…`); `./measure.sh help` lists them. Stages are shared across
 campaigns: `preflight → dryrun → smoke → campaign → validate`.
 
+### Isolation
+
+Each kit applies the **runtime** isolation automatically (measured/house cpuset split, performance
+governor, no-turbo, transparent huge pages off, NMI watchdog off) and restores it on teardown. For
+the strongest isolation, apply the optional **boot-time** hardening once — tickless, scheduler-isolated
+measured cores — and reboot before a campaign:
+
+```bash
+sudo scripts/harden_isolation.sh --on     # isolcpus/nohz_full/rcu_nocbs on the measured cores (backs up grub)
+sudo reboot                               # activate
+cat /proc/cmdline                         # verify the params are present
+sudo scripts/harden_isolation.sh --off    # revert (then reboot)
+```
+
 ## Repository map
 
 ```
