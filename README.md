@@ -64,12 +64,6 @@ scripts/                Deploy, ingest, benchmark, and report scripts
 plots/                  curated figure gallery: domain -> setup -> tier/bench (see plots/README.md)
 results/                curated data gallery, same structure, symlinks into the real data dirs
 
-# THESIS SCOPE (2026-07-12): the thesis shows two isolated campaigns only —
-#   the local isolated service (local_service/data_iso) and the GLM-5.2 isolated
-#   agent runs (local_agents/{SWE_clean,OC_clean}; the earlier soft-isolated
-#   SWE_long/OC_long live in archive/glm_softiso_long_campaigns). The H100 campaign and the EKS
-#   service benchmark were moved to archive/ (see archive/README.md).
-
 local_service/          local k3s service run: per-tier TMA L1+L2, attribution, 12-cell timing grid
   scripts/iso/          isolated-campaign kit: run_service_campaign.sh, validate, plot
   data_iso/  plots_iso/ banked 36-cell data + figures
