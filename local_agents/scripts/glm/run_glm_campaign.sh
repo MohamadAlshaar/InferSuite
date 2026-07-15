@@ -28,32 +28,49 @@ PERF=$(ls -d /usr/lib/linux-tools-6.8*/perf 2>/dev/null | tail -1)
 MSLICE="measured.slice"
 log(){ printf '[glm %s] %s\n' "$(date +%H:%M:%S)" "$*" | tee -a "$KIT/campaign.log"; }
 
-# ---------------- counter groups (dry-run-verified 2026-07-08, zero multiplexing) -----------
+# ---------------- counter groups (reworked 2026-07-14 for the L3/L4 hardened rerun) ---------
+# Discipline unchanged: every group fits the per-thread GP budget (<=4 GP + fixed), verified
+# 100%-enabled by the dry-run; zero kernel multiplexing ever. Changes vs the certified set:
+#  - tma REMOVED from the rotation -> runs CONTINUOUSLY per episode (PERF_METRICS + fixed
+#    slots, no GP counters; see start_tma_cont). Full-episode L1/L2 census, one PERF_METRICS
+#    user, frees a rotation slot.
+#  - fp1+fp2+core MERGED into fpbr: SPR's combined fp_arith .scalar/.vector events preserve
+#    the only displayed FP number (packed share); branches/branch-misses move here; cycles+
+#    instructions live in every group and task-clock stays in priv, so core is redundant.
+#  - icache FOLDED into the new fetch-latency drill (fe_lat); l2_rqsts.code_rd_miss and
+#    uops_executed.thread dropped (collected-but-never-used, 2026-07-14 audit).
+#  - NEW L3/L4 drill groups: fe_lat (fetch-latency children), core_ports (core-bound
+#    ports-utilization + divider), dram_bw (DRAM bandwidth-vs-latency leaf).
 declare -A GRP
-GRP[tma]="slots,topdown-retiring,topdown-bad-spec,topdown-fe-bound,topdown-be-bound,topdown-heavy-ops,topdown-br-mispredict,topdown-fetch-lat,topdown-mem-bound"
-GRP[core]="task-clock,cycles,instructions,branches,branch-misses"
+GRP[fpbr]="cycles,instructions,fp_arith_inst_retired.scalar,fp_arith_inst_retired.vector,branches,branch-misses"
 GRP[cache]="cycles,instructions,mem_load_retired.l1_hit,mem_load_retired.l2_hit,mem_load_retired.l3_hit,mem_load_retired.l3_miss"
-GRP[fp1]="cycles,instructions,fp_arith_inst_retired.scalar_single,fp_arith_inst_retired.scalar_double,fp_arith_inst_retired.128b_packed_single,fp_arith_inst_retired.128b_packed_double"
-GRP[fp2]="cycles,instructions,fp_arith_inst_retired.256b_packed_single,fp_arith_inst_retired.256b_packed_double,fp_arith_inst_retired.512b_packed_single,fp_arith_inst_retired.512b_packed_double"
-GRP[mlp]="cycles,instructions,l1d_pend_miss.pending,l1d_pend_miss.pending_cycles,uops_executed.thread"
+GRP[mlp]="cycles,instructions,l1d_pend_miss.pending,l1d_pend_miss.pending_cycles"
 GRP[fe]="cycles,instructions,idq.dsb_uops,idq.mite_uops,idq.ms_uops,lsd.uops"
-GRP[icache]="cycles,instructions,l2_rqsts.all_code_rd,l2_rqsts.code_rd_miss,icache_data.stalls"
+GRP[fe_lat]="cycles,instructions,icache_data.stalls,icache_tag.stalls,int_misc.clear_resteer_cycles,l2_rqsts.all_code_rd"
+GRP[core_ports]="cycles,instructions,exe_activity.1_ports_util,exe_activity.2_ports_util,exe_activity.exe_bound_0_ports,arith.div_active"
+GRP[dram_bw]="cycles,instructions,cpu/offcore_requests_outstanding.data_rd,cmask=4/,offcore_requests_outstanding.cycles_with_data_rd,offcore_requests.data_rd"
 # priv: kernel-vs-user split + kernel-mediated behavior. context-switches/migrations/
 # page-faults are software events (zero PMU counters); :u/:k splits cost 2 GP.
 GRP[priv]="task-clock,context-switches,cpu-migrations,page-faults,cycles:u,cycles:k,instructions:u,instructions:k"
-GORDER="tma core cache fp1 fp2 mlp fe icache priv"
+# GORDER_OVERRIDE: dedicate a capture to ONE group (e.g. a replay running fe_lat back-to-back
+# = continuous-grade exact capture of that group; used to bound the rotation-sampling error
+# against the same trajectory's windowed capture — Mathur&Cook-style validation).
+GORDER="${GORDER_OVERRIDE:-fpbr cache mlp fe fe_lat core_ports dram_bw priv}"
+# continuous whole-episode TMA L1+L2 (dedicated hardware, zero GP counters, zero multiplex)
+TMA_EVENTS="slots,topdown-retiring,topdown-bad-spec,topdown-fe-bound,topdown-be-bound,topdown-heavy-ops,topdown-br-mispredict,topdown-fetch-lat,topdown-mem-bound"
 
 cg_of(){ sed 's/^0:://' "/proc/$1/cgroup" 2>/dev/null | head -1 | sed 's|^/||'; }
 cg_of_container(){ local p; p=$(docker inspect -f '{{.State.Pid}}' "$1" 2>/dev/null); [ -n "$p" ] && cg_of "$p"; }
 
 # ---------------- cleanup trap (EXIT covers normal paths; INT/TERM routed into it) -----------
-PROXY_UNIT=""; WATCHER_PID=""; POLL_PIDS=(); REC_PIDS=(); AGENT_PID=""; LG_PID=""; RAN_WORK=0
+PROXY_UNIT=""; WATCHER_PID=""; POLL_PIDS=(); REC_PIDS=(); TMACONT_PID=""; AGENT_PID=""; LG_PID=""; RAN_WORK=0
 cleanup(){
   local rc=$?
   if [ "$RAN_WORK" = 1 ]; then
     sudo systemctl stop 'glm-swe-*.scope' 2>/dev/null
     [ -n "$AGENT_PID" ] && kill -9 -- "-$AGENT_PID" 2>/dev/null   # OC process group (setsid)
     pkill -f "eval/run_batch.py" 2>/dev/null
+    [ -n "$TMACONT_PID" ] && kill -INT "$TMACONT_PID" 2>/dev/null
     [ ${#REC_PIDS[@]} -gt 0 ] && kill -TERM "${REC_PIDS[@]}" 2>/dev/null
     [ ${#POLL_PIDS[@]} -gt 0 ] && kill "${POLL_PIDS[@]}" 2>/dev/null
     [ -n "$LG_PID" ] && kill "$LG_PID" 2>/dev/null
@@ -125,6 +142,40 @@ PY
   fi
   sudo pkill -9 -x perf 2>/dev/null
   log "ISOLATION: applied (measured=$CPUS_MEASURED house=$CPUS_HOUSE)"
+  # ---- quiet-partition PROOF (2026-07-15): applied != verified. Before any episode starts,
+  # assert the shield is real: slices pinned, knobs set, and the measured cores actually
+  # SILENT (<2% busy over 1.5 s) with no foreign resident tasks. Abort loudly otherwise.
+  local iso_fail=0
+  [ "$(cat /sys/fs/cgroup/system.slice/cpuset.cpus.effective)" = "$CPUS_HOUSE" ] || { log "ISO-PROOF FAIL: system.slice cpuset"; iso_fail=1; }
+  [ "$(cat /sys/fs/cgroup/user.slice/cpuset.cpus.effective)" = "$CPUS_HOUSE" ]   || { log "ISO-PROOF FAIL: user.slice cpuset"; iso_fail=1; }
+  [ "$(cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor)" = performance ] || { log "ISO-PROOF FAIL: governor"; iso_fail=1; }
+  [ "$(cat /sys/devices/system/cpu/intel_pstate/no_turbo)" = 1 ] || { log "ISO-PROOF FAIL: no_turbo"; iso_fail=1; }
+  if ! python3 - "$CPUS_MEASURED" <<'PY'
+import sys, time
+def parse(spec):
+    out = []
+    for part in spec.split(","):
+        a, _, b = part.partition("-")
+        out += list(range(int(a), int(b or a) + 1))
+    return out
+meas = parse(sys.argv[1])
+def snap():
+    d = {}
+    for ln in open("/proc/stat"):
+        if ln.startswith("cpu") and ln[3:4].isdigit():
+            p = ln.split(); d[int(p[0][3:])] = (sum(map(int, p[1:11])), int(p[4]) + int(p[5]))
+    return d
+a = snap(); time.sleep(1.5); b = snap()
+noisy = {c: 100*((b[c][0]-a[c][0])-(b[c][1]-a[c][1]))/max(b[c][0]-a[c][0], 1)
+         for c in meas}
+bad = {c: round(v, 1) for c, v in noisy.items() if v > 2.0}
+print(f"  ISO-PROOF quiet-check: max busy {max(noisy.values()):.1f}% on measured cores" +
+      (f" — NOISY: {bad}" if bad else " (silent)"))
+sys.exit(1 if bad else 0)
+PY
+  then log "ISO-PROOF FAIL: measured cores not quiet"; iso_fail=1; fi
+  [ "$iso_fail" = 0 ] && log "ISOLATION: PROVEN quiet (slices pinned, knobs set, partition silent)" \
+    || { log "ISOLATION: PROOF FAILED — aborting before any capture"; exit 1; }
 }
 
 restore_isolation(){
@@ -185,6 +236,21 @@ start_records(){ # $1 out, $2 cgroups csv — full-episode task-clock records
     REC_PIDS+=($!)
   done
 }
+
+start_tma_cont(){ # $1 out, $2 cgroups csv — CONTINUOUS whole-episode TMA L1/L2 census.
+  # PERF_METRICS register + fixed slots counter only: zero GP counters, so it coexists with
+  # the windowed groups without multiplexing (dry-run gate verifies the coexistence).
+  # -I 10000 keeps a 10 s interval series (events stay installed between reads: still a
+  # 100% duty-cycle exact census, the intervals are just reads).
+  local OUT="$1"
+  taskset -c "$CPUS_HOUSE" "$PERF" stat -I 10000 -x, -a -e "$TMA_EVENTS" \
+    --for-each-cgroup="$2" -o "$OUT/tma_cont.csv" -- sleep 100000 >/dev/null 2>&1 &
+  TMACONT_PID=$!
+}
+stop_tma_cont(){ # SIGINT makes perf stat emit the final partial interval and exit cleanly
+  [ -n "$TMACONT_PID" ] && kill -INT "$TMACONT_PID" 2>/dev/null
+  wait "$TMACONT_PID" 2>/dev/null; TMACONT_PID=""
+}
 mk_tables(){ # $1 rec.data, $2 out-prefix, $3 symfs ('-' = none) — perf-script based:
   # tolerates the truncated-tail corruption that aborts perf report when a recorded cgroup
   # is destroyed mid-flight (sweagent removes its sandbox on natural exit; verified 2026-07-08).
@@ -206,6 +272,14 @@ mk_tables(){ # $1 rec.data, $2 out-prefix, $3 symfs ('-' = none) — perf-script
   grep '^D' "${PRE}.tab" | cut -d' ' -f2- | sort -rn > "${PRE}_dso.txt"
   grep '^K' "${PRE}.tab" | cut -d' ' -f2- | sort -rn | head -40 > "${PRE}_ksym.txt"
   rm -f "${PRE}.tab"
+  # per-CPU occupancy lanes + leaf-symbol table (2026-07-14: feed hw-threads + harness-anatomy
+  # figures; previously only derivable post-hoc via gen_lanes_leaf.sh)
+  sudo "$PERF" script -f -i "$REC" -F time,cpu 2>/dev/null | \
+    awk 'NF>=2 {gsub(/\[|\]/,"",$1); gsub(/:$/,"",$2); print $2, $1+0}' > "${PRE}_cpulanes.tsv"
+  sudo "$PERF" script -f -i "$REC" "${SYMFS[@]}" -F comm,period,ip,sym,dso 2>/dev/null | awk '
+    /^\t/ { if (want) { line=$0; sub(/^\t[ ]*[0-9a-f]+ /,"",line); n[line]+=per; want=0 } next }
+    NF>=2 { per=$NF; want=1 }
+    END { for (x in n) printf "%d\t%s\n", n[x], x }' | sort -rn > "${PRE}_leaf.txt"
 }
 
 stop_records(){ # $1 out, $2 cgroups csv, $3 symfs csv ('-' entries = none)
@@ -287,7 +361,10 @@ cycle_stats(){ # $1 out, $2 cgroups csv, $3 alive-predicate (shell string), $4 m
   local OUT="$1" CGS="$2" ALIVE="$3" MAX="$4" t0=$SECONDS w=0 g ws a
   printf 'win\tgroup\tt_start\tt_end\talive_after\n' > "$OUT/windows.tsv"
   while eval "$ALIVE" 2>/dev/null && [ $((SECONDS - t0)) -lt "$MAX" ]; do
-    for g in $GORDER; do
+    # SHUFFLED rotation (2026-07-14): a fixed order is systematic sampling without a random
+    # start — it can phase-lock with the agent loop's cadence and bias which phases a group
+    # sees (SMARTS). windows.tsv records the realized order = full provenance.
+    for g in $(shuf -e $GORDER); do
       eval "$ALIVE" 2>/dev/null || break
       ws=$EPOCHREALTIME
       taskset -c "$CPUS_HOUSE" "$PERF" stat -a -e "${GRP[$g]}" --for-each-cgroup="$CGS" \
@@ -295,7 +372,7 @@ cycle_stats(){ # $1 out, $2 cgroups csv, $3 alive-predicate (shell string), $4 m
       a=1; eval "$ALIVE" 2>/dev/null || a=0        # sampled AFTER the window (real signal)
       printf '%03d\t%s\t%s\t%s\t%d\n' "$w" "$g" "$ws" "$EPOCHREALTIME" "$a" >> "$OUT/windows.tsv"
       w=$((w+1))
-    done
+    done                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   done
   echo "$w" > "$OUT/n_windows"
 }
@@ -309,10 +386,11 @@ json.dump({"workload":wl,"config":cfg,"run":int(run),"model":os.environ["MODEL_I
   "endpoint":os.environ["GLM_ENDPOINT"],"thinking":os.environ["THINKING"],
   "cpus_measured":os.environ["CPUS_MEASURED"],"cpus_house":os.environ["CPUS_HOUSE"],
   "winsec":int(os.environ["WINSEC"]),"repo_rev":rev,"kernel":os.uname().release,
+  "gorder":os.environ.get("GORDER",""),"rotation":"shuffled","tma_cont":True,
   "ts_start":time.time(),"extra":json.loads(extra or "{}")}, open(f"{out}/metadata.json","w"), indent=1)
 PY
 }
-export REPO MODEL_ID GLM_ENDPOINT THINKING CPUS_MEASURED CPUS_HOUSE WINSEC
+export REPO MODEL_ID GLM_ENDPOINT THINKING CPUS_MEASURED CPUS_HOUSE WINSEC GORDER
 
 episode_ok(){ # $1 out, $2 name
   local nw=$(cat "$1/n_windows" 2>/dev/null || echo 0)
@@ -387,9 +465,10 @@ swe_episode(){ # $1 instance, $2 run n
   write_metadata "$OUT" swe "$SHORT" "$N" "{\"instance\":\"$INST\",\"subset\":\"$SWE_SUBSET\",\"temperature\":$SWE_TEMP,\"harness_cg\":\"$HARNESS_CG\",\"tool_cg\":\"$TOOL_CG\",\"proxy_cg\":\"$PROXY_CG\"}"
   local CGS="$HARNESS_CG,$TOOL_CG,$PROXY_CG"
   ( loop_guard "$OUT/agent.log" "$UNIT" ) & LG_PID=$!   # inherits house-CPU confinement (user.slice)
-  start_pollers "$OUT" "$CGS"; start_records "$OUT" "$CGS"
+  start_pollers "$OUT" "$CGS"; start_records "$OUT" "$CGS"; start_tma_cont "$OUT" "$CGS"
   cycle_stats "$OUT" "$CGS" "$ALIVE" "$SWE_DRAIN_S"
   kill "$LG_PID" 2>/dev/null
+  stop_tma_cont
   stop_records "$OUT" "$CGS" "-,${TOOL_SYMFS:--},-"; stop_pollers "$OUT"   # records stop BEFORE any cgroup teardown we control
   sudo systemctl stop "$UNIT.scope" 2>/dev/null
   cp -r "$REPO/agentic/swe_agent/$ODIR" "$OUT/traj" 2>/dev/null
@@ -409,6 +488,8 @@ oc_episode(){ # $1 task key, $2 run n
   OCT[image-crop]="tasks/05_Creative_Synthesis/05_Creative_Synthesis_task_10_social_poster_multi_crop.md"
   OCT[sam3-debug]="tasks/02_Code_Intelligence/02_Code_Intelligence_task_2_sam3_debug.md"
   OCT[jigsaw-hard]="tasks/02_Code_Intelligence/02_Code_Intelligence_task_5_jigsaw_puzzle_hard_zh.md"
+  OCT[paper-poster]="tasks/05_Creative_Synthesis/05_Creative_Synthesis_task_7_paper_to_poster.md"
+  OCT[scp-crawl]="tasks/01_Productivity_Flow/01_Productivity_Flow_task_9_scp_crawl.md"
   OCT[connect-dots]="tasks/02_Code_Intelligence/02_Code_Intelligence_task_12_connect_the_dots_hard_zh.md"
   local OUT="$DATA/${TIER_PREFIX}_oc_${T}/run_${N}"
   [ -f "$OUT/DONE" ] && { log "skip oc-$T run$N (DONE)"; return 0; }
@@ -460,9 +541,10 @@ oc_episode(){ # $1 task key, $2 run n
   local RESDIR="$REPO/agentic/openclaw/external/WildClawBench/output/openclaw/$TCAT/$STEM"
   ( oc_loop_guard "$RESDIR" "$AGENT_PID" ) & LG_PID=$!
   local CGS="$CONT_CG/agent,$CONT_CG/toolexec,$PROXY_CG"
-  start_pollers "$OUT" "$CGS"; start_records "$OUT" "$CGS"
+  start_pollers "$OUT" "$CGS"; start_records "$OUT" "$CGS"; start_tma_cont "$OUT" "$CGS"
   cycle_stats "$OUT" "$CGS" "$ALIVE" "$OC_DRAIN_S"
   kill "$LG_PID" 2>/dev/null
+  stop_tma_cont
   kill -9 -- "-$AGENT_PID" 2>/dev/null; wait "$AGENT_PID" 2>/dev/null; AGENT_PID=""
   # archive the transcript + grader outputs next to the capture (three-way join input)
   local RESRUN=$(ls -td "$RESDIR"/*/ 2>/dev/null | head -1)
@@ -504,8 +586,9 @@ replay_episode(){ # $1 short-name, $2 source live run, $3 dest run n
   log "REPLAY RUNNING $SHORT r$N (harness=$HARNESS_CG tool=$TOOL_CG)"
   write_metadata "$OUT" swe_replay "$SHORT" "$N" "{\"source_run\":$SRC,\"traj\":\"$TRAJ\",\"harness_cg\":\"$HARNESS_CG\",\"tool_cg\":\"$TOOL_CG\"}"
   local CGS="$HARNESS_CG,$TOOL_CG"          # no proxy: the model is never called
-  start_pollers "$OUT" "$CGS"; start_records "$OUT" "$CGS"
+  start_pollers "$OUT" "$CGS"; start_records "$OUT" "$CGS"; start_tma_cont "$OUT" "$CGS"
   cycle_stats "$OUT" "$CGS" "$ALIVE" "${REPLAY_DRAIN_S:-1800}"
+  stop_tma_cont
   stop_records "$OUT" "$CGS" "-,${TOOL_SYMFS:--}"; stop_pollers "$OUT"
   sudo systemctl stop "$UNIT.scope" 2>/dev/null
   swe_cleanup_sandbox
@@ -530,6 +613,10 @@ stage_preflight(){
   local fail=0
   [ -n "$PERF" ] && [ -x "$PERF" ] || { log "FAIL: perf binary"; fail=1; }
   [ "$(cat /proc/sys/kernel/perf_event_paranoid)" = "-1" ] || { log "FAIL: perf_event_paranoid != -1"; fail=1; }
+  # kptr_restrict must be PINNED (0): it decides whether kernel samples resolve to
+  # [kernel.kallsyms] or fall into [unknown] — a mid-campaign flip silently shifts the DSO
+  # tables and breaks live<->replay dso-match anchors (seen 2026-07-15: 78% vs true 96%).
+  [ "$(cat /proc/sys/kernel/kptr_restrict)" = "0" ] || { log "FAIL: kptr_restrict != 0 (sudo sysctl -w kernel.kptr_restrict=0)"; fail=1; }
   [ -s "$KEYFILE" ] || { log "FAIL: $KEYFILE missing"; fail=1; }
   local K=$(tr -d '[:space:]' < "$KEYFILE")
   local code=$(curl -s --max-time 20 -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $K" "$GLM_ENDPOINT/models")
@@ -569,9 +656,94 @@ while time.time()-t<180:
       log "DRYRUN FAIL: group $g (see $STATE/dry_$g.txt)"; fail=1
     else log "  $g OK"; fi
   done
+  # ---- coexistence gate (2026-07-14): the continuous TMA session (PERF_METRICS + fixed
+  # slots) must NOT multiplex against the windowed GP groups. Run both simultaneously on the
+  # busy dummy and require BOTH clean.
+  log "DRYRUN: continuous-TMA + windowed-group coexistence"
+  "$PERF" stat -I 2000 -a -e "$TMA_EVENTS" --for-each-cgroup="$CG" -o "$STATE/dry_tmacont.txt" \
+    -- sleep 9 >/dev/null 2>&1 &
+  local TCP=$!
+  sleep 1
+  for g in fpbr core_ports; do
+    "$PERF" stat -a -e "${GRP[$g]}" --for-each-cgroup="$CG" -- sleep 3 2> "$STATE/dry_coex_$g.txt"
+  done
+  wait "$TCP" 2>/dev/null
+  local cf
+  for cf in "$STATE/dry_tmacont.txt" "$STATE/dry_coex_fpbr.txt" "$STATE/dry_coex_core_ports.txt"; do
+    if grep -qE "<not counted>|<not supported>" "$cf" \
+       || grep -qE '\(\s*[0-9]+[.,][0-9]+%\s*\)\s*$' "$cf"; then
+      log "DRYRUN FAIL: coexistence ($cf)"; fail=1
+    fi
+  done
+  [ $fail -eq 0 ] && log "  coexistence OK (continuous TMA + windowed groups, all 100%-enabled)"
+
+  # ---- new-event semantics (2026-07-14): exotic counters can carry errata (Kanev ISCA'15) —
+  # prove each NEW event fires on a workload known to exercise it, and stays near zero on one
+  # that doesn't.
+  log "DRYRUN: new-event semantics microbenchmarks"
+  systemd-run --user --scope --unit="glm-drydiv-$$" --collect -- python3 -c "
+import numpy as np, time  # glm_drydiv_marker
+# CACHE-RESIDENT divider kernel (~1 MB total, out= avoids allocation churn): must light up
+# arith.div_active but NOT the DRAM-occupancy event — the negative control for dram_bw
+a = np.random.rand(200,200)+1.0; b = np.random.rand(200,200)+1.0; c = np.empty_like(a)
+t = time.time()
+while time.time()-t<40: np.divide(a, b, out=c)
+" >/dev/null 2>&1 &
+  systemd-run --user --scope --unit="glm-drystream-$$" --collect -- python3 -c "
+import numpy as np, time  # glm_drystream_marker
+x = np.random.rand(250_000_000)   # ~2 GB: guaranteed DRAM-resident streaming
+t = time.time()
+while time.time()-t<40: s = x.sum()
+" >/dev/null 2>&1 &
+  sleep 4
+  local DP=$(pgrep -f glm_drydiv_marker | head -1) SP=$(pgrep -f glm_drystream_marker | head -1)
+  if [ -n "$DP" ] && [ -n "$SP" ]; then
+    local DCG=$(cg_of "$DP") SCG=$(cg_of "$SP")
+    "$PERF" stat -a -e "${GRP[core_ports]}" --for-each-cgroup="$DCG,$SCG" -- sleep 4 2> "$STATE/dry_sem_div.txt"
+    "$PERF" stat -a -e "${GRP[fpbr]}"       --for-each-cgroup="$DCG,$SCG" -- sleep 4 2> "$STATE/dry_sem_fp.txt"
+    "$PERF" stat -a -e "${GRP[dram_bw]}"    --for-each-cgroup="$DCG,$SCG" -- sleep 4 2> "$STATE/dry_sem_dram.txt"
+    if python3 - "$STATE" "$DCG" "$SCG" <<'PY'
+import re, sys
+state, dcg, scg = sys.argv[1:4]
+def load(f):
+    d = {}
+    for ln in open(f"{state}/{f}"):
+        m = re.match(r"^\s+([\d,]+)\s+(\S+)\s+(\S+)", ln)
+        if m: d[(m.group(3), m.group(2))] = float(m.group(1).replace(",", ""))
+    return d
+div, fp, dr = load("dry_sem_div.txt"), load("dry_sem_fp.txt"), load("dry_sem_dram.txt")
+ok = True
+def chk(label, cond, detail):
+    global ok
+    print(f"  {'OK ' if cond else 'FAIL'} {label}: {detail}")
+    ok = ok and cond
+# divider: active while the div loop runs, ~silent for the streaming loop
+dshare = div.get((dcg,'arith.div_active'),0)/max(div.get((dcg,'cycles'),1),1)
+sshare = div.get((scg,'arith.div_active'),0)/max(div.get((scg,'cycles'),1),1)
+chk("arith.div_active", dshare > 0.02 and dshare > 5*max(sshare,1e-9), f"div-loop {100*dshare:.1f}% vs stream {100*sshare:.2f}% of cycles")
+# combined FP umbrellas: numpy loops are packed-dominated on both scopes
+v, s = fp.get((dcg,'fp_arith_inst_retired.vector'),0), fp.get((dcg,'fp_arith_inst_retired.scalar'),0)
+chk("fp vector/scalar", v > 10*max(s,1), f"vector {v:.2e} vs scalar {s:.2e} (div loop)")
+# DRAM: streaming loop saturates outstanding data reads; div loop (cache-resident) does not
+socc = dr.get((scg,'offcore_requests_outstanding.cycles_with_data_rd'),0)/max(dr.get((scg,'cycles'),1),1)
+docc = dr.get((dcg,'offcore_requests_outstanding.cycles_with_data_rd'),0)/max(dr.get((dcg,'cycles'),1),1)
+chk("dram occupancy", socc > 0.10 and socc > 3*max(docc,1e-9), f"stream {100*socc:.0f}% vs div {100*docc:.0f}% of cycles")
+sys.exit(0 if ok else 1)
+PY
+    then log "  new-event semantics OK"
+    else log "DRYRUN FAIL: new-event semantics"; fail=1; fi
+    kill "$DP" "$SP" 2>/dev/null
+  else
+    log "DRYRUN FAIL: semantics scopes did not start"; fail=1
+  fi
+
   # kernel-split calibration: prove cycles:u/:k against scopes with KNOWN kernel share
   log "DRYRUN: kernel-split calibration (ground truth)"
-  systemd-run --user --scope --unit="glm-dryks-$$" --collect -- python3 -c "
+  # PIN the ground-truth scope to a HOUSE (ticked) cpu: on nohz_full cores the scheduler's
+  # user/system SPLIT comes from boundary vtime accounting and legitimately diverges from the
+  # PMU by ~26pp on a fast-syscall loop (measured 2026-07-15) — the 6pp agreement gate is only
+  # meaningful under tick accounting. The measured-core gap is logged separately below.
+  systemd-run --user --scope --unit="glm-dryks-$$" --collect -- taskset -c 1 python3 -c "
 import os, time  # glm_dryks_marker
 t = time.time()
 while time.time() - t < 60: os.getppid()" >/dev/null 2>&1 &
@@ -602,14 +774,45 @@ b0 = dict(zip(sys.argv[4].split()[::2], map(float, sys.argv[4].split()[1::2])))
 b1 = dict(zip(sys.argv[5].split()[::2], map(float, sys.argv[5].split()[1::2])))
 du, ds = b1["user_usec"] - b0["user_usec"], b1["system_usec"] - b0["system_usec"]
 sched = 100 * ds / (du + ds) if du + ds > 0 else -1
+# 12pp band: the periodic getppid loop aliases against tick sampling — measured agreement
+# spread on the SAME ticked core is 5.2-9.7pp across runs (2026-07-15). Machinery breakage
+# (mis-scoped cgroup, swapped counters) shows as >25pp or a nonsense share; 12pp still gates.
 print(f"  compute-scope kernel {comp:.1f}% (expect <5)")
-print(f"  syscall-scope: PMU {sysc:.1f}% vs scheduler {sched:.1f}% (agree within 6pp, both >10)")
-sys.exit(0 if (0 <= comp < 5 and sysc > 10 and sched > 10 and abs(sysc - sched) < 6) else 1)
+print(f"  syscall-scope: PMU {sysc:.1f}% vs scheduler {sched:.1f}% (agree within 12pp, both >10)")
+sys.exit(0 if (0 <= comp < 5 and sysc > 10 and sched > 10 and abs(sysc - sched) < 12) else 1)
 PY
     then log "  kernel-split calibration OK (PMU agrees with scheduler accounting)"
     else log "DRYRUN FAIL: kernel-split calibration"; fail=1; fi
     kill "$KP" 2>/dev/null
   else log "DRYRUN WARN: kernel-calibration scope did not start"; fi
+  # informational: the SAME loop on a nohz_full (measured) core — records the environment's
+  # known scheduler-split bias + the context-tracking syscall overhead for the MANIFEST.
+  systemd-run --user --scope --unit="glm-dryksm-$$" --collect -- taskset -c 8 python3 -c "
+import os, time  # glm_dryksm_marker
+t = time.time()
+while time.time() - t < 20: os.getppid()" >/dev/null 2>&1 &
+  sleep 1
+  local KPM=$(pgrep -f glm_dryksm_marker | head -1)
+  if [ -n "$KPM" ]; then
+    local KCGM=$(cg_of "$KPM")
+    local M0=$(head -3 "/sys/fs/cgroup/$KCGM/cpu.stat" | tr '\n' ' ')
+    "$PERF" stat -a -e cycles:u,cycles:k --for-each-cgroup="$KCGM" -- sleep 5 2> "$STATE/dry_kcal_nohz.txt"
+    local M1=$(head -3 "/sys/fs/cgroup/$KCGM/cpu.stat" | tr '\n' ' ')
+    python3 - "$STATE/dry_kcal_nohz.txt" "$M0" "$M1" <<'PY' | while read -r l; do log "$l"; done
+import re, sys
+vals = {}
+for ln in open(sys.argv[1]):
+    m = re.match(r"^\s+([\d,]+)\s+(cycles:[uk])\s+", ln)
+    if m: vals[m.group(2)] = float(m.group(1).replace(",", ""))
+pmu = 100*vals.get("cycles:k",0)/max(vals.get("cycles:u",0)+vals.get("cycles:k",0),1)
+b0 = dict(zip(sys.argv[2].split()[::2], map(float, sys.argv[2].split()[1::2])))
+b1 = dict(zip(sys.argv[3].split()[::2], map(float, sys.argv[3].split()[1::2])))
+du, ds = b1["user_usec"]-b0["user_usec"], b1["system_usec"]-b0["system_usec"]
+sched = 100*ds/max(du+ds,1)
+print(f"  nohz_full-core info: PMU k% {pmu:.1f} vs scheduler {sched:.1f} (gap {abs(pmu-sched):.1f}pp — vtime split, informational)")
+PY
+    kill "$KPM" 2>/dev/null
+  fi
   kill "$BP" 2>/dev/null
   [ $fail -eq 0 ] && { log "DRYRUN OK"; touch "$STATE/dryrun_ok"; } || exit 1
 }
@@ -688,6 +891,8 @@ case "${1:-all}" in
   smoke-oc)       REPEATS=1 OC_TASKS="calendar"                    stage_campaign oc ;;
   campaign)       stage_campaign "${2:-swe}" ;;
   replay-anchor)  stage_replay "${2:-}" ;;
+  replay-one)     RAN_WORK=1; apply_isolation; replay_episode "${2:?short}" "${3:-1}" "${4:?dest run n}"; restore_isolation ;;
+  restore-isolation) restore_isolation ;;   # manual cleanup after an interrupted campaign
   validate)       stage_validate ;;
   all)            stage_preflight; stage_dryrun; stage_smoke; stage_campaign swe ;;
   *) echo "usage: $0 {preflight|dryrun|isolation-test|smoke|smoke-swe|smoke-django|smoke-oc|campaign swe|campaign oc|validate|all}"; exit 1 ;;

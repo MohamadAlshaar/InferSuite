@@ -1,49 +1,32 @@
 #!/usr/bin/env python3
-"""audit_plots.py — verify the rendered figures match the raw data (all 4 tasks).
+"""audit_plots.py — verify the rendered figures match the raw data (PLOT_SPEC-driven).
 
-Independent recomputation: fresh regex parsing (NOT importing the plotter or the
-validator), raw cpustat/traj/group files -> every displayed number, compared against
-DISPLAYED values transcribed from the rendered PNGs. Tolerances = display rounding.
-Exit 0 = all match."""
-import bisect, json, re, sys
+Rewritten 2026-07-14: the old version hardcoded the archived certified campaign and values
+hand-transcribed from its PNGs. Now: `plot_glm_results.py` dumps every number it renders to
+<out>/values_dump.json at render time; this script INDEPENDENTLY recomputes each one from the
+raw capture files (fresh regex parsing — no imports from the plotter or the validator) and
+compares. Tolerances = display rounding. Exit 0 = all match.
+
+  PLOT_SPEC=local_agents/SWE_long/plot_spec.json python3 audit_plots.py
+  (or)  python3 audit_plots.py <plot_spec.json>
+
+Burst vocabulary under test (must equal the MANIFEST): tool active >0.005 cores, harness
+>0.02, heavy peak >0.3, gaps <0.4 s merged, dust <=0.001 core-s dropped, exact usec deltas.
+"""
+import json, os, re, sys, bisect
 from glob import glob
 from statistics import median
 
-DATA = "../../data"
-TASKS = {"astropy": "glm_swe_astropy", "scikit-learn": "glm_swe_scikit-learn",
-         "sympy": "glm_swe_sympy", "django": "glm_swe_django-lite"}
+SPEC_PATH = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("PLOT_SPEC")
+if not SPEC_PATH:
+    sys.exit("need PLOT_SPEC (env or argv[1])")
+SPEC = json.load(open(SPEC_PATH))
+DATA, OUT = SPEC["data"], SPEC["out"]
+DUMP = json.load(open(f"{OUT}/values_dump.json"))
+TASKS = [(x[0], x[1], list(x[2])) for x in SPEC["resolved"]]
 
-# ---- values as DISPLAYED in the rendered PNGs (transcribed 2026-07-09) -----------------------
-D = {
- #        wall  cpu_s  toolCPU% harnCPU% | calls med  peak  wall% | IPCt  DSBt kernt fpT | IPCh | ret fe | topslice kernC | ecdf_t ecdf_h | heavy acts
- "astropy":      (15, 147, 92, 6,  35, 0.4, 16.6,  9.5, 1.84, 52, 40, 17, 2.47, 42, 35, 61, 40,  82,  73,  35,  83),
- "scikit-learn": ( 7, 1771, 99, 0,  36, 0.7, 20.0, 27.4, 0.69, 82, 10, 70, 2.45, 43, 24, 85, 10,  72,  62,  36,  75),
- "sympy":        (31, 142, 33, 59, 111, 0.3,  1.3,  2.4, 1.71, 61, 12,  0, 2.83, 29, 34, 75, 12, 188, 188, 111, 188),
- "django":       (41, 506,  6, 87, 317, 0.1,  1.0,  1.3, 1.46, 60, 20,  0, 2.89, 24, 39, 58, 20, 351, 348, 317, 351),
-}
-
-SUST = {"astropy": 2.7, "scikit-learn": 20.0, "sympy": 1.0, "django": 0.3}
-# harness anatomy figure — displayed values transcribed from the rendered PNG
-INTERP_D = {"astropy": 29, "scikit-learn": 28, "sympy": 27, "django": 30}   # (a) interpreter-loop %
-SUSTH_D  = {"astropy": 0.61, "scikit-learn": 0.53, "sympy": 0.99, "django": 1.00}  # (b) sustained peak
-HBURST_D = {"astropy": 73, "scikit-learn": 62, "sympy": 188, "django": 348}  # (c) burst counts
-AVG_D = {"astropy": 0.16, "scikit-learn": 4.36, "sympy": 0.08, "django": 0.21}  # transcribed from donut centers
-
-LINE = re.compile(r"^\s+([\d,]+(?:\.\d+)?)\s+(?:msec\s+)?([\w.:-]+)\s+(\S*(?:\.scope|/agent|/toolexec))")
-
-def sums(rd, role_of):
-    S = {}
-    for f in glob(f"{rd}/group_*_w*.txt"):
-        txt = open(f).read()
-        if "<not counted>" in txt or "<not supported>" in txt: continue
-        if re.search(r"\(\s*\d+[.,]\d+%\s*\)\s*$", txt, re.M): continue
-        for ln in txt.splitlines():
-            m = LINE.match(ln)
-            if not m: continue
-            v, ev, cg = float(m.group(1).replace(",", "")), m.group(2), m.group(3)
-            r = role_of(cg)
-            if r: S.setdefault(r, {}); S[r][ev] = S[r].get(ev, 0.0) + v
-    return S
+THR_TOOL, THR_HARN, THR_HEAVY, GAP, DUST = 0.005, 0.02, 0.3, 0.4, 0.001
+LINE = re.compile(r"^\s+([\d,]+(?:\.\d+)?|<not counted>)\s+(?:msec\s+)?([\w.:-]+)\s+(\S*(?:\.scope|/agent|/toolexec))")
 
 def cpustat(rd, i):
     out = []
@@ -53,98 +36,112 @@ def cpustat(rd, i):
             out.append((float(p[0]), float(p[2])))
     return out
 
-def series(rd, i):
+def samples(rd, i):
     s = cpustat(rd, i)
-    return [((a[0]+b[0])/2, max(0.0, (b[1]-a[1])/max((b[0]-a[0])*1e6, 1e-9))) for a, b in zip(s, s[1:])]
+    return [(a[0], b[0], max(b[1]-a[1], 0.0)/1e6/max(b[0]-a[0], 1e-9), max(b[1]-a[1], 0.0)/1e6)
+            for a, b in zip(s, s[1:])]
 
-def bursts(rd):
+def bursts(rd, i, thr):
     out, cur = [], None
-    for t, v in series(rd, 2):
-        if v > 0.3:
-            if cur is None: cur = [t, t, 0.0]
-            cur[1] = t; cur[2] = max(cur[2], v)
-        elif cur and t - cur[1] > 2.0:
-            out.append(cur); cur = None
+    for t0, t1, r, cs in samples(rd, i):
+        if r > thr:
+            if cur and t0 - cur[1] < GAP:
+                cur[1] = t1; cur[2] += cs; cur[3] = max(cur[3], r)
+            else:
+                if cur: out.append(cur)
+                cur = [t0, t1, cs, r]
     if cur: out.append(cur)
-    return out
+    return [b for b in out if b[2] > DUST]
 
-def spans(rd, i, thr):
-    out, cur = [], None
-    for t, v in series(rd, i):
-        if v > thr:
-            if cur is None: cur = [t, t]
-            cur[1] = t
-        elif cur and t - cur[1] > 2.0:
-            out.append(cur); cur = None
-    if cur: out.append(cur)
-    return out
+def sums(rd, role_of):
+    """Independent re-implementation of the published window semantics: a fully idle scope
+    (all rows <not counted>) is dropped from that window; a scope MIXING counts and
+    <not counted> rejects the whole window; multiplex annotation or <not supported>
+    rejects the whole window. Counted scopes in a window with idle siblings are KEPT."""
+    S, CO = {}, {}
+    for f in glob(f"{rd}/group_*_w*.txt"):
+        txt = open(f).read()
+        if "<not supported>" in txt: continue
+        if re.search(r"\(\s*\d+[.,]\d+%\s*\)\s*$", txt, re.M): continue
+        raw = {}
+        for ln in txt.splitlines():
+            m = LINE.match(ln)
+            if not m: continue
+            v, ev, cg = m.group(1), m.group(2), m.group(3)
+            raw.setdefault(cg, {})[ev] = None if v.startswith("<") else float(v.replace(",", ""))
+        if any((any(x is None for x in evs.values()) and not all(x is None for x in evs.values()))
+               for evs in raw.values()):
+            continue                     # partial scope -> genuine PMU failure, reject window
+        for cg, evs in raw.items():
+            if all(x is None for x in evs.values()):
+                continue                 # idle scope (model-wait) -> drop scope, keep window
+            r = role_of(cg)
+            if r:
+                S.setdefault(r, {}); CO.setdefault(r, {})
+                wI, wC = evs.get("instructions", 0.0) or 0.0, evs.get("cycles", 0.0) or 0.0
+                for ev, x in evs.items():
+                    S[r][ev] = S[r].get(ev, 0.0) + x
+                    e = CO[r].setdefault(ev, {"I": 0.0, "C": 0.0})
+                    e["I"] += wI; e["C"] += wC
+    # hardened-rerun episodes: continuous TMA census csv (time,count,,event,cgroup,run,pct)
+    tc = f"{rd}/tma_cont.csv"
+    if os.path.exists(tc):
+        for ln in open(tc):
+            if ln.startswith("#") or not ln.strip(): continue
+            p = [x.strip() for x in ln.split(",")]
+            if len(p) < 7 or p[1].startswith("<"): continue
+            r = role_of(p[4])
+            if not r: continue
+            try:
+                S.setdefault(r, {})[p[3]] = S[r].get(p[3], 0.0) + float(p[1])
+            except ValueError:
+                pass
+    return S, CO
 
 fails = 0
 def chk(task, name, got, want, tol):
     global fails
     ok = abs(got - want) <= tol
     if not ok: fails += 1
-    print(f"  {'OK ' if ok else 'FAIL'} {task:13s} {name:22s} plotted={want:<8g} recomputed={round(got,3):<10g} tol={tol}")
+    print(f"  {'OK ' if ok else 'FAIL'} {task:22s} {name:22s} plotted={round(want,3):<10g} recomputed={round(got,3):<10g} tol={tol}")
 
-for task, cfg in TASKS.items():
-    rd = f"{DATA}/{cfg}/run_1"
-    (wall_d, cpus_d, tshare_d, hshare_d, calls_d, med_d, peak_d, wshare_d,
-     ipct_d, dsbt_d, kernt_d, fpt_d, ipch_d, ret_d, fe_d, top_d, kernc_d,
-     et_d, eh_d, heavy_d, acts_d) = D[task]
+for name, cfg, runs in TASKS:
+    rd = f"{DATA}/{cfg}/{runs[0]}"
+    D = DUMP[name]
     meta = json.load(open(f"{rd}/metadata.json"))
-    ex = meta["extra"]
-    role_of = lambda cg, ex=ex: ("harness" if cg == ex.get("harness_cg") else
-                                 "tool" if cg == ex.get("tool_cg") else
-                                 "proxy" if cg == ex.get("proxy_cg") else None)
-    # F1 two-view
-    tt = cpustat(rd, 2); hh = cpustat(rd, 1); pp = cpustat(rd, 3)
-    wall = (tt[-1][0] - tt[0][0]) / 60
-    cs = [(x[-1][1] - x[0][1]) / 1e6 for x in (hh, tt, pp)]
-    chk(task, "wall (min)", wall, wall_d, 0.6)
-    chk(task, "core-s total (displayed)", sum(cs), cpus_d, 1.5)
-    chk(task, "avg CPUs (displayed)", sum(cs)/(wall*60), AVG_D[task], 0.005)
-    chk(task, "tool CPU share %", 100*cs[1]/sum(cs), tshare_d, 1.0)
-    chk(task, "harness CPU share %", 100*cs[0]/sum(cs), hshare_d, 1.0)
-    # F3 tool calls
-    B = bursts(rd)
-    durs = [b[1]-b[0]+0.1 for b in B]
-    tool_active = sum(1 for _, v in series(rd, 2) if v > 0.3) * 0.1
-    chk(task, "tool calls (heavy)", len(B), calls_d, 0)
-    chk(task, "tool calls total (displayed)", len(json.load(open(tj0))["trajectory"]) if (tj0 := glob(f"{rd}/traj/*/*.traj")[0]) else 0, acts_d, 0)
-    chk(task, "median dur (s)", median(durs), med_d, 0.06)
-    chk(task, "peak CPUs (0.1s, cap 20)", min(max(b[2] for b in B), 20.0), peak_d, 0.06)
-    chk(task, "tool-active wall %", 100*tool_active/(wall*60), wshare_d, 0.3)
-    # F4/F5 counters (independent parse)
-    S = sums(rd, role_of)
-    t, h = S["tool"], S["harness"]
-    chk(task, "tool IPC", t["instructions"]/t["cycles"], ipct_d, 0.01)
-    chk(task, "harness IPC", h["instructions"]/h["cycles"], ipch_d, 0.01)
-    ut = t["idq.dsb_uops"] + t["idq.mite_uops"] + t["idq.ms_uops"] + t.get("lsd.uops", 0)
-    chk(task, "tool DSB %", 100*t["idq.dsb_uops"]/ut, dsbt_d, 0.6)
-    chk(task, "tool kernel %", 100*t["cycles:k"]/(t["cycles:k"]+t["cycles:u"]), kernt_d, 0.6)
-    fpk = sum(v for k, v in t.items() if k.startswith("fp_arith") and "packed" in k)
-    fps = sum(v for k, v in t.items() if k.startswith("fp_arith") and "scalar" in k)
-    chk(task, "tool packed FP %", 100*fpk/(fpk+fps) if fpk+fps else 0, fpt_d, 0.6)
-    tma = [t.get(f"topdown-{k}", 0) for k in ("retiring", "bad-spec", "fe-bound", "be-bound")]
-    chk(task, "tool TMA retiring %", 100*tma[0]/sum(tma), ret_d, 0.6)
-    chk(task, "tool TMA FE %", 100*tma[2]/sum(tma), fe_d, 0.6)
-    # F6 software (top slice share of categorized samples, python-or-blas)
-    rows = [(float(p[0].rstrip('%')), p[-1]) for p in
-            (l.split() for l in open(f"{rd}/scope2_dso.txt")) if p and p[0].endswith('%')]
-    tot = sum(r[0] for r in rows)
-    py = sum(r[0] for r in rows if re.search(r"python|\.cpython-|libpython", r[1], re.I))
-    blas = sum(r[0] for r in rows if re.search(r"openblas|libgomp", r[1], re.I))
-    chk(task, "software top slice %", 100*max(py, blas)/tot, top_d, 1.0)
-    chk(task, "software kernel ctr %", 100*t["cycles:k"]/(t["cycles:k"]+t["cycles:u"]), kernc_d, 0.6)
-    # F7 ECDF ns + F2 counts
-    tj = glob(f"{rd}/traj/*/*.traj")[0]
-    steps = json.load(open(tj))["trajectory"]
-    ets = [s["execution_time"] for s in steps if s.get("execution_time", 0) > 0]
-    chk(task, "ECDF tool n", len(ets), et_d, 0)
-    chk(task, "ECDF harness n", len(spans(rd, 1, 0.05)), eh_d, 0)
-    chk(task, "timeline heavy", len(B), heavy_d, 0)
-    chk(task, "timeline actions", len(steps), acts_d, 0)
-    # F3 sustained peak (1 s window, step 0.25, cap 20) — independent recompute
+    ex = meta.get("extra", {})
+    if meta.get("workload") == "oc":
+        c = ex.get("container_cg", "")
+        role_of = lambda cg, c=c, ex=ex: ("harness" if cg == f"{c}/agent" else
+                                          "tool" if cg == f"{c}/toolexec" else
+                                          "proxy" if cg == ex.get("proxy_cg") else None)
+    else:
+        role_of = lambda cg, ex=ex: ("harness" if cg == ex.get("harness_cg") else
+                                     "tool" if cg == ex.get("tool_cg") else
+                                     "proxy" if cg == ex.get("proxy_cg") else None)
+
+    # ---- Fig 1a/1b: wall, exact fence totals, active-wall (NOTE: cs may carry the OC
+    # lineage correction — recompute the RAW totals and allow the moved share as tolerance)
+    tt = cpustat(rd, 2)
+    chk(name, "wall (min)", (tt[-1][0]-tt[0][0])/60, D["wall_min"], 0.05)
+    raw = []
+    for i in (1, 2, 3):
+        s = cpustat(rd, i)
+        raw.append((s[-1][1]-s[0][1])/1e6 if len(s) > 1 else 0.0)
+    chk(name, "core-s total", sum(raw), D["cs_total"], 0.5)   # correction moves, never adds
+    tool_act = sum(t1-t0 for t0, t1, r, _ in samples(rd, 2) if r > THR_TOOL)
+    harn_act = sum(t1-t0 for t0, t1, r, _ in samples(rd, 1) if r > THR_HARN)
+    chk(name, "tool active wall (s)", tool_act, D["tool_active_s"], 0.5)
+    if meta.get("workload") != "oc":   # OC harness active-wall is lineage-scaled in the dump
+        chk(name, "harness active wall(s)", harn_act, D["harn_active_s"], 0.5)
+
+    # ---- Fig 3 / call structure: heavy bursts, med duration, peak, tool wall share
+    B = bursts(rd, 2, THR_HEAVY)
+    chk(name, "heavy bursts", len(B), D["heavy_bursts"], 0)
+    chk(name, "median heavy dur (s)", median([b[1]-b[0] for b in B]) if B else 0, D["med_heavy_dur"], 0.06)
+    chk(name, "peak spike (cores)", min(max(b[3] for b in B), 20.0) if B else 0, D["peak_spike"], 0.06)
+    chk(name, "tool wall share (%)", 100*tool_act/(tt[-1][0]-tt[0][0]), D["tool_wall_pct"], 0.3)
+    # sustained peak (1 s window / 0.25 step, cap 20) — independent recompute
     s2 = cpustat(rd, 2); T2 = [r[0] for r in s2]
     sp, t = 0.0, s2[0][0]
     while t + 1.0 <= s2[-1][0]:
@@ -152,43 +149,132 @@ for task, cfg in TASKS.items():
         if 0 <= i < j < len(s2) and s2[j][0] > s2[i][0]:
             sp = max(sp, (s2[j][1]-s2[i][1])/1e6/(s2[j][0]-s2[i][0]))
         t += 0.25
-    chk(task, "peak CPUs sustained", min(sp, 20.0), SUST[task], 0.06)
-    # F8 lanes: samples exist and land ONLY on the 20 pinned logical CPUs
+    chk(name, "sustained peak", min(sp, 20.0), D["sust"], 0.06)
+
+    # ---- Figs 4/5: counter-derived card (independent parse of the group files)
+    S, CO = sums(rd, role_of)
+    for role in ("tool", "harness"):
+        d, DD = S.get(role, {}), D[role]
+        I, cyc = d.get("instructions", 0) or 1, d.get("cycles", 0)
+        chk(name, f"{role} IPC", I/cyc if cyc else 0, DD["IPC"], 0.01)
+        ut = d.get("idq.dsb_uops", 0)+d.get("idq.mite_uops", 0)+d.get("idq.ms_uops", 0)+d.get("lsd.uops", 0)
+        chk(name, f"{role} DSB %", 100*d.get("idq.dsb_uops", 0)/ut if ut else 0, DD["DSB"], 0.6)
+        ck, cu = d.get("cycles:k", 0), d.get("cycles:u", 0)
+        chk(name, f"{role} OS share %", 100*ck/(ck+cu) if ck+cu else 0, DD["kern"], 0.6)
+        fpk = sum(v for k, v in d.items() if k.startswith("fp_arith")
+                  and ("packed" in k or k.endswith(".vector")))
+        fps = sum(v for k, v in d.items() if k.startswith("fp_arith") and "scalar" in k)
+        chk(name, f"{role} packed FP %", 100*fpk/(fpk+fps) if fpk+fps else 0, DD["vecFP"], 0.6)
+        co = CO.get(role, {})
+        def coI(k, d=d, co=co):
+            e = co.get(k)
+            return (e or {}).get("I", 0) or (d.get("instructions", 0) or 1)
+        chk(name, f"{role} brMPKI", 1000*d.get("branch-misses", 0)/coI("branch-misses"), DD["brMPKI"], 0.06)
+        chk(name, f"{role} L1I MPKI", 1000*d.get("l2_rqsts.all_code_rd", 0)/coI("l2_rqsts.all_code_rd"), DD["L1I_MPKI"], 0.06)
+        tma = [d.get(f"topdown-{k}", 0) for k in ("retiring", "bad-spec", "fe-bound", "be-bound")]
+        ts = sum(tma) or 1
+        for lab, idx in (("retiring", 0), ("bad", 1), ("fe", 2), ("be", 3)):
+            chk(name, f"{role} TMA {lab} %", 100*tma[idx]/ts, D[f"tma_{role}"][lab], 0.6)
+        # TMA L2: child + remainder per L1 bucket, same order as the figure
+        l2 = []
+        for l1k, subk in (("topdown-retiring", "topdown-heavy-ops"),
+                          ("topdown-fe-bound", "topdown-fetch-lat"),
+                          ("topdown-bad-spec", "topdown-br-mispredict"),
+                          ("topdown-be-bound", "topdown-mem-bound")):
+            sub = d.get(subk, 0.0)
+            if l1k == "topdown-fe-bound":     # figure order: SUB then REMAIN differs per bucket
+                l2 += [100*sub/ts, 100*max(d.get(l1k, 0)-sub, 0)/ts]
+            elif l1k == "topdown-retiring":
+                l2 += [100*max(d.get(l1k, 0)-sub, 0)/ts, 100*sub/ts]
+            else:
+                l2 += [100*sub/ts, 100*max(d.get(l1k, 0)-sub, 0)/ts]
+        for seg_i, seg_v in enumerate(l2):
+            chk(name, f"{role} TMA-L2 seg{seg_i}", seg_v, D[f"tma_l2_{role}"][seg_i], 0.6)
+
+    # ---- Fig 4c TMA L3/L4 drill (hardened-rerun sets only)
+    for role in ("tool", "harness"):
+        DL3 = D.get(f"l3_{role}")
+        if not DL3:
+            continue
+        d = S.get(role, {})
+        co = CO.get(role, {})
+        for lab, key in (("icache", "icache_data.stalls"), ("itlb", "icache_tag.stalls"),
+                         ("resteer", "int_misc.clear_resteer_cycles"),
+                         ("div", "arith.div_active"),
+                         ("dram_ge1", "offcore_requests_outstanding.cycles_with_data_rd")):
+            e = co.get(key)
+            cyc = (e or {}).get("C", 0) or (d.get("cycles", 0) or 1)
+            chk(name, f"{role} L3 {lab} %cyc", 100 * d.get(key, 0) / cyc, DL3[lab], 0.15)
+
+    # ---- Fig 4d TMA tree (independent recompute of all 16 leaf segments)
+    for role in ("tool", "harness"):
+        DT = D.get(f"tma_tree_{role}")
+        if not DT:
+            continue
+        d = S.get(role, {}); co = CO.get(role, {})
+        t = {k: d.get(f"topdown-{k}", 0) for k in ("retiring", "bad-spec", "fe-bound", "be-bound")}
+        ts = sum(t.values()) or 1
+        L1 = {k: 100*v/ts for k, v in t.items()}
+        heavy = 100*d.get("topdown-heavy-ops", 0)/ts
+        br = 100*d.get("topdown-br-mispredict", 0)/ts
+        flat = 100*d.get("topdown-fetch-lat", 0)/ts
+        mem = 100*d.get("topdown-mem-bound", 0)/ts
+        core = max(L1["be-bound"] - mem, 0)
+        def cycp(k, d=d, co=co):
+            e = co.get(k) or {}
+            c = e.get("C", 0) or (d.get("cycles", 0) or 1)
+            return 100*d.get(k, 0)/c
+        kids = {"ic": cycp("icache_data.stalls"), "it": cycp("icache_tag.stalls"),
+                "rs": cycp("int_misc.clear_resteer_cycles")}
+        sc = min(1.0, flat/max(sum(kids.values()), 1e-9))
+        fl = {k: v*sc for k, v in kids.items()}
+        fbw = max(L1["fe-bound"] - flat, 0)
+        dsb, mite = d.get("idq.dsb_uops", 0), d.get("idq.mite_uops", 0)
+        fbw_dsb = fbw*dsb/max(dsb+mite, 1)
+        w = {"l1": 5*d.get("mem_load_retired.l1_hit", 0), "l2": 15*d.get("mem_load_retired.l2_hit", 0),
+             "l3": 50*d.get("mem_load_retired.l3_hit", 0), "dr": 250*d.get("mem_load_retired.l3_miss", 0)}
+        tw = sum(w.values()) or 1
+        div = min(cycp("arith.div_active"), core)
+        vec = [max(L1["retiring"]-heavy, 0), heavy, fl["ic"], fl["it"], fl["rs"],
+               max(flat-sum(fl.values()), 0), fbw_dsb, max(fbw-fbw_dsb, 0),
+               br, max(L1["bad-spec"]-br, 0),
+               mem*w["l1"]/tw, mem*w["l2"]/tw, mem*w["l3"]/tw, mem*w["dr"]/tw,
+               div, max(core-div, 0)]
+        for si, x in enumerate(vec):
+            chk(name, f"{role} tree seg{si}", x, DT[si], 0.6)
+
+    # ---- Fig 7b cumulative sums = raw fence totals
+    for nm, idx in (("tool", 1), ("harness", 0), ("litellm", 2)):
+        if nm in D.get("cumsum", {}):
+            chk(name, f"cumsum {nm}", raw[idx], D["cumsum"][nm], 0.5)
+
+    # ---- Fig 7 ECDF ns (SWE only)
+    if "ecdf_tool_n" in D:
+        tj = glob(f"{rd}/traj/*/*.traj")
+        ets = [s for s in json.load(open(tj[0]))["trajectory"] if s.get("execution_time", 0) > 0] if tj else []
+        chk(name, "ECDF tool n", len(ets), D["ecdf_tool_n"], 0)
+        chk(name, "ECDF harness bursts", len(bursts(rd, 1, THR_HARN)), D["ecdf_harn_n"], 2)
+
+    # ---- Fig 8 lanes: samples land ONLY on the pinned partition
     MEAS = set(range(2, 12)) | set(range(14, 24))
-    lanes_cpus = set()
-    nsamp = 0
-    for ln in open(f"{rd}/scope2_cpulanes.tsv"):
-        p = ln.split()
-        if len(p) == 2:
-            lanes_cpus.add(int(p[1])); nsamp += 1
-    chk(task, "hw-lanes samples", 1 if nsamp > 500 else 0, 1, 0)
-    chk(task, "hw-lanes pinned-only", 0 if lanes_cpus <= MEAS else 1, 0, 0)
-    # F9 harness anatomy — independent recompute of the three panels
-    interp = tot = 0
-    for ln in open(f"{rd}/scope1_leaf.txt"):
-        m2 = re.match(r"\s*(\d+)\s+\t?\s*(.+?)\s+\((.+)\)\s*$", ln)
-        if not m2: continue
-        tot += int(m2.group(1))
-        if "_PyEval_EvalFrameDefault" in m2.group(2): interp += int(m2.group(1))
-    chk(task, "harness interp-loop %", 100*interp/tot, INTERP_D[task], 0.6)
-    s1 = cpustat(rd, 1); T1 = [r[0] for r in s1]
-    sp1, t = 0.0, s1[0][0]
-    while t + 1.0 <= s1[-1][0]:
-        i = bisect.bisect_left(T1, t); j = bisect.bisect_left(T1, t + 1.0)
-        if 0 <= i < j < len(s1) and s1[j][0] > s1[i][0]:
-            sp1 = max(sp1, (s1[j][1]-s1[i][1])/1e6/(s1[j][0]-s1[i][0]))
-        t += 0.25
-    chk(task, "harness sustained peak", min(sp1, 20.0), SUSTH_D[task], 0.006)
-    hb, cur = 0, None
-    hs = series(rd, 1)
-    for tt2, vv2 in hs:
-        if vv2 > 0.05:
-            if cur is None: cur = [tt2, tt2]
-            cur[1] = tt2
-        elif cur and tt2 - cur[1] > 2.0:
-            hb += 1; cur = None
-    if cur: hb += 1
-    chk(task, "harness burst count", hb, HBURST_D[task], 0)
+    lf = f"{rd}/scope2_cpulanes.tsv"
+    if os.path.exists(lf):
+        cpus = set()
+        for ln in open(lf):
+            p = ln.split()
+            if len(p) == 2: cpus.add(int(float(p[1])))
+        chk(name, "lanes pinned-only", 0 if cpus <= MEAS else 1, 0, 0)
+
+    # ---- Fig 9 card (SWE only): sustained harness peak recompute
+    if "card" in D and "sustained peak (cores)" in D["card"]:
+        s1 = cpustat(rd, 1); T1 = [r[0] for r in s1]
+        sp1, t = 0.0, s1[0][0]
+        while t + 1.0 <= s1[-1][0]:
+            i = bisect.bisect_left(T1, t); j = bisect.bisect_left(T1, t + 1.0)
+            if 0 <= i < j < len(s1) and s1[j][0] > s1[i][0]:
+                sp1 = max(sp1, (s1[j][1]-s1[i][1])/1e6/(s1[j][0]-s1[i][0]))
+            t += 0.25
+        chk(name, "harness sustained", min(sp1, 20.0), D["card"]["sustained peak (cores)"], 0.006)
 
 print(f"\n{'ALL MATCH — figures faithfully represent the data' if fails == 0 else f'{fails} MISMATCHES'}")
 sys.exit(1 if fails else 0)

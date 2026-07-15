@@ -8,8 +8,8 @@
 #   ./measure.sh <campaign> <stage> [args]
 #
 # CAMPAIGNS
-#   agents-swe   SWE-agent x GLM-5.2, long-horizon (SWE_long: django/sympy/babel/fmt)
-#   agents-oc    OpenClaw x GLM-5.2, long-horizon (OC_long: jigsaw/pdf/sam3/...)
+#   agents-swe   SWE-agent x GLM-5.2, long-horizon (SWE_clean: django/sympy/babel/fmt)
+#   agents-oc    OpenClaw x GLM-5.2, long-horizon (OC_clean: jigsaw/pdf/web/scp)
 #   service      local k3s service, isolated per-tier CPU/TMA campaign
 #   plots        regenerate every figure set from banked data (no capture, no spend)
 #   validate     run every validator over banked data
@@ -45,17 +45,17 @@ CAMP="$1"; STAGE="${2:-}"; shift $(( $# >= 2 ? 2 : 1 ))
 
 case "$CAMP" in
   agents-swe)
-    : "${SWE_TEMP:=0.6}" "${LOOP_GUARD_N:=12}" "${REPEATS:=1}"
-    export SWE_TEMP LOOP_GUARD_N REPEATS SWE_SUBSET SWE_INSTANCES SWE_DRAIN_S
-    export DATA_ROOT="${DATA_ROOT:-$REPO/local_agents/SWE_long/data}"
+    : "${SWE_TEMP:=0.6}" "${LOOP_GUARD_N:=12}" "${REPEATS:=1}" "${WINSEC:=5}"
+    export SWE_TEMP LOOP_GUARD_N REPEATS SWE_SUBSET SWE_INSTANCES SWE_DRAIN_S WINSEC
+    export DATA_ROOT="${DATA_ROOT:-$REPO/local_agents/SWE_clean/data}"
     [ -n "$STAGE" ] || { echo "need a stage (preflight|dryrun|smoke|campaign|validate)"; exit 1; }
     [ "$STAGE" = campaign ] && set -- swe "$@"
     exec "$GLM/run_glm_campaign.sh" "$STAGE" "$@" ;;
 
   agents-oc)
-    : "${LOOP_GUARD_N:=12}" "${REPEATS:=1}" "${OC_WATCHER:=lineage}"
-    export LOOP_GUARD_N REPEATS OC_WATCHER OC_TASKS OC_DRAIN_S
-    export DATA_ROOT="${DATA_ROOT:-$REPO/local_agents/OC_long/data}"
+    : "${LOOP_GUARD_N:=12}" "${REPEATS:=1}" "${OC_WATCHER:=lineage}" "${WINSEC:=5}"
+    export LOOP_GUARD_N REPEATS OC_WATCHER OC_TASKS OC_DRAIN_S WINSEC
+    export DATA_ROOT="${DATA_ROOT:-$REPO/local_agents/OC_clean/data}"
     [ -n "$STAGE" ] || { echo "need a stage (preflight|dryrun|smoke|campaign|validate)"; exit 1; }
     [ "$STAGE" = campaign ] && set -- oc "$@"
     exec "$GLM/run_glm_campaign.sh" "$STAGE" "$@" ;;
@@ -66,12 +66,12 @@ case "$CAMP" in
 
   plots)
     which="${STAGE:-all}"
-    swe(){ echo "[plots] SWE_long"; env PLOT_SPEC="$REPO/local_agents/SWE_long/plot_spec.json" $PY "$GLM/plot_glm_results.py"
-           env PLOT_SPEC="$REPO/local_agents/SWE_long/plot_spec.json" $PY "$GLM/plot_call_structure.py"
-           $PY "$REPO/local_agents/SWE_long/plot_internal_tools.py"
-           $PY "$REPO/local_agents/SWE_long/plot_calls_vs_bursts.py"; }
-    oc(){  echo "[plots] OC_long";  env PLOT_SPEC="$REPO/local_agents/OC_long/plot_spec.json"  $PY "$GLM/plot_glm_results.py"
-           env PLOT_SPEC="$REPO/local_agents/OC_long/plot_spec.json"  $PY "$GLM/plot_call_structure.py"; }
+    swe(){ echo "[plots] SWE_clean"; env PLOT_SPEC="$REPO/local_agents/SWE_clean/plot_spec.json" $PY "$GLM/plot_glm_results.py"
+           env PLOT_SPEC="$REPO/local_agents/SWE_clean/plot_spec.json" $PY "$GLM/plot_call_structure.py"
+           env PLOT_SPEC="$REPO/local_agents/SWE_clean/plot_spec.json" $PY "$GLM/plot_internal_tools.py"
+           env PLOT_SPEC="$REPO/local_agents/SWE_clean/plot_spec.json" $PY "$GLM/plot_calls_vs_bursts.py"; }
+    oc(){  echo "[plots] OC_clean";  env PLOT_SPEC="$REPO/local_agents/OC_clean/plot_spec.json"  $PY "$GLM/plot_glm_results.py"
+           env PLOT_SPEC="$REPO/local_agents/OC_clean/plot_spec.json"  $PY "$GLM/plot_call_structure.py"; }
     svc(){ echo "[plots] service"; $PY "$SVC/plot_service_iso.py"; }
     case "$which" in
       agents-swe) swe ;; agents-oc) oc ;; service) svc ;;
@@ -82,10 +82,10 @@ case "$CAMP" in
     which="${STAGE:-all}"
     va(){ echo "[validate] $1"; $PY "$GLM/validate_glm_agents.py" "$2" glm; }
     case "$which" in
-      agents-swe) va SWE_long "$REPO/local_agents/SWE_long/data" ;;
-      agents-oc)  va OC_long  "$REPO/local_agents/OC_long/data" ;;
+      agents-swe) va SWE_clean "$REPO/local_agents/SWE_clean/data" ;;
+      agents-oc)  va OC_clean  "$REPO/local_agents/OC_clean/data" ;;
       service)    $PY "$SVC/validate_service.py" ;;
-      all) va SWE_long "$REPO/local_agents/SWE_long/data"; va OC_long "$REPO/local_agents/OC_long/data"; $PY "$SVC/validate_service.py" ;;
+      all) va SWE_clean "$REPO/local_agents/SWE_clean/data"; va OC_clean "$REPO/local_agents/OC_clean/data"; $PY "$SVC/validate_service.py" ;;
       *) echo "unknown validate set: $which"; exit 1 ;;
     esac ;;
 

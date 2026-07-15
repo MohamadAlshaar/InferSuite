@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
-"""Per-burst parallelism: peak CPU usage per burst for the TOOL fence (top row) and the
-HARNESS/agent fence (bottom row). Spike = max over one 0.1 s sample (capped at 20 = partition);
-sustained = max 1 s rolling mean. Bursts from the 10 Hz cpu.stat lanes (tool thr 0.005, harness
-thr 0.02). Configure via PLOT_SPEC=<spec.json> (same file the main plotter uses); without it,
-defaults to the SWE_long set. Run with SYSTEM python3.
+"""Per-burst CPU COST (adopted 2026-07-14, replaces the peak-cores view): y = core-seconds
+per burst — an exact, ADDITIVE total (Σ over bursts = fence total = the cpu_work donut).
+Peak parallelism is kept as the dot color. The old y-axis ("peak cores, 0.1 s spike") read
+like a core headcount and was not additive.
 
-Harness y-axis is ADAPTIVE: SWE harness is Python/GIL (~1 core), OC harness is node/V8
-(multi-threaded, bursts past 1 core) — the panel scales to the measured peak either way."""
+Bursts from the 10 Hz cpu.stat lanes with exact usec integration (tool thr 0.005, harness
+thr 0.02, sub-0.4 s gaps merged, heavy > 0.3 — ONE vocabulary, see the plots MANIFEST).
+Configure via PLOT_SPEC=<spec.json> (same file the main plotter uses); without it, defaults
+to the SWE_clean set. Run with SYSTEM python3."""
 import os, sys, json
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-SWE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "SWE_long")
+SWE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "SWE_clean")
 if os.environ.get("PLOT_SPEC"):
     spec = json.load(open(os.environ["PLOT_SPEC"]))
     DATA, OUT = spec["data"], spec["out"]
     TASKS = [(x[0], f"{DATA}/{x[1]}/{x[2][0]}") for x in spec["resolved"]]
 else:
     TASKS = [("django (Python)", f"{SWE}/data/glm_swe_django/run_1"),
-             ("sympy (Python)", f"{SWE}/data/glm_swe_sympy-light/run_1"),
+             ("sympy (Python)", f"{SWE}/data/glm_swe_sympy/run_1"),
              ("babel (JavaScript)", f"{SWE}/data/glm_swe_babel/run_1"),
              ("fmt (C++)", f"{SWE}/data/glm_swe_fmtlib/run_1")]
     OUT = f"{SWE}/plots"
@@ -29,9 +30,11 @@ plt.rcParams.update({
     "figure.dpi": 150, "savefig.dpi": 300, "savefig.bbox": "tight",
     "axes.grid": True, "grid.color": "#cccccc", "grid.linewidth": 0.5, "grid.alpha": 0.6,
     "axes.axisbelow": True})
-C_HARN, C_TOOL = "#6a51a3", "#1b9e77"
+C_TOOL, C_HARN = "#1b9e77", "#6a51a3"
+THR_TOOL, THR_HARN, THR_HEAVY, GAP_S = 0.005, 0.02, 0.3, 0.4
 
 def bursts(rd, scope, thr):
+    """[(duration_s, core_seconds, peak_cores)] — exact usec integration, GAP_S merge."""
     rows = []
     for ln in open(f"{rd}/cpustat_scope{scope}.tsv"):
         p = ln.split()
@@ -44,66 +47,55 @@ def bursts(rd, scope, thr):
     out, cur = [], None
     for t0, t1, r, cs in rates:
         if r > thr:
-            if cur and t0 - cur[1] < 0.4:
+            if cur and t0 - cur[1] < GAP_S:
                 cur = [cur[0], t1, cur[2] + cs, cur[3] + [r]]
             else:
                 if cur: out.append(cur)
                 cur = [t0, t1, cs, [r]]
     if cur: out.append(cur)
-    res = []
-    for s0, s1, cs, rr in out:
-        if cs <= 0.001: continue
-        res.append((s1 - s0, cs, max(rr)))
-    return res
+    return [(s1 - s0, cs, max(rr)) for s0, s1, cs, rr in out if cs > 0.001]
 
-# precompute so the harness row can scale to the true peak across all panels
-H = {label: np.array([b[2] for b in bursts(rd, 1, 0.02)]) for label, rd in TASKS}
-T = {label: np.array([b[2] for b in bursts(rd, 2, 0.005)]) for label, rd in TASKS}
-harn_peak = max((h.max() for h in H.values() if len(h)), default=1.0)
-harn_top = max(1.28, harn_peak * 1.12)
+B_TOOL = {lab: bursts(rd, 2, THR_TOOL) for lab, rd in TASKS}
+B_HARN = {lab: bursts(rd, 1, THR_HARN) for lab, rd in TASKS}
+harn_peak = max((b[2] for B in B_HARN.values() for b in B), default=1.0)
 
 fig, axes = plt.subplots(2, len(TASKS), figsize=(3.3 * len(TASKS), 7.6), sharey="row")
 axes = np.atleast_2d(axes)
-fig.subplots_adjust(hspace=0.42, wspace=0.10, top=0.86)
-for col, (label, rd) in enumerate(TASKS):
-    for row, (spikes, color, rolename) in enumerate(
-            [(T[label], C_TOOL, "Tool bursts"), (H[label], C_HARN, "Harness bursts")]):
+fig.subplots_adjust(hspace=0.42, wspace=0.10, top=0.85)
+rng = np.random.default_rng(7)
+sc = None
+for col, (lab, rd) in enumerate(TASKS):
+    for row, (B, role) in enumerate([(B_TOOL[lab], "Tool bursts"), (B_HARN[lab], "Harness bursts")]):
         ax = axes[row][col]
-        heavy = int((spikes > 0.3).sum())
-        x = np.random.default_rng(7).uniform(-0.30, 0.30, len(spikes))
-        ax.scatter(x, spikes, s=13, alpha=0.45, color=color, edgecolors="white", linewidths=0.4)
-        med, p95 = (np.median(spikes), np.percentile(spikes, 95)) if len(spikes) else (0, 0)
+        cs = np.array([b[1] for b in B])          # core-seconds  (the honest, additive total)
+        pk = np.array([b[2] for b in B])          # peak cores    (secondary encoding = color)
+        heavy = int((pk > THR_HEAVY).sum())
+        x = rng.uniform(-0.30, 0.30, len(cs))
+        sc = ax.scatter(x, cs, c=pk, cmap="viridis", vmin=1, vmax=8,
+                        s=16, alpha=0.7, edgecolors="white", linewidths=0.4)
+        med = np.median(cs) if len(cs) else 0
+        p95 = np.percentile(cs, 95) if len(cs) else 0
         ax.hlines(med, -0.40, 0.40, color="#222222", lw=1.6, zorder=4)
         ax.hlines(p95, -0.40, 0.40, color="#222222", lw=1.1, linestyle=(0, (4, 3)), zorder=4)
         ax.set_xlim(-0.62, 0.62); ax.set_xticks([])
+        ax.set_yscale("log"); ax.set_ylim(1e-3, 1e2)
         for s in ("top", "right"): ax.spines[s].set_visible(False)
-        mx = float(spikes.max()) if len(spikes) else 0.0
         if row == 0:
-            ax.set_title(label, fontsize=11, pad=26)
-            pk = f"{mx:.0f}" if mx >= 3 else f"{mx:.1f}"
-            ax.text(0.5, 1.045, f"{len(spikes)} bursts · {heavy} heavy · peak {pk} cores",
-                    transform=ax.transAxes, ha="center", fontsize=8.5, color="#555555")
-            ax.set_yscale("symlog", linthresh=1.0)
-            ax.set_ylim(0, 23)
-            ax.set_yticks([0, 0.5, 1, 2, 5, 10, 20])
-            ax.set_yticklabels(["0", "0.5", "1", "2", "5", "10", "20"])
-            ax.axhline(20, color="#aaaaaa", lw=0.8, linestyle=":", zorder=1)
+            ax.set_title(lab, fontsize=11, pad=26)
+            note = f"{len(cs)} bursts ({heavy} heavy) · Σ={cs.sum():.0f} cs"
         else:
-            ax.text(0.5, 1.045, f"{len(spikes)} bursts · max {mx:.2f} cores",
-                    transform=ax.transAxes, ha="center", fontsize=8.5, color="#555555")
-            ax.set_ylim(0, harn_top)
-            ax.axhline(1.0, color="#aaaaaa", lw=0.8, linestyle=":", zorder=1)
+            note = f"{len(cs)} bursts · Σ={cs.sum():.0f} cs · med {med:.2f}"
+        ax.text(0.5, 1.02, note, transform=ax.transAxes, ha="center",
+                fontsize=7.3, color="#555555")
         if col == 0:
-            ax.set_ylabel(f"{rolename}\npeak CPU usage (cores, 0.1 s spike)")
-axes[0][-1].annotate("20-core partition", xy=(0.62, 20), xycoords="data",
-                     xytext=(-2, 4), textcoords="offset points", ha="right", fontsize=7.5, color="#888888")
-axes[1][-1].annotate("1 core", xy=(0.62, 1.0), xycoords="data",
-                     xytext=(-2, 4), textcoords="offset points", ha="right", fontsize=7.5, color="#888888")
-# title states what the data shows: harness ceiling differs by runtime (Python GIL vs node V8)
+            ax.set_ylabel(f"{role}\nCPU per burst (core-seconds)")
+cb = fig.colorbar(sc, ax=axes.ravel().tolist(), fraction=0.018, pad=0.015)
+cb.set_label("peak parallelism (cores)", fontsize=8.5)
 harn_note = ("harness stays ~1 core (Python/GIL)" if harn_peak < 1.3
              else f"harness bursts to {harn_peak:.1f} cores (node/V8, multi-threaded)")
-fig.suptitle(f"Per-burst parallelism — tool calls fan out per payload; {harn_note}", fontsize=13)
-fig.text(0.5, 0.005, "solid line = median · dashed = p95 · bursts from the 10 Hz fence lanes",
+fig.suptitle(f"Per-burst CPU cost (core-seconds, additive) — color = peak parallelism; {harn_note}",
+             fontsize=12.5, y=0.94)
+fig.text(0.5, 0.005, "solid = median · dashed = p95 · Σ over bursts = fence total (cpu_work donut)",
          ha="center", fontsize=8, color="#777777")
 fig.savefig(f"{OUT}/glm_call_structure.png"); plt.close(fig)
 print(f"wrote {OUT}/glm_call_structure.png")

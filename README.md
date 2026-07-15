@@ -13,7 +13,7 @@ in wall-clock time and CPU core-seconds, with the GPU profiled in lockstep (Nsig
 **InferSuite is developed by us**: the service, the deployment, the benchmark suite, the agent
 harnesses, and the measurement/plotting tooling are all built in-house for this work.
 
-![InferSuite service pipeline](docs/service_pipeline_fenced.png)
+<!-- ![InferSuite service pipeline](docs/service_pipeline_fenced.png) -->
 
 It contains three things:
 
@@ -28,8 +28,8 @@ to the proven per-campaign kits (it sets the right data root / env; nothing is r
 
 ```bash
 ./measure.sh agents-swe preflight            # env checks, no spend
-./measure.sh agents-swe campaign             # SWE-agent x GLM-5.2 (SWE_long)
-./measure.sh agents-oc  campaign             # OpenClaw x GLM-5.2 (OC_long)
+./measure.sh agents-swe campaign             # SWE-agent x GLM-5.2 (SWE_clean)
+./measure.sh agents-oc  campaign             # OpenClaw x GLM-5.2 (OC_clean)
 ./measure.sh service    campaign             # local k3s service, per-tier CPU/TMA
 ./measure.sh plots                           # regenerate every figure set (no spend)
 ./measure.sh validate                        # run every validator over banked data
@@ -66,7 +66,8 @@ results/                curated data gallery, same structure, symlinks into the 
 
 # THESIS SCOPE (2026-07-12): the thesis shows two isolated campaigns only —
 #   the local isolated service (local_service/data_iso) and the GLM-5.2 isolated
-#   agent runs (local_agents/{SWE_long,OC_long}). The H100 campaign and the EKS
+#   agent runs (local_agents/{SWE_clean,OC_clean}; the earlier soft-isolated
+#   SWE_long/OC_long live in archive/glm_softiso_long_campaigns). The H100 campaign and the EKS
 #   service benchmark were moved to archive/ (see archive/README.md).
 
 local_service/          local k3s service run: per-tier TMA L1+L2, attribution, 12-cell timing grid
@@ -75,8 +76,8 @@ local_service/          local k3s service run: per-tier TMA L1+L2, attribution, 
 
 local_agents/           local agent campaigns (GLM-5.2 frontier tier)
   scripts/glm/          campaign kit: run_glm_campaign.sh (SWE + OC), lineage watcher, validate, plotters
-  SWE_long/             long-horizon SWE-agent: data/ plots/ plot_spec.json LAUNCH.md
-  OC_long/              long-horizon OpenClaw:  data/ plots/ plot_spec.json (lineage-fenced)
+  SWE_clean/            hardened long-horizon SWE-agent: data/ plots/ (incl. thesis_ready/) plot_spec.json MANIFEST
+  OC_clean/             hardened long-horizon OpenClaw:  data/ plots/ plot_spec.json MANIFEST (lineage-fenced)
 
 agentic/
   swe_agent/  openclaw/            the two agent harnesses the GLM-5.2 campaigns drive

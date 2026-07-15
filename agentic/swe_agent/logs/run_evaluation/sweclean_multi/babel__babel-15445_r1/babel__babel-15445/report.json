@@ -1,0 +1,84 @@
+{
+    "babel__babel-15445": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "inputSourceMap without sourcesContent"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "multiple sources",
+                    "identifierName",
+                    "newline in template literal",
+                    "newline in string literal",
+                    "lazy source map generation",
+                    "wraps around infer inside an array type",
+                    "should not deduplicate comments with same start index",
+                    "comments with null or undefined loc",
+                    "comments without loc",
+                    "comments without loc2",
+                    "comments without loc3",
+                    "comments without node.loc",
+                    "should add parenthesis when NullishCoalescing is used along with ||",
+                    "should add parenthesis when NullishCoalesing is used with &&",
+                    "numeric member expression",
+                    "nested if statements needs block",
+                    "prints directives in block with empty body",
+                    "flow object indentation",
+                    "flow object exact",
+                    "flow object indentation with empty leading ObjectTypeProperty",
+                    "flow interface with nullish extends",
+                    "flow function type annotation with no parent",
+                    "preserves escapes",
+                    "preserves escapes in minified output",
+                    "unescaped single quote",
+                    "unescaped double quote",
+                    "unescaped single and double quotes together throw",
+                    "preserves single quotes if not minified",
+                    "converts single quotes to double quotes if minified",
+                    "wraps around union for array",
+                    "wraps around intersection for array",
+                    "wraps around rest",
+                    "wraps around optional type",
+                    "not wrapped in parentheses when standalone",
+                    "wrapped in parentheses in expression statement",
+                    "wrapped in parentheses in arrow function",
+                    "not wrapped in parentheses in conditional",
+                    "wrapped in parentheses in conditional in expression statement",
+                    "wrapped in parentheses in conditional in arrow function",
+                    "not wrapped in parentheses in binary expression",
+                    "wrapped in parentheses in binary expression in expression statement",
+                    "wrapped in parentheses in binary expression in arrow function",
+                    "not wrapped in parentheses in sequence expression",
+                    "wrapped in parentheses in sequence expression in expression statement",
+                    "wrapped in parentheses in sequence expression in arrow function",
+                    "wrapped in parentheses in export default declaration",
+                    "true",
+                    "false",
+                    "default in Babel 7",
+                    "empty extends array",
+                    "detects open bracket from non-optional OptionalMemberExpression",
+                    "atomic node",
+                    "node without inner locations",
+                    "comment skipped in arrow function because of newlines",
+                    "comment in arrow function with return type"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

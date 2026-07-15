@@ -1,9 +1,16 @@
 # Figure gallery (curated view)
 
 All figures in one tree, organized **domain → setup → tier/bench**. This directory is a *view*:
-figures are generated at their source locations (`local_service/`, `local_agents/`, `h100/`,
-`agentic/inference/plots/`, `agentic/thesis_figures/`, `benchmark_results/plots/`) and copied here by
-`scripts/sync_plots.sh`. Never edit here — regenerate at the source and re-sync.
+never edit here — regenerate at the source and re-run `scripts/sync_plots.sh`.
+
+**THESIS SETS (live, resynced):** `agents/swe_long/` (← `local_agents/SWE_long/plots/`),
+`agents/oc_long/` (← `local_agents/OC_long/plots/`), `service/iso/` (← `local_service/plots_iso/`),
+plus `engine/local/` + `gpu/local_a2000/` (← `agentic/inference/plots/`). Each live set carries
+its own MANIFEST at the source.
+
+**Everything else below is a FROZEN legacy snapshot** (h100/, eks/, local_api/, service/local
+tok-trees, gpu/h100, gpu/l40s): sources archived 2026-07-12 under `archive/`; kept for browsing,
+no longer resynced.
 
 ## Setups (what ran where)
 

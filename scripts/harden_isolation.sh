@@ -42,8 +42,13 @@ case "$MODE" in
       || echo "  hardening: OFF"
     exit 0 ;;
   --on)  newval="$(tr -s ' ' <<<"$clean isolcpus=$CPUS_MEASURED nohz_full=$CPUS_MEASURED rcu_nocbs=$CPUS_MEASURED" | sed -E 's/^ | $//g')" ;;
+  # --on-soft: tickless + RCU-offload WITHOUT isolcpus. Measured 2026-07-14: isolcpus removes
+  # the cores from the scheduler's balancing domains — a 20-way pool confined to the measured
+  # cpuset stacked entirely on ONE core (cpu16 100%, 19 idle), which would invalidate all
+  # tool-fence parallelism results. nohz_full/rcu_nocbs do not affect balancing.
+  --on-soft) newval="$(tr -s ' ' <<<"$clean nohz_full=$CPUS_MEASURED rcu_nocbs=$CPUS_MEASURED" | sed -E 's/^ | $//g')" ;;
   --off) newval="$clean" ;;
-  *) echo "usage: sudo $0 [--on|--off|--status]"; exit 1 ;;
+  *) echo "usage: sudo $0 [--on|--on-soft|--off|--status]"; exit 1 ;;
 esac
 
 cp -n "$GRUB" "${GRUB}.pre-isoharden.bak"   # one-time backup

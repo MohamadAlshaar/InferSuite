@@ -1,49 +1,25 @@
 #!/usr/bin/env bash
-# sync_plots.sh — build/refresh the curated figure gallery at plots/ from all generator output
-# locations. plots/ is a VIEW: never edit it directly; regenerate figures at their source and
-# re-run this script. Structure: plots/<domain>/<setup>/... where <setup> encodes where it ran:
-#   local      = fully local workstation (Xeon w5-3425 + RTX A2000, self-served 7B)
-#   local_api  = local workstation CPU; model = Claude Sonnet via API (no local serving)
-#   h100       = rented H100 node (KVM guest, self-hosted 32B)
-#   eks        = EKS cluster (deployed service; H100 GPU node)
-#   l40s       = L40S cloud box (ncu study)
+# sync_plots.sh — refresh the curated figure gallery at plots/ from the CURRENT generator
+# output locations. plots/ is a VIEW: never edit it directly; regenerate figures at their
+# source and re-run this script.
+#
+# THESIS SCOPE (locked 2026-07-12): the actively regenerated sets are the two isolated
+# campaigns + the isolated service run. Everything else under plots/ (h100/, eks/,
+# local_api/, service/local tok-trees, gpu/h100, gpu/l40s) is a FROZEN legacy snapshot —
+# its sources moved to archive/ and are deliberately NOT resynced or deleted here.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 R() { mkdir -p "plots/$2" && rsync -a --delete-after --exclude='*.json' "$1" "plots/$2/"; }
 
-# ---------- service ----------
-R "local_service/plots/tok64/"        service/local/tok64
-R "local_service/plots/tok192/"       service/local/tok192
-R "local_service/plots/tok320/"       service/local/tok320
-R "local_service/plots/idle_control/" service/local/idle_control
-mkdir -p plots/service/local && cp -a local_service/plots/timing_donuts.png local_service/plots/timing_cpu_stages.png plots/service/local/
-R "h100/service/plots/"               service/h100
-R "benchmark_results/plots/figures/full_benchmark/cross_tier/" service/eks/cross_tier
-R "benchmark_results/plots/figures/full_benchmark/tok64/"      service/eks/tok64
-R "benchmark_results/plots/figures/full_benchmark/tok192/"     service/eks/tok192
-R "benchmark_results/plots/figures/full_benchmark/tok320/"     service/eks/tok320
+# ---------- thesis sets (live) ----------
+R "local_agents/SWE_clean/plots/" agents/swe_clean       # SWE-agent x GLM-5.2 hardened campaign
+R "local_agents/OC_clean/plots/"  agents/oc_clean        # OpenClaw x GLM-5.2 hardened campaign
+R "local_service/plots_iso/"      service/iso            # isolated k3s service campaign
 
-# ---------- agents ----------
-mkdir -p plots/agents/local_api
-cp -a agentic/thesis_figures/0*.png plots/agents/local_api/            # cross-workload (Sonnet driver)
-cp -a local_agents/plots/tool_attribution.png plots/agents/local_api/  # tool software view (replays + live Sonnet OC)
-cp -a local_agents/plots/api_harness_*.png plots/agents/local_api/     # frontier agent-side suite (live Sonnet)
-R "h100/plots/bcb/" agents/h100/bcb
-R "h100/plots/swe/" agents/h100/swe
-R "h100/plots/oc/"  agents/h100/oc
-mkdir -p plots/agents/h100 && cp -a h100/plots/grand_*.png plots/agents/h100/
-R "h100/plots/agent_side/" agents/h100/agent_side
-# local self-served campaign (7B): during/outside two-views + engine TMA per agent
-mkdir -p plots/agents/local && cp -a local_agents/plots/local_agents_*.png plots/agents/local/
+# ---------- still-generated engine/GPU figures (sources remain in tree) ----------
+[ -d agentic/inference/plots/gpu ] && R "agentic/inference/plots/gpu/" gpu/local_a2000
+if ls agentic/inference/plots/0*.png >/dev/null 2>&1; then
+  mkdir -p plots/engine/local && cp -a agentic/inference/plots/0*.png plots/engine/local/
+fi
 
-# ---------- during-inference engine studies ----------
-mkdir -p plots/engine/local
-cp -a agentic/inference/plots/0*.png plots/engine/local/
-cp -a agentic/thesis_figures/phantom_cpu.png plots/engine/local/
-
-# ---------- gpu ----------
-R "agentic/inference/plots/gpu/"  gpu/local_a2000
-R "h100/plots/gpu/"        gpu/h100
-R "agentic/aws_agents/gpu/" gpu/l40s
-
-echo "synced -> plots/ ($(find plots -name '*.png' | wc -l) figures)"
+echo "synced -> plots/ ($(find plots -name '*.png' | wc -l) figures; legacy snapshots untouched)"

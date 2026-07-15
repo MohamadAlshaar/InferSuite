@@ -1,0 +1,322 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git checkout 840ec8569ddb304345f082bb82d733742f431504 test/format-test.cc
+Updated 0 paths from bd884af8
++ git apply --verbose --reject -
+Checking patch test/format-test.cc...
+Applied patch test/format-test.cc cleanly.
++ mkdir -p build
++ cmake -B build -S .
+-- CMake version: 3.22.1
+-- Module support is disabled.
+-- Version: 9.1.1
+-- Build type: Release
+-- Target 'doc' disabled (requires doxygen)
+-- FMT_PEDANTIC: OFF
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /testbed/build
+++ nproc
++ cmake --build build --parallel 24 --target format-test
+Consolidate compiler generated dependencies of target fmt
+Consolidate compiler generated dependencies of target gtest
+[  9%] Building CXX object CMakeFiles/fmt.dir/src/format.cc.o
+[ 18%] Building CXX object CMakeFiles/fmt.dir/src/os.cc.o
+[ 36%] Built target gtest
+[ 45%] Linking CXX static library libfmt.a
+[ 45%] Built target fmt
+Consolidate compiler generated dependencies of target test-main
+[ 54%] Building CXX object test/CMakeFiles/test-main.dir/util.cc.o
+[ 63%] Building CXX object test/CMakeFiles/test-main.dir/gtest-extra.cc.o
+[ 72%] Linking CXX static library libtest-main.a
+[ 81%] Built target test-main
+Consolidate compiler generated dependencies of target format-test
+[ 90%] Building CXX object test/CMakeFiles/format-test.dir/format-test.cc.o
+[100%] Linking CXX executable ../bin/format-test
+[100%] Built target format-test
++ : '>>>>> Start Test Output'
++ ctest --test-dir build -V -R format-test
+Internal ctest changing into directory: /testbed/build
+UpdateCTestConfiguration  from :/testbed/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/testbed/build/DartConfiguration.tcl
+Test project /testbed/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 7
+    Start 7: format-test
+
+7: Test command: /testbed/build/bin/format-test
+7: Test timeout computed to be: 10000000
+7: [==========] Running 117 tests from 6 test suites.
+7: [----------] Global test environment set-up.
+7: [----------] 5 tests from uint128_test
+7: [ RUN      ] uint128_test.ctor
+7: [       OK ] uint128_test.ctor (0 ms)
+7: [ RUN      ] uint128_test.shift
+7: [       OK ] uint128_test.shift (0 ms)
+7: [ RUN      ] uint128_test.minus
+7: [       OK ] uint128_test.minus (0 ms)
+7: [ RUN      ] uint128_test.plus_assign
+7: [       OK ] uint128_test.plus_assign (0 ms)
+7: [ RUN      ] uint128_test.multiply
+7: [       OK ] uint128_test.multiply (0 ms)
+7: [----------] 5 tests from uint128_test (0 ms total)
+7: 
+7: [----------] 2 tests from float_test
+7: [ RUN      ] float_test.isfinite
+7: [       OK ] float_test.isfinite (0 ms)
+7: [ RUN      ] float_test.isnan
+7: [       OK ] float_test.isnan (0 ms)
+7: [----------] 2 tests from float_test (0 ms total)
+7: 
+7: [----------] 9 tests from util_test
+7: [ RUN      ] util_test.bit_cast
+7: [       OK ] util_test.bit_cast (0 ms)
+7: [ RUN      ] util_test.increment
+7: [       OK ] util_test.increment (0 ms)
+7: [ RUN      ] util_test.parse_nonnegative_int
+7: [       OK ] util_test.parse_nonnegative_int (0 ms)
+7: [ RUN      ] util_test.utf8_to_utf16
+7: [       OK ] util_test.utf8_to_utf16 (0 ms)
+7: [ RUN      ] util_test.utf8_to_utf16_empty_string
+7: [       OK ] util_test.utf8_to_utf16_empty_string (0 ms)
+7: [ RUN      ] util_test.allocator_ref
+7: [       OK ] util_test.allocator_ref (0 ms)
+7: [ RUN      ] util_test.format_system_error
+7: [       OK ] util_test.format_system_error (0 ms)
+7: [ RUN      ] util_test.system_error
+7: [       OK ] util_test.system_error (0 ms)
+7: [ RUN      ] util_test.report_system_error
+7: [       OK ] util_test.report_system_error (0 ms)
+7: [----------] 9 tests from util_test (0 ms total)
+7: 
+7: [----------] 9 tests from memory_buffer_test
+7: [ RUN      ] memory_buffer_test.ctor
+7: [       OK ] memory_buffer_test.ctor (0 ms)
+7: [ RUN      ] memory_buffer_test.move_ctor_inline_buffer
+7: [       OK ] memory_buffer_test.move_ctor_inline_buffer (0 ms)
+7: [ RUN      ] memory_buffer_test.move_ctor_dynamic_buffer
+7: [       OK ] memory_buffer_test.move_ctor_dynamic_buffer (0 ms)
+7: [ RUN      ] memory_buffer_test.move_assignment
+7: [       OK ] memory_buffer_test.move_assignment (0 ms)
+7: [ RUN      ] memory_buffer_test.grow
+7: [       OK ] memory_buffer_test.grow (0 ms)
+7: [ RUN      ] memory_buffer_test.allocator
+7: [       OK ] memory_buffer_test.allocator (0 ms)
+7: [ RUN      ] memory_buffer_test.exception_in_deallocate
+7: [       OK ] memory_buffer_test.exception_in_deallocate (0 ms)
+7: [ RUN      ] memory_buffer_test.max_size_allocator
+7: [       OK ] memory_buffer_test.max_size_allocator (0 ms)
+7: [ RUN      ] memory_buffer_test.max_size_allocator_overflow
+7: [       OK ] memory_buffer_test.max_size_allocator_overflow (0 ms)
+7: [----------] 9 tests from memory_buffer_test (0 ms total)
+7: 
+7: [----------] 90 tests from format_test
+7: [ RUN      ] format_test.escape
+7: [       OK ] format_test.escape (0 ms)
+7: [ RUN      ] format_test.unmatched_braces
+7: [       OK ] format_test.unmatched_braces (0 ms)
+7: [ RUN      ] format_test.no_args
+7: [       OK ] format_test.no_args (0 ms)
+7: [ RUN      ] format_test.args_in_different_positions
+7: [       OK ] format_test.args_in_different_positions (0 ms)
+7: [ RUN      ] format_test.arg_errors
+7: [       OK ] format_test.arg_errors (0 ms)
+7: [ RUN      ] format_test.many_args
+7: [       OK ] format_test.many_args (0 ms)
+7: [ RUN      ] format_test.named_arg
+7: [       OK ] format_test.named_arg (0 ms)
+7: [ RUN      ] format_test.auto_arg_index
+7: [       OK ] format_test.auto_arg_index (0 ms)
+7: [ RUN      ] format_test.empty_specs
+7: [       OK ] format_test.empty_specs (0 ms)
+7: [ RUN      ] format_test.left_align
+7: [       OK ] format_test.left_align (0 ms)
+7: [ RUN      ] format_test.right_align
+7: [       OK ] format_test.right_align (0 ms)
+7: [ RUN      ] format_test.center_align
+7: [       OK ] format_test.center_align (0 ms)
+7: [ RUN      ] format_test.fill
+7: [       OK ] format_test.fill (0 ms)
+7: [ RUN      ] format_test.plus_sign
+7: [       OK ] format_test.plus_sign (0 ms)
+7: [ RUN      ] format_test.minus_sign
+7: [       OK ] format_test.minus_sign (0 ms)
+7: [ RUN      ] format_test.space_sign
+7: [       OK ] format_test.space_sign (0 ms)
+7: [ RUN      ] format_test.hash_flag
+7: [       OK ] format_test.hash_flag (0 ms)
+7: [ RUN      ] format_test.zero_flag
+7: [       OK ] format_test.zero_flag (0 ms)
+7: [ RUN      ] format_test.zero_flag_and_align
+7: [       OK ] format_test.zero_flag_and_align (0 ms)
+7: [ RUN      ] format_test.width
+7: [       OK ] format_test.width (0 ms)
+7: [ RUN      ] format_test.runtime_width
+7: [       OK ] format_test.runtime_width (0 ms)
+7: [ RUN      ] format_test.precision
+7: [       OK ] format_test.precision (0 ms)
+7: [ RUN      ] format_test.runtime_precision
+7: [       OK ] format_test.runtime_precision (0 ms)
+7: [ RUN      ] format_test.format_bool
+7: [       OK ] format_test.format_bool (0 ms)
+7: [ RUN      ] format_test.format_short
+7: [       OK ] format_test.format_short (0 ms)
+7: [ RUN      ] format_test.format_int
+7: [       OK ] format_test.format_int (0 ms)
+7: [ RUN      ] format_test.format_bin
+7: [       OK ] format_test.format_bin (0 ms)
+7: [ RUN      ] format_test.format_dec
+7: [       OK ] format_test.format_dec (0 ms)
+7: [ RUN      ] format_test.format_hex
+7: [       OK ] format_test.format_hex (0 ms)
+7: [ RUN      ] format_test.format_oct
+7: [       OK ] format_test.format_oct (0 ms)
+7: [ RUN      ] format_test.format_int_locale
+7: [       OK ] format_test.format_int_locale (0 ms)
+7: [ RUN      ] format_test.format_float
+7: [       OK ] format_test.format_float (0 ms)
+7: [ RUN      ] format_test.format_double
+7: [       OK ] format_test.format_double (0 ms)
+7: [ RUN      ] format_test.precision_rounding
+7: [       OK ] format_test.precision_rounding (0 ms)
+7: [ RUN      ] format_test.prettify_float
+7: [       OK ] format_test.prettify_float (0 ms)
+7: [ RUN      ] format_test.format_nan
+7: [       OK ] format_test.format_nan (0 ms)
+7: [ RUN      ] format_test.format_infinity
+7: [       OK ] format_test.format_infinity (0 ms)
+7: [ RUN      ] format_test.format_long_double
+7: [       OK ] format_test.format_long_double (0 ms)
+7: [ RUN      ] format_test.format_char
+7: [       OK ] format_test.format_char (0 ms)
+7: [ RUN      ] format_test.format_volatile_char
+7: [       OK ] format_test.format_volatile_char (0 ms)
+7: [ RUN      ] format_test.format_unsigned_char
+7: [       OK ] format_test.format_unsigned_char (0 ms)
+7: [ RUN      ] format_test.format_cstring
+7: [       OK ] format_test.format_cstring (0 ms)
+7: [ RUN      ] format_test.format_pointer
+7: [       OK ] format_test.format_pointer (0 ms)
+7: [ RUN      ] format_test.write_uintptr_fallback
+7: [       OK ] format_test.write_uintptr_fallback (0 ms)
+7: [ RUN      ] format_test.format_enum_class
+7: [       OK ] format_test.format_enum_class (0 ms)
+7: [ RUN      ] format_test.format_string
+7: [       OK ] format_test.format_string (0 ms)
+7: [ RUN      ] format_test.format_string_view
+7: [       OK ] format_test.format_string_view (0 ms)
+7: [ RUN      ] format_test.format_std_string_view
+7: [       OK ] format_test.format_std_string_view (0 ms)
+7: [ RUN      ] format_test.format_explicitly_convertible_to_std_string_view
+7: [       OK ] format_test.format_explicitly_convertible_to_std_string_view (0 ms)
+7: [ RUN      ] format_test.format_convertible_to_anything
+7: [       OK ] format_test.format_convertible_to_anything (0 ms)
+7: [ RUN      ] format_test.format_custom
+7: [       OK ] format_test.format_custom (0 ms)
+7: [ RUN      ] format_test.format_to_custom
+7: [       OK ] format_test.format_to_custom (0 ms)
+7: [ RUN      ] format_test.format_string_from_speed_test
+7: [       OK ] format_test.format_string_from_speed_test (0 ms)
+7: [ RUN      ] format_test.format_examples
+7: [       OK ] format_test.format_examples (0 ms)
+7: [ RUN      ] format_test.print
+7: [       OK ] format_test.print (0 ms)
+7: [ RUN      ] format_test.variadic
+7: [       OK ] format_test.variadic (0 ms)
+7: [ RUN      ] format_test.dynamic
+7: [       OK ] format_test.dynamic (0 ms)
+7: [ RUN      ] format_test.bytes
+7: [       OK ] format_test.bytes (0 ms)
+7: [ RUN      ] format_test.group_digits_view
+7: [       OK ] format_test.group_digits_view (0 ms)
+7: [ RUN      ] format_test.join
+7: [       OK ] format_test.join (0 ms)
+7: [ RUN      ] format_test.format_byte
+7: [       OK ] format_test.format_byte (0 ms)
+7: [ RUN      ] format_test.join_bytes
+7: [       OK ] format_test.join_bytes (0 ms)
+7: [ RUN      ] format_test.format_message_example
+7: [       OK ] format_test.format_message_example (0 ms)
+7: [ RUN      ] format_test.unpacked_args
+7: [       OK ] format_test.unpacked_args (0 ms)
+7: [ RUN      ] format_test.compile_time_string
+7: [       OK ] format_test.compile_time_string (0 ms)
+7: [ RUN      ] format_test.custom_format_compile_time_string
+7: [       OK ] format_test.custom_format_compile_time_string (0 ms)
+7: [ RUN      ] format_test.named_arg_udl
+7: [       OK ] format_test.named_arg_udl (0 ms)
+7: [ RUN      ] format_test.enum
+7: [       OK ] format_test.enum (0 ms)
+7: [ RUN      ] format_test.formatter_not_specialized
+7: [       OK ] format_test.formatter_not_specialized (0 ms)
+7: [ RUN      ] format_test.non_null_terminated_format_string
+7: [       OK ] format_test.non_null_terminated_format_string (0 ms)
+7: [ RUN      ] format_test.dynamic_formatter
+7: [       OK ] format_test.dynamic_formatter (0 ms)
+7: [ RUN      ] format_test.to_string
+7: [       OK ] format_test.to_string (0 ms)
+7: [ RUN      ] format_test.output_iterators
+7: [       OK ] format_test.output_iterators (0 ms)
+7: [ RUN      ] format_test.formatted_size
+7: [       OK ] format_test.formatted_size (0 ms)
+7: [ RUN      ] format_test.format_to_no_args
+7: [       OK ] format_test.format_to_no_args (0 ms)
+7: [ RUN      ] format_test.format_to
+7: [       OK ] format_test.format_to (0 ms)
+7: [ RUN      ] format_test.format_to_memory_buffer
+7: [       OK ] format_test.format_to_memory_buffer (0 ms)
+7: [ RUN      ] format_test.format_to_vector
+7: [       OK ] format_test.format_to_vector (0 ms)
+7: [ RUN      ] format_test.format_to_propagates_exceptions
+7: [       OK ] format_test.format_to_propagates_exceptions (0 ms)
+7: [ RUN      ] format_test.format_to_n
+7: [       OK ] format_test.format_to_n (0 ms)
+7: [ RUN      ] format_test.format_to_n_output_iterator
+7: [       OK ] format_test.format_to_n_output_iterator (0 ms)
+7: [ RUN      ] format_test.format_string_errors
+7: [       OK ] format_test.format_string_errors (0 ms)
+7: [ RUN      ] format_test.vformat_to
+7: [       OK ] format_test.vformat_to (0 ms)
+7: [ RUN      ] format_test.char_traits_is_not_ambiguous
+7: [       OK ] format_test.char_traits_is_not_ambiguous (0 ms)
+7: [ RUN      ] format_test.back_insert_slicing
+7: [       OK ] format_test.back_insert_slicing (0 ms)
+7: [ RUN      ] format_test.test_formatters_enabled
+7: [       OK ] format_test.test_formatters_enabled (0 ms)
+7: [ RUN      ] format_test.format_facet
+7: [       OK ] format_test.format_facet (0 ms)
+7: [ RUN      ] format_test.format_facet_separator
+7: [       OK ] format_test.format_facet_separator (0 ms)
+7: [ RUN      ] format_test.format_facet_grouping
+7: [       OK ] format_test.format_facet_grouping (0 ms)
+7: [ RUN      ] format_test.format_named_arg_with_locale
+7: [       OK ] format_test.format_named_arg_with_locale (0 ms)
+7: [----------] 90 tests from format_test (5 ms total)
+7: 
+7: [----------] 2 tests from format_int_test
+7: [ RUN      ] format_int_test.data
+7: [       OK ] format_int_test.data (0 ms)
+7: [ RUN      ] format_int_test.format_int
+7: [       OK ] format_int_test.format_int (0 ms)
+7: [----------] 2 tests from format_int_test (0 ms total)
+7: 
+7: [----------] Global test environment tear-down
+7: [==========] 117 tests from 6 test suites ran. (6 ms total)
+7: [  PASSED  ] 117 tests.
+1/1 Test #7: format-test ......................   Passed    0.01 sec
+
+The following tests passed:
+	format-test
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.01 sec
++ : '>>>>> End Test Output'
++ git checkout 840ec8569ddb304345f082bb82d733742f431504 test/format-test.cc
+Updated 1 path from bd884af8
