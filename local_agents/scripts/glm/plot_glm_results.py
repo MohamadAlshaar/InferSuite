@@ -58,6 +58,29 @@ if os.environ.get("PLOT_SPEC"):
     OUTCOME = _SPEC.get("outcome", OUTCOME)
     DISPLAY = {n: (n if OUTCOME[n] == "resolved" else f"{n} ({OUTCOME[n]})") for n, _, _ in RESOLVED}
 
+def count_turns(run_dir):
+    """Agent turns per episode: SWE-agent logs one STEP marker per turn; OC episodes
+    count assistant messages in the transcript instead."""
+    import json as _j, os as _o
+    try:
+        n = open(f"{run_dir}/agent.log", errors="ignore").read().count("STEP ")
+        if n > 0:
+            return n
+    except OSError:
+        pass
+    f = f"{run_dir}/transcript/chat.jsonl"
+    n = 0
+    if _o.path.exists(f):
+        for ln in open(f):
+            try:
+                m = _j.loads(ln)
+            except Exception:
+                continue
+            msg = m.get("message") or {}
+            if m.get("type") == "message" and msg.get("role") == "assistant":
+                n += 1
+    return n
+
 def count_transcript_toolcalls(run_dir):
     """OC episodes carry transcript/chat.jsonl instead of a sweagent traj — count the
     assistant toolCall blocks so call totals stay honest on OC panels."""
@@ -452,16 +475,18 @@ for n, cfg, runs in RESOLVED:
     tj = _g.glob(f"{DATA}/{cfg}/{runs[0]}/traj/*/*.traj")
     total = (len(_j.load(open(tj[0])).get("trajectory", [])) if tj
              else count_transcript_toolcalls(f"{DATA}/{cfg}/{runs[0]}"))
-    stats[n] = dict(total=total, n=len(B)/len(runs), med=np.median(durs) if durs else 0,
+    turns = count_turns(f"{DATA}/{cfg}/{runs[0]}")
+    stats[n] = dict(total=total, turns=turns, n=len(B)/len(runs), med=np.median(durs) if durs else 0,
                     mx=max(durs) if durs else 0,
                     peak=min(max(cpus), 20.0) if cpus else 0,
                     sust=max(peak_sustained(f"{DATA}/{cfg}/{rn}") for rn in runs),
                     share=100*tools/walls if walls else 0)
-    VALUES[n].update(calls_total=stats[n]["total"], heavy_bursts=stats[n]["n"],
+    VALUES[n].update(calls_total=stats[n]["total"], turns=int(stats[n]["turns"]),
+                     heavy_bursts=stats[n]["n"],
                      med_heavy_dur=float(stats[n]["med"]), peak_spike=float(stats[n]["peak"]),
                      sust=float(stats[n]["sust"]), tool_wall_pct=float(stats[n]["share"]))
 PANELS = [("n", "Tool calls per episode", "{:.0f}"), ("med", "Median call duration (s)", "{:.1f}"),
-          ("peak", "Peak CPU usage (cores)", "{:.1f}"), ("share", "Tool-active share of wall (%)", "{:.1f}")]
+          ("turns", "Agent turns", "{:.0f}"), ("share", "Tool-active share of wall (%)", "{:.1f}")]
 fig, axes = plt.subplots(1, len(RESOLVED), figsize=(3.1*len(RESOLVED), 2.9)); axes = np.atleast_1d(axes)
 for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
     v = [stats[n][k] for n in names]
@@ -476,22 +501,15 @@ for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
         ax.invert_yaxis(); ax.set_xlim(0, max(tv) * 1.45); ax.grid(axis="x")
         continue
     ax.barh(range(len(names)), v, color=C_TOOL, height=0.55, edgecolor="white", linewidth=0.8)
-    if k == "peak":   # two timescales: solid bar = instantaneous (0.1 s); dark tick = sustained (1 s)
-        sv = [stats[n]["sust"] for n in names]
-        ax.barh(range(len(names)), sv, color="#0e6b52", height=0.55, edgecolor="white", linewidth=0.8)
-        for i, (xi, xs) in enumerate(zip(v, sv)):
-            ax.text(xi, i, f" {xi:.1f} / {xs:.1f}", va="center", fontsize=8.5, color="#333333")
-        ax.set_title(ttl + "\nlight = 0.1 s spike · dark = 1 s sustained", fontsize=8.5)
-    else:
-        ax.set_title(ttl, fontsize=10)
-        for i, x in enumerate(v):
-            ax.text(x, i, " " + fmtv.format(x), va="center", fontsize=9, color="#333333")
+    ax.set_title(ttl, fontsize=10)
+    for i, x in enumerate(v):
+        ax.text(x, i, " " + fmtv.format(x), va="center", fontsize=9, color="#333333")
     ax.set_yticks(range(len(names)))
     ax.set_yticklabels(names if pi == 0 else [], fontsize=9.5)
     ax.invert_yaxis()
     ax.set_xlim(0, max(v) * 1.42); ax.grid(axis="x")
 fig.suptitle("Tool-call structure", fontsize=12.5, y=1.06)
-defs_footer(fig, " Spiky parallelism (astropy: parallel compiler procs ~0.3 s) shows in 0.1 s peaks, not sustained.")
+defs_footer(fig)
 fig.savefig(f"{OUT}/glm_tool_calls.png"); plt.close(fig)
 
 # ================= Fig 4: TMA Level 1, per fence (uop-delivery panel dropped 2026-07-15 —
@@ -534,8 +552,7 @@ COLS = [("IPC",      "IPC",              0.0, 6.0,  "{:.2f}"),
         ("L1D_MPKI", "L1D-load MPKI",    0.0, 40.0, "{:.1f}"),
         ("LLC_MPKI", "LLC MPKI",         0.0, 10.0, "{:.2f}"),
         ("AMAT",     "AMAT (cyc)",       5.0, 50.0, "{:.1f}"),
-        ("MLP",      "MLP",              1.0, 16.0, "{:.1f}"),
-        ("vecFP",    "Packed %FP",       0.0, 100., "{:.0f}")]
+        ("MLP",      "MLP",              1.0, 16.0, "{:.1f}")]
 M = np.zeros((len(rows), len(COLS))); TXT = []
 for i, (_, nm_, role) in enumerate(rows):
     m = met(nm_, role); TXT.append(m)
