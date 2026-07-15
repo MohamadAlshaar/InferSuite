@@ -59,8 +59,7 @@ ax.set_xticks([70, 100, 150, 200, 300, 400]); ax.set_xticklabels(["70", "100", "
 ax.set_yticks([10, 30, 100, 300, 800]); ax.set_yticklabels(["10", "30", "100", "300", "800"])
 ax.set_xlabel("conversation length (turns)")
 ax.set_ylabel("harness CPU work (core-seconds)")
-ax.set_title("Harness cost is set by conversation length, not codebase —\n"
-             f"{len(pts)} live episodes · 4 repos (68 KLOC–531 KLOC)", fontsize=12)
+ax.set_title("Harness CPU work vs conversation length", fontsize=12)
 ax.legend(fontsize=8.5, frameon=False, loc="upper left")
 ax.annotate("django & sympy:\nsame code size (477k vs 531k lines),\n22× the harness work at 3.1× the turns",
             xy=(389, 632), xytext=(120, 340), fontsize=8, color="#555555",

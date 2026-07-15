@@ -535,7 +535,6 @@ COLS = [("IPC",      "IPC",              0.0, 6.0,  "{:.2f}"),
         ("LLC_MPKI", "LLC MPKI",         0.0, 10.0, "{:.2f}"),
         ("AMAT",     "AMAT (cyc)",       5.0, 50.0, "{:.1f}"),
         ("MLP",      "MLP",              1.0, 16.0, "{:.1f}"),
-        ("kern",     "OS share %",       0.0, 100., "{:.0f}"),
         ("vecFP",    "Packed %FP",       0.0, 100., "{:.0f}")]
 M = np.zeros((len(rows), len(COLS))); TXT = []
 for i, (_, nm_, role) in enumerate(rows):
@@ -603,15 +602,13 @@ for row, (scope, role) in enumerate(((2, "tool"), (1, "harness"))):
                    counterclock=False, wedgeprops=dict(width=0.42, edgecolor="white", linewidth=2),
                    autopct=lambda p: f"{p:.0f}%" if p >= 7 else "", pctdistance=0.76,
                    textprops=dict(fontsize=8.5))
-        kern_ctr = met(name, role)["kern"]
-        ax.text(0, 0, f"OS share\n{kern_ctr:.0f}%", ha="center", va="center", fontsize=9.5, color=C_KERN)
         if row == 0: ax.set_title(DISPLAY[name], fontsize=11)
         ax.set_aspect("equal")
 axes[0, 0].set_ylabel("Tool fence", fontsize=11)
 axes[1, 0].set_ylabel("Harness fence", fontsize=11)
 fig.legend(handles=[Patch(fc=c, label=n) for n, c, _ in ROLES] + [Patch(fc="#b3b3b3", label="other / unresolved")],
            ncol=3, loc="lower center", frameon=False, fontsize=9, bbox_to_anchor=(0.5, -0.02))
-fig.suptitle("What runs inside each fence (record samples; center = OS share of cycles from counters)",
+fig.suptitle("What runs inside each fence (record samples)",
              fontsize=12, y=0.98)
 fig.savefig(f"{OUT}/extra/glm_software_kernel.png"); plt.close(fig)
 
@@ -698,7 +695,7 @@ for pnl, (name, cfg, runs) in enumerate(RESOLVED):
     for s in ("top", "right"): ax.spines[s].set_visible(False)
     ax.grid(True, alpha=0.4)
     if pnl == len(RESOLVED) - 1: ax.set_xlabel("Episode time (minutes)")
-fig.suptitle("Cumulative CPU work (core-seconds) — flat = idle (model round-trip); slope = CPU usage (cores)",
+fig.suptitle("Cumulative CPU work",
              fontsize=12, y=0.995)
 defs_footer(fig)
 fig.savefig(f"{OUT}/glm_timeline_cumulative.png"); plt.close(fig)
@@ -1037,9 +1034,8 @@ def dsb_share(S):
     return 100 * S["idq.dsb_uops"] / ut
 CARD = [("IPC", lambda S: S["instructions"]/S["cycles"], 4),
         ("uop-cache (DSB) %", dsb_share, 100),
-        ("OS share %", lambda S: 100*S["cycles:k"]/(S["cycles:k"]+S["cycles:u"]), 100),
         ("sustained peak (cores)", None, 1.25)]
-axsB = grid[1].subgridspec(1, 4, wspace=0.35)
+axsB = grid[1].subgridspec(1, 3, wspace=0.35)
 for k, (ttl, fn, hi) in enumerate(CARD):
     ax = fig.add_subplot(axsB[k])
     v = [peak_sustained(TASKS[n]["rep"], scope=1) if fn is None else fn(TASKS[n]["S"]["harness"]) for n in names9]
@@ -1077,8 +1073,7 @@ for k, name in enumerate(names9):
 
 fig.suptitle("Harness anatomy — the agent framework as a workload: what it runs, how it performs, what it costs over time",
              fontsize=12.5, y=0.985)
-defs_footer(fig, " OS share = CPU time spent inside the operating system doing system calls for this fence"
-            " (network/disk/wakeups). Burst = contiguous harness activity above the harness threshold"
+defs_footer(fig, " Burst = contiguous harness activity above the harness threshold"
             " (see MANIFEST); cost = its exact usage integral.")
 fig.savefig(f"{OUT}/glm_harness_anatomy.png"); plt.close(fig)
 print("wrote glm_harness_anatomy.png")

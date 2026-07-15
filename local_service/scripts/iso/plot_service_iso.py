@@ -15,6 +15,7 @@ DATA = os.path.join(HERE, "..", "..", "data_iso")
 OUT = os.path.join(HERE, "..", "..", "plots_iso"); os.makedirs(OUT, exist_ok=True)
 
 plt.rcParams.update({
+    "font.family": "serif", "font.serif": ["DejaVu Serif"],
     "font.size": 11, "figure.dpi": 150, "savefig.dpi": 300, "savefig.bbox": "tight",
     "axes.spines.top": False, "axes.spines.right": False,
     "axes.grid": True, "grid.alpha": 0.35, "grid.linewidth": 0.6,
@@ -124,13 +125,13 @@ box(9.9, 4.3, 3.0, 1.9, "#1b9e77", "vLLM host",
     "~1.9 cores flat; IPC 3.59; uop-cache 99%;\nzero FP = phantom CPU, not compute")
 box(1.1, 1.4, 2.6, 1.7, "#e6ab02", "mongodb",
     "document store:\nsemantic-cache metadata",
-    "~0.01 cores; 28% OS share")
+    "~0.01 cores")
 box(4.4, 1.4, 2.6, 1.7, "#CC79A7", "milvus",
     "vector database: nearest-neighbor\nsearch over 14,419 chunk vectors",
-    "~0.02 cores; IPC 0.85; 24% OS share")
+    "~0.02 cores; IPC 0.85")
 box(7.7, 1.4, 2.6, 1.7, "#66a61e", "seaweed filer+volume",
     "object store: resolves + serves\nthe retrieved chunk texts",
-    "~0.002 cores; 41% OS share\n(storage = syscall work)")
+    "~0.002 cores\n(storage = syscall work)")
 arrow(2.45, 5.35, 3.4, 5.2, "1.", "HTTP request")
 ax.text(5.1, 6.30, "2. embed query (BGE, in-process)", fontsize=7.6, color="#6a51a3", ha="center")
 arrow(4.0, 3.9, 2.6, 3.1, "3.", "cache lookup", dy=0.18)
@@ -186,12 +187,10 @@ def metrics_of(E):
     pk = sum(v for k, v in E.items() if k.startswith("fp_arith") and "packed" in k)
     sc = sum(v for k, v in E.items() if k.startswith("fp_arith") and "scalar" in k)
     fp = 100 * pk / (pk + sc) if pk + sc > 0 else 0.0
-    kern = 100 * E.get("cycles:k", 0) / (E.get("cycles:k", 0) + E.get("cycles:u", 1))
-    return [ipc, dsb, br, l1i, l1d, l2d, llc, fp, kern]
+    return [ipc, dsb, br, l1i, l1d, l2d, llc, fp]
 
 MET = [("IPC", 0, 6), ("uop-cache %", 0, 100), ("branch MPKI", 0, 20), ("L1I MPKI", 0, 20),
-       ("L1D MPKI", 0, 40), ("L2D MPKI", 0, 20), ("LLC MPKI", 0, 10), ("packed FP %", 0, 100),
-       ("OS share %", 0, 100)]
+       ("L1D MPKI", 0, 40), ("L2D MPKI", 0, 20), ("LLC MPKI", 0, 10), ("packed FP %", 0, 100)]
 SHOW = ["vllm", "fastapi", "milvus", "mongodb"]
 fig, axes = plt.subplots(1, 4, figsize=(15.2, 3.9), sharey=True)
 for ax, b in zip(axes, BUCKETS):
@@ -202,7 +201,7 @@ for ax, b in zip(axes, BUCKETS):
                 if r["S"].get(p, {}).get("cycles")]
         cand = [c for c in cand if np.isfinite(c[0])]
         cand.sort(key=lambda c: c[0])
-        rowsM.append(cand[len(cand)//2] if cand else [np.nan]*9)
+        rowsM.append(cand[len(cand)//2] if cand else [np.nan]*8)
     M = np.array(rowsM)
     N = np.array([[(M[i, j] - lo) / (hi - lo) if np.isfinite(M[i, j]) else np.nan
                    for j, (_, lo, hi) in enumerate(MET)] for i in range(len(SHOW))])
@@ -254,28 +253,29 @@ for lab, pod, keys in ROWS3:
     spread = (max(rets) - min(rets)) / 2
     sel.append((lab, med[0], med[1], spread, len(cand)))
 
-fig, (a1, a2) = plt.subplots(1, 2, figsize=(12.6, 4.4))
+L1COLS = [(0, "Retiring", "#009E73"), (2, "Frontend-bound", "#0072B2"),
+          (1, "Bad speculation", "#D55E00"), (3, "Backend-bound", "#E69F00")]
+def txtcol(hexcol):
+    r, g, b = (int(hexcol[i:i+2], 16) for i in (1, 3, 5))
+    return "black" if 0.299*r + 0.587*g + 0.114*b > 150 else "white"
 labels = [lab for lab, _, _, sp, n in sel]
-for ax, idx, keys, ttl in ((a1, 1, TMA_KEYS, "TMA Level 1 (% of pipeline slots) — median run"),
-                           (a2, 2, UOP_KEYS, "Frontend uop delivery path (%) — same run")):
-    left = np.zeros(len(sel))
-    for k in range(4):
-        col = keys[k][1]
-        lab = keys[k][0] if idx == 1 else keys[k][2]
-        v = np.array([s[idx][k] if s[idx] else 0 for s in sel])
-        ax.barh(range(len(sel)), v, left=left, color=col, height=0.62, edgecolor="white",
-                linewidth=0.8, label=lab)
-        for i, (l, x) in enumerate(zip(left, v)):
-            if x >= 7: ax.text(l + x/2, i, f"{x:.0f}", ha="center", va="center", fontsize=7.3, color="white")
-        left += v
-    ax.set_yticks(range(len(sel)))
-    ax.set_yticklabels(labels if idx == 1 else [], fontsize=7.6)
-    ax.invert_yaxis(); ax.set_xlim(0, 100); ax.set_title(ttl, fontsize=10.5)
-    ax.legend(ncol=4 if idx == 1 else 2, fontsize=7.2, frameon=False, loc="upper center",
-              bbox_to_anchor=(0.5, -0.13))
-fig.suptitle("Microarchitecture by pod — median run per row", fontsize=12.5, y=1.02)
-
-fig.savefig(f"{OUT}/svc_tma_uop.png"); plt.close(fig)
+fig, a1 = plt.subplots(figsize=(8.4, 0.52*len(sel)+2.2))
+Y = np.arange(len(sel))
+left = np.zeros(len(sel))
+for idx, lab, col in L1COLS:
+    v = np.array([srow[1][idx] if srow[1] else 0 for srow in sel])
+    a1.barh(Y, v, left=left, color=col, height=0.6, label=lab, edgecolor="white", linewidth=0.8)
+    for y, (l, vv) in enumerate(zip(left, v)):
+        if vv >= 8:
+            a1.text(l+vv/2, y, f"{vv:.0f}", ha="center", va="center",
+                    fontsize=8, color=txtcol(col), fontweight="bold")
+    left += v
+a1.set_yticks(Y); a1.set_yticklabels(labels, fontsize=9.5)
+a1.invert_yaxis(); a1.set_xlim(0, 100); a1.grid(axis="x")
+a1.legend(ncol=4, fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, -0.11), frameon=False)
+a1.set_xlabel("Pipeline slots (%)")
+a1.set_title("TMA Level 1", fontsize=12, pad=10)
+fig.savefig(f"{OUT}/svc_tma_l1.png"); plt.close(fig)
 
 # ---------------- S4: request-rhythm timeline ---------------------------------------------------
 def pod_series(rd, pod):
