@@ -330,7 +330,7 @@ fig.legend(handles=[Patch(fc=C_WAIT, label="Inference (model round-trip; CPU wai
                     Patch(fc=C_TOOL, label="Tool execution"),
                     Patch(fc=C_HARN, label="Agent harness")],
            ncol=3, loc="lower center", frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, -0.06))
-fig.suptitle("Time split — how each episode's wall-clock passed: agent (harness + tools) vs inference",
+fig.suptitle("Wall-clock time split",
              fontsize=13, y=1.04)
 fig.savefig(f"{OUT}/glm_time_split.png"); plt.close(fig)
 
@@ -366,7 +366,7 @@ fig.legend(handles=[Patch(fc=C_TOOL, label="Tool execution"),
                     Patch(fc=C_HARN, label="Agent harness"),
                     Patch(fc=C_PROXY, label="litellm (API proxy to GLM-5.2)")],
            ncol=3, loc="lower center", frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, 0.075))
-fig.suptitle("CPU work — who did the episode's computation (share of core-seconds consumed)",
+fig.suptitle("CPU work (core-seconds)",
              fontsize=13, y=1.02)
 
 defs_footer(fig)
@@ -415,7 +415,7 @@ for pnl, (name, _, _) in enumerate(RESOLVED):
 fig.legend(handles=[Patch(fc=C_TOOL, label="Tool-fence CPU (cores)"),
                     Patch(fc=C_HARN, label="Harness-fence CPU (cores, own y-scale — note peak per panel)")],
            ncol=2, loc="upper center", frameon=False, fontsize=9, bbox_to_anchor=(0.5, 0.965))
-fig.suptitle("Orchestration timeline — measured CPU usage (cores) over time; white = model round-trip (both fences idle)",
+fig.suptitle("Orchestration timeline",
              fontsize=12, y=0.995)
 fig.supylabel("CPU usage (cores) — instantaneous, from the 10 Hz cpu.stat series", fontsize=9.5, x=0.045)
 defs_footer(fig)
@@ -490,7 +490,7 @@ for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
     ax.set_yticklabels(names if pi == 0 else [], fontsize=9.5)
     ax.invert_yaxis()
     ax.set_xlim(0, max(v) * 1.42); ax.grid(axis="x")
-fig.suptitle("Tool-call structure of the certified episodes (10 Hz cgroup timelines)", fontsize=12.5, y=1.06)
+fig.suptitle("Tool-call structure", fontsize=12.5, y=1.06)
 defs_footer(fig, " Spiky parallelism (astropy: parallel compiler procs ~0.3 s) shows in 0.1 s peaks, not sustained.")
 fig.savefig(f"{OUT}/glm_tool_calls.png"); plt.close(fig)
 
@@ -513,7 +513,7 @@ a1.set_yticks(Y); a1.set_yticklabels([r[0] for r in rows], fontsize=9.5)
 a1.invert_yaxis(); a1.set_xlim(0, 100); a1.grid(axis="x")
 a1.legend(ncol=4, fontsize=8.5, loc="upper center", bbox_to_anchor=(0.5, -0.11), frameon=False)
 a1.set_xlabel("Pipeline slots (%)")
-a1.set_title("TMA Level 1 — where each fence's pipeline slots went", fontsize=12, pad=10)
+a1.set_title("TMA Level 1", fontsize=12, pad=10)
 fig.savefig(f"{OUT}/glm_tma_l1.png"); plt.close(fig)
 
 # ================= Fig 5: signature heatmap on ABSOLUTE reference scales ========================
@@ -553,8 +553,7 @@ ax.set_xticks(range(len(COLS)))
 ax.set_xticklabels([f"{lab}\n[{lo:g}–{hi:g}]" for _, lab, lo, hi, _f in COLS], fontsize=8.2)
 ax.tick_params(axis="x", pad=2)
 ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows], fontsize=9.5)
-ax.set_title("Per-side signatures on absolute scales — ranges anchored to hardware ceilings where they exist\n"
-             "(IPC: 6-wide core; MLP: 16 fill buffers; AMAT: L1-hit 5cyc to L3-territory 50cyc), else fixed empirical references",
+ax.set_title("Per-side hardware signatures",
              fontsize=11, pad=14)
 ax.grid(False)
 cb = fig.colorbar(im, ax=ax, fraction=0.022, pad=0.02)
@@ -897,8 +896,7 @@ if _have_l3:
     ax.set_yticks(Yt); ax.set_yticklabels([r[0] for r in treerows], fontsize=9.3); ax.invert_yaxis()
     ax.set_xlim(0, 100); ax.set_xlabel("Pipeline slots (%)"); ax.grid(axis="x", alpha=0.4)
     ax.legend(ncol=4, fontsize=7.4, loc="upper center", bbox_to_anchor=(0.5, -0.10), frameon=False)
-    ax.set_title("The full TMA tree per fence — L1→L4, measured children + unmeasured remainders\n"
-                 "(* = labeled proxy split: FE-bw by uop-delivery shares; memory by load-latency weights)",
+    ax.set_title("TMA tree (Level 1–4)",
                  fontsize=12, pad=10)
     fig.savefig(f"{OUT}/glm_tma_tree.png"); plt.close(fig)
     print("wrote glm_tma_tree.png")
