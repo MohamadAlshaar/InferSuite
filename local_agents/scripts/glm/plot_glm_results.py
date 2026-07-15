@@ -423,8 +423,16 @@ for pnl, (name, _, _) in enumerate(RESOLVED):
     axT.set_title(f"tool peak {peak_tool:.0f} cores · harness peak {peak_harn:.2f} cores",
                   loc="right", fontsize=8, color="#888888")
     axT.set_ylabel(f"{DISPLAY[name]}\ntool cores", fontsize=9)
-    axT.set_ylim(0, tmax*1.1)
-    axT.yaxis.set_major_locator(plt.MaxNLocator(4, integer=True))
+    # symlog: linear below 1 core, log above — sub-core activity stays visible next to
+    # 13-20 core build peaks (linear scaling crushed everything under ~0.5 cores to 0 px)
+    if tmax > 4:
+        axT.set_yscale("symlog", linthresh=1.0, linscale=0.8)
+        axT.set_ylim(0, tmax*1.25)
+        tks = [t for t in (0, 0.5, 1, 2, 5, 10, 20) if t <= tmax*1.25]
+        axT.set_yticks(tks); axT.set_yticklabels([f"{t:g}" for t in tks], fontsize=7.5)
+    else:
+        axT.set_ylim(0, tmax*1.1)
+        axT.yaxis.set_major_locator(plt.MaxNLocator(4, integer=True))
     axH.set_ylabel("harness\ncores", fontsize=8.5, color=C_HARN)
     # do NOT clip: OC harness is node/V8 (multi-threaded) and bursts past 1 core; SWE harness
     # is Python (GIL) ~1 core. Show the true peak either way.
@@ -486,8 +494,8 @@ for n, cfg, runs in RESOLVED:
                      med_heavy_dur=float(stats[n]["med"]), peak_spike=float(stats[n]["peak"]),
                      sust=float(stats[n]["sust"]), tool_wall_pct=float(stats[n]["share"]))
 PANELS = [("n", "Tool calls per episode", "{:.0f}"), ("med", "Median call duration (s)", "{:.1f}"),
-          ("turns", "Agent turns", "{:.0f}"), ("share", "Tool-active share of wall (%)", "{:.1f}")]
-fig, axes = plt.subplots(1, len(RESOLVED), figsize=(3.1*len(RESOLVED), 2.9)); axes = np.atleast_1d(axes)
+          ("share", "Tool-active share of wall (%)", "{:.1f}")]
+fig, axes = plt.subplots(1, len(PANELS), figsize=(3.1*len(PANELS), 2.9)); axes = np.atleast_1d(axes)
 for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
     v = [stats[n][k] for n in names]
     if k == "n":      # light = ALL calls (trajectory); dark = heavy calls (>0.3 cores)
