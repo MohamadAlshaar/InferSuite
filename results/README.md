@@ -7,7 +7,7 @@ Setup names are the same as in `plots/README.md`:
 | setup | meaning |
 |---|---|
 | `local` | fully local workstation (self-served 7B) |
-| `local_api` | local CPU; model = Claude Sonnet via API |
+| `local_api` | local CPU; model = commercial frontier LLM via API |
 | `h100` | rented H100 node (self-hosted 32B) |
 | `eks` | EKS deployed cluster |
 | `l40s` | L40S ncu study |

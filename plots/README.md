@@ -17,7 +17,7 @@ no longer resynced.
 | setup | machine | CPU measurement | model |
 |---|---|---|---|
 | `local` | workstation (Xeon w5-3425 bare metal + RTX A2000) | full TMA + perf record | self-served Qwen2.5-7B-AWQ (vLLM/k3s) |
-| `local_api` | workstation CPU only | full TMA + perf record | Claude Sonnet 4.6 via API (no local serving) |
+| `local_api` | workstation CPU only | full TMA + perf record | commercial frontier LLM via API (no local serving) |
 | `h100` | rented H100 PCIe node (KVM guest) | portable suite + perf record (no TMA) | self-hosted Qwen2.5 32B (Coder/Instruct) |
 | `eks` | EKS cluster (c7i.metal CPU node + p5 H100 GPU node) | TMA on CPU pods; GPU node has no PMU | Qwen2.5-Instruct behind llm-d |
 | `l40s` | L40S cloud box | — (GPU ncu study) | Coder-32B-AWQ |
