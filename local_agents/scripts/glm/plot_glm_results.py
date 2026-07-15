@@ -436,8 +436,14 @@ for pnl, (name, _, _) in enumerate(RESOLVED):
     axH.set_ylabel("harness\ncores", fontsize=8.5, color=C_HARN)
     # do NOT clip: OC harness is node/V8 (multi-threaded) and bursts past 1 core; SWE harness
     # is Python (GIL) ~1 core. Show the true peak either way.
-    axH.set_ylim(0, max(1.25, peak_harn*1.12))
-    axH.yaxis.set_major_locator(plt.MaxNLocator(3, integer=True))
+    if peak_harn > 2:   # OC node harness: compress above 1 core so sub-core V8 activity shows
+        axH.set_yscale("symlog", linthresh=1.0, linscale=0.8)
+        axH.set_ylim(0, peak_harn*1.3)
+        tks = [t for t in (0, 0.5, 1, 2, 3) if t <= peak_harn*1.3]
+        axH.set_yticks(tks); axH.set_yticklabels([f"{t:g}" for t in tks], fontsize=7)
+    else:
+        axH.set_ylim(0, max(1.25, peak_harn*1.12))
+        axH.yaxis.set_major_locator(plt.MaxNLocator(3, integer=True))
     plt.setp(axT.get_xticklabels(), visible=False)
     for a in (axT, axH):
         a.grid(False)
