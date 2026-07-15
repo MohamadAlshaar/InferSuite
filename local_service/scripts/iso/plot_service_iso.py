@@ -379,15 +379,15 @@ for j, c in enumerate(CKEYS):
     tot = max(g + cp + other, 1)
     cats[j] = [100*g/tot, 100*cp/tot, 100*other/tot]
 left = np.zeros(len(CKEYS))
-for k, (lab, col) in enumerate([("GPU decoding (CPU busy-waits)", "#1b9e77"),
+for k, (lab, col) in enumerate([("GPU decoding (CPU busy-waits)", "#c9c9c9"),
                                 ("CPU-side RAG stage (embed/search/fetch)", "#6a51a3"),
-                                ("handoff / sub-threshold", "#dddddd")]):
+                                ("handoff / sub-threshold", "#f2f2f2")]):
     ax.bar(range(len(CKEYS)), cats[:, k], bottom=left, color=col, width=0.62,
            edgecolor="white", linewidth=0.8, label=lab)
     for i in range(len(CKEYS)):
         if cats[i, k] >= 8:
             ax.text(i, left[i] + cats[i, k]/2, f"{cats[i, k]:.0f}%", ha="center", va="center",
-                    fontsize=7.3, color="white" if k < 2 else "#555555")
+                    fontsize=7.3, color="white" if k == 1 else "#555555")
     left += cats[:, k]
 bucket_axis(ax)
 ax.set_ylabel("share of wall time (%)"); ax.set_ylim(0, 118)
@@ -415,17 +415,17 @@ for ax, t in zip(axes, TIERS):
                 else: other += 1
     tot = max(g + cp + other, 1)
     vals = [100*g/tot, 100*cp/tot, 100*other/tot]
-    ax.pie(vals, colors=["#1b9e77", "#6a51a3", "#dddddd"], startangle=90, counterclock=False,
+    ax.pie(vals, colors=["#c9c9c9", "#6a51a3", "#f2f2f2"], startangle=90, counterclock=False,
            wedgeprops=dict(width=0.42, edgecolor="white", linewidth=2),
            autopct=lambda p: f"{p:.0f}%" if p >= 4 else "", pctdistance=0.76,
            textprops=dict(fontsize=9.5))
     ax.text(0, 0.10, f"tok{t}", ha="center", va="center", fontsize=13, fontweight="bold")
-    ax.text(0, -0.32, f"{vals[0]:.0f}% GPU", ha="center", va="center", fontsize=8.5, color="#1b9e77")
+    ax.text(0, -0.32, f"{vals[0]:.0f}% GPU", ha="center", va="center", fontsize=8.5, color="#777777")
     ax.set_title(f"{t}out per request", fontsize=10.5)
     ax.set_aspect("equal")
-fig.legend(handles=[Patch(fc="#1b9e77", label="GPU decoding (host CPU busy-waits)"),
+fig.legend(handles=[Patch(fc="#c9c9c9", label="GPU decoding (host CPU busy-waits)"),
                     Patch(fc="#6a51a3", label="CPU-side RAG stage (embed / search / fetch)"),
-                    Patch(fc="#dddddd", label="handoff / sub-threshold")],
+                    Patch(fc="#f2f2f2", label="handoff / sub-threshold")],
            ncol=3, loc="lower center", frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, 0.035))
 fig.suptitle("Where a request's time goes, by output tier — GPU work vs CPU-side work",
              fontsize=13, y=1.02)
