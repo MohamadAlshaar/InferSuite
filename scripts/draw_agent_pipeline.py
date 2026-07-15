@@ -203,16 +203,16 @@ box(AX, 4.65, AW, 1.2, "Tool sandbox", "container: shell, edit, pytest,\nbrowser
     icon=ic_term, ic=P["tool"]["ic"], bec=P["tool"]["cb"])
 box(BX, 4.65, BW, 1.2, "Workspace", "repo checkout,\nartifacts, results",
     icon=ic_folder, ic=P["tool"]["ic"], bec=P["tool"]["cb"])
-box(AX, 2.55, AW, 1.2, "vLLM engine", "self-served 7B\n(or remote GLM-5.2 API)",
+box(AX, 2.55, AW, 1.2, "Served model", "remote GLM-5.2 API\n(or a locally served model)",
     icon=ic_cube, ic=P["infer"]["ic"], bec=P["infer"]["cb"])
-cuboid(5.55, 1.12, 2.0, 0.55, "CPU cores", "harness / tools / engine", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
+cuboid(5.55, 1.12, 2.0, 0.55, "CPU cores", "harness / tools / serving", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
 cuboid(9.05, 1.12, 1.7, 0.55, "GPU", "generation", fs=9.5, icon=ic_chip, ic=P["hw"]["ic"])
 
 # ---------------- measurement fences ----------------
 fence(AX-0.12, 6.63, AW+0.24, 1.44)
 fence(AX-0.12, 4.53, AW+0.24, 1.44)
 fence(AX-0.12, 2.43, AW+0.24, 1.44)
-ax.text(11.55, 2.18, "red dashes: cgroup measurement fences (harness / tools / engine), measured in the same windows",
+ax.text(11.55, 2.18, "red dashes: cgroup measurement fences (harness / tools / model serving), measured in the same windows",
         fontsize=7.4, color="#c0392b", ha="right", style="italic", zorder=6,
         path_effects=[pe.withStroke(linewidth=2.4, foreground="white")])
 
