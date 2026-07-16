@@ -61,16 +61,35 @@ if os.environ.get("PLOT_SPEC"):
 INTERNAL_PREFIXES = ("str_replace_editor", "open ", "goto ", "scroll_up", "scroll_down",
                      "create ", "search_file", "search_dir", "find_file", "submit", "edit ")
 def count_internal_calls(run_dir):
-    """SWE traj: calls to the agent's OWN tools (editor/viewer/search/submit). None if no traj."""
-    import json as _j, glob as _g
+    """Calls handled by the agent's OWN machinery, per fence semantics.
+    SWE traj: editor/viewer/search/submit actions. OC transcript: every tool but 'exec'
+    runs inside the gateway process (write/edit/read/process/image/web_*) — no fork+exec,
+    so it never leaves the agent fence. None if neither record exists."""
+    import json as _j, glob as _g, os as _o
     tj = _g.glob(f"{run_dir}/traj/**/*.traj", recursive=True)
-    if not tj:
+    if tj:
+        n = 0
+        for st in _j.load(open(tj[0])).get("trajectory", []):
+            act = (st.get("action") or "").strip()
+            if not act or act.startswith(INTERNAL_PREFIXES):
+                n += 1
+        return n
+    f = f"{run_dir}/transcript/chat.jsonl"
+    if not _o.path.exists(f):
         return None
     n = 0
-    for st in _j.load(open(tj[0])).get("trajectory", []):
-        act = (st.get("action") or "").strip()
-        if not act or act.startswith(INTERNAL_PREFIXES):
-            n += 1
+    for ln in open(f):
+        try:
+            m = _j.loads(ln)
+        except Exception:
+            continue
+        msg = m.get("message") or {}
+        if m.get("type") == "message" and msg.get("role") == "assistant":
+            for c in (msg.get("content") or []):
+                if "tool" in str(c.get("type", "")).lower():
+                    name = ((c.get("toolCall") or {}).get("name") or c.get("name") or "")
+                    if name != "exec":
+                        n += 1
     return n
 
 def count_turns(run_dir):
@@ -506,7 +525,8 @@ for n, cfg, runs in RESOLVED:
              else count_transcript_toolcalls(f"{DATA}/{cfg}/{runs[0]}"))
     turns = count_turns(f"{DATA}/{cfg}/{runs[0]}")
     internal = count_internal_calls(f"{DATA}/{cfg}/{runs[0]}")
-    stats[n] = dict(total=total, turns=turns, internal=internal, n=len(B)/len(runs), med=np.median(durs) if durs else 0,
+    has_traj = bool(__import__("glob").glob(f"{DATA}/{cfg}/{runs[0]}/traj/**/*.traj", recursive=True))
+    stats[n] = dict(total=total, turns=turns, internal=internal, has_traj=has_traj, n=len(B)/len(runs), med=np.median(durs) if durs else 0,
                     mx=max(durs) if durs else 0,
                     peak=min(max(cpus), 20.0) if cpus else 0,
                     sust=max(peak_sustained(f"{DATA}/{cfg}/{rn}") for rn in runs),
@@ -541,7 +561,9 @@ for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
         ax.barh(range(len(names)), v, color="#0e6b52", height=0.55, edgecolor="white", linewidth=0.8)
         for i, (tot, iv) in enumerate(zip(tv, v)):
             ax.text(tot, i, f" {iv:.0f} of {tot:.0f}", va="center", fontsize=8.5, color="#333333")
-        ax.set_title(ttl + "\ndark = editor/viewer/search/submit", fontsize=8.5)
+        int_lab = ("dark = editor/viewer/search/submit" if all(stats[n]["has_traj"] for n in names)
+                   else "dark = gateway tools (write/edit/read/web)")
+        ax.set_title(ttl + "\n" + int_lab, fontsize=8.5)
         ax.set_yticks(range(len(names))); ax.set_yticklabels([])
         ax.invert_yaxis(); ax.set_xlim(0, max(tv) * 1.5); ax.grid(axis="x")
         continue
