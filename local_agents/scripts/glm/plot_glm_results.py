@@ -58,6 +58,21 @@ if os.environ.get("PLOT_SPEC"):
     OUTCOME = _SPEC.get("outcome", OUTCOME)
     DISPLAY = {n: (n if OUTCOME[n] == "resolved" else f"{n} ({OUTCOME[n]})") for n, _, _ in RESOLVED}
 
+INTERNAL_PREFIXES = ("str_replace_editor", "open ", "goto ", "scroll_up", "scroll_down",
+                     "create ", "search_file", "search_dir", "find_file", "submit", "edit ")
+def count_internal_calls(run_dir):
+    """SWE traj: calls to the agent's OWN tools (editor/viewer/search/submit). None if no traj."""
+    import json as _j, glob as _g
+    tj = _g.glob(f"{run_dir}/traj/**/*.traj", recursive=True)
+    if not tj:
+        return None
+    n = 0
+    for st in _j.load(open(tj[0])).get("trajectory", []):
+        act = (st.get("action") or "").strip()
+        if not act or act.startswith(INTERNAL_PREFIXES):
+            n += 1
+    return n
+
 def count_turns(run_dir):
     """Agent turns per episode: SWE-agent logs one STEP marker per turn; OC episodes
     count assistant messages in the transcript instead."""
@@ -490,17 +505,22 @@ for n, cfg, runs in RESOLVED:
     total = (len(_j.load(open(tj[0])).get("trajectory", [])) if tj
              else count_transcript_toolcalls(f"{DATA}/{cfg}/{runs[0]}"))
     turns = count_turns(f"{DATA}/{cfg}/{runs[0]}")
-    stats[n] = dict(total=total, turns=turns, n=len(B)/len(runs), med=np.median(durs) if durs else 0,
+    internal = count_internal_calls(f"{DATA}/{cfg}/{runs[0]}")
+    stats[n] = dict(total=total, turns=turns, internal=internal, n=len(B)/len(runs), med=np.median(durs) if durs else 0,
                     mx=max(durs) if durs else 0,
                     peak=min(max(cpus), 20.0) if cpus else 0,
                     sust=max(peak_sustained(f"{DATA}/{cfg}/{rn}") for rn in runs),
                     share=100*tools/walls if walls else 0)
     VALUES[n].update(calls_total=stats[n]["total"], turns=int(stats[n]["turns"]),
+                     internal_calls=stats[n]["internal"],
                      heavy_bursts=stats[n]["n"],
                      med_heavy_dur=float(stats[n]["med"]), peak_spike=float(stats[n]["peak"]),
                      sust=float(stats[n]["sust"]), tool_wall_pct=float(stats[n]["share"]))
 PANELS = [("n", "Tool calls per episode", "{:.0f}"), ("med", "Median call duration (s)", "{:.1f}"),
+          ("internal", "Agent-internal calls", "{:.0f}"),
           ("share", "Tool-active share of wall (%)", "{:.1f}")]
+if any(stats[n]["internal"] is None for n in names):     # OC transcripts carry no trajectory
+    PANELS = [pp for pp in PANELS if pp[0] != "internal"]
 fig, axes = plt.subplots(1, len(PANELS), figsize=(3.1*len(PANELS), 2.9)); axes = np.atleast_1d(axes)
 for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
     v = [stats[n][k] for n in names]
@@ -515,6 +535,16 @@ for pi, (ax, (k, ttl, fmtv)) in enumerate(zip(axes, PANELS)):
         ax.invert_yaxis(); ax.set_xlim(0, max(tv) * 1.45); ax.grid(axis="x")
         continue
     ax.barh(range(len(names)), v, color=C_TOOL, height=0.55, edgecolor="white", linewidth=0.8)
+    if k == "internal":   # light = all calls, dark = the agent's own editor/viewer/search/submit
+        tv = [stats[n]["total"] for n in names]
+        ax.barh(range(len(names)), tv, color="#a6d9c8", height=0.55, edgecolor="white", linewidth=0.8)
+        ax.barh(range(len(names)), v, color="#0e6b52", height=0.55, edgecolor="white", linewidth=0.8)
+        for i, (tot, iv) in enumerate(zip(tv, v)):
+            ax.text(tot, i, f" {iv:.0f} of {tot:.0f}", va="center", fontsize=8.5, color="#333333")
+        ax.set_title(ttl + "\ndark = editor/viewer/search/submit", fontsize=8.5)
+        ax.set_yticks(range(len(names))); ax.set_yticklabels([])
+        ax.invert_yaxis(); ax.set_xlim(0, max(tv) * 1.5); ax.grid(axis="x")
+        continue
     ax.set_title(ttl, fontsize=10)
     for i, x in enumerate(v):
         ax.text(x, i, " " + fmtv.format(x), va="center", fontsize=9, color="#333333")
