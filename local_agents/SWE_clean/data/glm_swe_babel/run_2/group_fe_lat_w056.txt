@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       515,352,176      cycles                           measured.slice/glm-swe-babel-r2.scope                                      
+     1,651,672,380      instructions                     measured.slice/glm-swe-babel-r2.scope #    3.20  insn per cycle            
+        18,432,180      icache_data.stalls               measured.slice/glm-swe-babel-r2.scope                                      
+         4,666,938      icache_tag.stalls                measured.slice/glm-swe-babel-r2.scope                                      
+        19,147,407      int_misc.clear_resteer_cycles    measured.slice/glm-swe-babel-r2.scope                                      
+        11,910,509      l2_rqsts.all_code_rd             measured.slice/glm-swe-babel-r2.scope                                      
+       119,276,957      cycles                           measured.slice/docker-4419b9190319e64034f6e6e72bb31b34b63e1e55cd49a62cbd5ab4670f5bcbf8.scope                                      
+       143,532,745      instructions                     measured.slice/docker-4419b9190319e64034f6e6e72bb31b34b63e1e55cd49a62cbd5ab4670f5bcbf8.scope #    1.20  insn per cycle            
+        15,291,704      icache_data.stalls               measured.slice/docker-4419b9190319e64034f6e6e72bb31b34b63e1e55cd49a62cbd5ab4670f5bcbf8.scope                                      
+         2,630,092      icache_tag.stalls                measured.slice/docker-4419b9190319e64034f6e6e72bb31b34b63e1e55cd49a62cbd5ab4670f5bcbf8.scope                                      
+        14,698,959      int_misc.clear_resteer_cycles    measured.slice/docker-4419b9190319e64034f6e6e72bb31b34b63e1e55cd49a62cbd5ab4670f5bcbf8.scope                                      
+         4,910,997      l2_rqsts.all_code_rd             measured.slice/docker-4419b9190319e64034f6e6e72bb31b34b63e1e55cd49a62cbd5ab4670f5bcbf8.scope                                      
+       130,448,346      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1213244.scope                                      
+       333,395,805      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1213244.scope #    2.56  insn per cycle            
+         8,272,048      icache_data.stalls               user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1213244.scope                                      
+         2,902,629      icache_tag.stalls                user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1213244.scope                                      
+         9,400,849      int_misc.clear_resteer_cycles    user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1213244.scope                                      
+         6,119,738      l2_rqsts.all_code_rd             user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1213244.scope                                      
+
+       5.002847257 seconds time elapsed
+

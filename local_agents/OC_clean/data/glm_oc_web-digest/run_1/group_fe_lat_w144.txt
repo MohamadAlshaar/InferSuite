@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+         5,460,303      cycles                           measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+           750,091      instructions                     measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent #    0.14  insn per cycle            
+         2,121,238      icache_data.stalls               measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+         1,175,864      icache_tag.stalls                measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+         1,152,000      int_misc.clear_resteer_cycles    measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+           171,569      l2_rqsts.all_code_rd             measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+     <not counted>      cycles                           measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+     <not counted>      instructions                     measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+     <not counted>      icache_data.stalls               measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+     <not counted>      icache_tag.stalls                measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+     <not counted>      int_misc.clear_resteer_cycles    measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+     <not counted>      l2_rqsts.all_code_rd             measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+         8,757,575      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+         2,020,206      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope #    0.23  insn per cycle            
+         2,612,239      icache_data.stalls               user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+         1,293,034      icache_tag.stalls                user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+         2,473,552      int_misc.clear_resteer_cycles    user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+           398,778      l2_rqsts.all_code_rd             user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+
+       5.002712787 seconds time elapsed
+

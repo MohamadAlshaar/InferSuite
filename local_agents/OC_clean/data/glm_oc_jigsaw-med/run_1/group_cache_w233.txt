@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+         5,184,774      cycles                           measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+           738,541      instructions                     measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent #    0.14  insn per cycle            
+           183,944      mem_load_retired.l1_hit          measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+             3,883      mem_load_retired.l2_hit          measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+             4,601      mem_load_retired.l3_hit          measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+             4,053      mem_load_retired.l3_miss         measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+     <not counted>      cycles                           measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+     <not counted>      instructions                     measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+     <not counted>      mem_load_retired.l1_hit          measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+     <not counted>      mem_load_retired.l2_hit          measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+     <not counted>      mem_load_retired.l3_hit          measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+     <not counted>      mem_load_retired.l3_miss         measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+         9,580,620      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+         2,136,984      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope #    0.22  insn per cycle            
+           514,146      mem_load_retired.l1_hit          user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+            18,022      mem_load_retired.l2_hit          user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+            24,839      mem_load_retired.l3_hit          user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+             1,459      mem_load_retired.l3_miss         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+
+       5.002989145 seconds time elapsed
+

@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+        36,993,045      cycles                           measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/agent                                      
+        28,988,569      instructions                     measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/agent #    0.78  insn per cycle            
+        22,317,039      idq.dsb_uops                     measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/agent                                      
+        15,640,115      idq.mite_uops                    measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/agent                                      
+         1,692,969      idq.ms_uops                      measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/agent                                      
+                 0      lsd.uops                         measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/agent                                      
+        97,836,091      cycles                           measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/toolexec                                      
+       142,497,086      instructions                     measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/toolexec #    1.46  insn per cycle            
+       123,106,715      idq.dsb_uops                     measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/toolexec                                      
+        34,879,303      idq.mite_uops                    measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/toolexec                                      
+         4,585,598      idq.ms_uops                      measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/toolexec                                      
+                 0      lsd.uops                         measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope/toolexec                                      
+        32,832,391      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+        23,070,982      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope #    0.70  insn per cycle            
+         9,777,618      idq.dsb_uops                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+        22,156,252      idq.mite_uops                    user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+           435,258      idq.ms_uops                      user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+                 0      lsd.uops                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+
+       5.002709589 seconds time elapsed
+

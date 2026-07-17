@@ -1,0 +1,21 @@
+
+ Performance counter stats for 'system wide':
+
+       122,461,237      cycles                           measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+       143,414,842      instructions                     measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent #    1.17  insn per cycle            
+        14,630,556      cpu/offcore_requests_outstanding.data_rd,cmask=4/ measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+        60,696,842      offcore_requests_outstanding.cycles_with_data_rd measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+           637,394      offcore_requests.data_rd         measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/agent                                      
+       174,718,418      cycles                           measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+       351,577,968      instructions                     measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec #    2.01  insn per cycle            
+         4,546,473      cpu/offcore_requests_outstanding.data_rd,cmask=4/ measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+        13,857,671      offcore_requests_outstanding.cycles_with_data_rd measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+           250,526      offcore_requests.data_rd         measured.slice/docker-a30677e020d112ec4e6e041c362dd380522a1bb76dcac528741fa2807613ed9a.scope/toolexec                                      
+       218,916,977      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+       491,600,367      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope #    2.25  insn per cycle            
+         7,674,150      cpu/offcore_requests_outstanding.data_rd,cmask=4/ user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+        41,265,713      offcore_requests_outstanding.cycles_with_data_rd user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+           354,393      offcore_requests.data_rd         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope                                      
+
+       5.002661149 seconds time elapsed
+

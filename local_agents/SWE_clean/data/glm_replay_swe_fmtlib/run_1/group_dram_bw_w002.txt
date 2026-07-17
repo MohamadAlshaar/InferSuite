@@ -1,0 +1,16 @@
+
+ Performance counter stats for 'system wide':
+
+     7,614,261,529      cycles                           measured.slice/glm-rep-fmtlib-r1.scope                                      
+    22,939,020,960      instructions                     measured.slice/glm-rep-fmtlib-r1.scope #    3.01  insn per cycle            
+     1,030,371,608      cpu/offcore_requests_outstanding.data_rd,cmask=4/ measured.slice/glm-rep-fmtlib-r1.scope                                      
+     2,244,892,977      offcore_requests_outstanding.cycles_with_data_rd measured.slice/glm-rep-fmtlib-r1.scope                                      
+        52,195,948      offcore_requests.data_rd         measured.slice/glm-rep-fmtlib-r1.scope                                      
+     7,947,132,173      cycles                           measured.slice/docker-b71c9b3d0d3b4df12efc814fb7a9fdd26c26fefd615f5878d92c8824cc9022c0.scope                                      
+    14,059,824,230      instructions                     measured.slice/docker-b71c9b3d0d3b4df12efc814fb7a9fdd26c26fefd615f5878d92c8824cc9022c0.scope #    1.77  insn per cycle            
+       499,812,285      cpu/offcore_requests_outstanding.data_rd,cmask=4/ measured.slice/docker-b71c9b3d0d3b4df12efc814fb7a9fdd26c26fefd615f5878d92c8824cc9022c0.scope                                      
+     1,889,629,504      offcore_requests_outstanding.cycles_with_data_rd measured.slice/docker-b71c9b3d0d3b4df12efc814fb7a9fdd26c26fefd615f5878d92c8824cc9022c0.scope                                      
+        39,667,884      offcore_requests.data_rd         measured.slice/docker-b71c9b3d0d3b4df12efc814fb7a9fdd26c26fefd615f5878d92c8824cc9022c0.scope                                      
+
+      10.002245796 seconds time elapsed
+

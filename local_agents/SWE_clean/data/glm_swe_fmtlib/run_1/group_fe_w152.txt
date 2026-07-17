@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+       863,327,311      cycles                           measured.slice/glm-swe-fmtlib-r1.scope                                      
+     2,826,816,136      instructions                     measured.slice/glm-swe-fmtlib-r1.scope #    3.27  insn per cycle            
+     2,176,306,871      idq.dsb_uops                     measured.slice/glm-swe-fmtlib-r1.scope                                      
+       799,867,084      idq.mite_uops                    measured.slice/glm-swe-fmtlib-r1.scope                                      
+        25,274,307      idq.ms_uops                      measured.slice/glm-swe-fmtlib-r1.scope                                      
+                 0      lsd.uops                         measured.slice/glm-swe-fmtlib-r1.scope                                      
+       133,759,542      cycles                           measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+       162,770,969      instructions                     measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #    1.22  insn per cycle            
+       143,539,784      idq.dsb_uops                     measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+       116,302,400      idq.mite_uops                    measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+        10,271,335      idq.ms_uops                      measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+                 0      lsd.uops                         measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+       162,337,001      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+       435,542,718      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #    2.68  insn per cycle            
+       231,662,257      idq.dsb_uops                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+       245,240,160      idq.mite_uops                    user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+         1,526,777      idq.ms_uops                      user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+                 0      lsd.uops                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+
+       5.003064948 seconds time elapsed
+

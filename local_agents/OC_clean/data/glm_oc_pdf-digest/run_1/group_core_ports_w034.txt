@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+         2,384,015      cycles                           measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+           336,523      instructions                     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent #    0.14  insn per cycle            
+           115,740      exe_activity.1_ports_util        measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+            73,842      exe_activity.2_ports_util        measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+            26,978      exe_activity.exe_bound_0_ports   measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+               896      arith.div_active                 measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+     <not counted>      cycles                           measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      instructions                     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      exe_activity.1_ports_util        measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      exe_activity.2_ports_util        measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      exe_activity.exe_bound_0_ports   measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      arith.div_active                 measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+         8,059,896      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+         1,963,353      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope #    0.24  insn per cycle            
+           540,123      exe_activity.1_ports_util        user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+           348,605      exe_activity.2_ports_util        user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+           137,582      exe_activity.exe_bound_0_ports   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+             7,018      arith.div_active                 user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+
+       5.002679300 seconds time elapsed
+

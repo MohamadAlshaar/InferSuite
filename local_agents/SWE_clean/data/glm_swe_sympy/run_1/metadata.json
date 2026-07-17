@@ -1,0 +1,25 @@
+{
+ "workload": "swe",
+ "config": "sympy",
+ "run": 1,
+ "model": "glm-5.2",
+ "endpoint": "https://api.z.ai/api/paas/v4",
+ "thinking": "enabled",
+ "cpus_measured": "2-11,14-23",
+ "cpus_house": "0-1,12-13",
+ "winsec": 5,
+ "repo_rev": "5f11475",
+ "kernel": "6.17.0-1024-oem",
+ "gorder": "fpbr cache mlp fe fe_lat core_ports dram_bw priv",
+ "rotation": "shuffled",
+ "tma_cont": true,
+ "ts_start": 1784060684.2532804,
+ "extra": {
+  "instance": "sympy__sympy-14248",
+  "subset": "verified",
+  "temperature": 0.6,
+  "harness_cg": "measured.slice/glm-swe-sympy-r1.scope",
+  "tool_cg": "measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope",
+  "proxy_cg": "user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope"
+ }
+}

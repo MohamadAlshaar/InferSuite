@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+        71,670,941      cycles                           measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+        89,957,557      instructions                     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent #    1.26  insn per cycle            
+             1,040      fp_arith_inst_retired.scalar     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+                 0      fp_arith_inst_retired.vector     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+        19,471,445      branches                         measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent                                      
+           297,300      branch-misses                    measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/agent #    1.53% of all branches           
+     <not counted>      cycles                           measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      instructions                     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      fp_arith_inst_retired.scalar     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      fp_arith_inst_retired.vector     measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      branches                         measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+     <not counted>      branch-misses                    measured.slice/docker-8c9774259a11db9dc0bc2a9509a808413eb4014c90ab433dea2d805145a65e98.scope/toolexec                                      
+        87,146,108      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+       158,041,273      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope #    1.81  insn per cycle            
+               836      fp_arith_inst_retired.scalar     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+                 0      fp_arith_inst_retired.vector     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+        35,189,562      branches                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope                                      
+           544,757      branch-misses                    user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2448044.scope #    1.55% of all branches           
+
+       5.002666700 seconds time elapsed
+

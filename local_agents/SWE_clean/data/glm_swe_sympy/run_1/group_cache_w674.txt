@@ -1,0 +1,24 @@
+
+ Performance counter stats for 'system wide':
+
+     1,918,241,814      cycles                           measured.slice/glm-swe-sympy-r1.scope                                      
+     3,547,448,561      instructions                     measured.slice/glm-swe-sympy-r1.scope #    1.85  insn per cycle            
+       942,355,075      mem_load_retired.l1_hit          measured.slice/glm-swe-sympy-r1.scope                                      
+        12,946,016      mem_load_retired.l2_hit          measured.slice/glm-swe-sympy-r1.scope                                      
+         2,014,355      mem_load_retired.l3_hit          measured.slice/glm-swe-sympy-r1.scope                                      
+         5,973,973      mem_load_retired.l3_miss         measured.slice/glm-swe-sympy-r1.scope                                      
+       145,566,973      cycles                           measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope                                      
+       190,209,654      instructions                     measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope #    1.31  insn per cycle            
+        47,547,311      mem_load_retired.l1_hit          measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope                                      
+         1,143,256      mem_load_retired.l2_hit          measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope                                      
+           116,749      mem_load_retired.l3_hit          measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope                                      
+            55,241      mem_load_retired.l3_miss         measured.slice/docker-c30b61cb69496cb0cdab11b21b920c849d6f2b2ac0a60b4cb5914770963e6ab7.scope                                      
+        27,295,452      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope                                      
+        34,784,259      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope #    1.27  insn per cycle            
+         9,383,485      mem_load_retired.l1_hit          user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope                                      
+           102,187      mem_load_retired.l2_hit          user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope                                      
+            28,577      mem_load_retired.l3_hit          user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope                                      
+            23,612      mem_load_retired.l3_miss         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-252892.scope                                      
+
+       5.002693328 seconds time elapsed
+

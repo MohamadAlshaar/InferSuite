@@ -1,0 +1,18 @@
+
+ Performance counter stats for 'system wide':
+
+        95,237,614      cycles                           measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+       113,320,734      instructions                     measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent #    1.19  insn per cycle            
+        62,586,012      l1d_pend_miss.pending            measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+        38,768,420      l1d_pend_miss.pending_cycles     measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/agent                                      
+    17,781,726,494      cycles                           measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+    39,302,337,237      instructions                     measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec #    2.21  insn per cycle            
+     5,729,547,835      l1d_pend_miss.pending            measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+     3,591,496,812      l1d_pend_miss.pending_cycles     measured.slice/docker-58c1ba6d722796fa2f628ff96e47df1f5a7a9553580c27fcab0998bf6fabdd66.scope/toolexec                                      
+        25,954,059      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+        21,445,750      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope #    0.83  insn per cycle            
+        21,705,120      l1d_pend_miss.pending            user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+        12,868,090      l1d_pend_miss.pending_cycles     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-2290979.scope                                      
+
+       5.002260479 seconds time elapsed
+

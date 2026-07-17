@@ -1,0 +1,7 @@
+{
+    "babel__babel-15445": {
+        "model_name_or_path": "babel__babel-15445_r5",
+        "instance_id": "babel__babel-15445",
+        "model_patch": "diff --git a/packages/babel-generator/src/source-map.ts b/packages/babel-generator/src/source-map.ts\nindex 634b41fb60..2f9d14f25b 100644\n--- a/packages/babel-generator/src/source-map.ts\n+++ b/packages/babel-generator/src/source-map.ts\n@@ -53,13 +53,10 @@ export default class SourceMap {\n     if (opts.inputSourceMap) {\n       this._inputMap = new TraceMap(opts.inputSourceMap);\n       const resolvedSources = this._inputMap.resolvedSources;\n+      const sourcesContent = this._inputMap.sourcesContent || [];\n       if (resolvedSources.length) {\n         for (let i = 0; i < resolvedSources.length; i++) {\n-          setSourceContent(\n-            map,\n-            resolvedSources[i],\n-            this._inputMap.sourcesContent[i],\n-          );\n+          setSourceContent(map, resolvedSources[i], sourcesContent[i]);\n         }\n       }\n     }\n"
+    }
+}

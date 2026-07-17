@@ -1,0 +1,30 @@
+
+ Performance counter stats for 'system wide':
+
+            109.70 msec task-clock                       measured.slice/glm-swe-fmtlib-r1.scope #    0.022 CPUs utilized             
+                40      context-switches                 measured.slice/glm-swe-fmtlib-r1.scope #  364.642 /sec                      
+                 0      cpu-migrations                   measured.slice/glm-swe-fmtlib-r1.scope #    0.000 /sec                      
+             2,188      page-faults                      measured.slice/glm-swe-fmtlib-r1.scope #   19.946 K/sec                     
+       331,592,900      cycles:u                         measured.slice/glm-swe-fmtlib-r1.scope                                      
+        17,397,756      cycles:k                         measured.slice/glm-swe-fmtlib-r1.scope                                      
+     1,054,350,831      instructions:u                   measured.slice/glm-swe-fmtlib-r1.scope #    3.18  insn per cycle            
+        18,687,514      instructions:k                   measured.slice/glm-swe-fmtlib-r1.scope #    1.07  insn per cycle            
+             41.12 msec task-clock                       measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #    0.008 CPUs utilized             
+                88      context-switches                 measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #    2.140 K/sec                     
+                 0      cpu-migrations                   measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #    0.000 /sec                      
+             2,206      page-faults                      measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #   53.647 K/sec                     
+        92,216,879      cycles:u                         measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+        36,178,485      cycles:k                         measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope                                      
+       112,545,806      instructions:u                   measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #    1.22  insn per cycle            
+        44,528,522      instructions:k                   measured.slice/docker-927ab377b96dd40a734298ff03299bd7a9aa654441e2f912496f8f95e5d2ff9c.scope #    1.23  insn per cycle            
+             32.62 msec task-clock                       user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #    0.007 CPUs utilized             
+                56      context-switches                 user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #    1.717 K/sec                     
+                 2      cpu-migrations                   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #   61.305 /sec                      
+                22      page-faults                      user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #  674.353 /sec                      
+        99,573,699      cycles:u                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+         2,693,785      cycles:k                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope                                      
+       246,576,617      instructions:u                   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #    2.48  insn per cycle            
+         1,528,573      instructions:k                   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1018340.scope #    0.57  insn per cycle            
+
+       5.003190725 seconds time elapsed
+

@@ -1,0 +1,7 @@
+{
+    "fmtlib__fmt-3248": {
+        "model_name_or_path": "fmtlib__fmt-3248_r1",
+        "instance_id": "fmtlib__fmt-3248",
+        "model_patch": "diff --git a/include/fmt/core.h b/include/fmt/core.h\nindex 1e7f4f24..8ec4134b 100644\n--- a/include/fmt/core.h\n+++ b/include/fmt/core.h\n@@ -2237,8 +2237,13 @@ template <typename Char> class specs_setter {\n   FMT_CONSTEXPR void on_localized() { specs_.localized = true; }\n \n   FMT_CONSTEXPR void on_zero() {\n-    if (specs_.align == align::none) specs_.align = align::numeric;\n-    specs_.fill[0] = Char('0');\n+    if (specs_.align == align::none) {\n+      // Ignore '0' if an alignment is specified for compatibility with\n+      // std::format which requires that \"if the 0 character and an align\n+      // option both appear, the 0 character is ignored\".\n+      specs_.align = align::numeric;\n+      specs_.fill[0] = Char('0');\n+    }\n   }\n \n   FMT_CONSTEXPR void on_precision(int precision) {\n"
+    }
+}

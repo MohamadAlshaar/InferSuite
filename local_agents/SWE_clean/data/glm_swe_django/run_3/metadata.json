@@ -1,0 +1,25 @@
+{
+ "workload": "swe",
+ "config": "django",
+ "run": 3,
+ "model": "glm-5.2",
+ "endpoint": "https://api.z.ai/api/paas/v4",
+ "thinking": "enabled",
+ "cpus_measured": "2-11,14-23",
+ "cpus_house": "0-1,12-13",
+ "winsec": 5,
+ "repo_rev": "5f11475",
+ "kernel": "6.17.0-1024-oem",
+ "gorder": "fpbr cache mlp fe fe_lat core_ports dram_bw priv",
+ "rotation": "shuffled",
+ "tma_cont": true,
+ "ts_start": 1784080224.4573624,
+ "extra": {
+  "instance": "django__django-16560",
+  "subset": "verified",
+  "temperature": 0.6,
+  "harness_cg": "measured.slice/glm-swe-django-r3.scope",
+  "tool_cg": "measured.slice/docker-2653929d9b872af16d02d073bedb93f9e3337bcd7ff4471b9b26cff472da7cd1.scope",
+  "proxy_cg": "user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1999275.scope"
+ }
+}

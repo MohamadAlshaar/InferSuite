@@ -1,0 +1,21 @@
+
+ Performance counter stats for 'system wide':
+
+     1,122,492,580      cycles                           measured.slice/glm-swe-django-r2.scope                                      
+     3,712,726,369      instructions                     measured.slice/glm-swe-django-r2.scope #    3.31  insn per cycle            
+        77,923,860      cpu/offcore_requests_outstanding.data_rd,cmask=4/ measured.slice/glm-swe-django-r2.scope                                      
+       219,581,887      offcore_requests_outstanding.cycles_with_data_rd measured.slice/glm-swe-django-r2.scope                                      
+         4,361,201      offcore_requests.data_rd         measured.slice/glm-swe-django-r2.scope                                      
+       934,977,709      cycles                           measured.slice/docker-a41b267cc5205e2f057709dca2d07ec307c6e913e6d1ce50ef0a5d624d323b72.scope                                      
+     1,281,391,208      instructions                     measured.slice/docker-a41b267cc5205e2f057709dca2d07ec307c6e913e6d1ce50ef0a5d624d323b72.scope #    1.37  insn per cycle            
+        83,318,808      cpu/offcore_requests_outstanding.data_rd,cmask=4/ measured.slice/docker-a41b267cc5205e2f057709dca2d07ec307c6e913e6d1ce50ef0a5d624d323b72.scope                                      
+       295,079,828      offcore_requests_outstanding.cycles_with_data_rd measured.slice/docker-a41b267cc5205e2f057709dca2d07ec307c6e913e6d1ce50ef0a5d624d323b72.scope                                      
+         7,511,010      offcore_requests.data_rd         measured.slice/docker-a41b267cc5205e2f057709dca2d07ec307c6e913e6d1ce50ef0a5d624d323b72.scope                                      
+       188,529,492      cycles                           user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1899380.scope                                      
+       503,338,745      instructions                     user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1899380.scope #    2.67  insn per cycle            
+         6,938,415      cpu/offcore_requests_outstanding.data_rd,cmask=4/ user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1899380.scope                                      
+        40,680,869      offcore_requests_outstanding.cycles_with_data_rd user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1899380.scope                                      
+           334,436      offcore_requests.data_rd         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-1899380.scope                                      
+
+       5.002918025 seconds time elapsed
+

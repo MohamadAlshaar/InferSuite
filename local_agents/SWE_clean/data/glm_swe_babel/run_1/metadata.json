@@ -1,0 +1,25 @@
+{
+ "workload": "swe",
+ "config": "babel",
+ "run": 1,
+ "model": "glm-5.2",
+ "endpoint": "https://api.z.ai/api/paas/v4",
+ "thinking": "enabled",
+ "cpus_measured": "2-11,14-23",
+ "cpus_house": "0-1,12-13",
+ "winsec": 5,
+ "repo_rev": "5f11475",
+ "kernel": "6.17.0-1024-oem",
+ "gorder": "fpbr cache mlp fe fe_lat core_ports dram_bw priv",
+ "rotation": "shuffled",
+ "tma_cont": true,
+ "ts_start": 1784066818.1120563,
+ "extra": {
+  "instance": "babel__babel-15445",
+  "subset": "multilingual",
+  "temperature": 0.6,
+  "harness_cg": "measured.slice/glm-swe-babel-r1.scope",
+  "tool_cg": "measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope",
+  "proxy_cg": "user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope"
+ }
+}

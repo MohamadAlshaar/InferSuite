@@ -1,0 +1,22 @@
+{
+ "workload": "oc",
+ "config": "web-digest",
+ "run": 2,
+ "model": "glm-5.2",
+ "endpoint": "https://api.z.ai/api/paas/v4",
+ "thinking": "enabled",
+ "cpus_measured": "2-11,14-23",
+ "cpus_house": "0-1,12-13",
+ "winsec": 5,
+ "repo_rev": "5f11475",
+ "kernel": "6.17.0-1024-oem",
+ "gorder": "fpbr cache mlp fe fe_lat core_ports dram_bw priv",
+ "rotation": "shuffled",
+ "tma_cont": true,
+ "ts_start": 1784125016.2574463,
+ "extra": {
+  "container_cg": "measured.slice/docker-e4b617657eb43a7cd1729198d3a9cb3c3d633e437a900916e81cf8e322a6d9c0.scope",
+  "proxy_cg": "user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-257532.scope",
+  "watcher": "lineage"
+ }
+}

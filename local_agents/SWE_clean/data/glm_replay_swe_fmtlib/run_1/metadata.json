@@ -1,0 +1,23 @@
+{
+ "workload": "swe_replay",
+ "config": "fmtlib",
+ "run": 1,
+ "model": "glm-5.2",
+ "endpoint": "https://api.z.ai/api/paas/v4",
+ "thinking": "enabled",
+ "cpus_measured": "2-11,14-23",
+ "cpus_house": "0-1,12-13",
+ "winsec": 10,
+ "repo_rev": "5f11475",
+ "kernel": "6.17.0-1024-oem",
+ "gorder": "fpbr cache mlp fe fe_lat core_ports dram_bw priv",
+ "rotation": "shuffled",
+ "tma_cont": true,
+ "ts_start": 1784068873.414009,
+ "extra": {
+  "source_run": 1,
+  "traj": "/home/mohamad/llm-service-kernel-latest/local_agents/SWE_clean/data/glm_swe_fmtlib/run_1/traj/fmtlib__fmt-3248/fmtlib__fmt-3248.traj",
+  "harness_cg": "measured.slice/glm-rep-fmtlib-r1.scope",
+  "tool_cg": "measured.slice/docker-b71c9b3d0d3b4df12efc814fb7a9fdd26c26fefd615f5878d92c8824cc9022c0.scope"
+ }
+}

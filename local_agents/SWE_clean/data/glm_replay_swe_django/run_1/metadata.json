@@ -1,0 +1,23 @@
+{
+ "workload": "swe_replay",
+ "config": "django",
+ "run": 1,
+ "model": "glm-5.2",
+ "endpoint": "https://api.z.ai/api/paas/v4",
+ "thinking": "enabled",
+ "cpus_measured": "2-11,14-23",
+ "cpus_house": "0-1,12-13",
+ "winsec": 10,
+ "repo_rev": "5f11475",
+ "kernel": "6.17.0-1024-oem",
+ "gorder": "fpbr cache mlp fe fe_lat core_ports dram_bw priv",
+ "rotation": "shuffled",
+ "tma_cont": true,
+ "ts_start": 1784068762.304946,
+ "extra": {
+  "source_run": 1,
+  "traj": "/home/mohamad/llm-service-kernel-latest/local_agents/SWE_clean/data/glm_swe_django/run_1/traj/django__django-16560/django__django-16560.traj",
+  "harness_cg": "measured.slice/glm-rep-django-r1.scope",
+  "tool_cg": "measured.slice/docker-72bfd7d32c598a0266b36999d628a36bd51482c4c4eb6c5f851ba44125c56767.scope"
+ }
+}

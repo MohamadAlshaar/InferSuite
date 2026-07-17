@@ -1,0 +1,20 @@
+diff --git a/packages/babel-generator/src/source-map.ts b/packages/babel-generator/src/source-map.ts
+index 634b41fb60..2f9d14f25b 100644
+--- a/packages/babel-generator/src/source-map.ts
++++ b/packages/babel-generator/src/source-map.ts
+@@ -53,13 +53,10 @@ export default class SourceMap {
+     if (opts.inputSourceMap) {
+       this._inputMap = new TraceMap(opts.inputSourceMap);
+       const resolvedSources = this._inputMap.resolvedSources;
++      const sourcesContent = this._inputMap.sourcesContent || [];
+       if (resolvedSources.length) {
+         for (let i = 0; i < resolvedSources.length; i++) {
+-          setSourceContent(
+-            map,
+-            resolvedSources[i],
+-            this._inputMap.sourcesContent[i],
+-          );
++          setSourceContent(map, resolvedSources[i], sourcesContent[i]);
+         }
+       }
+     }

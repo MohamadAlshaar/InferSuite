@@ -1,0 +1,30 @@
+
+ Performance counter stats for 'system wide':
+
+             99.25 msec task-clock                       measured.slice/glm-swe-babel-r1.scope #    0.020 CPUs utilized             
+                42      context-switches                 measured.slice/glm-swe-babel-r1.scope #  423.163 /sec                      
+                 2      cpu-migrations                   measured.slice/glm-swe-babel-r1.scope #   20.151 /sec                      
+             2,731      page-faults                      measured.slice/glm-swe-babel-r1.scope #   27.516 K/sec                     
+       295,792,814      cycles:u                         measured.slice/glm-swe-babel-r1.scope                                      
+        19,665,348      cycles:k                         measured.slice/glm-swe-babel-r1.scope                                      
+       942,095,176      instructions:u                   measured.slice/glm-swe-babel-r1.scope #    3.18  insn per cycle            
+        22,582,601      instructions:k                   measured.slice/glm-swe-babel-r1.scope #    1.15  insn per cycle            
+             43.59 msec task-clock                       measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope #    0.009 CPUs utilized             
+                93      context-switches                 measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope #    2.134 K/sec                     
+                 6      cpu-migrations                   measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope #  137.652 /sec                      
+             2,480      page-faults                      measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope #   56.896 K/sec                     
+        99,815,392      cycles:u                         measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope                                      
+        36,451,353      cycles:k                         measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope                                      
+       134,478,270      instructions:u                   measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope #    1.35  insn per cycle            
+        45,863,990      instructions:k                   measured.slice/docker-672a029bb2dc74e086b69a2ce7191ad6a0981a109468ed94fbd8faa0b6de0c3b.scope #    1.26  insn per cycle            
+             31.71 msec task-clock                       user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope #    0.006 CPUs utilized             
+                57      context-switches                 user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope #    1.798 K/sec                     
+                 0      cpu-migrations                   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope #    0.000 /sec                      
+                10      page-faults                      user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope #  315.375 /sec                      
+        96,874,430      cycles:u                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope                                      
+         2,582,454      cycles:k                         user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope                                      
+       236,514,861      instructions:u                   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope #    2.44  insn per cycle            
+         1,516,039      instructions:k                   user.slice/user-1002.slice/user@1002.service/app.slice/glm-proxy-953338.scope #    0.59  insn per cycle            
+
+       5.003191159 seconds time elapsed
+

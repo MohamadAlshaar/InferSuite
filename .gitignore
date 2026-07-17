@@ -46,14 +46,17 @@ archive/
 # isolated-campaign raw data (heavy; plots + specs + kits are tracked, data is not)
 local_agents/SWE_long/data/
 local_agents/OC_long/data/
-local_service/data_iso/
+local_service/data_iso/**/rec_*.data
 local_agents/SWE_long/*.log
 local_agents/OC_long/*.log
 agentic/inference/runs/
 
-# hardened-rerun campaigns (2026-07-15): plots + specs + MANIFESTs tracked, raw data local
-local_agents/SWE_clean/data/
-local_agents/OC_clean/data/
+# hardened-rerun campaigns: figure-critical raw data IS tracked so the repo is
+# self-sufficient for regenerating + auditing every figure. Only the heavy perf record
+# binaries stay local (their derived comm/dso/ksym/leaf/lane tables ARE tracked), plus
+# the one >100MB traj (tracked as .traj.gz — decompress after clone).
+local_agents/*_clean/data/**/rec_*.data
+local_agents/SWE_clean/data/glm_swe_sympy/run_1/traj/sympy__sympy-14248/sympy__sympy-14248.traj
 local_agents/SWE_clean/*.log
 local_agents/OC_clean/*.log
 # archived campaign raw data stays local too
