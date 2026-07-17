@@ -488,7 +488,7 @@ def evidence_checks(rd):
         if bad10:
             fails.append("E10 continuous-TMA census invalid")
 
-    # E11 (runs with the partition witness, 2026-07-17): unfenced-residual bound.
+    # E11 (runs with the partition witness): unfenced-residual bound.
     # procstat_partition.tsv sees ALL activity on the measured CPUs (kernel threads
     # included); fence cpu.stat sums see only cgroup members. partition_busy - fences =
     # the async-kernel residual (writeback/irq) no cgroup owns. Informational unless the

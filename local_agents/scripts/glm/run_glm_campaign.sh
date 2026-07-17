@@ -227,7 +227,7 @@ start_pollers(){ # $1 out, $2 cgroups csv — 10 Hz cpu.stat usage_usec per scop
         done >> "'"$OUT/cpustat_scope$i.tsv"'" ' ) &
     POLL_PIDS+=($!)
   done
-  # partition-wide residual witness (2026-07-17): /proc/stat per-CPU at 10 Hz — sees
+  # partition-wide residual witness: /proc/stat per-CPU at 10 Hz — sees
   # EVERYTHING on the machine incl. kernel threads no cgroup owns. Post-hoc on the
   # measured CPUs: partition busy minus fence sums = unfenced residual (writeback/irq).
   # Fields: epoch cpuN user nice system idle iowait irq softirq (jiffies, USER_HZ=100).
