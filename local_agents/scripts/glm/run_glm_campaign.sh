@@ -150,7 +150,8 @@ PY
   [ "$(cat /sys/fs/cgroup/user.slice/cpuset.cpus.effective)" = "$CPUS_HOUSE" ]   || { log "ISO-PROOF FAIL: user.slice cpuset"; iso_fail=1; }
   [ "$(cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor)" = performance ] || { log "ISO-PROOF FAIL: governor"; iso_fail=1; }
   [ "$(cat /sys/devices/system/cpu/intel_pstate/no_turbo)" = 1 ] || { log "ISO-PROOF FAIL: no_turbo"; iso_fail=1; }
-  if ! python3 - "$CPUS_MEASURED" <<'PY'
+  local QUIET_OUT
+  if ! QUIET_OUT=$(python3 - "$CPUS_MEASURED" <<'PY'
 import sys, time
 def parse(spec):
     out = []
@@ -173,7 +174,9 @@ print(f"  ISO-PROOF quiet-check: max busy {max(noisy.values()):.1f}% on measured
       (f" — NOISY: {bad}" if bad else " (silent)"))
 sys.exit(1 if bad else 0)
 PY
-  then log "ISO-PROOF FAIL: measured cores not quiet"; iso_fail=1; fi
+  )
+  then log "ISO-PROOF FAIL: measured cores not quiet ${QUIET_OUT}"; iso_fail=1; fi
+  log "ISO-PROOF ${QUIET_OUT}"   # bank the measured ambient bound, not just the verdict
   [ "$iso_fail" = 0 ] && log "ISOLATION: PROVEN quiet (slices pinned, knobs set, partition silent)" \
     || { log "ISOLATION: PROOF FAILED — aborting before any capture"; exit 1; }
 }
@@ -224,6 +227,19 @@ start_pollers(){ # $1 out, $2 cgroups csv — 10 Hz cpu.stat usage_usec per scop
         done >> "'"$OUT/cpustat_scope$i.tsv"'" ' ) &
     POLL_PIDS+=($!)
   done
+  # partition-wide residual witness (2026-07-17): /proc/stat per-CPU at 10 Hz — sees
+  # EVERYTHING on the machine incl. kernel threads no cgroup owns. Post-hoc on the
+  # measured CPUs: partition busy minus fence sums = unfenced residual (writeback/irq).
+  # Fields: epoch cpuN user nice system idle iowait irq softirq (jiffies, USER_HZ=100).
+  ( exec taskset -c "$CPUS_HOUSE" bash -c '
+      while [ -f "'"$OUT"'/.polling" ]; do
+        t=$EPOCHREALTIME
+        grep -E "^cpu[0-9]+" /proc/stat | while read -r c u n sy id io irq sirq _; do
+          echo "$t $c $u $n $sy $id $io $irq $sirq"
+        done
+        sleep 0.1
+      done >> "'"$OUT/procstat_partition.tsv"'" ' ) &
+  POLL_PIDS+=($!)
 }
 stop_pollers(){ rm -f "$1/.polling"; sleep 0.3; POLL_PIDS=(); }
 

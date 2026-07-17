@@ -488,6 +488,48 @@ def evidence_checks(rd):
         if bad10:
             fails.append("E10 continuous-TMA census invalid")
 
+    # E11 (runs with the partition witness, 2026-07-17): unfenced-residual bound.
+    # procstat_partition.tsv sees ALL activity on the measured CPUs (kernel threads
+    # included); fence cpu.stat sums see only cgroup members. partition_busy - fences =
+    # the async-kernel residual (writeback/irq) no cgroup owns. Informational unless the
+    # residual exceeds 1% of partition capacity (then the "fences cover the partition"
+    # premise of the magnitude figures needs a documented explanation).
+    if os.path.exists(f"{rd}/procstat_partition.tsv"):
+        try:
+            meas = set()
+            mspec = json.load(open(f"{rd}/metadata.json")).get("cpus_measured", "")
+            for part in str(mspec).split(","):
+                if not part: continue
+                a_, _, b_ = part.partition("-")
+                meas.update(range(int(a_), int(b_ or a_) + 1))
+            first, last = {}, {}
+            for ln in open(f"{rd}/procstat_partition.tsv"):
+                pp = ln.split()
+                if len(pp) < 9 or not pp[1].startswith("cpu"): continue
+                cpu = int(pp[1][3:])
+                if cpu not in meas: continue
+                busy = sum(int(x) for x in pp[2:5]) + int(pp[7]) + int(pp[8])  # user+nice+sys+irq+softirq
+                t = float(pp[0])
+                if cpu not in first: first[cpu] = (t, busy)
+                last[cpu] = (t, busy)
+            part_busy = sum((last[c][1] - first[c][1]) for c in first) / 100.0  # jiffies -> s
+            span = max((last[c][0] - first[c][0]) for c in first) if first else 0.0
+            fence = 0.0
+            for sc in (1, 2):   # measured-partition fences only (litellm lives on housekeeping)
+                rows = [int(pp[2]) for pp in (l.split() for l in open(f"{rd}/cpustat_scope{sc}.tsv"))
+                        if len(pp) >= 3 and pp[1] == "usage_usec" and int(pp[2]) >= 0]
+                if len(rows) > 1: fence += (rows[-1] - rows[0]) / 1e6
+            resid = part_busy - fence
+            cap = span * len(first)
+            pct = 100.0 * resid / cap if cap else 0.0
+            ev.append(f"E11 partition witness: partition busy {part_busy:.1f}cs vs fences {fence:.1f}cs "
+                      f"-> residual {resid:.1f}cs = {pct:.2f}% of capacity "
+                      f"({'OK' if pct <= 1.0 else 'ABOVE 1% BOUND'})")
+            if pct > 1.0:
+                fails.append(f"E11 unfenced residual {pct:.2f}% of partition capacity (>1%)")
+        except Exception as e:
+            ev.append(f"E11 partition witness present but unreadable ({e})")
+
     # E4 (OC) — two modes:
     #   LINEAGE (lineage.tsv present, rung-2 watcher, accepted 2026-07-12): PID-set purity.
     #   Every record sample carries a pid; the lineage log says which pids are tool-class.
