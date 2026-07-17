@@ -60,6 +60,20 @@ Beside the data: `plots/` (figures + `MANIFEST.md` + `values_dump.json`), `plots
 | `agentic/inference/` | GPU-side studies (ncu GPU-TMA, spin-vs-block busy-wait experiment). |
 | `plots/` (repo root) | Curated read-only gallery synced by `scripts/sync_plots.sh` — never edit figures there. |
 
+## Data availability
+
+The repo IS self-sufficient for figures: all figure-critical raw data (fence CPU series,
+counter windows, continuous TMA, derived record tables, trajectories/transcripts, metadata)
+is tracked for SWE_clean, OC_clean, and data_iso, plus the harness-scaling inputs from the
+archived campaigns. Two exceptions:
+
+- the heavy perf record binaries (`rec_*.data`) stay out of git — their derived
+  comm/dso/ksym/leaf/lane tables ARE tracked, and no plotter reads the raw records
+  (only `gen_lanes_leaf.sh` re-derivation would need them; an offline tarball
+  `infersuite_perf_records.tar.*` was made at handover time);
+- one oversized trajectory ships compressed — after cloning run:
+  `gunzip -k local_agents/SWE_clean/data/glm_swe_sympy/run_1/traj/sympy__sympy-14248/sympy__sympy-14248.traj.gz`
+
 ## The narrative
 
 The thesis repo (`~/thesis/InferSuite_thesis`) is the write-up: agent results in the Results
